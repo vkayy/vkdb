@@ -344,8 +344,8 @@ public:
     /**
      * @brief Insert a given key-value pair into the skip list.
      *
-     * This method attempts If the key already exists, the value associated with the key is updated.
-     * The method uses a probabilistic approach to determine the level (or height) of the new node.
+     * If the key already exists, the value associated with the key is updated. Otherwise, the method
+     * uses a probabilistic approach to determine the level (or height) of the new node.
      *
      * First, it finds the appropriate position for the new node, then creates a new node with the
      * determined height. Finally, it updates the forward pointers of the predecessors to point to
