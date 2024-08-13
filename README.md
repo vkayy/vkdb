@@ -1,2 +1,32 @@
 # vkdb
-A time-series database engine built in C++ with minimal dependencies.
+
+A time-series database engine currently being built in C++ with minimal dependencies.
+
+## What will the architecture be?
+
+vkdb will be supported with an LSM tree architecture -- these are most suited to high write throughput, and as time-series data workloads are generally append-only, I decided this was a sensible design choice.
+
+## How will this architecture work?
+
+Initially, key-value pairs are written to an in-memory table (memtable). As in-memory data is volatile, to ensure durability, every write operation is first recorded in a write-ahead log (WAL), guaranteeing no data is lost in the event of a crash. Once a memtable exceeds a certain threshold, it is frozen and made immutable. From this point, it is flushed to the disk as an SSTable.
+
+These SSTables make up the majority of the LSM tree's pyramid architecture, being divided into levels of increasing population and ordered by recency. When a key is looked up, we initially check the memtable (at any point in time, only one will be active) and continue to move down the levels of the LSM tree.
+
+As operations are append-only, updates and deletions are done a little differently to a typical relational database engine's. That is, updates are treated no differently to insertions; after all, key-value stores are checked in order of recency. Similarly, deletions are just like insertions, but the value is marked with a 'tombstone', signifying deletion.
+
+Now, from this point, we notice that this can lead to a lot of wasted disk space -- if we've updated a key hundreds of times, it'll have hundreds of redundant entries. This is solved with periodic compaction, which is a process where SSTables with overlapping key ranges are merged together, and is divided into many kinds, including time-window compaction strategy (TWCS).
+
+TWCS organises and compacts data based on time intervals, and this is beneficial to us, given that we're working with time-series data workloads. Hence, TWCS becomes most appropriate, and with it, we're also able to avoid size, write, and read amplification.
+
+From this point on, there are a few other optimisations I intend on implementing (Bloom filters, summary tables), and also my own custom query language.
+
+## What's the progress plan?
+
+- [x] Memtables.
+- [ ] Write-ahead log (WAL).
+- [ ] SSTables.
+- [ ] Time-window compaction strategy (TWCS).
+- [ ] Bloom filters.
+- [ ] Summary tables.
+- [ ] Query parser.
+- [ ] Query execution engine.
