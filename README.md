@@ -25,6 +25,7 @@ From this point on, there are a few other optimisations I intend on implementing
 - [x] Memtables.
 - [ ] Write-ahead log (WAL).
 - [ ] SSTables.
+- [ ] LSM tree architecture.
 - [ ] Time-window compaction strategy (TWCS).
 - [ ] Bloom filters.
 - [ ] Summary tables.
