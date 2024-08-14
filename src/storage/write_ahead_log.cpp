@@ -18,7 +18,7 @@ WriteAheadLog::~WriteAheadLog() {
     }
 }
 
-void WriteAheadLog::append_log(const std::string &entry) {
+void WriteAheadLog::appendLog(const std::string &entry) {
     std::lock_guard<std::mutex> lock(log_mutex);
     log_stream << entry << std::endl;
     if (!log_stream.good()) {
@@ -26,7 +26,7 @@ void WriteAheadLog::append_log(const std::string &entry) {
     }
 }
 
-void WriteAheadLog::flush_log() {
+void WriteAheadLog::flushLog() {
     std::lock_guard<std::mutex> lock(log_mutex);
     log_stream.flush();
     if (!log_stream.good()) {
@@ -34,7 +34,7 @@ void WriteAheadLog::flush_log() {
     }
 }
 
-void WriteAheadLog::recover_from_log() {
+void WriteAheadLog::recoverFromLog() {
     std::lock_guard<std::mutex> lock(log_mutex);
     log_stream.close();
     std::ifstream recovery_stream(log_file_path, std::ios::in);

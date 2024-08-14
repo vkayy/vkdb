@@ -30,14 +30,14 @@ public:
      * @param entry The log entry to append.
      * @throws `std::runtime_error` if unable to write to log file.
      */
-    void append_log(const std::string &entry);
+    void appendLog(const std::string &entry);
 
     /**
      * @brief Flush the log file to ensure all entries are written.
      *
      * @throws `std::runtime_error` if unable to flush log file.
      */
-    void flush_log();
+    void flushLog();
 
     /**
      * @brief Recover from the log file by reading all entries.
@@ -47,7 +47,7 @@ public:
      *
      * @throws `std::runtime_error` if unable to reopen log file.
      */
-    void recover_from_log();
+    void recoverFromLog();
 
 private:
     std::string log_file_path; // The file path of the log file.

@@ -23,8 +23,8 @@ TEST(WriteAheadLogTest, AppendsLogEntry) {
     std::string log_file_path = generate_log_file_name();
     WriteAheadLog wal(log_file_path);
 
-    EXPECT_NO_THROW(wal.append_log("Test entry 1"));
-    EXPECT_NO_THROW(wal.append_log("Test entry 2"));
+    EXPECT_NO_THROW(wal.appendLog("Test entry 1"));
+    EXPECT_NO_THROW(wal.appendLog("Test entry 2"));
 
     std::ifstream file(log_file_path);
     ASSERT_TRUE(file.is_open());
@@ -41,8 +41,8 @@ TEST(WriteAheadLogTest, FlushesLog) {
     std::string log_file_path = generate_log_file_name();
     WriteAheadLog wal(log_file_path);
 
-    wal.append_log("Flushed entry");
-    EXPECT_NO_THROW(wal.flush_log());
+    wal.appendLog("Flushed entry");
+    EXPECT_NO_THROW(wal.flushLog());
 
     std::ifstream file(log_file_path);
     ASSERT_TRUE(file.is_open());
@@ -56,15 +56,15 @@ TEST(WriteAheadLogTest, RecoversFromLog) {
     std::string log_file_path = generate_log_file_name();
 
     WriteAheadLog wal(log_file_path);
-    wal.append_log("Recovery entry 1");
-    wal.append_log("Recovery entry 2");
-    wal.flush_log();
+    wal.appendLog("Recovery entry 1");
+    wal.appendLog("Recovery entry 2");
+    wal.flushLog();
 
     std::ofstream empty_file(log_file_path, std::ios::trunc);
     empty_file.close();
 
     WriteAheadLog new_wal(log_file_path);
-    EXPECT_NO_THROW(new_wal.recover_from_log());
+    EXPECT_NO_THROW(new_wal.recoverFromLog());
 
     std::ifstream file(log_file_path);
     ASSERT_TRUE(file.is_open());
@@ -82,7 +82,7 @@ TEST(WriteAheadLogTest, HandlesConcurrentAppending) {
     auto append_task = [&]() {
         for (int i = 0; i < 10; ++i) {
             std::string entry = "Concurrent entry " + std::to_string(i);
-            wal.append_log(entry);
+            wal.appendLog(entry);
         }
     };
 
