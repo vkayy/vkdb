@@ -127,3 +127,50 @@ TEST(MemTableTest, HandlesConcurrentUpdates) {
         EXPECT_EQ(expected_value, search_result);
     }
 }
+
+TEST(MemTableTest, RemovesKeyValuePairs) {
+    MemTable<int32_t, std::string> memtable;
+    int32_t key = generateRandomInt32(1, 10000);
+    std::string value = generateRandomString(100);
+
+    memtable.put(key, value);
+    EXPECT_EQ(memtable.get(key), value);
+
+    memtable.remove(key);
+    EXPECT_THROW(memtable.get(key), std::runtime_error);
+}
+
+TEST(MemTableTest, HandlesConcurrentRemovalsAndGets) {
+    MemTable<int32_t, std::string> memtable;
+    const int32_t num_threads = 10;
+    const int32_t num_operations_per_thread = 100;
+    std::atomic<bool> start_flag(false);
+    std::vector<std::thread> threads;
+    std::vector<int32_t> keys;
+
+    for (int32_t i = 0; i < num_threads * num_operations_per_thread; ++i) {
+        keys.push_back(i);
+        memtable.put(i, "value_" + std::to_string(i));
+    }
+
+    auto remove_and_get = [&](int32_t thread_id) {
+        while (!start_flag.load()) {
+            std::this_thread::yield();
+        }
+
+        for (int32_t i = thread_id * num_operations_per_thread; i < (thread_id + 1) * num_operations_per_thread; ++i) {
+            memtable.remove(keys[i]);
+            EXPECT_THROW(memtable.get(keys[i]), std::runtime_error);
+        }
+    };
+
+    for (int32_t i = 0; i < num_threads; ++i) {
+        threads.emplace_back(remove_and_get, i);
+    }
+
+    start_flag.store(true);
+
+    for (auto &thread : threads) {
+        thread.join();
+    }
+}

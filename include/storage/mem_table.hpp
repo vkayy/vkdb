@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <fstream>
 #include <map>
+#include <optional>
 
 /**
  * @brief A memory table (MemTable) implementation with a skip list as the underlying data structure.
@@ -22,12 +23,12 @@ private:
 
 public:
     /**
-     * @brief Insert a key-value pair into the MemTable.
+     * @brief Add a key-value pair to the MemTable.
      *
-     * @param key The key associated with the value to insert.
-     * @param value The value associated with the key to insert.
+     * @param key The key associated with the value to add.
+     * @param value The value associated with the key to add.
      */
-    void put(const TKey &key, const TValue &value) {
+    void put(const TKey &key, const std::optional<TValue> &value) {
         table.insert(key, value);
     }
 
@@ -36,15 +37,30 @@ public:
      *
      * @param key The key to search for.
      * @return `TValue` The value associated with the key.
-     * @throws `std::runtime_error` if the key is not found.
+     * @throws `std::runtime_error` if the key is not found or is marked deleted.
      */
     TValue get(const TKey &key) const {
-        TValue *value = table.findWaitFree(key);
-        if (!value) {
+        std::optional<TValue> *value = table.findWaitFree(key);
+        if (!value || !value->has_value()) {
             throw std::runtime_error("key not found in memtable");
         }
 
-        return *value;
+        return value->value();
+    }
+
+    /**
+     * @brief Marks a key as deleted by inserting a tombstone.
+     *
+     * @param key The key to delete.
+     * @throws `std::runtime_error` if the key is not found or is marked deleted.
+     */
+    void remove(const TKey &key) {
+        std::optional<TValue> *value = table.findWaitFree(key);
+        if (!value || !value->has_value()) {
+            throw std::runtime_error("key not found in memtable");
+        }
+
+        table.insert(key, std::nullopt);
     }
 
     /**

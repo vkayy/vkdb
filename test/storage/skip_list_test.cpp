@@ -15,9 +15,9 @@ TEST(SkipListTest, InsertsAndSearchesForKeyValuePairs) {
     }
 
     for (const auto &[key, value] : pairs) {
-        int32_t *search_result = skiplist.findWaitFree(key);
+        std::optional<int32_t> *search_result = skiplist.findWaitFree(key);
         EXPECT_TRUE(search_result != nullptr);
-        EXPECT_EQ(value, *search_result);
+        EXPECT_EQ(value, search_result->value());
     }
 }
 
@@ -33,9 +33,9 @@ TEST(SkipListTest, SerializesAndDeserializesSkipList) {
     }
 
     for (const auto &[key, value] : pairs) {
-        std::string *search_result = skiplist.findWaitFree(key);
+        std::optional<std::string> *search_result = skiplist.findWaitFree(key);
         EXPECT_TRUE(search_result != nullptr);
-        EXPECT_EQ(value, *search_result);
+        EXPECT_EQ(value, search_result->value());
     }
 
     const std::string filename = "./skiplist_test_output";
@@ -46,9 +46,9 @@ TEST(SkipListTest, SerializesAndDeserializesSkipList) {
 
     for (size_t i = 0; i < 100; ++i) {
         auto [key, value] = pairs[i];
-        std::string *search_result = deserialized_skiplist.findWaitFree(key);
+        std::optional<std::string> *search_result = deserialized_skiplist.findWaitFree(key);
         EXPECT_TRUE(search_result != nullptr);
-        EXPECT_EQ(value, *search_result);
+        EXPECT_EQ(value, search_result->value());
     }
 
     std::remove(filename.c_str());
@@ -64,7 +64,7 @@ TEST(SkipListTest, SearchesForNonExistentKeys) {
     }
 
     int32_t non_existent_key = generateRandomInt32(10001, 20000);
-    int32_t *value = skiplist.findWaitFree(non_existent_key);
+    std::optional<int32_t> *value = skiplist.findWaitFree(non_existent_key);
     EXPECT_EQ(value, nullptr);
 }
 
@@ -92,10 +92,10 @@ TEST(SkipListTest, HandlesConcurrentInsertsAndSearches) {
             skiplist.insert(key, value);
 
             if (generateRandomInt32(1, 100) <= 50) {
-                std::string *search_result = skiplist.findWaitFree(key);
+                std::optional<std::string> *search_result = skiplist.findWaitFree(key);
                 EXPECT_TRUE(search_result != nullptr);
                 if (search_result != nullptr) {
-                    EXPECT_EQ(value, *search_result);
+                    EXPECT_EQ(value, search_result->value());
                 }
             }
         }
@@ -112,10 +112,10 @@ TEST(SkipListTest, HandlesConcurrentInsertsAndSearches) {
     }
 
     for (const auto &[key, value] : inserted_pairs) {
-        std::string *search_result = skiplist.findWaitFree(key);
+        std::optional<std::string> *search_result = skiplist.findWaitFree(key);
         EXPECT_TRUE(search_result != nullptr);
         if (search_result != nullptr) {
-            EXPECT_EQ(value, *search_result);
+            EXPECT_EQ(value, search_result->value());
         }
     }
 }
@@ -130,17 +130,17 @@ TEST(SkipListTest, UpdatesKeys) {
     skiplist.insert(2, "new_value2");
     skiplist.insert(3, "new_value3");
 
-    std::string *value = skiplist.findWaitFree(1);
+    std::optional<std::string> *value = skiplist.findWaitFree(1);
     EXPECT_TRUE(value != nullptr);
-    EXPECT_EQ(*value, "value1");
+    EXPECT_EQ(value->value(), "value1");
 
     value = skiplist.findWaitFree(2);
     EXPECT_TRUE(value != nullptr);
-    EXPECT_EQ(*value, "new_value2");
+    EXPECT_EQ(value->value(), "new_value2");
 
     value = skiplist.findWaitFree(3);
     EXPECT_TRUE(value != nullptr);
-    EXPECT_EQ(*value, "new_value3");
+    EXPECT_EQ(value->value(), "new_value3");
 
     value = skiplist.findWaitFree(4);
     EXPECT_TRUE(value == nullptr);
@@ -178,10 +178,10 @@ TEST(SkipListTest, HandlesConcurrentUpdates) {
     }
 
     for (const auto &[key, expected_value] : expected_values) {
-        std::string *search_result = skiplist.findWaitFree(key);
+        std::optional<std::string> *search_result = skiplist.findWaitFree(key);
         EXPECT_TRUE(search_result != nullptr);
         if (search_result != nullptr) {
-            EXPECT_EQ(expected_value, *search_result);
+            EXPECT_EQ(expected_value, search_result->value());
         }
     }
 }

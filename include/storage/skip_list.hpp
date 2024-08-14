@@ -37,7 +37,7 @@ private:
          * @param value The value associated with the key.
          * @param height The `top_level` of the node.
          */
-        SkipListNode(const TKey &key, const TValue &value, const int32_t height)
+        SkipListNode(const TKey &key, const std::optional<TValue> &value, const int32_t height)
             : key(key), value(value), top_level(height) {
             initialiseForward(height, nullptr);
         }
@@ -78,9 +78,9 @@ private:
             }
         }
 
-        TKey key;          // The key used to order and search the skip list.
-        TValue value;      // The associated value stored with the key.
-        int32_t top_level; // The highest level this node reaches in the skip list.
+        TKey key;                    // The key used to order and search the skip list.
+        std::optional<TValue> value; // The associated value stored with the key.
+        int32_t top_level;           // The highest level this node reaches in the skip list.
 
         std::vector<AtomicMarkableReference<SkipListNode>> forward; // The vector of `AtomicMarkableReference`s of forward pointers.
     };
@@ -187,7 +187,7 @@ private:
         SkipListNode *prev = head;
         while (true) {
             TKey key;
-            TValue value;
+            std::optional<TValue> value;
             int32_t top_level;
 
             deserialize(ifs, key);
@@ -317,9 +317,9 @@ public:
      * @brief Search for a given key as a wait-free operation.
      *
      * @param key The key to search for.
-     * @return `TValue *` A pointer to the associated value if found, otherwise `nullptr`.
+     * @return `std::optional<TValue> *` A pointer to the associated optional value if found, otherwise `nullptr`.
      */
-    TValue *findWaitFree(const TKey &key) const {
+    std::optional<TValue> *findWaitFree(const TKey &key) const {
         bool marked = false;
         SkipListNode *pred = head, *curr = nullptr, *succ = nullptr;
 
@@ -357,7 +357,7 @@ public:
      * @param key The key to insert.
      * @param value The associated value of the key.
      */
-    void insert(const TKey &key, const TValue &value) {
+    void insert(const TKey &key, const std::optional<TValue> &value) {
         int32_t top_level = randomLevel();
         SkipListNode *preds[MAX_LEVEL + 1];
         SkipListNode *succs[MAX_LEVEL + 1];
