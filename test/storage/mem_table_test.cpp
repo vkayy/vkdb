@@ -98,6 +98,7 @@ TEST(MemTableTest, HandlesConcurrentUpdates) {
     std::atomic<bool> start_flag(false);
     std::vector<std::thread> threads;
     std::map<int32_t, std::string> expected_values;
+    std::mutex expected_values_mutex;
 
     auto update = [&](int32_t thread_id) {
         while (!start_flag.load()) {
@@ -106,8 +107,11 @@ TEST(MemTableTest, HandlesConcurrentUpdates) {
 
         for (int32_t i = thread_id * num_operations_per_thread; i < (thread_id + 1) * num_operations_per_thread; ++i) {
             int32_t key = i;
+
             std::string value = generateRandomString(100);
             memtable.put(key, value);
+
+            std::lock_guard<std::mutex> lock(expected_values_mutex);
             expected_values[key] = value;
         }
     };
@@ -185,7 +189,7 @@ TEST(MemTableTest, HandlesTombstoneSerializationAndDeserialization) {
     memtable.remove(key);
     EXPECT_THROW(memtable.get(key), std::runtime_error);
 
-    const std::string filename = "./memtable_remove_test_output";
+    const std::string filename = "./memtable_test_output";
     memtable.serialize(filename);
 
     MemTable<int32_t, std::string> deserialized_memtable;
