@@ -9,11 +9,44 @@
 
 class WriteAheadLog {
 public:
+    /**
+     * @brief Construct a new write-ahead log object with the given log file path.
+     *
+     * @param log_file_path The path to the log file.
+     * @throws `std::runtime_error` if unable to open log file.
+     */
     WriteAheadLog(const std::string &log_file_path);
+
+    /**
+     * @brief Destroy the write-ahead log object.
+     *
+     * If the log stream is still open, it is closed.
+     */
     ~WriteAheadLog();
 
+    /**
+     * @brief Append a log entry to the log file.
+     *
+     * @param entry The log entry to append.
+     * @throws `std::runtime_error` if unable to write to log file.
+     */
     void append_log(const std::string &entry);
+
+    /**
+     * @brief Flush the log file to ensure all entries are written.
+     *
+     * @throws `std::runtime_error` if unable to flush log file.
+     */
     void flush_log();
+
+    /**
+     * @brief Recover from the log file by reading all entries.
+     *
+     * Closes the log stream and reopens the log file as a recovery
+     * stream, reading line-by-line to process the log.
+     *
+     * @throws `std::runtime_error` if unable to reopen log file.
+     */
     void recover_from_log();
 
 private:

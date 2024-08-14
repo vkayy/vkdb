@@ -3,6 +3,7 @@
 
 #include "utils/atomic_markable_reference.hpp"
 #include "utils/random.hpp"
+#include "utils/serialize.hpp"
 #include <atomic>
 #include <fstream>
 #include <iostream>
@@ -155,8 +156,8 @@ private:
      */
     void serializeNode(std::ofstream &ofs, SkipListNode *node) const {
         while (node != nil) {
-            serialize(ofs, node->key);
-            serialize(ofs, node->value);
+            serializeValue(ofs, node->key);
+            serializeValue(ofs, node->value);
             ofs.write(reinterpret_cast<const char *>(&node->top_level), sizeof(node->top_level));
 
             for (int32_t i = 0; i < node->top_level; ++i) {
@@ -190,12 +191,12 @@ private:
             std::optional<TValue> value;
             int32_t top_level;
 
-            deserialize(ifs, key);
+            deserializeValue(ifs, key);
             if (ifs.eof()) {
                 break;
             }
 
-            deserialize(ifs, value);
+            deserializeValue(ifs, value);
             ifs.read(reinterpret_cast<char *>(&top_level), sizeof(top_level));
 
             if (top_level == -1) {
@@ -218,71 +219,6 @@ private:
 
             prev = new_node;
         }
-    }
-
-    /**
-     * @brief Serialize data into a file.
-     *
-     * A utility function to serialize any data type to a binary file. This is
-     * typically used for saving the state of skip list node data.
-     *
-     * @tparam T The type of the data to serialize.
-     * @param ofs The `ofstream` to serialize into.
-     * @param value The value to serialize.
-     */
-    template <typename T>
-    void serialize(std::ofstream &ofs, const T &value) const {
-        size_t size = sizeof(value);
-        ofs.write(reinterpret_cast<const char *>(&size), sizeof(size));
-        ofs.write(reinterpret_cast<const char *>(&value), size);
-    }
-
-    /**
-     * @brief Serialize a string into a file.
-     *
-     * A utility function to serialize strings to a binary file. This is
-     * typically used for saving the state of skip list node data.
-     *
-     * @param ofs The `ofstream` to serialize into.
-     * @param value The string to serialize.
-     */
-    void serialize(std::ofstream &ofs, const std::string &value) const {
-        size_t size = value.size();
-        ofs.write(reinterpret_cast<const char *>(&size), sizeof(size));
-        ofs.write(value.data(), size);
-    }
-
-    /**
-     * @brief Deserialize data from a file.
-     *
-     * A utility function to deserialize any data type to a binary file. This is
-     * typically used for rconstructing skip list node data.
-     *
-     * @tparam T The type of the data to deserialize.
-     * @param ifs The `ifstream` to deserialize from.
-     * @param value The value to deserialize into.
-     */
-    template <typename T>
-    void deserialize(std::ifstream &ifs, T &value) {
-        size_t size;
-        ifs.read(reinterpret_cast<char *>(&size), sizeof(size));
-        ifs.read(reinterpret_cast<char *>(&value), size);
-    }
-
-    /**
-     * @brief Deserialize a string from a file.
-     *
-     * A utility function to deserialize strings to a binary file. This is
-     * typically used for rconstructing skip list node data.
-     *
-     * @param ifs The `ifstream` to deserialize from.
-     * @param value The string to deserialize into.
-     */
-    void deserialize(std::ifstream &ifs, std::string &value) {
-        size_t size;
-        ifs.read(reinterpret_cast<char *>(&size), sizeof(size));
-        value.resize(size);
-        ifs.read(&value[0], size);
     }
 
     static constexpr int32_t MAX_LEVEL = 16;       // The max level of a skip list.
