@@ -23,10 +23,10 @@ From this point on, there are a few other optimisations I intend on implementing
 ## What's the progress plan?
 
 - [x] Memtables.
-- [ ] Write-ahead log (WAL).
+- [x] Write-ahead log (will be updated when integrated with LSM tree).
 - [ ] SSTables.
 - [ ] LSM tree architecture.
-- [ ] Time-window compaction strategy (TWCS).
+- [ ] Time-window compaction strategy.
 - [ ] Bloom filters.
 - [ ] Summary tables.
 - [ ] Query parser.
