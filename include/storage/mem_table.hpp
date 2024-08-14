@@ -27,8 +27,13 @@ public:
      *
      * @param key The key associated with the value to add.
      * @param value The value associated with the key to add.
+     *
+     * @throws `std::runtime_error` if the value is a tmobstone.
      */
     void put(const TKey &key, const std::optional<TValue> &value) {
+        if (!value.has_value()) {
+            throw std::runtime_error("cannot insert a tombstone value");
+        }
         table.insert(key, value);
     }
 

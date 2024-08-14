@@ -7,8 +7,7 @@
 /**
  * @brief Serialize data into a file.
  *
- * A utility function to serialize any data type to a binary file. This is
- * typically used for saving the state of skip list node data.
+ * A utility function to serialize any data type to a binary file.
  *
  * @tparam T The type of the data to serialize.
  * @param ofs The `ofstream` to serialize into.
@@ -24,8 +23,7 @@ void serializeValue(std::ofstream &ofs, const T &value) {
 /**
  * @brief Serialize a string into a file.
  *
- * A utility function to serialize strings to a binary file. This is
- * typically used for saving the state of skip list node data.
+ * A utility function to serialize strings to a binary file.
  *
  * @param ofs The `ofstream` to serialize into.
  * @param value The string to serialize.
@@ -35,8 +33,7 @@ void serializeValue(std::ofstream &ofs, const std::string &value);
 /**
  * @brief Deserialize data from a file.
  *
- * A utility function to deserialize any data type to a binary file. This is
- * typically used for rconstructing skip list node data.
+ * A utility function to deserialize any data type to a binary file.
  *
  * @tparam T The type of the data to deserialize.
  * @param ifs The `ifstream` to deserialize from.
@@ -52,8 +49,7 @@ void deserializeValue(std::ifstream &ifs, T &value) {
 /**
  * @brief Deserialize a string from a file.
  *
- * A utility function to deserialize strings to a binary file. This is
- * typically used for rconstructing skip list node data.
+ * A utility function to deserialize strings to a binary file.
  *
  * @param ifs The `ifstream` to deserialize from.
  * @param value The string to deserialize into.
