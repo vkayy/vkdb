@@ -174,3 +174,24 @@ TEST(MemTableTest, HandlesConcurrentRemovalsAndGets) {
         thread.join();
     }
 }
+
+TEST(MemTableTest, HandlesTombstoneSerializationAndDeserialization) {
+    MemTable<int32_t, std::string> memtable;
+
+    int32_t key = generateRandomInt32(1, 10000);
+    std::string value = generateRandomString(100);
+    memtable.put(key, value);
+
+    memtable.remove(key);
+    EXPECT_THROW(memtable.get(key), std::runtime_error);
+
+    const std::string filename = "./memtable_remove_test_output";
+    memtable.serialize(filename);
+
+    MemTable<int32_t, std::string> deserialized_memtable;
+    deserialized_memtable.deserialize(filename);
+
+    EXPECT_THROW(deserialized_memtable.get(key), std::runtime_error);
+
+    std::remove(filename.c_str());
+}
