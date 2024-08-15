@@ -82,6 +82,10 @@ public:
     /**
      * @brief Flush a MemTable to disk as an SSTable.
      *
+     * The contents of the MemTable are written to the SSTable file in binary format,
+     * and an index is created to map keys to their respective offsets in the file.
+     * This prevents the need to scan the entire file to find a key later.
+     *
      * @param mem_table The MemTable to flush.
      *
      * @throws `std::runtime_error` if the SSTable file cannot be opened for writing.

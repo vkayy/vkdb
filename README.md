@@ -24,7 +24,7 @@ From this point on, there are a few other optimisations I intend on implementing
 
 - [x] Memtables.
 - [x] Write-ahead log (will be updated when integrated with LSM tree).
-- [ ] SSTables.
+- [x] SSTables.
 - [ ] LSM tree architecture.
 - [ ] Time-window compaction strategy.
 - [ ] Bloom filters.
