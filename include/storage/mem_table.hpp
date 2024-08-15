@@ -23,6 +23,17 @@ private:
 
 public:
     /**
+     * @brief Iterate over all key-value pairs in the MemTable.
+     *
+     * @param callback A function to call for each key-value pair.
+     */
+    void forEach(std::function<void(const TKey &, const std::optional<TValue> &)> callback) {
+        for (auto it = table.begin(); it != table.end(); ++it) {
+            callback(it->first, it->second);
+        }
+    }
+    
+    /**
      * @brief Add a key-value pair to the MemTable.
      *
      * @param key The key associated with the value to add.
@@ -92,6 +103,16 @@ public:
      */
     void deserialize(const std::string &filename) {
         table.deserialize(filename);
+    }
+
+    /**
+     * @brief Print the contents of the memtable for testing purposes.
+     *
+     * This function traverses the memtable's underlying skip list and prints
+     * out all the key-value pairs.
+     */
+    void print() {
+        table.print();
     }
 };
 

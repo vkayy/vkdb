@@ -250,6 +250,109 @@ public:
     };
 
     /**
+     * @brief An iterator for the skip list.
+     *
+     */
+    class Iterator {
+    private:
+        SkipListNode *current; // The current node in the skip list.
+
+    public:
+        using iterator_category = std::forward_iterator_tag;             // The iterator category.
+        using value_type = std::pair<const TKey, std::optional<TValue>>; // The value type.
+        using difference_type = std::ptrdiff_t;                          // The difference type.
+        using pointer = value_type *;                                    // The pointer type.
+        using reference = value_type &;                                  // The reference type.
+
+        /**
+         * @brief Construct a new Iterator object.
+         *
+         * @param node The node to start the iterator from.
+         */
+        Iterator(SkipListNode *node)
+            : current(node) {}
+
+        /**
+         * @brief Dereference the iterator.
+         *
+         * @return `reference` The dereferenced value.
+         */
+        reference operator*() const {
+            return *reinterpret_cast<pointer>(&current->key);
+        }
+
+        /**
+         * @brief Access the member of the iterator.
+         *
+         * @return `pointer` The member of the iterator.
+         */
+        pointer operator->() const {
+            return reinterpret_cast<pointer>(&current->key);
+        }
+
+        /**
+         * @brief Increment the iterator.
+         *
+         * @return `Iterator &` The incremented iterator.
+         */
+        Iterator &operator++() {
+            current = current->forward[0].getReference();
+            return *this;
+        }
+
+        /**
+         * @brief Increment the iterator.
+         *
+         * @return `Iterator` The incremented iterator.
+         */
+        Iterator operator++(int) {
+            Iterator tmp = *this;
+            ++(*this);
+            return tmp;
+        }
+
+        /**
+         * @brief Compare two iterators for equality.
+         *
+         * @param other The other iterator to compare.
+         * @return true if the iterators are equal.
+         * @return false if the iterators are not equal.
+         */
+        bool operator==(const Iterator &other) const {
+            return current == other.current;
+        }
+
+        /**
+         * @brief Compare two iterators for inequality.
+         *
+         * @param other The other iterator to compare.
+         * @return true if the iterators are inequal.
+         * @return false if the iterators are not inequal.
+         */
+        bool operator!=(const Iterator &other) const {
+            return !(*this == other);
+        }
+    };
+
+    /**
+     * @brief Get an iterator to the beginning of the skip list.
+     *
+     * @return Iterator An iterator to the beginning of the skip list.
+     */
+    Iterator begin() {
+        return Iterator(head->forward[0].getReference());
+    }
+
+    /**
+     * @brief Get an iterator to the end of the skip list.
+     *
+     * @return Iterator An iterator to the end of the skip list.
+     */
+    Iterator end() {
+        return Iterator(nil);
+    }
+
+    /**
      * @brief Search for a given key as a wait-free operation.
      *
      * @param key The key to search for.
@@ -274,7 +377,10 @@ public:
                 curr = succ;
             }
         }
-        return (curr->key == key ? &curr->value : nullptr);
+        if (curr->key == key) {
+            return &curr->value;
+        }
+        return nullptr;
     };
 
     /**
@@ -339,49 +445,6 @@ public:
     };
 
     /**
-     * @brief Remove a key from the skip list.
-     *
-     * @param key The key to remove.
-     * @return true The key was removed.
-     * @return false The key was not removed.
-     */
-    bool remove(const TKey &key) {
-        SkipListNode *preds[MAX_LEVEL + 1];
-        SkipListNode *succs[MAX_LEVEL + 1];
-        SkipListNode *succ;
-
-        while (true) {
-            bool found = findWithGC(key, preds, succs);
-            if (!found) {
-                return false;
-            }
-
-            bool marked = false;
-            auto node_to_remove = succs[0];
-            for (auto level = node_to_remove->top_level - 1; level >= 1; --level) {
-                succ = node_to_remove->forward[level].get(marked);
-                while (!marked) {
-                    node_to_remove->forward[level].setMarked(true);
-                    succ = node_to_remove->forward[level].get(marked);
-                }
-            }
-
-            marked = false;
-            succ = node_to_remove->forward[0].get(marked);
-            while (true) {
-                bool success = node_to_remove->forward[0].compareAndSwap(succ, false, succ, true);
-                succ = succs[0]->forward[0].get(marked);
-                if (success) {
-                    return true;
-                }
-                if (marked) {
-                    return false;
-                }
-            }
-        }
-    };
-
-    /**
      * @brief Serialize the skip list.
      *
      * Serializes the entire skip list, including all its nodes, into a binary file.
@@ -426,6 +489,26 @@ public:
 
         deserializeNode(ifs);
     }
+
+    /**
+     * @brief Print the contents of the skip list for testing purposes.
+     *
+     * This function traverses the skip list at the lowest level and prints out
+     * all the key-value pairs.
+     */
+    void print() {
+        std::cout << "\nContents:\n";
+        for (auto it = begin(); it != end(); ++it) {
+            std::cout << "Key: " << it->first << ", Value: ";
+            if (it->second.has_value()) {
+                std::cout << it->second.value();
+            } else {
+                std::cout << "std::nullopt";
+            }
+            std::cout << "\n";
+        }
+        std::cout << "End of Contents\n\n";
+    }
 };
 
-#endif
+#endif // SKIP_LIST_HPP

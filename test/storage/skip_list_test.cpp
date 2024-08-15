@@ -185,3 +185,76 @@ TEST(SkipListTest, HandlesConcurrentUpdates) {
         }
     }
 }
+
+TEST(SkipListIteratorTest, IteratorTraversal) {
+    SkipList<int32_t, std::string> skiplist;
+    skiplist.insert(1, "one");
+    skiplist.insert(2, "two");
+    skiplist.insert(3, "three");
+    skiplist.insert(4, "four");
+    skiplist.insert(5, "five");
+
+    std::vector<std::pair<int32_t, std::string>> expected{
+        {1, "one"},
+        {2, "two"},
+        {3, "three"},
+        {4, "four"},
+        {5, "five"}};
+
+    auto it = skiplist.begin();
+    auto expectedIt = expected.begin();
+
+    while (it != skiplist.end() && expectedIt != expected.end()) {
+        EXPECT_EQ(it->first, expectedIt->first);
+        EXPECT_EQ(it->second, expectedIt->second);
+        ++it;
+        ++expectedIt;
+    }
+
+    EXPECT_EQ(it, skiplist.end());
+    EXPECT_EQ(expectedIt, expected.end());
+}
+
+TEST(SkipListIteratorTest, EmptyIterator) {
+    SkipList<int32_t, std::string> emptyList;
+    auto it = emptyList.begin();
+    EXPECT_EQ(it, emptyList.end());
+}
+
+TEST(SkipListIteratorTest, IteratorFind) {
+    SkipList<int32_t, std::string> skiplist;
+    skiplist.insert(1, "one");
+    skiplist.insert(2, "two");
+    skiplist.insert(3, "three");
+    skiplist.insert(4, "four");
+    skiplist.insert(5, "five");
+
+    auto it = skiplist.begin();
+
+    // Try to find a specific element
+    while (it != skiplist.end()) {
+        if (it->first == 3) {
+            EXPECT_EQ(it->second, "three");
+            break;
+        }
+        ++it;
+    }
+    EXPECT_NE(it, skiplist.end());
+}
+
+TEST(SkipListIteratorTest, IteratorLoop) {
+    SkipList<int32_t, std::string> skiplist;
+    skiplist.insert(1, "one");
+    skiplist.insert(2, "two");
+    skiplist.insert(3, "three");
+    skiplist.insert(4, "four");
+    skiplist.insert(5, "five");
+
+    std::vector<int32_t> keys;
+    for (auto it = skiplist.begin(); it != skiplist.end(); ++it) {
+        keys.push_back(it->first);
+    }
+
+    std::vector<int32_t> expectedKeys{1, 2, 3, 4, 5};
+    EXPECT_EQ(keys, expectedKeys);
+}
