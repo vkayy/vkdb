@@ -18,14 +18,50 @@ template <typename TKey, typename TValue>
 class SSTable {
 private:
     /**
-     * @brief A structure to hold the index of an SSTable.
+     * @brief A structure to hold the metadata of an SSTable.
      */
-    struct SSTableIndex {
-        std::map<TKey, std::streampos> key_offset_map;
+    struct SSTableMetadata {
+        std::map<TKey, std::streampos> index; // The key to offset mapping.
+        TKey min_key;                         // The minimum key.
+        TKey max_key;                         // The maximum key.
+
+        /**
+         * @brief Serialize the SSTable metadata to a file stream.
+         *
+         * @param ofs The output file stream.
+         */
+        void serialize(std::ofstream &ofs) const {
+            serializeValue(ofs, min_key);
+            serializeValue(ofs, max_key);
+            serializeValue(ofs, index.size());
+            for (const auto &entry : index) {
+                serializeValue(ofs, entry.first);
+                serializeValue(ofs, entry.second);
+            }
+        }
+
+        /**
+         * @brief Deserialize the SSTable metadata from a file stream.
+         *
+         * @param ifs The input file stream.
+         */
+        void deserialize(std::ifstream &ifs) {
+            deserializeValue(ifs, min_key);
+            deserializeValue(ifs, max_key);
+            size_t index_size;
+            deserializeValue(ifs, index_size);
+            for (size_t i = 0; i < index_size; ++i) {
+                TKey key;
+                std::streampos offset;
+                deserializeValue(ifs, key);
+                deserializeValue(ifs, offset);
+                index[key] = offset;
+            }
+        }
     };
 
-    std::string filename; // The name of the SSTable file.
-    SSTableIndex index;   // The index of the SSTable.
+    std::string filename;     // The name of the SSTable file.
+    SSTableMetadata metadata; // The metadata of the SSTable.
 
 public:
     /**
@@ -37,45 +73,32 @@ public:
         : filename(filename) {}
 
     /**
-     * @brief Serialize the SSTable index to a separate file.
+     * @brief Serialize the SSTable metadata to a separate file.
      *
-     * @throws `std::runtime_error` if the index file cannot be opened for writing.
+     * @throws `std::runtime_error` if the metadata file cannot be opened for writing.
      */
-    void serializeIndex() const {
-        std::string index_filename = filename + ".idx";
-        std::ofstream ofs(index_filename, std::ios::binary);
+    void serializeMetadata() const {
+        std::string metadata_filename = filename + ".idx";
+        std::ofstream ofs(metadata_filename, std::ios::binary);
         if (!ofs.is_open()) {
-            throw std::runtime_error("unable to open index file for writing");
+            throw std::runtime_error("unable to open metadata file for writing");
         }
-
-        for (const auto &entry : index.key_offset_map) {
-            serializeValue(ofs, entry.first);
-            serializeValue(ofs, entry.second);
-        }
-
+        metadata.serialize(ofs);
         ofs.close();
     }
 
     /**
-     * @brief Deserialize the SSTable index from a file.
+     * @brief Deserialize the SSTable metadata from a file.
      *
-     * @throws `std::runtime_error` if the index file cannot be opened for reading.
+     * @throws `std::runtime_error` if the metadata file cannot be opened for reading.
      */
-    void deserializeIndex() {
-        std::string index_filename = filename + ".idx";
-        std::ifstream ifs(index_filename, std::ios::binary);
+    void deserializeMetadata() {
+        std::string metadata_filename = filename + ".idx";
+        std::ifstream ifs(metadata_filename, std::ios::binary);
         if (!ifs.is_open()) {
-            throw std::runtime_error("unable to open index file for reading");
+            throw std::runtime_error("unable to open metadata file for reading");
         }
-
-        while (ifs.peek() != EOF) {
-            TKey key;
-            std::streampos offset;
-            deserializeValue(ifs, key);
-            deserializeValue(ifs, offset);
-            index.key_offset_map[key] = offset;
-        }
-
+        metadata.deserialize(ifs);
         ifs.close();
     }
 
@@ -96,19 +119,36 @@ public:
             throw std::runtime_error("unable to open SSTable file for writing");
         }
 
+        bool keys_set = false;
+
         mem_table.forEach([&](const TKey &key, const std::optional<TValue> &value) {
             std::streampos pos = ofs.tellp();
-            index.key_offset_map[key] = pos;
+            metadata.index[key] = pos;
             serializeValue(ofs, key);
             serializeValue(ofs, value.has_value());
+
             if (value.has_value()) {
                 serializeValue(ofs, value.value());
+            }
+
+            if (!keys_set) {
+                metadata.min_key = key;
+                metadata.max_key = key;
+                keys_set = true;
+                return;
+            }
+
+            if (key < metadata.min_key) {
+                metadata.min_key = key;
+            }
+
+            if (key > metadata.max_key) {
+                metadata.max_key = key;
             }
         });
 
         ofs.close();
-
-        serializeIndex();
+        serializeMetadata();
     }
 
     /**
@@ -119,14 +159,19 @@ public:
      * @return `std::optional<TValue>` The value associated with the key, or `std::nullopt` if not present.
      * @throws `std::runtime_error` if the SSTable file cannot be opened for reading.
      */
-    std::optional<TValue> get(const TKey &key) const {
+    std::optional<TValue>
+    get(const TKey &key) const {
         std::ifstream ifs(filename, std::ios::binary);
         if (!ifs.is_open()) {
             throw std::runtime_error("unable to open SSTable file for reading");
         }
 
-        auto it = index.key_offset_map.find(key);
-        if (it == index.key_offset_map.end()) {
+        if (key > metadata.max_key || key < metadata.min_key) {
+            return std::nullopt;
+        }
+
+        auto it = metadata.index.find(key);
+        if (it == metadata.index.end()) {
             return std::nullopt;
         }
 
@@ -152,6 +197,24 @@ public:
         }
 
         return std::nullopt;
+    }
+
+    /**
+     * @brief Get the minimum key in the SSTable.
+     *
+     * @return `TKey` The minimum key.
+     */
+    TKey getMinKey() const {
+        return metadata.min_key;
+    }
+
+    /**
+     * @brief Get the maximum key in the SSTable.
+     *
+     * @return `TKey` The maximum key.
+     */
+    TKey getMaxKey() const {
+        return metadata.max_key;
     }
 };
 

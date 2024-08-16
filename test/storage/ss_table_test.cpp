@@ -16,7 +16,7 @@ TEST(SSTableTest, FlushFromMemTableAndRetrieve) {
     sstable.flushFromMemTable(memtable);
 
     auto retrieved_value = sstable.get(random_key);
-    ASSERT_TRUE(retrieved_value.has_value());
+    EXPECT_TRUE(retrieved_value.has_value());
     EXPECT_EQ(retrieved_value.value(), random_value);
 
     std::remove("./sstable_test_output");
@@ -60,7 +60,7 @@ TEST(SSTableTest, HandlesDeletedKey) {
     std::remove("./sstable_test_output.idx");
 }
 
-TEST(SSTableTest, DeserializesIndexAndRetrieve) {
+TEST(SSTableTest, DeserializesMetadataAndRetrieves) {
     MemTable<int32_t, std::string> memtable;
     int32_t random_key1 = generateRandomInt32(1, 10000);
     std::string random_value1 = generateRandomString(100);
@@ -74,15 +74,18 @@ TEST(SSTableTest, DeserializesIndexAndRetrieve) {
     sstable.flushFromMemTable(memtable);
 
     SSTable<int32_t, std::string> sstable_loaded("./sstable_test_output");
-    sstable_loaded.deserializeIndex();
+    sstable_loaded.deserializeMetadata();
 
     auto retrieved_value1 = sstable_loaded.get(random_key1);
-    ASSERT_TRUE(retrieved_value1.has_value());
+    EXPECT_TRUE(retrieved_value1.has_value());
     EXPECT_EQ(retrieved_value1.value(), random_value1);
 
     auto retrieved_value2 = sstable_loaded.get(random_key2);
-    ASSERT_TRUE(retrieved_value2.has_value());
+    EXPECT_TRUE(retrieved_value2.has_value());
     EXPECT_EQ(retrieved_value2.value(), random_value2);
+
+    EXPECT_EQ(sstable_loaded.getMinKey(), random_key1);
+    EXPECT_EQ(sstable_loaded.getMaxKey(), random_key2);
 
     std::remove("./sstable_test_output");
     std::remove("./sstable_test_output.idx");
@@ -105,7 +108,7 @@ TEST(SSTableTest, HandlesLargeNumberOfPairs) {
 
     for (const auto &[key, value] : pairs) {
         auto retrieved_value = sstable.get(key);
-        ASSERT_TRUE(retrieved_value.has_value());
+        EXPECT_TRUE(retrieved_value.has_value());
         EXPECT_EQ(retrieved_value.value(), value);
     }
 

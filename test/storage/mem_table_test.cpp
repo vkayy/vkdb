@@ -199,3 +199,20 @@ TEST(MemTableTest, HandlesTombstoneSerializationAndDeserialization) {
 
     std::remove(filename.c_str());
 }
+
+TEST(MemTableTest, HandlesKeyRange) {
+    MemTable<int32_t, std::string> memtable;
+    int32_t key = generateRandomInt32(1, 10000);
+    std::string value = generateRandomString(100);
+
+    memtable.put(key, value);
+    EXPECT_EQ(memtable.getMinKey(), key);
+    EXPECT_EQ(memtable.getMaxKey(), key);
+
+    int32_t new_key = generateRandomInt32(10001, 20000);
+    std::string new_value = generateRandomString(100);
+
+    memtable.put(new_key, new_value);
+    EXPECT_EQ(memtable.getMinKey(), key);
+    EXPECT_EQ(memtable.getMaxKey(), new_key);
+}

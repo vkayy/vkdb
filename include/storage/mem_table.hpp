@@ -2,10 +2,82 @@
 #define MEM_TABLE_HPP
 
 #include "skip_list.hpp"
+#include <atomic>
 #include <cstdint>
 #include <fstream>
-#include <map>
+#include <limits>
 #include <optional>
+
+#include <atomic>
+#include <mutex>
+#include <string>
+
+/**
+ * @brief A non-atomic key range class for managing the minimum and maximum keys.
+ *
+ * This class assumes external synchronization (e.g., through a lock on the MemTable).
+ *
+ * @tparam TKey The type of the key.
+ */
+template <typename TKey>
+class KeyRange {
+private:
+    TKey min_key;  // The minimum key.
+    TKey max_key;  // The maximum key.
+    bool keys_set; // Flag to indicate if the keys are set.
+
+public:
+    /**
+     * @brief Construct a new KeyRange object.
+     */
+    KeyRange()
+        : keys_set(false) {}
+
+    /**
+     * @brief Update the key range with the given key.
+     *
+     * @param key The key to update the range with.
+     */
+    void updateKeyRange(const TKey &key) {
+        if (!keys_set) {
+            min_key = max_key = key;
+            keys_set = true;
+        } else {
+            if (key < min_key) {
+                min_key = key;
+            }
+            if (key > max_key) {
+                max_key = key;
+            }
+        }
+    }
+
+    /**
+     * @brief Get the minimum key.
+     *
+     * @return TKey The minimum key.
+     * @throws `std::runtime_error` if the keys are not set.
+     */
+    TKey getMinKey() const {
+        if (!keys_set) {
+            throw std::runtime_error("keys not set");
+        }
+        return min_key;
+    }
+
+    /**
+     * @brief Get the maximum key.
+     *
+     * @return TKey The maximum key.
+     * @throws `std::runtime_error` if the keys are not set.
+     */
+    TKey getMaxKey() const {
+        if (!keys_set) {
+            throw std::runtime_error("keys not set");
+        }
+        return max_key;
+    }
+};
 
 /**
  * @brief A memory table (MemTable) implementation with a skip list as the underlying data structure.
@@ -20,6 +92,8 @@ template <typename TKey, typename TValue>
 class MemTable {
 private:
     SkipList<TKey, TValue> table; // The skip list used as the underlying data structure.
+    KeyRange<TKey> key_range;     // The atomic key range for the MemTable.
+    mutable std::mutex key_range_mutex;
 
 public:
     /**
@@ -32,7 +106,7 @@ public:
             callback(it->first, it->second);
         }
     }
-    
+
     /**
      * @brief Add a key-value pair to the MemTable.
      *
@@ -46,6 +120,10 @@ public:
             throw std::runtime_error("cannot insert a tombstone value");
         }
         table.insert(key, value);
+        {
+            std::lock_guard<std::mutex> lock(key_range_mutex);
+            key_range.updateKeyRange(key);
+        }
     }
 
     /**
@@ -103,6 +181,26 @@ public:
      */
     void deserialize(const std::string &filename) {
         table.deserialize(filename);
+    }
+
+    /**
+     * @brief Get the minimum key.
+     *
+     * @return TKey The minimum key.
+     * @throws `std::runtime_error` if the keys are not set.
+     */
+    TKey getMinKey() const {
+        return key_range.getMinKey();
+    }
+
+    /**
+     * @brief Get the maximum key.
+     *
+     * @return TKey The maximum key.
+     * @throws `std::runtime_error` if the keys are not set.
+     */
+    TKey getMaxKey() const {
+        return key_range.getMaxKey();
     }
 
     /**
