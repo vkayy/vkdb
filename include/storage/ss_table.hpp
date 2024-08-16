@@ -21,9 +21,10 @@ private:
      * @brief A structure to hold the metadata of an SSTable.
      */
     struct SSTableMetadata {
-        std::map<TKey, std::streampos> index; // The key to offset mapping.
+        std::time_t creation_time;            // The creation time.
         TKey min_key;                         // The minimum key.
         TKey max_key;                         // The maximum key.
+        std::map<TKey, std::streampos> index; // The key to offset mapping.
 
         /**
          * @brief Serialize the SSTable metadata to a file stream.
@@ -31,6 +32,7 @@ private:
          * @param ofs The output file stream.
          */
         void serialize(std::ofstream &ofs) const {
+            serializeValue(ofs, creation_time);
             serializeValue(ofs, min_key);
             serializeValue(ofs, max_key);
             serializeValue(ofs, index.size());
@@ -46,6 +48,7 @@ private:
          * @param ifs The input file stream.
          */
         void deserialize(std::ifstream &ifs) {
+            deserializeValue(ifs, creation_time);
             deserializeValue(ifs, min_key);
             deserializeValue(ifs, max_key);
             size_t index_size;
@@ -70,7 +73,9 @@ public:
      * @param filename The name of the SSTable file.
      */
     SSTable(const std::string &filename)
-        : filename(filename) {}
+        : filename(filename) {
+        metadata.creation_time = std::time(nullptr);
+    }
 
     /**
      * @brief Serialize the SSTable metadata to a separate file.
@@ -215,6 +220,117 @@ public:
      */
     TKey getMaxKey() const {
         return metadata.max_key;
+    }
+
+    /**
+     * @brief Get the creation time.
+     *
+     */
+    std::time_t getCreationTime() const {
+        return metadata.creation_time;
+    }
+
+    /**
+     * @brief Merge this SSTable with another SSTable.
+     *
+     * @param other The other SSTable to merge with.
+     *
+     * @return `std::unique_ptr<SSTable<TKey, TValue>>` The new SSTable resulting from the merge.
+     */
+    std::unique_ptr<SSTable<TKey, TValue>> merge(const SSTable<TKey, TValue> &other) {
+        std::map<TKey, std::optional<TValue>> merged_entries;
+        TKey new_min_key, new_max_key;
+        bool first_entry = true;
+
+        for (const auto &entry : metadata.index) {
+            TKey key = entry.first;
+            std::ifstream ifs(filename, std::ios::binary);
+            ifs.seekg(entry.second);
+
+            TKey read_key;
+            bool has_value;
+            deserializeValue(ifs, read_key);
+            deserializeValue(ifs, has_value);
+
+            std::optional<TValue> value;
+            if (has_value) {
+                TValue actual_value;
+                deserializeValue(ifs, actual_value);
+                value = actual_value;
+            }
+
+            merged_entries[key] = value;
+            if (first_entry) {
+                new_min_key = new_max_key = key;
+                first_entry = false;
+            } else {
+                if (key < new_min_key) {
+                    new_min_key = key;
+                }
+                if (key > new_max_key) {
+                    new_max_key = key;
+                }
+            }
+        }
+
+        for (const auto &entry : other.metadata.index) {
+            TKey key = entry.first;
+            std::ifstream ifs(other.filename, std::ios::binary);
+            ifs.seekg(entry.second);
+
+            TKey read_key;
+            bool has_value;
+            deserializeValue(ifs, read_key);
+            deserializeValue(ifs, has_value);
+
+            std::optional<TValue> value;
+            if (has_value) {
+                TValue actual_value;
+                deserializeValue(ifs, actual_value);
+                value = actual_value;
+            }
+
+            merged_entries[key] = value;
+            if (first_entry) {
+                new_min_key = new_max_key = key;
+                first_entry = false;
+            } else {
+                if (key < new_min_key)
+                    new_min_key = key;
+                if (key > new_max_key)
+                    new_max_key = key;
+            }
+        }
+
+        // Create the new SSTable using the merged entries
+        std::string new_filename = filename + "_merged";
+        std::ofstream ofs(new_filename, std::ios::binary);
+        if (!ofs.is_open()) {
+            throw std::runtime_error("unable to open merged SSTable file for writing");
+        }
+
+        SSTableMetadata new_metadata;
+        new_metadata.min_key = new_min_key;
+        new_metadata.max_key = new_max_key;
+
+        for (const auto &entry : merged_entries) {
+            if (entry.second.has_value()) {
+                std::streampos pos = ofs.tellp();
+                new_metadata.index[entry.first] = pos;
+
+                serializeValue(ofs, entry.first);
+                serializeValue(ofs, true);
+                serializeValue(ofs, entry.second.value());
+            }
+        }
+
+        ofs.close();
+
+        auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(new_filename);
+        new_sstable->metadata = new_metadata;
+        new_sstable->serializeMetadata();
+
+        return new_sstable;
     }
 };
 
