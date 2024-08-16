@@ -1,6 +1,7 @@
 #ifndef WRITE_AHEAD_LOG_HPP
 #define WRITE_AHEAD_LOG_HPP
 
+#include "mem_table.hpp"
 #include "utils/serialize.hpp"
 #include <ctime>
 #include <fstream>
@@ -36,7 +37,6 @@ private:
      */
     void serializeWALEntry(const WriteAheadLogEntry &entry) {
         serializeValue(log_stream, entry.timestamp);
-
         serializeValue(log_stream, entry.key);
 
         bool has_value = entry.value.has_value();
@@ -82,7 +82,7 @@ public:
      * @throws `std::runtime_error` if unable to open log file.
      */
     WriteAheadLog(const std::string &log_file_path)
-        : log_file_path(log_file_path), log_stream(log_file_path, std::ios::binary) {
+        : log_file_path(log_file_path), log_stream(log_file_path, std::ios::app | std::ios::binary) {
         if (!log_stream.is_open()) {
             throw std::runtime_error("unable to open log file");
         }
@@ -118,40 +118,30 @@ public:
     }
 
     /**
-     * @brief Flush the log file to ensure all entries are written.
-     *
-     * @throws `std::runtime_error` if unable to flush log file.
-     */
-    void flushLog() {
-        std::lock_guard<std::mutex> lock(log_mutex);
-
-        log_stream.flush();
-
-        if (!log_stream.good()) {
-            throw std::runtime_error("unable to flush log file");
-        }
-    }
-
-    /**
      * @brief Recover from the log file by reading all entries.
      *
-     * Closes the log stream and reopens the log file as a recovery
-     * stream, reading line-by-line to process the log.
+     * Closes the log stream and reopens the log file as a recovery stream,
+     * reading entry-by-entry to process the log.
      *
-     * @throws `std::runtime_error` if unable to reopen log file.
+     * @throws `std::runtime_error` if unable to reopen log file or entries are out of order.
      */
-    void recoverFromLog() {
+    void recoverFromLog(std::unique_ptr<MemTable<TKey, TValue>> &memtable) {
         std::lock_guard<std::mutex> lock(log_mutex);
-        log_stream.close();
         std::ifstream recovery_stream(log_file_path, std::ios::binary);
         if (!recovery_stream.is_open()) {
             throw std::runtime_error("unable to open log file for recovery");
         }
 
+        std::time_t last_timestamp = 0;
+
         while (recovery_stream.peek() != EOF) {
             WriteAheadLogEntry entry;
             deserializeWALEntry(recovery_stream, entry);
-            // TODO: Process log entry appropriately.
+            if (entry.timestamp < last_timestamp) {
+                throw std::runtime_error("log entries are not in chronological order");
+            }
+            memtable->put(entry.key, entry.value);
+            last_timestamp = entry.timestamp;
         }
         recovery_stream.close();
     }

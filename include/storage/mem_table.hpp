@@ -91,9 +91,10 @@ public:
 template <typename TKey, typename TValue>
 class MemTable {
 private:
-    SkipList<TKey, TValue> table; // The skip list used as the underlying data structure.
-    KeyRange<TKey> key_range;     // The atomic key range for the MemTable.
-    mutable std::mutex key_range_mutex;
+    SkipList<TKey, TValue> table;       // The skip list used as the underlying data structure.
+    KeyRange<TKey> key_range;           // The atomic key range for the MemTable.
+    mutable std::mutex key_range_mutex; // Mutex to protect the key range.
+    size_t size;                        // The size of the MemTable.
 
 public:
     /**
@@ -124,6 +125,7 @@ public:
             std::lock_guard<std::mutex> lock(key_range_mutex);
             key_range.updateKeyRange(key);
         }
+        size += sizeof(key) + sizeof(value);
     }
 
     /**
@@ -155,6 +157,7 @@ public:
         }
 
         table.insert(key, std::nullopt);
+        size += sizeof(key) + sizeof(std::nullopt);
     }
 
     /**
@@ -211,6 +214,15 @@ public:
      */
     void print() {
         table.print();
+    }
+
+    /**
+     * @brief Get the size of the MemTable.
+     *
+     * @return `size_t` The size of the MemTable.
+     */
+    size_t getSize() const {
+        return size;
     }
 };
 

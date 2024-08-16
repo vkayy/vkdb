@@ -51,7 +51,7 @@ TEST(SkipListTest, SerializesAndDeserializesSkipList) {
         EXPECT_EQ(value, search_result->value());
     }
 
-    std::remove(filename.c_str());
+    std::filesystem::remove(filename.c_str());
 }
 
 TEST(SkipListTest, SearchesForNonExistentKeys) {

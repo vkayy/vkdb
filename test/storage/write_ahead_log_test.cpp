@@ -20,8 +20,6 @@ TEST(WriteAheadLogTest, AppendsLogEntry) {
     EXPECT_NO_THROW(wal.appendLog(1, std::optional<std::string>("Test entry 1")));
     EXPECT_NO_THROW(wal.appendLog(2, std::optional<std::string>("Test entry 2")));
 
-    wal.flushLog();
-
     std::ifstream file(log_file_path, std::ios::binary);
     ASSERT_TRUE(file.is_open());
 
@@ -72,8 +70,6 @@ TEST(WriteAheadLogTest, HandlesOptionalValues) {
 
     EXPECT_NO_THROW(wal.appendLog(1, std::nullopt));
     EXPECT_NO_THROW(wal.appendLog(2, std::optional<std::string>("Test entry 2")));
-
-    wal.flushLog();
 
     std::ifstream file(log_file_path, std::ios::binary);
     ASSERT_TRUE(file.is_open());

@@ -42,7 +42,7 @@ TEST(MemTableTest, SerializesAndDeserializesMemTable) {
         EXPECT_EQ(deserialized_memtable.get(key), value);
     }
 
-    std::remove(filename.c_str());
+    std::filesystem::remove(filename.c_str());
 }
 
 TEST(MemTableTest, HandlesConcurrentPutsAndGets) {
@@ -197,7 +197,7 @@ TEST(MemTableTest, HandlesTombstoneSerializationAndDeserialization) {
 
     EXPECT_THROW(deserialized_memtable.get(key), std::runtime_error);
 
-    std::remove(filename.c_str());
+    std::filesystem::remove(filename.c_str());
 }
 
 TEST(MemTableTest, HandlesKeyRange) {

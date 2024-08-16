@@ -19,8 +19,8 @@ TEST(SSTableTest, FlushFromMemTableAndRetrieve) {
     EXPECT_TRUE(retrieved_value.has_value());
     EXPECT_EQ(retrieved_value.value(), random_value);
 
-    std::remove("./sstable_test_output");
-    std::remove("./sstable_test_output.idx");
+    std::filesystem::remove("./sstable_test_output");
+    std::filesystem::remove("./sstable_test_output.idx");
 }
 
 TEST(SSTableTest, HandlesNonExistentKey) {
@@ -37,8 +37,8 @@ TEST(SSTableTest, HandlesNonExistentKey) {
     auto retrieved_value = sstable.get(non_existent_key);
     EXPECT_FALSE(retrieved_value.has_value());
 
-    std::remove("./sstable_test_output");
-    std::remove("./sstable_test_output.idx");
+    std::filesystem::remove("./sstable_test_output");
+    std::filesystem::remove("./sstable_test_output.idx");
 }
 
 TEST(SSTableTest, HandlesDeletedKey) {
@@ -56,8 +56,8 @@ TEST(SSTableTest, HandlesDeletedKey) {
     auto retrieved_value = sstable.get(random_key);
     EXPECT_FALSE(retrieved_value.has_value());
 
-    std::remove("./sstable_test_output");
-    std::remove("./sstable_test_output.idx");
+    std::filesystem::remove("./sstable_test_output");
+    std::filesystem::remove("./sstable_test_output.idx");
 }
 
 TEST(SSTableTest, DeserializesMetadataAndRetrieves) {
@@ -87,8 +87,8 @@ TEST(SSTableTest, DeserializesMetadataAndRetrieves) {
     EXPECT_EQ(sstable_loaded.getMinKey(), random_key1);
     EXPECT_EQ(sstable_loaded.getMaxKey(), random_key2);
 
-    std::remove("./sstable_test_output");
-    std::remove("./sstable_test_output.idx");
+    std::filesystem::remove("./sstable_test_output");
+    std::filesystem::remove("./sstable_test_output.idx");
 }
 
 TEST(SSTableTest, HandlesLargeNumberOfPairs) {
@@ -112,6 +112,6 @@ TEST(SSTableTest, HandlesLargeNumberOfPairs) {
         EXPECT_EQ(retrieved_value.value(), value);
     }
 
-    std::remove("./sstable_test_output");
-    std::remove("./sstable_test_output.idx");
+    std::filesystem::remove("./sstable_test_output");
+    std::filesystem::remove("./sstable_test_output.idx");
 }
