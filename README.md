@@ -27,7 +27,7 @@ From this point on, there are a few other optimisations I intend on implementing
 - [x] SSTables.
 - [x] LSM tree architecture.
 - [x] Time-window compaction strategy.
-- [ ] Bloom filters.
+- [x] Bloom filters.
 - [ ] Summary tables.
 - [ ] Query parser.
 - [ ] Query execution engine.
