@@ -20,9 +20,6 @@
 template <typename T>
 class BloomFilter {
 private:
-    std::vector<uint32_t> seeds; // Seeds for the hash functions.
-    std::vector<bool> bits;      // The bit array.
-
     /**
      * @brief Initialise the seeds for the hash functions.
      *
@@ -47,9 +44,12 @@ private:
      */
     size_t hash(const T &item, size_t i) const {
         size_t result;
-        MurmurHash3_x86_32(&item, sizeof(item), seeds[i], &result);
+        MurmurHash3_x86_128(&item, sizeof(item), seeds[i], &result);
         return result % bits.size();
     }
+
+    std::vector<uint32_t> seeds; // Seeds for the hash functions.
+    std::vector<bool> bits;      // The bit array.
 
 public:
     /**

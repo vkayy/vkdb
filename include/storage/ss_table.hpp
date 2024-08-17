@@ -69,8 +69,8 @@ private:
 
     std::string filename;     // The name of the SSTable file.
     SSTableMetadata metadata; // The metadata of the SSTable.
-    
-    static const double BLOOM_FILTER_FALSE_POSITIVE_RATE = 0.01; // The false positive rate for the Bloom filter.
+
+    static constexpr double BLOOM_FILTER_FALSE_POSITIVE_RATE = 0.01; // The false positive rate for the Bloom filter.
 
 public:
     /**
