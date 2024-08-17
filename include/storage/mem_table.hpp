@@ -103,7 +103,8 @@ class MemTable {
 private:
     SkipList<TKey, TValue> table; // The skip list used as the underlying data structure.
     KeyRange<TKey> key_range;     // The atomic key range for the MemTable.
-    size_t size;                  // The size of the MemTable.
+    size_t byte_size = 0;         // The size of the MemTable.
+    size_t item_count = 0;        // The number of items in the MemTable.
 
 public:
     /**
@@ -131,7 +132,8 @@ public:
         }
         table.insert(key, value);
         key_range.updateKeyRange(key);
-        size += sizeof(key) + sizeof(value);
+        byte_size += sizeof(key) + sizeof(value);
+        ++item_count;
     }
 
     /**
@@ -169,7 +171,8 @@ public:
         }
 
         table.insert(key, std::nullopt);
-        size += sizeof(key) + sizeof(std::nullopt);
+        byte_size += sizeof(key) + sizeof(std::nullopt);
+        ++item_count;
     }
 
     /**
@@ -229,12 +232,21 @@ public:
     }
 
     /**
-     * @brief Get the size of the MemTable.
+     * @brief Get the size of the MemTable in bytes.
      *
-     * @return `size_t` The size of the MemTable.
+     * @return `size_t` The size of the MemTable in bytes.
      */
-    size_t getSize() const {
-        return size;
+    size_t getByteSize() const {
+        return byte_size;
+    }
+
+    /**
+     * @brief Get the number of items in the MemTable.
+     *
+     * @return `size_t` The number of items in the MemTable.
+     */
+    size_t getItemCount() const {
+        return item_count;
     }
 };
 

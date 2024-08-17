@@ -1,6 +1,7 @@
 #ifndef SS_TABLE_HPP
 #define SS_TABLE_HPP
 
+#include "bloom_filter.hpp"
 #include "mem_table.hpp"
 #include "utils/serialize.hpp"
 #include <fstream>
@@ -25,6 +26,7 @@ private:
         TKey min_key;                         // The minimum key.
         TKey max_key;                         // The maximum key.
         std::map<TKey, std::streampos> index; // The key to offset mapping.
+        BloomFilter<TKey> bloom_filter;       // The Bloom filter for approximate set membership.
 
         /**
          * @brief Serialize the SSTable metadata to a file stream.
@@ -40,6 +42,7 @@ private:
                 serializeValue(ofs, entry.first);
                 serializeValue(ofs, entry.second);
             }
+            bloom_filter.serialize(ofs);
         }
 
         /**
@@ -60,11 +63,14 @@ private:
                 deserializeValue(ifs, offset);
                 index[key] = offset;
             }
+            bloom_filter.deserialize(ifs);
         }
     };
 
     std::string filename;     // The name of the SSTable file.
     SSTableMetadata metadata; // The metadata of the SSTable.
+    
+    static const double BLOOM_FILTER_FALSE_POSITIVE_RATE = 0.01; // The false positive rate for the Bloom filter.
 
 public:
     /**
@@ -83,7 +89,7 @@ public:
      * @throws `std::runtime_error` if the metadata file cannot be opened for writing.
      */
     void serializeMetadata() const {
-        std::string metadata_filename = filename + ".idx";
+        std::string metadata_filename = filename + ".meta";
         std::ofstream ofs(metadata_filename, std::ios::binary);
         if (!ofs.is_open()) {
             throw std::runtime_error("unable to open metadata file for writing");
@@ -98,7 +104,7 @@ public:
      * @throws `std::runtime_error` if the metadata file cannot be opened for reading.
      */
     void deserializeMetadata() {
-        std::string metadata_filename = filename + ".idx";
+        std::string metadata_filename = filename + ".meta";
         std::ifstream ifs(metadata_filename, std::ios::binary);
         if (!ifs.is_open()) {
             throw std::runtime_error("unable to open metadata file for reading");
@@ -124,6 +130,8 @@ public:
             throw std::runtime_error("unable to open SSTable file for writing");
         }
 
+        metadata.bloom_filter = BloomFilter<TKey>(mem_table.getItemCount(), BLOOM_FILTER_FALSE_POSITIVE_RATE);
+
         bool keys_set = false;
 
         mem_table.forEach([&](const TKey &key, const std::optional<TValue> &value) {
@@ -135,6 +143,8 @@ public:
             if (value.has_value()) {
                 serializeValue(ofs, value.value());
             }
+
+            metadata.bloom_filter.insert(key);
 
             if (!keys_set) {
                 metadata.min_key = key;
@@ -167,6 +177,10 @@ public:
     std::optional<TValue>
     get(const TKey &key) const {
         if (key > metadata.max_key || key < metadata.min_key) {
+            return std::nullopt;
+        }
+
+        if (!metadata.bloom_filter.mightContain(key)) {
             return std::nullopt;
         }
 
@@ -295,14 +309,15 @@ public:
                 new_min_key = new_max_key = key;
                 first_entry = false;
             } else {
-                if (key < new_min_key)
+                if (key < new_min_key) {
                     new_min_key = key;
-                if (key > new_max_key)
+                }
+                if (key > new_max_key) {
                     new_max_key = key;
+                }
             }
         }
 
-        // Create the new SSTable using the merged entries
         std::string new_filename = filename + "_merged";
         std::ofstream ofs(new_filename, std::ios::binary);
         if (!ofs.is_open()) {
@@ -312,11 +327,13 @@ public:
         SSTableMetadata new_metadata;
         new_metadata.min_key = new_min_key;
         new_metadata.max_key = new_max_key;
+        new_metadata.bloom_filter = BloomFilter<TKey>(merged_entries.size(), 0.01);
 
         for (const auto &entry : merged_entries) {
             if (entry.second.has_value()) {
                 std::streampos pos = ofs.tellp();
                 new_metadata.index[entry.first] = pos;
+                new_metadata.bloom_filter.insert(entry.first);
 
                 serializeValue(ofs, entry.first);
                 serializeValue(ofs, true);

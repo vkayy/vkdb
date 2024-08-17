@@ -53,7 +53,7 @@ private:
      *
      */
     void flushMemTableIfExceeded() {
-        if (memtable->getSize() < MEMTABLE_SIZE_THRESHOLD) {
+        if (memtable->getByteSize() < MEMTABLE_SIZE_THRESHOLD) {
             return;
         }
         std::string sstable_filename = "sstable_L1_" + std::to_string(levels[0].sstables.size()) + ".db";
@@ -216,6 +216,9 @@ public:
             for (const auto &level : levels) {
                 for (auto it = level.sstables.rbegin(); it != level.sstables.rend(); ++it) {
                     auto result = (*it)->get(key);
+                    if (!result) {
+                        continue;
+                    }
                     if (result.has_value()) {
                         return result;
                     }
@@ -250,7 +253,7 @@ public:
         auto temp_memtable = std::make_unique<MemTable<TKey, TValue>>();
 
         wal.recoverFromLog(temp_memtable);
-        if (temp_memtable->getSize() >= MEMTABLE_SIZE_THRESHOLD) {
+        if (temp_memtable->getByteSize() >= MEMTABLE_SIZE_THRESHOLD) {
             std::string sstable_filename = "sstable_" + std::to_string(levels[0].sstables.size()) + "_recovered.db";
             auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(sstable_filename);
             new_sstable->flushFromMemTable(*temp_memtable);
