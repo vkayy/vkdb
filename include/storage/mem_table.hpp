@@ -22,16 +22,17 @@
 template <typename TKey>
 class KeyRange {
 private:
-    TKey min_key;  // The minimum key.
-    TKey max_key;  // The maximum key.
-    bool keys_set; // Flag to indicate if the keys are set.
+    std::atomic<TKey> min_key;  // The minimum key.
+    std::atomic<TKey> max_key;  // The maximum key.
+    std::atomic<bool> keys_set; // Flag to indicate if the keys are set.
 
 public:
     /**
      * @brief Construct a new KeyRange object.
      */
-    KeyRange()
-        : keys_set(false) {}
+    KeyRange() {
+        keys_set.store(false);
+    }
 
     /**
      * @brief Update the key range with the given key.
@@ -39,16 +40,17 @@ public:
      * @param key The key to update the range with.
      */
     void updateKeyRange(const TKey &key) {
-        if (!keys_set) {
-            min_key = max_key = key;
-            keys_set = true;
-        } else {
-            if (key < min_key) {
-                min_key = key;
-            }
-            if (key > max_key) {
-                max_key = key;
-            }
+        if (!keys_set.load()) {
+            min_key.store(key);
+            max_key.store(key);
+            keys_set.store(true);
+            return;
+        }
+        TKey current_min_key = min_key.load();
+        TKey current_max_key = max_key.load();
+        while (key < current_min_key && !min_key.compare_exchange_weak(current_min_key, key)) {
+        }
+        while (key > current_max_key && !max_key.compare_exchange_weak(current_max_key, key)) {
         }
     }
 
@@ -59,7 +61,7 @@ public:
      * @throws `std::runtime_error` if the keys are not set.
      */
     TKey getMinKey() const {
-        if (!keys_set) {
+        if (!keys_set.load()) {
             throw std::runtime_error("keys not set");
         }
         return min_key;
@@ -72,10 +74,18 @@ public:
      * @throws `std::runtime_error` if the keys are not set.
      */
     TKey getMaxKey() const {
-        if (!keys_set) {
+        if (!keys_set.load()) {
             throw std::runtime_error("keys not set");
         }
         return max_key;
+    }
+
+    /**
+     * @brief Check if the keys are set.
+     *
+     */
+    bool areKeysSet() const {
+        return keys_set.load();
     }
 };
 
@@ -91,10 +101,9 @@ public:
 template <typename TKey, typename TValue>
 class MemTable {
 private:
-    SkipList<TKey, TValue> table;       // The skip list used as the underlying data structure.
-    KeyRange<TKey> key_range;           // The atomic key range for the MemTable.
-    mutable std::mutex key_range_mutex; // Mutex to protect the key range.
-    size_t size;                        // The size of the MemTable.
+    SkipList<TKey, TValue> table; // The skip list used as the underlying data structure.
+    KeyRange<TKey> key_range;     // The atomic key range for the MemTable.
+    size_t size;                  // The size of the MemTable.
 
 public:
     /**
@@ -121,10 +130,7 @@ public:
             throw std::runtime_error("cannot insert a tombstone value");
         }
         table.insert(key, value);
-        {
-            std::lock_guard<std::mutex> lock(key_range_mutex);
-            key_range.updateKeyRange(key);
-        }
+        key_range.updateKeyRange(key);
         size += sizeof(key) + sizeof(value);
     }
 
@@ -136,6 +142,9 @@ public:
      * @throws `std::runtime_error` if the key is not found or is marked deleted.
      */
     TValue get(const TKey &key) const {
+        if (key_range.areKeysSet() && (key < key_range.getMinKey() || key > key_range.getMaxKey())) {
+            throw std::runtime_error("key not found in memtable");
+        }
         std::optional<TValue> *value = table.findWaitFree(key);
         if (!value || !value->has_value()) {
             throw std::runtime_error("key not found in memtable");
@@ -151,6 +160,9 @@ public:
      * @throws `std::runtime_error` if the key is not found or is marked deleted.
      */
     void remove(const TKey &key) {
+        if (key_range.areKeysSet() && (key < key_range.getMinKey() || key > key_range.getMaxKey())) {
+            throw std::runtime_error("key not found in memtable");
+        }
         std::optional<TValue> *value = table.findWaitFree(key);
         if (!value || !value->has_value()) {
             throw std::runtime_error("key not found in memtable");

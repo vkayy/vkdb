@@ -166,11 +166,6 @@ public:
      */
     std::optional<TValue>
     get(const TKey &key) const {
-        std::ifstream ifs(filename, std::ios::binary);
-        if (!ifs.is_open()) {
-            throw std::runtime_error("unable to open SSTable file for reading");
-        }
-
         if (key > metadata.max_key || key < metadata.min_key) {
             return std::nullopt;
         }
@@ -178,6 +173,11 @@ public:
         auto it = metadata.index.find(key);
         if (it == metadata.index.end()) {
             return std::nullopt;
+        }
+
+        std::ifstream ifs(filename, std::ios::binary);
+        if (!ifs.is_open()) {
+            throw std::runtime_error("unable to open SSTable file for reading");
         }
 
         ifs.seekg(it->second);
