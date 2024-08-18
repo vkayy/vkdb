@@ -28,6 +28,6 @@ From this point on, there are a few other optimisations I intend on implementing
 - [x] LSM tree architecture.
 - [x] Time-window compaction strategy.
 - [x] Bloom filters.
-- [ ] Summary tables.
+- [x] Summary tables.
 - [ ] Query parser.
 - [ ] Query execution engine.
