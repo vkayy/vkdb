@@ -14,6 +14,33 @@
 #include <vector>
 
 /**
+ * @brief A timestamped value structure.
+ *
+ * @tparam TValue The type of the value.
+ */
+template <typename TValue>
+class TimestampedValue {
+public:
+    std::time_t timestamp;       // The timestamp of the value.
+    std::optional<TValue> value; // The value.
+
+    /**
+     * @brief Construct a new TimestampedValue object.
+     *
+     */
+    TimestampedValue() = default;
+
+    /**
+     * @brief Construct a new TimestampedValue object.
+     *
+     * @param value The value.
+     * @param timestamp The timestamp.
+     */
+    TimestampedValue(const std::optional<TValue> &value, std::time_t timestamp = std::time(nullptr))
+        : timestamp(timestamp), value(value) {}
+};
+
+/**
  * @brief A skip list providing lock-free concurrency via `AtomicMarkableReference`s.
  *
  * This class provides logarithmic average time complexity for insert, remove, and search operations.
@@ -35,11 +62,11 @@ private:
          * Sets all forward pointers to `nullptr`.
          *
          * @param key The key associated with the node.
-         * @param value The value associated with the key.
+         * @param timestamped_value The timestamped value associated with the key.
          * @param height The `top_level` of the node.
          */
-        SkipListNode(const TKey &key, const std::optional<TValue> &value, const int32_t height)
-            : key(key), value(value), top_level(height) {
+        SkipListNode(const TKey &key, const TimestampedValue<TValue> &timestamped_value, const int32_t height)
+            : key(key), timestamped_value(timestamped_value), top_level(height) {
             initialiseForward(height, nullptr);
         }
 
@@ -79,9 +106,9 @@ private:
             }
         }
 
-        TKey key;                    // The key used to order and search the skip list.
-        std::optional<TValue> value; // The associated value stored with the key.
-        int32_t top_level;           // The highest level this node reaches in the skip list.
+        TKey key;                                   // The key used to order and search the skip list.
+        TimestampedValue<TValue> timestamped_value; // The associated value stored with the key.
+        int32_t top_level;                          // The highest level this node reaches in the skip list.
 
         std::vector<AtomicMarkableReference<SkipListNode>> forward; // The vector of `AtomicMarkableReference`s of forward pointers.
     };
@@ -157,7 +184,7 @@ private:
     void serializeNode(std::ofstream &ofs, SkipListNode *node) const {
         while (node != nil) {
             serializeValue(ofs, node->key);
-            serializeValue(ofs, node->value);
+            serializeValue(ofs, node->timestamped_value);
             ofs.write(reinterpret_cast<const char *>(&node->top_level), sizeof(node->top_level));
 
             for (int32_t i = 0; i < node->top_level; ++i) {
@@ -188,7 +215,7 @@ private:
         SkipListNode *prev = head;
         while (true) {
             TKey key;
-            std::optional<TValue> value;
+            TimestampedValue<TValue> value;
             int32_t top_level;
 
             deserializeValue(ifs, key);
@@ -258,11 +285,11 @@ public:
         SkipListNode *current; // The current node in the skip list.
 
     public:
-        using iterator_category = std::forward_iterator_tag;             // The iterator category.
-        using value_type = std::pair<const TKey, std::optional<TValue>>; // The value type.
-        using difference_type = std::ptrdiff_t;                          // The difference type.
-        using pointer = value_type *;                                    // The pointer type.
-        using reference = value_type &;                                  // The reference type.
+        using iterator_category = std::forward_iterator_tag;                // The iterator category.
+        using value_type = std::pair<const TKey, TimestampedValue<TValue>>; // The value type.
+        using difference_type = std::ptrdiff_t;                             // The difference type.
+        using pointer = value_type *;                                       // The pointer type.
+        using reference = value_type &;                                     // The reference type.
 
         /**
          * @brief Construct a new Iterator object.
@@ -356,9 +383,9 @@ public:
      * @brief Search for a given key as a wait-free operation.
      *
      * @param key The key to search for.
-     * @return `std::optional<TValue> *` A pointer to the associated optional value if found, otherwise `nullptr`.
+     * @return `TimestampedValue<TValue> *` A pointer to the associated optional value if found, otherwise `nullptr`.
      */
-    std::optional<TValue> *findWaitFree(const TKey &key) const {
+    TimestampedValue<TValue> *findWaitFree(const TKey &key) const {
         bool marked = false;
         SkipListNode *pred = head, *curr = nullptr, *succ = nullptr;
 
@@ -378,7 +405,7 @@ public:
             }
         }
         if (curr->key == key) {
-            return &curr->value;
+            return &curr->timestamped_value;
         }
         return nullptr;
     };
@@ -397,9 +424,9 @@ public:
      * exponentially increase to minimise future contention.
      *
      * @param key The key to insert.
-     * @param value The associated value of the key.
+     * @param timestamped_value The associated timestamped value of the key.
      */
-    void insert(const TKey &key, const std::optional<TValue> &value) {
+    void insert(const TKey &key, const TimestampedValue<TValue> &timestamped_value) {
         int32_t top_level = randomLevel();
         SkipListNode *preds[MAX_LEVEL + 1];
         SkipListNode *succs[MAX_LEVEL + 1];
@@ -407,11 +434,11 @@ public:
         while (true) {
             if (findWithGC(key, preds, succs)) {
                 SkipListNode *existing_node = succs[0];
-                existing_node->value = value;
+                existing_node->timestamped_value = timestamped_value;
                 return;
             }
 
-            auto new_node = new SkipListNode(key, value, top_level);
+            auto new_node = new SkipListNode(key, timestamped_value, top_level);
             for (int32_t level = 0; level < top_level; ++level) {
                 new_node->forward[level].set(succs[level], false);
             }

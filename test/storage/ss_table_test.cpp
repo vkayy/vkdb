@@ -12,7 +12,7 @@ std::unique_ptr<SSTable<TKey, TValue>> createAndPopulateSSTable(const std::strin
     BloomFilter<TKey> bloom_filter(pairs.size(), 0.01);
     KeyRange<TKey> key_range;
     for (const auto &[key, value] : pairs) {
-        memtable.put(key, value);
+        memtable.put(key, {value, std::time_t(nullptr)});
     }
     auto sstable = std::make_unique<SSTable<TKey, TValue>>(filename);
     sstable->flushFromMemTable(memtable, bloom_filter, key_range);
@@ -24,7 +24,7 @@ TEST(SSTableTest, FlushFromMemTableAndRetrieve) {
     int32_t random_key = generateRandomInt32(1, 10000);
     std::string random_value = generateRandomString(100);
 
-    memtable.put(random_key, random_value);
+    memtable.put(random_key, {random_value, std::time_t(nullptr)});
 
     BloomFilter<int32_t> bloom_filter(10, 0.01);
     bloom_filter.insert(random_key);
@@ -35,8 +35,8 @@ TEST(SSTableTest, FlushFromMemTableAndRetrieve) {
     sstable.flushFromMemTable(memtable, bloom_filter, key_range);
 
     auto retrieved_value = sstable.get(random_key);
-    EXPECT_TRUE(retrieved_value.has_value());
-    EXPECT_EQ(retrieved_value.value(), random_value);
+    EXPECT_TRUE(retrieved_value.value.has_value());
+    EXPECT_EQ(retrieved_value.value.value(), random_value);
 
     std::filesystem::remove("./sstable_test_output");
     std::filesystem::remove("./sstable_test_output.idx");
@@ -47,7 +47,7 @@ TEST(SSTableTest, HandlesNonExistentKey) {
     int32_t random_key = generateRandomInt32(1, 10000);
     std::string random_value = generateRandomString(100);
 
-    memtable.put(random_key, random_value);
+    memtable.put(random_key, {random_value, std::time_t(nullptr)});
 
     BloomFilter<int32_t> bloom_filter(10, 0.01);
     KeyRange<int32_t> key_range;
@@ -56,9 +56,7 @@ TEST(SSTableTest, HandlesNonExistentKey) {
     sstable.flushFromMemTable(memtable, bloom_filter, key_range);
 
     auto non_existent_key = random_key + 1;
-    auto retrieved_value = sstable.get(non_existent_key);
-    EXPECT_FALSE(retrieved_value.has_value());
-
+    EXPECT_THROW(sstable.get(non_existent_key), std::runtime_error);
     std::filesystem::remove("./sstable_test_output");
     std::filesystem::remove("./sstable_test_output.idx");
 }
@@ -68,7 +66,7 @@ TEST(SSTableTest, HandlesDeletedKey) {
     int32_t random_key = generateRandomInt32(1, 10000);
     std::string random_value = generateRandomString(10);
 
-    memtable.put(random_key, random_value);
+    memtable.put(random_key, {random_value, std::time_t(nullptr)});
     memtable.remove(random_key);
     EXPECT_THROW(memtable.get(random_key), std::runtime_error);
 
@@ -78,8 +76,7 @@ TEST(SSTableTest, HandlesDeletedKey) {
 
     sstable.flushFromMemTable(memtable, bloom_filter, key_range);
 
-    auto retrieved_value = sstable.get(random_key);
-    EXPECT_FALSE(retrieved_value.has_value());
+    EXPECT_THROW(sstable.get(random_key), std::runtime_error);
 
     std::filesystem::remove("./sstable_test_output");
     std::filesystem::remove("./sstable_test_output.idx");
@@ -92,8 +89,8 @@ TEST(SSTableTest, DeserializesMetadataAndRetrieves) {
     int32_t random_key2 = generateRandomInt32(10001, 20000);
     std::string random_value2 = generateRandomString(100);
 
-    memtable.put(random_key1, random_value1);
-    memtable.put(random_key2, random_value2);
+    memtable.put(random_key1, {random_value1, std::time_t(nullptr)});
+    memtable.put(random_key2, {random_value2, std::time_t(nullptr)});
 
     BloomFilter<int32_t> bloom_filter(1000, 0.01);
     KeyRange<int32_t> key_range;
@@ -104,12 +101,12 @@ TEST(SSTableTest, DeserializesMetadataAndRetrieves) {
     SSTable<int32_t, std::string> sstable_loaded("./sstable_test_output");
 
     auto retrieved_value1 = sstable_loaded.get(random_key1);
-    EXPECT_TRUE(retrieved_value1.has_value());
-    EXPECT_EQ(retrieved_value1.value(), random_value1);
+    EXPECT_TRUE(retrieved_value1.value.has_value());
+    EXPECT_EQ(retrieved_value1.value.value(), random_value1);
 
     auto retrieved_value2 = sstable_loaded.get(random_key2);
-    EXPECT_TRUE(retrieved_value2.has_value());
-    EXPECT_EQ(retrieved_value2.value(), random_value2);
+    EXPECT_TRUE(retrieved_value2.value.has_value());
+    EXPECT_EQ(retrieved_value2.value.value(), random_value2);
 
     EXPECT_EQ(key_range.getMinKey(), random_key1);
     EXPECT_EQ(key_range.getMaxKey(), random_key2);
@@ -126,7 +123,7 @@ TEST(SSTableTest, HandlesLargeNumberOfPairs) {
     for (int32_t i = 0; i < num_pairs; ++i) {
         int32_t key = i;
         std::string value = generateRandomString(100);
-        memtable.put(key, value);
+        memtable.put(key, {value, std::time_t(nullptr)});
         pairs.push_back({key, value});
     }
 
@@ -138,8 +135,8 @@ TEST(SSTableTest, HandlesLargeNumberOfPairs) {
 
     for (const auto &[key, value] : pairs) {
         auto retrieved_value = sstable.get(key);
-        EXPECT_TRUE(retrieved_value.has_value());
-        EXPECT_EQ(retrieved_value.value(), value);
+        EXPECT_TRUE(retrieved_value.value.has_value());
+        EXPECT_EQ(retrieved_value.value.value(), value);
     }
 
     std::filesystem::remove("./sstable_test_output");
@@ -161,12 +158,12 @@ TEST(SSTableMergeTest, MergesTwoNonOverlappingSSTables) {
 
     for (const auto &[key, value] : pairs1) {
         EXPECT_TRUE(merged_bloom_filter.mightContain(key));
-        EXPECT_EQ(merged_sstable->get(key).value(), value);
+        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
     }
 
     for (const auto &[key, value] : pairs2) {
         EXPECT_TRUE(merged_bloom_filter.mightContain(key));
-        EXPECT_EQ(merged_sstable->get(key).value(), value);
+        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);
@@ -197,7 +194,7 @@ TEST(SSTableMergeTest, MergesTwoOverlappingSSTables) {
         {1, "value1"}, {3, "value3"}, {4, "value4"}, {5, "value6"}, {6, "value6"}};
 
     for (const auto &[key, value] : expected_values) {
-        EXPECT_EQ(merged_sstable->get(key).value(), value);
+        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);
@@ -223,7 +220,7 @@ TEST(SSTableMergeTest, HandlesEmptySSTables) {
     auto merged_sstable = sstable1->merge(*sstable2, merged_bloom_filter, merged_key_range);
 
     for (const auto &[key, value] : pairs1) {
-        EXPECT_EQ(merged_sstable->get(key).value(), value);
+        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);
@@ -254,7 +251,7 @@ TEST(SSTableMergeTest, MergesWithDuplicateKeys) {
         {1, "value1"}, {2, "value4"}, {3, "value5"}, {4, "value6"}};
 
     for (const auto &[key, value] : expected_values) {
-        EXPECT_EQ(merged_sstable->get(key).value(), value);
+        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);

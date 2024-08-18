@@ -196,21 +196,24 @@ public:
      *
      * @param key The key.
      * @param value The value.
+     * @param timestamp The timestamp of the key-value pair.
      */
-    void put(const TKey &key, const TValue &value) {
+    void put(const TKey &key, const TValue &value, std::time_t timestamp) {
         std::lock_guard<std::mutex> lock(lsm_tree_mutex);
-        wal.appendLog(key, value);
-        memtable->put(key, value);
+        TimestampedValue<TValue> timestamped_value(value, timestamp);
+        wal.appendLog(key, timestamped_value);
+        memtable->put(key, timestamped_value);
         flushMemTableIfExceeded();
     }
 
     /**
-     * @brief Get the value associated with a key.
+     * @brief Get the timestamped value associated with a key.
      *
      * @param key The key.
-     * @return std::optional<TValue>
+     *
+     * @return `TimestampedValue<TValue>` The timestamped value associated with the key.
      */
-    std::optional<TValue> get(const TKey &key) {
+    TimestampedValue<TValue> get(const TKey &key) {
         std::lock_guard<std::mutex> lock(lsm_tree_mutex);
 
         try {
@@ -225,15 +228,15 @@ public:
                         continue;
                     }
                     SSTable<TKey, TValue> sstable(*it);
-                    auto result = sstable.get(key);
-                    if (result.has_value()) {
+                    TimestampedValue<TValue> result = sstable.get(key);
+                    if (result.value.has_value()) {
                         return result;
                     }
                 }
             }
         }
 
-        return std::nullopt;
+        return {std::nullopt, std::time_t(nullptr)};
     }
 
     /**
@@ -244,7 +247,9 @@ public:
     void remove(const TKey &key) {
         std::lock_guard<std::mutex> lock(lsm_tree_mutex);
 
-        wal.appendLog(key, std::nullopt);
+        TimestampedValue<TValue> tombstone = {std::nullopt, std::time_t(nullptr)};
+
+        wal.appendLog(key, tombstone);
         memtable->remove(key);
 
         flushMemTableIfExceeded();

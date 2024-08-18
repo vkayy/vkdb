@@ -25,9 +25,23 @@ private:
      *
      */
     struct WriteAheadLogEntry {
-        std::time_t timestamp;       // The timestamp of the log entry.
-        TKey key;                    // The key of the log entry.
-        std::optional<TValue> value; // The optional value of the log entry.
+        TKey key;                                   // The key of the log entry.
+        TimestampedValue<TValue> timestamped_value; // The timestamped value of the log entry.
+
+        /**
+         * @brief Construct a new WriteAheadLogEntry object.
+         *
+         */
+        WriteAheadLogEntry() = default;
+
+        /**
+         * @brief Construct a new WriteAheadLogEntry object with the given key and timestamped value.
+         *
+         * @param key The key of the log entry.
+         * @param timestamped_value The timestamped value of the log entry.
+         */
+        WriteAheadLogEntry(const TKey &key, const TimestampedValue<TValue> &timestamped_value = std::time_t(nullptr))
+            : key(key), timestamped_value(timestamped_value) {}
     };
 
     /**
@@ -36,14 +50,14 @@ private:
      * @param entry The log entry to serialize.
      */
     void serializeWALEntry(const WriteAheadLogEntry &entry) {
-        serializeValue(log_stream, entry.timestamp);
+        serializeValue(log_stream, entry.timestamped_value.timestamp);
         serializeValue(log_stream, entry.key);
 
-        bool has_value = entry.value.has_value();
+        bool has_value = entry.timestamped_value.value.has_value();
         serializeValue(log_stream, has_value);
 
         if (has_value) {
-            serializeValue(log_stream, entry.value.value());
+            serializeValue(log_stream, entry.timestamped_value.value.value());
         }
     }
 
@@ -54,7 +68,7 @@ private:
      * @param entry The log entry to deserialize into.
      */
     void deserializeWALEntry(std::ifstream &recovery_stream, WriteAheadLogEntry &entry) {
-        deserializeValue(recovery_stream, entry.timestamp);
+        deserializeValue(recovery_stream, entry.timestamped_value.timestamp);
         deserializeValue(recovery_stream, entry.key);
 
         bool has_value;
@@ -63,11 +77,11 @@ private:
         if (has_value) {
             TValue value;
             deserializeValue(recovery_stream, value);
-            entry.value = value;
+            entry.timestamped_value.value = value;
             return;
         }
 
-        entry.value.reset();
+        entry.timestamped_value.value.reset();
     }
 
     std::string log_file_path; // The file path of the log file.
@@ -105,10 +119,10 @@ public:
      * @param entry The log entry to append.
      * @throws `std::runtime_error` if unable to write to log file.
      */
-    void appendLog(const TKey &key, const std::optional<TValue> &value) {
+    void appendLog(const TKey &key, const TimestampedValue<TValue> &timestamped_value) {
         std::lock_guard<std::mutex> lock(log_mutex);
 
-        WriteAheadLogEntry entry({std::time(nullptr), key, value});
+        WriteAheadLogEntry entry({key, timestamped_value});
         serializeWALEntry(entry);
         log_stream.flush();
 
@@ -137,11 +151,11 @@ public:
         while (recovery_stream.peek() != EOF) {
             WriteAheadLogEntry entry;
             deserializeWALEntry(recovery_stream, entry);
-            if (entry.timestamp < last_timestamp) {
+            if (entry.timestamped_value.timestamp < last_timestamp) {
                 throw std::runtime_error("log entries are not in chronological order");
             }
-            memtable->put(entry.key, entry.value);
-            last_timestamp = entry.timestamp;
+            memtable->put(entry.key, entry.timestamped_value);
+            last_timestamp = entry.timestamped_value.timestamp;
         }
         recovery_stream.close();
     }
