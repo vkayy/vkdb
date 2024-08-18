@@ -10,13 +10,14 @@ TEST(MemTableTest, PutsAndGetsKeyValuePairs) {
     int32_t random_key = generateRandomInt32(0, 10000);
     for (size_t i = 0; i < 100; ++i) {
         std::string random_value = generateRandomString(100);
-        memtable.put(random_key * i, random_value);
-        pairs.push_back({random_key * i, random_value});
+        TimestampedValue<std::string> timestamped_value(random_value, std::time_t(nullptr));
+        memtable.put(random_key * i, timestamped_value);
+        pairs.push_back({random_key * i, timestamped_value.value.value()});
     }
 
     for (size_t i = 0; i < 100; ++i) {
         auto [key, value] = pairs[i];
-        EXPECT_EQ(memtable.get(key), value);
+        EXPECT_EQ(memtable.get(key).value.value(), value);
     }
 }
 
@@ -27,8 +28,9 @@ TEST(MemTableTest, SerializesAndDeserializesMemTable) {
     int32_t random_key = generateRandomInt32(1, 10000);
     for (size_t i = 0; i < 100; ++i) {
         std::string random_value = generateRandomString(100);
-        memtable.put(random_key * i, random_value);
-        pairs.push_back({random_key * i, random_value});
+        TimestampedValue<std::string> timestamped_value(random_value, std::time_t(nullptr));
+        memtable.put(random_key * i, timestamped_value);
+        pairs.push_back({random_key * i, timestamped_value.value.value()});
     }
 
     const std::string filename = "./memtable_test_output";
@@ -39,7 +41,7 @@ TEST(MemTableTest, SerializesAndDeserializesMemTable) {
 
     for (size_t i = 0; i < 100; ++i) {
         auto [key, value] = pairs[i];
-        EXPECT_EQ(deserialized_memtable.get(key), value);
+        EXPECT_EQ(deserialized_memtable.get(key).value.value(), value);
     }
 
     std::filesystem::remove(filename.c_str());
@@ -66,10 +68,10 @@ TEST(MemTableTest, HandlesConcurrentPutsAndGets) {
 
         for (int32_t i = thread_id * num_operations_per_thread; i < (thread_id + 1) * num_operations_per_thread; ++i) {
             auto [key, value] = inserted_pairs[i];
-            memtable.put(key, value);
+            memtable.put(key, {value, std::time_t(nullptr)});
 
             if (generateRandomInt32(1, 100) <= 50) {
-                std::string retrieved_value = memtable.get(key);
+                std::string retrieved_value = memtable.get(key).value.value();
                 EXPECT_EQ(value, retrieved_value);
             }
         }
@@ -86,7 +88,7 @@ TEST(MemTableTest, HandlesConcurrentPutsAndGets) {
     }
 
     for (const auto &[key, value] : inserted_pairs) {
-        std::string retrieved_value = memtable.get(key);
+        std::string retrieved_value = memtable.get(key).value.value();
         EXPECT_EQ(value, retrieved_value);
     }
 }
@@ -109,7 +111,7 @@ TEST(MemTableTest, HandlesConcurrentUpdates) {
             int32_t key = i;
 
             std::string value = generateRandomString(100);
-            memtable.put(key, value);
+            memtable.put(key, {value, std::time_t(nullptr)});
 
             std::lock_guard<std::mutex> lock(expected_values_mutex);
             expected_values[key] = value;
@@ -127,7 +129,7 @@ TEST(MemTableTest, HandlesConcurrentUpdates) {
     }
 
     for (const auto &[key, expected_value] : expected_values) {
-        std::string search_result = memtable.get(key);
+        std::string search_result = memtable.get(key).value.value();
         EXPECT_EQ(expected_value, search_result);
     }
 }
@@ -137,8 +139,8 @@ TEST(MemTableTest, RemovesKeyValuePairs) {
     int32_t key = generateRandomInt32(1, 10000);
     std::string value = generateRandomString(100);
 
-    memtable.put(key, value);
-    EXPECT_EQ(memtable.get(key), value);
+    memtable.put(key, {value, std::time_t(nullptr)});
+    EXPECT_EQ(memtable.get(key).value.value(), value);
 
     memtable.remove(key);
     EXPECT_THROW(memtable.get(key), std::runtime_error);
@@ -154,7 +156,7 @@ TEST(MemTableTest, HandlesConcurrentRemovalsAndGets) {
 
     for (int32_t i = 0; i < num_threads * num_operations_per_thread; ++i) {
         keys.push_back(i);
-        memtable.put(i, "value_" + std::to_string(i));
+        memtable.put(i, {"value_" + std::to_string(i), std::time_t(nullptr)});
     }
 
     auto remove_and_get = [&](int32_t thread_id) {
@@ -184,7 +186,7 @@ TEST(MemTableTest, HandlesTombstoneSerializationAndDeserialization) {
 
     int32_t key = generateRandomInt32(1, 10000);
     std::string value = generateRandomString(100);
-    memtable.put(key, value);
+    memtable.put(key, {value, std::time_t(nullptr)});
 
     memtable.remove(key);
     EXPECT_THROW(memtable.get(key), std::runtime_error);
@@ -205,14 +207,14 @@ TEST(MemTableTest, HandlesKeyRange) {
     int32_t key = generateRandomInt32(1, 10000);
     std::string value = generateRandomString(100);
 
-    memtable.put(key, value);
+    memtable.put(key, {value, std::time_t(nullptr)});
     EXPECT_EQ(memtable.getMinKey(), key);
     EXPECT_EQ(memtable.getMaxKey(), key);
 
     int32_t new_key = generateRandomInt32(10001, 20000);
     std::string new_value = generateRandomString(100);
 
-    memtable.put(new_key, new_value);
+    memtable.put(new_key, {new_value, std::time_t(nullptr)});
     EXPECT_EQ(memtable.getMinKey(), key);
     EXPECT_EQ(memtable.getMaxKey(), new_key);
 }

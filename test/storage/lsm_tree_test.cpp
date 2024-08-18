@@ -8,11 +8,11 @@ TEST(LSMTreeTest, PutsAndGets) {
     int32_t random_key = generateRandomInt32(1, 10000);
     std::string random_value = generateRandomString(100);
 
-    lsm_tree.put(random_key, random_value);
+    lsm_tree.put(random_key, random_value, std::time_t(nullptr));
 
     auto retrieved_value = lsm_tree.get(random_key);
-    EXPECT_TRUE(retrieved_value.has_value());
-    EXPECT_EQ(retrieved_value.value(), random_value);
+    EXPECT_TRUE(retrieved_value.value.has_value());
+    EXPECT_EQ(retrieved_value.value.value(), random_value);
 
     std::filesystem::remove("./wal_test.log");
 }
@@ -22,11 +22,11 @@ TEST(LSMTreeTest, RemovesKey) {
     int32_t random_key = generateRandomInt32(1, 10000);
     std::string random_value = generateRandomString(100);
 
-    lsm_tree.put(random_key, random_value);
+    lsm_tree.put(random_key, random_value, std::time_t(nullptr));
     lsm_tree.remove(random_key);
 
     auto retrieved_value = lsm_tree.get(random_key);
-    EXPECT_FALSE(retrieved_value.has_value());
+    EXPECT_FALSE(retrieved_value.value.has_value());
 
     std::filesystem::remove("./wal_test.log");
 }
@@ -36,7 +36,7 @@ TEST(LSMTreeTest, HandlesNonExistentKey) {
     int32_t random_key = generateRandomInt32(1, 10000);
 
     auto retrieved_value = lsm_tree.get(random_key);
-    EXPECT_FALSE(retrieved_value.has_value());
+    EXPECT_FALSE(retrieved_value.value.has_value());
 
     std::filesystem::remove("./wal_test.log");
 }
@@ -48,12 +48,12 @@ TEST(LSMTreeTest, FlushesMemTableToSSTable) {
     for (int32_t i = 0; i < num_pairs; ++i) {
         int32_t key = i;
         std::string value = generateRandomString(100);
-        lsm_tree.put(key, value);
+        lsm_tree.put(key, value, std::time_t(nullptr));
     }
 
     for (int32_t i = 0; i < num_pairs; ++i) {
         auto retrieved_value = lsm_tree.get(i);
-        EXPECT_TRUE(retrieved_value.has_value());
+        EXPECT_TRUE(retrieved_value.value.has_value());
     }
 
     std::filesystem::remove("./wal_test.log");
@@ -66,14 +66,14 @@ TEST(LSMTreeTest, RecoversFromWAL) {
     int32_t random_key = generateRandomInt32(1, 10000);
     std::string random_value = generateRandomString(100);
 
-    lsm_tree.put(random_key, random_value);
+    lsm_tree.put(random_key, random_value, std::time_t(nullptr));
 
     LSMTree<int32_t, std::string> recovered_lsm_tree("./wal_test.log");
     recovered_lsm_tree.recover();
 
     auto retrieved_value = recovered_lsm_tree.get(random_key);
-    EXPECT_TRUE(retrieved_value.has_value());
-    EXPECT_EQ(retrieved_value.value(), random_value);
+    EXPECT_TRUE(retrieved_value.value.has_value());
+    EXPECT_EQ(retrieved_value.value.value(), random_value);
 
     std::filesystem::remove("./wal_test.log");
 }
@@ -87,16 +87,16 @@ TEST(LSMTreeTest, HandlesConcurrentOperations) {
         for (int32_t i = 0; i < ops_per_thread; ++i) {
             int32_t key = thread_id * ops_per_thread + i;
             std::string value = generateRandomString(100);
-            lsm_tree.put(key, value);
+            lsm_tree.put(key, value, std::time_t(nullptr));
 
             auto retrieved_value = lsm_tree.get(key);
-            EXPECT_TRUE(retrieved_value.has_value());
-            EXPECT_EQ(retrieved_value.value(), value);
+            EXPECT_TRUE(retrieved_value.value.has_value());
+            EXPECT_EQ(retrieved_value.value.value(), value);
 
             if (i % 10 == 0) {
                 lsm_tree.remove(key);
                 auto removed_value = lsm_tree.get(key);
-                EXPECT_FALSE(removed_value.has_value());
+                EXPECT_FALSE(removed_value.value.has_value());
             }
         }
     };

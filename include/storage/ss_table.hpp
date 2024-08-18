@@ -131,14 +131,14 @@ public:
 
         SSTableMetadata metadata;
 
-        mem_table.forEach([&](const TKey &key, const std::optional<TValue> &value) {
+        mem_table.forEach([&](const TKey &key, const TimestampedValue<TValue> &timestamped_value) {
             std::streampos pos = ofs.tellp();
             metadata.index[key] = pos;
             serializeValue(ofs, key);
-            serializeValue(ofs, value.has_value());
+            serializeValue(ofs, timestamped_value.value.has_value());
 
-            if (value.has_value()) {
-                serializeValue(ofs, value.value());
+            if (timestamped_value.value.has_value()) {
+                serializeValue(ofs, timestamped_value);
             }
 
             bloom_filter.insert(key);
@@ -155,11 +155,10 @@ public:
      *
      * @param key The key to search for.
      *
-     * @return `std::optional<TValue>` The value associated with the key, or `std::nullopt` if not present.
-     * @throws `std::runtime_error` if the SSTable file cannot be opened for reading.
+     * @return `TimestampedValue<TValue>` The value associated with the key.
+     * @throws `std::runtime_error` if the SSTable file cannot be opened for reading or the key is not found.
      */
-    std::optional<TValue>
-    get(const TKey &key) const {
+    TimestampedValue<TValue> get(const TKey &key) const {
         std::ifstream meta_ifs(filename + ".meta", std::ios::binary);
         if (!meta_ifs.is_open()) {
             throw std::runtime_error("unable to open metadata file for reading");
@@ -170,7 +169,7 @@ public:
 
         auto it = new_metadata.index.find(key);
         if (it == new_metadata.index.end()) {
-            return std::nullopt;
+            throw std::runtime_error("key not found in SSTable");
         }
 
         std::ifstream data_ifs(filename, std::ios::binary);
@@ -194,12 +193,12 @@ public:
         deserializeValue(data_ifs, has_value);
 
         if (has_value) {
-            TValue value;
+            TimestampedValue<TValue> value;
             deserializeValue(data_ifs, value);
             return value;
         }
 
-        return std::nullopt;
+        throw std::runtime_error("key not found in SSTable");
     }
 
     /**
@@ -239,7 +238,7 @@ public:
         KeyRange<TKey> &key_range) {
 
         std::unordered_map<TKey, bool> seen;
-        std::map<TKey, std::optional<TValue>> merged_entries;
+        std::map<TKey, TimestampedValue<TValue>> merged_entries;
 
         SSTableMetadata metadata;
         deserializeMetadata(metadata, filename);
@@ -261,10 +260,10 @@ public:
                 continue;
             }
 
-            TValue actual_value;
+            TimestampedValue<TValue> actual_value;
             deserializeValue(ifs, actual_value);
 
-            std::optional<TValue> value;
+            TimestampedValue<TValue> value;
             value = actual_value;
 
             seen[key] = true;
@@ -286,10 +285,10 @@ public:
                 continue;
             }
 
-            TValue actual_value;
+            TimestampedValue<TValue> actual_value;
             deserializeValue(ifs, actual_value);
 
-            std::optional<TValue> value;
+            TimestampedValue<TValue> value;
             value = actual_value;
 
             seen[key] = true;
@@ -307,17 +306,16 @@ public:
         new_metadata.creation_time = std::time(nullptr);
         bloom_filter = BloomFilter<TKey>(merged_entries.size(), BLOOM_FILTER_FALSE_POSITIVE_RATE);
 
-        for (const auto &[key, value] : merged_entries) {
-            if (value.has_value()) {
+        for (const auto &[key, timestamped_value] : merged_entries) {
+            if (timestamped_value.value.has_value()) {
                 std::streampos pos = ofs.tellp();
                 new_metadata.index[key] = pos;
                 bloom_filter.insert(key);
 
                 serializeValue(ofs, key);
                 serializeValue(ofs, true);
-                serializeValue(ofs, value.value());
+                serializeValue(ofs, timestamped_value);
             } else {
-                std::cout << "tried merging tombstone value in key " << key << std::endl;
                 throw std::runtime_error("cannot merge tombstone values");
             }
         }

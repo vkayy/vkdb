@@ -17,8 +17,8 @@ TEST(WriteAheadLogTest, AppendsLogEntry) {
     std::string log_file_path = generate_log_file_name();
     WriteAheadLog<int32_t, std::string> wal(log_file_path);
 
-    EXPECT_NO_THROW(wal.appendLog(1, std::optional<std::string>("Test entry 1")));
-    EXPECT_NO_THROW(wal.appendLog(2, std::optional<std::string>("Test entry 2")));
+    EXPECT_NO_THROW(wal.appendLog(1, TimestampedValue<std::string>("Test entry 1")));
+    EXPECT_NO_THROW(wal.appendLog(2, TimestampedValue<std::string>("Test entry 2")));
 
     std::ifstream file(log_file_path, std::ios::binary);
     ASSERT_TRUE(file.is_open());
@@ -68,8 +68,8 @@ TEST(WriteAheadLogTest, HandlesOptionalValues) {
     std::string log_file_path = generate_log_file_name();
     WriteAheadLog<int32_t, std::string> wal(log_file_path);
 
-    EXPECT_NO_THROW(wal.appendLog(1, std::nullopt));
-    EXPECT_NO_THROW(wal.appendLog(2, std::optional<std::string>("Test entry 2")));
+    EXPECT_NO_THROW(wal.appendLog(1, {std::nullopt, std::time_t(nullptr)}));
+    EXPECT_NO_THROW(wal.appendLog(2, TimestampedValue<std::string>("Test entry 2")));
 
     std::ifstream file(log_file_path, std::ios::binary);
     ASSERT_TRUE(file.is_open());

@@ -112,7 +112,7 @@ public:
      *
      * @param callback A function to call for each key-value pair.
      */
-    void forEach(std::function<void(const TKey &, const std::optional<TValue> &)> callback) {
+    void forEach(std::function<void(const TKey &, const TimestampedValue<TValue> &)> callback) {
         for (auto it = table.begin(); it != table.end(); ++it) {
             callback(it->first, it->second);
         }
@@ -122,37 +122,37 @@ public:
      * @brief Add a key-value pair to the MemTable.
      *
      * @param key The key associated with the value to add.
-     * @param value The value associated with the key to add.
+     * @param timestamped_value The timestamped value associated with the key to add.
      *
      * @throws `std::runtime_error` if the value is a tmobstone.
      */
-    void put(const TKey &key, const std::optional<TValue> &value) {
-        if (!value.has_value()) {
+    void put(const TKey &key, const TimestampedValue<TValue> &timestamped_value) {
+        if (!timestamped_value.value.has_value()) {
             throw std::runtime_error("cannot insert a tombstone value");
         }
-        table.insert(key, value);
+        table.insert(key, timestamped_value);
         key_range.updateKeyRange(key);
-        byte_size += sizeof(key) + sizeof(value);
+        byte_size += sizeof(key) + sizeof(timestamped_value);
         ++item_count;
     }
 
     /**
-     * @brief Retrieves the value associated with the given key.
+     * @brief Retrieves the timestamped value associated with the given key.
      *
      * @param key The key to search for.
-     * @return `TValue` The value associated with the key.
+     * @return `TimestampedValue<TValue>` The timestamped value associated with the key.
      * @throws `std::runtime_error` if the key is not found or is marked deleted.
      */
-    TValue get(const TKey &key) const {
+    TimestampedValue<TValue> get(const TKey &key) const {
         if (key_range.areKeysSet() && (key < key_range.getMinKey() || key > key_range.getMaxKey())) {
             throw std::runtime_error("key not found in memtable");
         }
-        std::optional<TValue> *value = table.findWaitFree(key);
-        if (!value || !value->has_value()) {
+        TimestampedValue<TValue> *timestamped_value = table.findWaitFree(key);
+        if (!timestamped_value || !timestamped_value->value.has_value()) {
             throw std::runtime_error("key not found in memtable");
         }
 
-        return value->value();
+        return *timestamped_value;
     }
 
     /**
@@ -165,13 +165,15 @@ public:
         if (key_range.areKeysSet() && (key < key_range.getMinKey() || key > key_range.getMaxKey())) {
             throw std::runtime_error("key not found in memtable");
         }
-        std::optional<TValue> *value = table.findWaitFree(key);
-        if (!value || !value->has_value()) {
+        TimestampedValue<TValue> *timestamped_value = table.findWaitFree(key);
+        if (!timestamped_value || !timestamped_value->value.has_value()) {
             throw std::runtime_error("key not found in memtable");
         }
 
-        table.insert(key, std::nullopt);
-        byte_size += sizeof(key) + sizeof(std::nullopt);
+        TimestampedValue<TValue> tombstone = {std::nullopt, std::time_t(nullptr)};
+
+        table.insert(key, tombstone);
+        byte_size += sizeof(key) + sizeof(tombstone);
         ++item_count;
     }
 
