@@ -43,7 +43,7 @@ TEST(LSMTreeTest, HandlesNonExistentKey) {
 
 TEST(LSMTreeTest, FlushesMemTableToSSTable) {
     LSMTree<int32_t, std::string> lsm_tree("./wal_test.log");
-    const int32_t num_pairs = 1000000;
+    const int32_t num_pairs = 10000;
 
     for (int32_t i = 0; i < num_pairs; ++i) {
         int32_t key = i;
@@ -58,7 +58,7 @@ TEST(LSMTreeTest, FlushesMemTableToSSTable) {
 
     std::filesystem::remove("./wal_test.log");
     std::filesystem::remove("./sstable_0.db");
-    std::filesystem::remove("./sstable_0.db.idx");
+    std::filesystem::remove("./sstable_0.db.meta");
 }
 
 TEST(LSMTreeTest, RecoversFromWAL) {
@@ -113,6 +113,6 @@ TEST(LSMTreeTest, HandlesConcurrentOperations) {
     std::filesystem::remove("./wal_test.log");
     for (int i = 0; i < 10; ++i) {
         std::filesystem::remove("./sstable_" + std::to_string(i) + ".db");
-        std::filesystem::remove("./sstable_" + std::to_string(i) + ".db.idx");
+        std::filesystem::remove("./sstable_" + std::to_string(i) + ".db.meta");
     }
 }

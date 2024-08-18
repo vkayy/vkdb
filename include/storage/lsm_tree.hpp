@@ -4,37 +4,32 @@
 #include "mem_table.hpp"
 #include "ss_table.hpp"
 #include "write_ahead_log.hpp"
+#include <filesystem>
 #include <memory>
 #include <mutex>
 #include <queue>
 
-/**
- * @brief A Log-Structured Merge-Tree (LSM Tree) for key-value storage.
- *
- * @tparam TKey The type of the key.
- * @tparam TValue The type of the value.
- */
 template <typename TKey, typename TValue>
 class LSMTree {
 private:
-    /**
-     * @brief A level in the LSM tree.
-     *
-     */
     struct LSMTreeLevel {
-        size_t max_size;                                              // The maximum size of the level.
-        std::vector<std::unique_ptr<SSTable<TKey, TValue>>> sstables; // The SSTables in the level.
+        size_t max_size;                            // The maximum size of the level.
+        std::vector<std::string> sstable_filenames; // The SSTable filenames.
     };
 
-    std::unique_ptr<MemTable<TKey, TValue>> memtable; // The in-memory table.
-    std::vector<LSMTreeLevel> levels;                 // The levels of the LSM tree.
-    WriteAheadLog<TKey, TValue> wal;                  // The write-ahead log.
-    mutable std::mutex lsm_tree_mutex;                // Mutex for thread safety.
+    std::string data_directory;        // The directory to store the SSTables.
+    mutable std::mutex lsm_tree_mutex; // The mutex for the LSM tree.
 
-    constexpr static size_t MEMTABLE_SIZE_THRESHOLD = 128 * 100 * 1000 * 8; // 128MB memtable size threshold.
-    constexpr static std::time_t COMPACTION_TIME_WINDOW = 60 * 60 * 24;     // Compaction time window.
-    constexpr static size_t LEVEL_SIZE_MULTIPLIER = 10;                     // SSTable size multiplier for each level.
-    constexpr static size_t NUM_LEVELS = 4;                                 // Number of levels in the LSM tree.
+    WriteAheadLog<TKey, TValue> wal;                                  // The write-ahead log.
+    std::unique_ptr<MemTable<TKey, TValue>> memtable;                 // The in-memory table.
+    std::unordered_map<std::string, BloomFilter<TKey>> bloom_filters; // The Bloom filters for each SSTable.
+    std::unordered_map<std::string, KeyRange<TKey>> key_ranges;       // The key ranges for each SSTable.
+    std::vector<LSMTreeLevel> levels;                                 // The levels of the LSM tree.
+
+    constexpr static std::time_t COMPACTION_TIME_WINDOW = 60 * 60 * 24;      // Compaction time window.
+    constexpr static size_t MEMTABLE_SIZE_THRESHOLD = 128 * 1000 * 1000 * 8; // 128MB memtable size threshold.
+    constexpr static size_t LEVEL_SIZE_MULTIPLIER = 10;                      // SSTable size multiplier for each level.
+    constexpr static size_t NUM_LEVELS = 10;                                 // Number of levels in the LSM tree.
 
     /**
      * @brief Initializes the levels of the LSM tree.
@@ -56,11 +51,14 @@ private:
         if (memtable->getByteSize() < MEMTABLE_SIZE_THRESHOLD) {
             return;
         }
-        std::string sstable_filename = "sstable_L1_" + std::to_string(levels[0].sstables.size()) + ".db";
+        std::string sstable_filename = data_directory + "/sstable_L0_" + std::to_string(levels[0].sstable_filenames.size()) + ".db";
         auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(sstable_filename);
-        new_sstable->flushFromMemTable(*memtable);
 
-        levels[0].sstables.push_back(std::move(new_sstable));
+        bloom_filters[sstable_filename] = BloomFilter<TKey>(memtable->getItemCount(), BLOOM_FILTER_FALSE_POSITIVE_RATE);
+        new_sstable->flushFromMemTable(*memtable, bloom_filters[sstable_filename], key_ranges[sstable_filename]);
+
+        levels[0].sstable_filenames.push_back(sstable_filename);
+
         memtable = std::make_unique<MemTable<TKey, TValue>>();
 
         balanceLevels();
@@ -75,24 +73,24 @@ private:
             auto &current_level = levels[i];
             auto &next_level = levels[i + 1];
 
-            size_t current_size = current_level.sstables.size();
+            size_t current_size = current_level.sstable_filenames.size();
             size_t max_size = current_level.max_size;
 
             if (current_size > max_size) {
                 size_t excess_size = current_size - max_size;
 
-                std::vector<std::unique_ptr<SSTable<TKey, TValue>>> to_move(excess_size);
+                std::vector<std::string> to_move(excess_size);
 
                 to_move.insert(to_move.end(),
-                               std::make_move_iterator(current_level.sstables.begin()),
-                               std::make_move_iterator(current_level.sstables.begin() + excess_size));
+                               current_level.sstable_filenames.begin(),
+                               current_level.sstable_filenames.begin() + excess_size);
 
-                current_level.sstables.erase(current_level.sstables.begin(),
-                                             current_level.sstables.begin() + excess_size);
+                current_level.sstable_filenames.erase(current_level.sstable_filenames.begin(),
+                                                      current_level.sstable_filenames.begin() + excess_size);
 
-                next_level.sstables.insert(next_level.sstables.end(),
-                                           std::make_move_iterator(to_move.begin()),
-                                           std::make_move_iterator(to_move.end()));
+                next_level.sstable_filenames.insert(next_level.sstable_filenames.end(),
+                                                    to_move.begin(),
+                                                    to_move.end());
             }
         }
     }
@@ -108,28 +106,33 @@ private:
      */
     void compactLevel(size_t level_index) {
         if (level_index >= levels.size()) {
-            std::invalid_argument("level index is outside range");
+            throw std::invalid_argument("level index is outside range");
         }
         auto &level = levels[level_index];
         auto now = std::time(nullptr);
-        std::vector<std::unique_ptr<SSTable<TKey, TValue>>> to_compact;
+        std::vector<std::string> to_compact;
 
-        auto it = std::partition(level.sstables.begin(), level.sstables.end(),
-                                 [&](const std::unique_ptr<SSTable<TKey, TValue>> &sstable) {
-                                     return now - sstable->getCreationTime() <= COMPACTION_TIME_WINDOW;
+        auto it = std::partition(level.sstable_filenames.begin(), level.sstable_filenames.end(),
+                                 [&](const std::string &filename) {
+                                     SSTable<TKey, TValue> sstable(filename);
+                                     return now - sstable.getCreationTime() <= COMPACTION_TIME_WINDOW;
                                  });
 
-        to_compact.insert(to_compact.end(),
-                          std::make_move_iterator(it),
-                          std::make_move_iterator(level.sstables.end()));
-        level.sstables.erase(it, level.sstables.end());
+        to_compact.insert(to_compact.end(), it, level.sstable_filenames.end());
+        level.sstable_filenames.erase(it, level.sstable_filenames.end());
 
         if (to_compact.size() > 1) {
-            std::string new_sstable_filename = "sstable_L" + std::to_string(level_index) + "_compacted_" + std::to_string(level.sstables.size()) + ".db";
+            std::string new_sstable_filename = data_directory + "/sstable_L" + std::to_string(level_index) + "_compacted_" + std::to_string(level.sstable_filenames.size()) + ".db";
             auto merged_sstable = mergeSSTables(to_compact, new_sstable_filename);
-            level.sstables.push_back(std::move(merged_sstable));
+            level.sstable_filenames.push_back(new_sstable_filename);
+
+            for (const auto &filename : to_compact) {
+                bloom_filters.erase(filename);
+                key_ranges.erase(filename);
+                std::filesystem::remove(filename);
+            }
         } else if (to_compact.size() == 1) {
-            level.sstables.push_back(std::move(to_compact[0]));
+            level.sstable_filenames.push_back(to_compact[0]);
         }
     }
 
@@ -141,13 +144,14 @@ private:
      * @return `std::unique_ptr<SSTable<TKey, TValue>>` The new SSTable.
      */
     std::unique_ptr<SSTable<TKey, TValue>> mergeSSTables(
-        const std::vector<std::unique_ptr<SSTable<TKey, TValue>>> &sstables,
+        const std::vector<std::string> &sstable_filenames,
         const std::string &new_filename) {
 
         auto merged_sstable = std::make_unique<SSTable<TKey, TValue>>(new_filename);
 
-        for (const auto &sstable : sstables) {
-            merged_sstable->merge(*sstable);
+        for (const auto &filename : sstable_filenames) {
+            SSTable<TKey, TValue> sstable(filename);
+            merged_sstable->merge(sstable, bloom_filters[new_filename], key_ranges[new_filename]);
         }
 
         return merged_sstable;
@@ -174,16 +178,15 @@ public:
     /**
      * @brief Construct a new LSMTree object.
      *
-     * This initializes the LSM tree with the given write-ahead log path and
-     * number of levels. Then, it starts a background thread for compaction.
-     *
      * @param wal_path The path to the write-ahead log.
-     * @param num_levels The number of levels in the LSM tree.
+     * @param data_dir The directory to store the SSTables.
      */
-    LSMTree(const std::string &wal_path, size_t num_levels = NUM_LEVELS)
+    LSMTree(const std::string &wal_path, const std::string &data_dir = "./")
         : memtable(std::make_unique<MemTable<TKey, TValue>>()),
-          wal(wal_path) {
-        initializeLevels(num_levels);
+          wal(wal_path),
+          data_directory(data_dir) {
+        initializeLevels(NUM_LEVELS);
+        std::filesystem::create_directories(data_directory);
         std::thread compaction_thread(&LSMTree::backgroundCompaction, this);
         compaction_thread.detach();
     }
@@ -214,11 +217,15 @@ public:
             return memtable->get(key);
         } catch (const std::runtime_error &) {
             for (const auto &level : levels) {
-                for (auto it = level.sstables.rbegin(); it != level.sstables.rend(); ++it) {
-                    auto result = (*it)->get(key);
-                    if (!result) {
+                for (auto it = level.sstable_filenames.rbegin(); it != level.sstable_filenames.rend(); ++it) {
+                    if (key_ranges[*it].areKeysSet() && (key < key_ranges[*it].getMinKey() || key > key_ranges[*it].getMaxKey())) {
                         continue;
                     }
+                    if (!bloom_filters[*it].mightContain(key)) {
+                        continue;
+                    }
+                    SSTable<TKey, TValue> sstable(*it);
+                    auto result = sstable.get(key);
                     if (result.has_value()) {
                         return result;
                     }
@@ -254,11 +261,13 @@ public:
 
         wal.recoverFromLog(temp_memtable);
         if (temp_memtable->getByteSize() >= MEMTABLE_SIZE_THRESHOLD) {
-            std::string sstable_filename = "sstable_" + std::to_string(levels[0].sstables.size()) + "_recovered.db";
+            std::string sstable_filename = data_directory + "/sstable_L0_" + std::to_string(levels[0].sstable_filenames.size()) + "_recovered.db";
             auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(sstable_filename);
-            new_sstable->flushFromMemTable(*temp_memtable);
-            levels[0].sstables.push_back(std::move(new_sstable));
 
+            bloom_filters[sstable_filename] = BloomFilter<TKey>(temp_memtable->getItemCount(), BLOOM_FILTER_FALSE_POSITIVE_RATE);
+            new_sstable->flushFromMemTable(*temp_memtable, bloom_filters[sstable_filename], key_ranges[sstable_filename]);
+
+            levels[0].sstable_filenames.push_back(sstable_filename);
             temp_memtable = std::make_unique<MemTable<TKey, TValue>>();
 
             balanceLevels();
