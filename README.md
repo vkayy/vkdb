@@ -1,10 +1,10 @@
 # vkdb
 
-A time-series database engine currently being built in C++ with minimal dependencies.
+A time series database engine currently being built in C++ with minimal dependencies.
 
 ## What will the architecture be?
 
-vkdb will be supported with an LSM tree architecture -- these are most suited to high write throughput, and as time-series data workloads are generally append-only, I decided this was a sensible design choice.
+vkdb will be supported with an LSM tree architecture -- these are most suited to high write throughput, and as time series data workloads are generally append-only, I decided this was a sensible design choice.
 
 ## How will this architecture work?
 
@@ -16,7 +16,7 @@ As operations are append-only, updates and deletions are done a little different
 
 Now, from this point, we notice that this can lead to a lot of wasted disk space -- if we've updated a key hundreds of times, it'll have hundreds of redundant entries. This is solved with periodic compaction, which is a process where SSTables with overlapping key ranges are merged together, and is divided into many kinds, including time-window compaction strategy (TWCS).
 
-TWCS organises and compacts data based on time intervals, and this is beneficial to us, given that we're working with time-series data workloads. Hence, TWCS becomes most appropriate, and with it, we're also able to avoid size, write, and read amplification.
+TWCS organises and compacts data based on time intervals, and this is beneficial to us, given that we're working with time series data workloads. Hence, TWCS becomes most appropriate, and with it, we're also able to avoid size, write, and read amplification.
 
 From this point on, there are a few other optimisations I intend on implementing (Bloom filters, summary tables), and also my own custom query language.
 
