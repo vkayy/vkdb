@@ -2,14 +2,110 @@
 #define SS_TABLE_HPP
 
 #include "bloom_filter.hpp"
+#include "lru_cache.hpp"
 #include "mem_table.hpp"
 #include "utils/serialize.hpp"
 #include <fstream>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
 
 constexpr double BLOOM_FILTER_FALSE_POSITIVE_RATE = 0.01; // The false positive rate for the Bloom filter.
+constexpr size_t MEMTABLE_SIZE_THRESHOLD = 1000 * 8;      // 1KB memtable size threshold.
+
+/**
+ * @brief A block in an SSTable.
+ *
+ * @tparam TKey The type of the key.
+ * @tparam TValue The type of the value.
+ */
+template <typename TKey, typename TValue>
+struct SSTableBlock {
+private:
+    std::map<TKey, TimestampedValue<TValue>> index; // The key to value mapping.
+
+public:
+    /**
+     * @brief Get the value associated with the key.
+     *
+     * @param key The key.
+     * @return `TimestampedValue<TValue> *` The value associated with the key or `nullptr` if not found.
+     */
+    TimestampedValue<TValue> *get(const TKey &key) {
+        auto it = index.find(key);
+        if (it == index.end()) {
+            return nullptr;
+        }
+        return &it->second;
+    }
+
+    /**
+     * @brief Put the key-value pair into the block index.
+     *
+     * @param key The key.
+     * @param timestamped_value The timestamped value.
+     */
+    void put(const TKey &key, const TimestampedValue<TValue> &timestamped_value) {
+        index[key] = timestamped_value;
+    }
+};
+
+/**
+ * @brief A cache for the LSM tree.
+ *
+ * @tparam TKey The type of the key.
+ * @tparam TValue The type of the value.
+ */
+template <typename TKey, typename TValue>
+struct LSMTreeCache {
+    LRUCache<size_t, std::pair<SSTableBlock<TKey, TValue>, size_t>> block_cache; // The block cache.
+    std::atomic<int32_t> block_cache_version;                                    // The version of the block cache.
+    int32_t block_size;                                                          // The block size for the block cache.
+    LRUCache<TKey, std::pair<TimestampedValue<TValue>, size_t>> kv_cache;        // The key-value cache.
+    std::atomic<int32_t> kv_cache_version;                                       // The version of the key-value cache.
+};
+
+/**
+ * @brief A structure to hold the metadata of an SSTable.
+ */
+template <typename TKey>
+struct SSTableMetadata {
+    std::map<TKey, std::streampos> index; // The key to offset mapping.
+    std::time_t creation_time;            // The creation time.
+
+    /**
+     * @brief Serialize the SSTable metadata to a file stream.
+     *
+     * @param ofs The output file stream.
+     */
+    void serialize(std::ofstream &ofs) const {
+        serializeValue(ofs, creation_time);
+        serializeValue(ofs, index.size());
+        for (const auto &entry : index) {
+            serializeValue(ofs, entry.first);
+            serializeValue(ofs, entry.second);
+        }
+    }
+
+    /**
+     * @brief Deserialize the SSTable metadata from a file stream.
+     *
+     * @param ifs The input file stream.
+     */
+    void deserialize(std::ifstream &ifs) {
+        deserializeValue(ifs, creation_time);
+        size_t index_size;
+        deserializeValue(ifs, index_size);
+        for (size_t i = 0; i < index_size; ++i) {
+            TKey key;
+            std::streampos offset;
+            deserializeValue(ifs, key);
+            deserializeValue(ifs, offset);
+            index[key] = offset;
+        }
+    }
+};
 
 /**
  * @brief An immutable disk-based SSTable for key-value storage.
@@ -21,44 +117,46 @@ template <typename TKey, typename TValue>
 class SSTable {
 private:
     /**
-     * @brief A structure to hold the metadata of an SSTable.
+     * @brief Read a block from the SSTable file.
+     *
+     * @param block_offset The offset of the block.
+     * @param block_size The size of the block.
+     *
+     * @return `SSTableBlock<TKey, TValue>` The block read from the file.
+     * @throws `std::runtime_error` if the SSTable file fails to open or seek to the block offset.
      */
-    struct SSTableMetadata {
-        std::map<TKey, std::streampos> index; // The key to offset mapping.
-        std::time_t creation_time;            // The creation time.
-
-        /**
-         * @brief Serialize the SSTable metadata to a file stream.
-         *
-         * @param ofs The output file stream.
-         */
-        void serialize(std::ofstream &ofs) const {
-            serializeValue(ofs, creation_time);
-            serializeValue(ofs, index.size());
-            for (const auto &entry : index) {
-                serializeValue(ofs, entry.first);
-                serializeValue(ofs, entry.second);
-            }
+    SSTableBlock<TKey, TValue> read_block(std::streampos block_offset, size_t block_size) const {
+        std::ifstream ifs(filename, std::ios::binary);
+        if (!ifs.is_open()) {
+            throw std::runtime_error("SSTable::read_block - unable to open SSTable file for reading");
         }
 
-        /**
-         * @brief Deserialize the SSTable metadata from a file stream.
-         *
-         * @param ifs The input file stream.
-         */
-        void deserialize(std::ifstream &ifs) {
-            deserializeValue(ifs, creation_time);
-            size_t index_size;
-            deserializeValue(ifs, index_size);
-            for (size_t i = 0; i < index_size; ++i) {
-                TKey key;
-                std::streampos offset;
-                deserializeValue(ifs, key);
-                deserializeValue(ifs, offset);
-                index[key] = offset;
-            }
+        ifs.seekg(0, std::ios::end);
+        std::streampos file_length = ifs.tellg();
+        ifs.seekg(0, std::ios::beg);
+
+        ifs.seekg(block_offset);
+        if (ifs.fail()) {
+            throw std::runtime_error("SSTable::read_block - unable to seek to block offset");
         }
-    };
+
+        SSTableBlock<TKey, TValue> block;
+
+        size_t bytes_read = 0;
+
+        while (bytes_read < block_size && ifs.tellg() < file_length) {
+            TKey key;
+            deserializeValue(ifs, key);
+
+            TimestampedValue<TValue> timestamped_value;
+            deserializeValue(ifs, timestamped_value);
+
+            bytes_read = ifs.tellg() - block_offset;
+            block.put(key, timestamped_value);
+        }
+
+        return block;
+    }
 
     std::string filename; // The name of the SSTable file.
 
@@ -79,7 +177,7 @@ public:
      *
      * @throws `std::runtime_error` if the metadata file cannot be opened for writing.
      */
-    void serializeMetadata(const SSTableMetadata &metadata, const std::string &sstable_filename) const {
+    static void serializeMetadata(const SSTableMetadata<TKey> &metadata, const std::string &sstable_filename) {
         std::string metadata_filename = sstable_filename + ".meta";
         std::ofstream ofs(metadata_filename, std::ios::binary);
         if (!ofs.is_open()) {
@@ -97,7 +195,7 @@ public:
      *
      * @throws `std::runtime_error` if the metadata file cannot be opened for reading.
      */
-    void deserializeMetadata(SSTableMetadata &metadata, const std::string &sstable_filename) {
+    static void deserializeMetadata(SSTableMetadata<TKey> &metadata, const std::string &sstable_filename) {
         std::string metadata_filename = sstable_filename + ".meta";
         std::ifstream ifs(metadata_filename, std::ios::binary);
         if (!ifs.is_open()) {
@@ -129,18 +227,14 @@ public:
             throw std::runtime_error("unable to open SSTable file for writing");
         }
 
-        SSTableMetadata metadata;
+        SSTableMetadata<TKey> metadata;
+        metadata.creation_time = std::time(nullptr);
 
         mem_table.forEach([&](const TKey &key, const TimestampedValue<TValue> &timestamped_value) {
             std::streampos pos = ofs.tellp();
             metadata.index[key] = pos;
             serializeValue(ofs, key);
-            serializeValue(ofs, timestamped_value.value.has_value());
-
-            if (timestamped_value.value.has_value()) {
-                serializeValue(ofs, timestamped_value);
-            }
-
+            serializeValue(ofs, timestamped_value);
             bloom_filter.insert(key);
             key_range.updateKeyRange(key);
         });
@@ -154,51 +248,40 @@ public:
      * @brief Retrieve a value from the SSTable by its key.
      *
      * @param key The key to search for.
+     * @param cache The cache to use.
      *
      * @return `TimestampedValue<TValue>` The value associated with the key.
      * @throws `std::runtime_error` if the SSTable file cannot be opened for reading or the key is not found.
      */
-    TimestampedValue<TValue> get(const TKey &key) const {
-        std::ifstream meta_ifs(filename + ".meta", std::ios::binary);
-        if (!meta_ifs.is_open()) {
-            throw std::runtime_error("unable to open metadata file for reading");
+    TimestampedValue<TValue> get(const TKey &key, LSMTreeCache<TKey, TValue> &cache) const {
+        SSTableMetadata<TKey> metadata;
+        deserializeMetadata(metadata, filename);
+
+        auto it = metadata.index.find(key);
+        if (it == metadata.index.end()) {
+            throw std::runtime_error("SSTable::get - key not found in SSTable index");
         }
 
-        SSTableMetadata new_metadata;
-        new_metadata.deserialize(meta_ifs);
+        std::streampos block_offset = it->second - (it->second % std::streampos(cache.block_size));
+        size_t cache_key = std::hash<std::string>{}(filename + std::to_string(block_offset));
 
-        auto it = new_metadata.index.find(key);
-        if (it == new_metadata.index.end()) {
-            throw std::runtime_error("key not found in SSTable");
+        SSTableBlock<TKey, TValue> key_block;
+        auto cached_block_entry = cache.block_cache.get(cache_key);
+
+        if (cached_block_entry && cached_block_entry->second == cache.block_cache_version.load()) {
+            key_block = cached_block_entry->first;
+        } else {
+            key_block = read_block(block_offset, cache.block_size);
+            cache.block_cache_version.fetch_add(1);
+            cache.block_cache.put(cache_key, {key_block, cache.block_cache_version.load()});
         }
 
-        std::ifstream data_ifs(filename, std::ios::binary);
-        if (!data_ifs.is_open()) {
-            throw std::runtime_error("unable to open SSTable file for reading");
+        TimestampedValue<TValue> *timestamped_value = key_block.get(key);
+        if (!timestamped_value || !timestamped_value->value.has_value()) {
+            throw std::runtime_error("SSTable::get - key not found in SSTable block");
         }
 
-        data_ifs.seekg(it->second);
-        if (data_ifs.fail()) {
-            throw std::runtime_error("unable to seek to key offset");
-        }
-
-        TKey found_key;
-        deserializeValue(data_ifs, found_key);
-
-        if (found_key != key) {
-            throw std::runtime_error("key mismatch during deserialization");
-        }
-
-        bool has_value;
-        deserializeValue(data_ifs, has_value);
-
-        if (has_value) {
-            TimestampedValue<TValue> value;
-            deserializeValue(data_ifs, value);
-            return value;
-        }
-
-        throw std::runtime_error("key not found in SSTable");
+        return *timestamped_value;
     }
 
     /**
@@ -240,61 +323,35 @@ public:
         std::unordered_map<TKey, bool> seen;
         std::map<TKey, TimestampedValue<TValue>> merged_entries;
 
-        SSTableMetadata metadata;
-        deserializeMetadata(metadata, filename);
+        auto process_sstable = [&](const std::string &sstable_filename) {
+            SSTableMetadata<TKey> metadata;
+            deserializeMetadata(metadata, sstable_filename);
 
-        SSTableMetadata other_metadata;
-        deserializeMetadata(other_metadata, other.filename);
+            for (const auto &entry : metadata.index) {
+                TKey key = entry.first;
+                std::ifstream ifs(sstable_filename, std::ios::binary);
+                ifs.seekg(entry.second);
 
-        for (const auto &entry : other_metadata.index) {
-            TKey key = entry.first;
-            std::ifstream ifs(other.filename, std::ios::binary);
-            ifs.seekg(entry.second);
+                TKey read_key;
+                deserializeValue(ifs, key);
+                if (seen[key]) {
+                    continue;
+                }
 
-            TKey read_key;
-            bool has_value;
-            deserializeValue(ifs, read_key);
-            deserializeValue(ifs, has_value);
+                TimestampedValue<TValue> timestamp_value;
+                deserializeValue(ifs, timestamp_value);
+                if (!timestamp_value.value.has_value()) {
+                    continue;
+                }
 
-            if (!has_value || seen[key]) {
-                continue;
+                seen[key] = true;
+                merged_entries[key] = timestamp_value;
+                key_range.updateKeyRange(key);
             }
+        };
 
-            TimestampedValue<TValue> actual_value;
-            deserializeValue(ifs, actual_value);
-
-            TimestampedValue<TValue> value;
-            value = actual_value;
-
-            seen[key] = true;
-            merged_entries[key] = value;
-            key_range.updateKeyRange(key);
-        }
-
-        for (const auto &entry : metadata.index) {
-            TKey key = entry.first;
-            std::ifstream ifs(filename, std::ios::binary);
-            ifs.seekg(entry.second);
-
-            TKey read_key;
-            bool has_value;
-            deserializeValue(ifs, read_key);
-            deserializeValue(ifs, has_value);
-
-            if (!has_value || seen[key]) {
-                continue;
-            }
-
-            TimestampedValue<TValue> actual_value;
-            deserializeValue(ifs, actual_value);
-
-            TimestampedValue<TValue> value;
-            value = actual_value;
-
-            seen[key] = true;
-            merged_entries[key] = value;
-            key_range.updateKeyRange(key);
-        }
+        process_sstable(other.filename);
+        process_sstable(filename);
 
         std::string new_filename = filename + "_merged";
         std::ofstream ofs(new_filename, std::ios::binary);
@@ -302,7 +359,7 @@ public:
             throw std::runtime_error("unable to open merged SSTable file for writing");
         }
 
-        SSTableMetadata new_metadata;
+        SSTableMetadata<TKey> new_metadata;
         new_metadata.creation_time = std::time(nullptr);
         bloom_filter = BloomFilter<TKey>(merged_entries.size(), BLOOM_FILTER_FALSE_POSITIVE_RATE);
 
@@ -310,11 +367,11 @@ public:
             if (timestamped_value.value.has_value()) {
                 std::streampos pos = ofs.tellp();
                 new_metadata.index[key] = pos;
-                bloom_filter.insert(key);
 
                 serializeValue(ofs, key);
-                serializeValue(ofs, true);
                 serializeValue(ofs, timestamped_value);
+
+                bloom_filter.insert(key);
             } else {
                 throw std::runtime_error("cannot merge tombstone values");
             }

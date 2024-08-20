@@ -67,7 +67,7 @@ private:
          */
         SkipListNode(const TKey &key, const TimestampedValue<TValue> &timestamped_value, const int32_t height)
             : key(key), timestamped_value(timestamped_value), top_level(height) {
-            initialiseForward(height, nullptr);
+            initialise_forward(height, nullptr);
         }
 
         /**
@@ -81,7 +81,7 @@ private:
          */
         SkipListNode(const TKey &key, const int32_t height, SkipListNode *forward_value)
             : key(key), top_level(height) {
-            initialiseForward(height, forward_value);
+            initialise_forward(height, forward_value);
         }
 
         /**
@@ -99,7 +99,7 @@ private:
          * @param height The `top_level` of the node.
          * @param forward_value The value to set all forward pointers.
          */
-        void initialiseForward(const int32_t height, SkipListNode *forward_value) {
+        void initialise_forward(const int32_t height, SkipListNode *forward_value) {
             forward = std::vector<AtomicMarkableReference<SkipListNode>>(height);
             for (int32_t i = 0; i < height; ++i) {
                 forward[i].set(forward_value, false);
@@ -218,12 +218,13 @@ private:
             TimestampedValue<TValue> value;
             int32_t top_level;
 
-            deserializeValue(ifs, key);
             if (ifs.eof()) {
                 break;
             }
 
+            deserializeValue(ifs, key);
             deserializeValue(ifs, value);
+
             ifs.read(reinterpret_cast<char *>(&top_level), sizeof(top_level));
 
             if (top_level == -1) {
