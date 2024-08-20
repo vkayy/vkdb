@@ -49,7 +49,7 @@ private:
      *
      * @param entry The log entry to serialize.
      */
-    void serializeWALEntry(const WriteAheadLogEntry &entry) {
+    void serialize_WAL_entry(const WriteAheadLogEntry &entry) {
         serializeValue(log_stream, entry.timestamped_value.timestamp);
         serializeValue(log_stream, entry.key);
 
@@ -67,7 +67,7 @@ private:
      * @param recovery_stream The recovery stream to read from.
      * @param entry The log entry to deserialize into.
      */
-    void deserializeWALEntry(std::ifstream &recovery_stream, WriteAheadLogEntry &entry) {
+    void deserialize_WAL_entry(std::ifstream &recovery_stream, WriteAheadLogEntry &entry) {
         deserializeValue(recovery_stream, entry.timestamped_value.timestamp);
         deserializeValue(recovery_stream, entry.key);
 
@@ -123,7 +123,7 @@ public:
         std::lock_guard<std::mutex> lock(log_mutex);
 
         WriteAheadLogEntry entry({key, timestamped_value});
-        serializeWALEntry(entry);
+        serialize_WAL_entry(entry);
         log_stream.flush();
 
         if (!log_stream.good()) {
@@ -150,7 +150,7 @@ public:
 
         while (recovery_stream.peek() != EOF) {
             WriteAheadLogEntry entry;
-            deserializeWALEntry(recovery_stream, entry);
+            deserialize_WAL_entry(recovery_stream, entry);
             if (entry.timestamped_value.timestamp < last_timestamp) {
                 throw std::runtime_error("log entries are not in chronological order");
             }
@@ -158,6 +158,28 @@ public:
             last_timestamp = entry.timestamped_value.timestamp;
         }
         recovery_stream.close();
+    }
+
+    /**
+     * @brief Clear the log file.
+     *
+     */
+    void clearLog() {
+        std::lock_guard<std::mutex> lock(log_mutex);
+
+        log_stream.close();
+
+        std::ofstream clear_stream(log_file_path, std::ios::trunc | std::ios::binary);
+        if (!clear_stream.is_open()) {
+            throw std::runtime_error("unable to clear log file");
+        }
+
+        clear_stream.close();
+
+        log_stream.open(log_file_path, std::ios::app | std::ios::binary);
+        if (!log_stream.is_open()) {
+            throw std::runtime_error("unable to reopen log file");
+        }
     }
 };
 

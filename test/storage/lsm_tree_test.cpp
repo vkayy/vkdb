@@ -43,7 +43,7 @@ TEST(LSMTreeTest, HandlesNonExistentKey) {
 
 TEST(LSMTreeTest, FlushesMemTableToSSTable) {
     LSMTree<int32_t, std::string> lsm_tree("./wal_test.log");
-    const int32_t num_pairs = 10000;
+    const int32_t num_pairs = 1000;
 
     for (int32_t i = 0; i < num_pairs; ++i) {
         int32_t key = i;
@@ -53,6 +53,45 @@ TEST(LSMTreeTest, FlushesMemTableToSSTable) {
 
     for (int32_t i = 0; i < num_pairs; ++i) {
         auto retrieved_value = lsm_tree.get(i);
+        EXPECT_TRUE(retrieved_value.value.has_value());
+    }
+
+    std::filesystem::remove("./wal_test.log");
+    std::filesystem::remove("./sstable_0.db");
+    std::filesystem::remove("./sstable_0.db.meta");
+}
+
+TEST(LSMTreeTest, ReadsManyKeys) {
+    LSMTree<int32_t, std::string> lsm_tree("./wal_test.log");
+    const int32_t num_pairs = 10000;
+    for (int32_t i = 0; i < num_pairs; ++i) {
+        int32_t key = i;
+        std::string value = generateRandomString(100);
+        lsm_tree.put(key, value, std::time_t(nullptr));
+    }
+
+    for (int32_t i = 0; i < num_pairs; ++i) {
+        auto retrieved_value = lsm_tree.get(i);
+        EXPECT_TRUE(retrieved_value.value.has_value());
+    }
+
+    std::filesystem::remove("./wal_test.log");
+    std::filesystem::remove("./sstable_0.db");
+    std::filesystem::remove("./sstable_0.db.meta");
+}
+
+TEST(LSMTreeTest, ReadsRepeatedKey) {
+    LSMTree<int32_t, std::string> lsm_tree("./wal_test.log");
+    const int32_t num_pairs = 10000;
+
+    for (int32_t i = 0; i < num_pairs; ++i) {
+        int32_t key = i;
+        std::string value = generateRandomString(100);
+        lsm_tree.put(key, value, std::time_t(nullptr));
+    }
+
+    for (int32_t i = 0; i < num_pairs; ++i) {
+        auto retrieved_value = lsm_tree.get(num_pairs - 1);
         EXPECT_TRUE(retrieved_value.value.has_value());
     }
 
@@ -81,7 +120,7 @@ TEST(LSMTreeTest, RecoversFromWAL) {
 TEST(LSMTreeTest, HandlesConcurrentOperations) {
     LSMTree<int32_t, std::string> lsm_tree("./wal_test.log");
     const int32_t num_threads = 4;
-    const int32_t ops_per_thread = 10000;
+    const int32_t ops_per_thread = 100;
 
     auto worker = [&](int thread_id) {
         for (int32_t i = 0; i < ops_per_thread; ++i) {

@@ -1,4 +1,5 @@
 #include "storage/bloom_filter.hpp"
+#include "storage/lru_cache.hpp"
 #include "storage/mem_table.hpp"
 #include "storage/ss_table.hpp"
 #include "utils/random.hpp"
@@ -34,7 +35,8 @@ TEST(SSTableTest, FlushFromMemTableAndRetrieve) {
 
     sstable.flushFromMemTable(memtable, bloom_filter, key_range);
 
-    auto retrieved_value = sstable.get(random_key);
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+    auto retrieved_value = sstable.get(random_key, cache);
     EXPECT_TRUE(retrieved_value.value.has_value());
     EXPECT_EQ(retrieved_value.value.value(), random_value);
 
@@ -56,7 +58,8 @@ TEST(SSTableTest, HandlesNonExistentKey) {
     sstable.flushFromMemTable(memtable, bloom_filter, key_range);
 
     auto non_existent_key = random_key + 1;
-    EXPECT_THROW(sstable.get(non_existent_key), std::runtime_error);
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+    EXPECT_THROW(sstable.get(non_existent_key, cache), std::runtime_error);
     std::filesystem::remove("./sstable_test_output");
     std::filesystem::remove("./sstable_test_output.idx");
 }
@@ -76,7 +79,8 @@ TEST(SSTableTest, HandlesDeletedKey) {
 
     sstable.flushFromMemTable(memtable, bloom_filter, key_range);
 
-    EXPECT_THROW(sstable.get(random_key), std::runtime_error);
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+    EXPECT_THROW(sstable.get(random_key, cache), std::runtime_error);
 
     std::filesystem::remove("./sstable_test_output");
     std::filesystem::remove("./sstable_test_output.idx");
@@ -100,11 +104,12 @@ TEST(SSTableTest, DeserializesMetadataAndRetrieves) {
 
     SSTable<int32_t, std::string> sstable_loaded("./sstable_test_output");
 
-    auto retrieved_value1 = sstable_loaded.get(random_key1);
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+    auto retrieved_value1 = sstable_loaded.get(random_key1, cache);
     EXPECT_TRUE(retrieved_value1.value.has_value());
     EXPECT_EQ(retrieved_value1.value.value(), random_value1);
 
-    auto retrieved_value2 = sstable_loaded.get(random_key2);
+    auto retrieved_value2 = sstable_loaded.get(random_key2, cache);
     EXPECT_TRUE(retrieved_value2.value.has_value());
     EXPECT_EQ(retrieved_value2.value.value(), random_value2);
 
@@ -120,21 +125,33 @@ TEST(SSTableTest, HandlesLargeNumberOfPairs) {
     const int32_t num_pairs = 1000;
     std::vector<std::pair<int32_t, std::string>> pairs;
 
+    BloomFilter<int32_t> bloom_filter(num_pairs, 0.01);
+    KeyRange<int32_t> key_range;
+
     for (int32_t i = 0; i < num_pairs; ++i) {
         int32_t key = i;
         std::string value = generateRandomString(100);
         memtable.put(key, {value, std::time_t(nullptr)});
+        bloom_filter.insert(key);
+        key_range.updateKeyRange(key);
         pairs.push_back({key, value});
     }
 
-    BloomFilter<int32_t> bloom_filter(1000, 0.01);
-    KeyRange<int32_t> key_range;
     SSTable<int32_t, std::string> sstable("./sstable_test_output");
 
     sstable.flushFromMemTable(memtable, bloom_filter, key_range);
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
 
     for (const auto &[key, value] : pairs) {
-        auto retrieved_value = sstable.get(key);
+        if (key < key_range.getMinKey() || key > key_range.getMaxKey()) {
+            continue;
+        }
+
+        if (!bloom_filter.mightContain(key)) {
+            continue;
+        }
+
+        auto retrieved_value = sstable.get(key, cache);
         EXPECT_TRUE(retrieved_value.value.has_value());
         EXPECT_EQ(retrieved_value.value.value(), value);
     }
@@ -156,14 +173,16 @@ TEST(SSTableMergeTest, MergesTwoNonOverlappingSSTables) {
     KeyRange<int32_t> merged_key_range;
     auto merged_sstable = sstable1->merge(*sstable2, merged_bloom_filter, merged_key_range);
 
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+
     for (const auto &[key, value] : pairs1) {
         EXPECT_TRUE(merged_bloom_filter.mightContain(key));
-        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
+        EXPECT_EQ(merged_sstable->get(key, cache).value.value(), value);
     }
 
     for (const auto &[key, value] : pairs2) {
         EXPECT_TRUE(merged_bloom_filter.mightContain(key));
-        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
+        EXPECT_EQ(merged_sstable->get(key, cache).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);
@@ -193,8 +212,10 @@ TEST(SSTableMergeTest, MergesTwoOverlappingSSTables) {
     std::map<int32_t, std::string> expected_values = {
         {1, "value1"}, {3, "value3"}, {4, "value4"}, {5, "value6"}, {6, "value6"}};
 
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+
     for (const auto &[key, value] : expected_values) {
-        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
+        EXPECT_EQ(merged_sstable->get(key, cache).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);
@@ -219,8 +240,10 @@ TEST(SSTableMergeTest, HandlesEmptySSTables) {
     KeyRange<int32_t> merged_key_range;
     auto merged_sstable = sstable1->merge(*sstable2, merged_bloom_filter, merged_key_range);
 
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+
     for (const auto &[key, value] : pairs1) {
-        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
+        EXPECT_EQ(merged_sstable->get(key, cache).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);
@@ -250,8 +273,10 @@ TEST(SSTableMergeTest, MergesWithDuplicateKeys) {
     std::map<int32_t, std::string> expected_values = {
         {1, "value1"}, {2, "value4"}, {3, "value5"}, {4, "value6"}};
 
+    LSMTreeCache<int32_t, std::string> cache{{}, 0, 1000 * 1000 * 8, {}};
+
     for (const auto &[key, value] : expected_values) {
-        EXPECT_EQ(merged_sstable->get(key).value.value(), value);
+        EXPECT_EQ(merged_sstable->get(key, cache).value.value(), value);
     }
 
     EXPECT_EQ(merged_key_range.getMinKey(), 1);

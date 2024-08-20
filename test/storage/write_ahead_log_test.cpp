@@ -108,3 +108,21 @@ TEST(WriteAheadLogTest, HandlesOptionalValues) {
 
     file.close();
 }
+
+TEST(WriteAheadLogTest, ClearsLog) {
+    std::string log_file_path = generate_log_file_name();
+    WriteAheadLog<int32_t, std::string> wal(log_file_path);
+
+    EXPECT_NO_THROW(wal.appendLog(1, TimestampedValue<std::string>("Test entry 1")));
+    EXPECT_NO_THROW(wal.appendLog(2, TimestampedValue<std::string>("Test entry 2")));
+
+    wal.clearLog();
+
+    std::ifstream file(log_file_path, std::ios::binary);
+    ASSERT_TRUE(file.is_open());
+
+    file.seekg(0, std::ios::end);
+    EXPECT_EQ(file.tellg(), 0);
+
+    file.close();
+}
