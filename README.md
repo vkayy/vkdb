@@ -18,7 +18,7 @@ Now, from this point, we notice that this can lead to a lot of wasted disk space
 
 TWCS organises and compacts data based on time intervals, and this is beneficial to us, given that we're working with time series data workloads. Hence, TWCS becomes most appropriate, and with it, we're also able to avoid size, write, and read amplification.
 
-From this point on, there are a few other optimisations I intend on implementing (Bloom filters, summary tables), and also my own custom query language.
+From this point on, there are a few other optimisations I intend on implementing, and also my own custom query language.
 
 ## What's the progress plan?
 
@@ -29,5 +29,7 @@ From this point on, there are a few other optimisations I intend on implementing
 - [x] Time-window compaction strategy.
 - [x] Bloom filters.
 - [x] Summary tables.
+- [x] LRU cache.
+- [x] LSM tree caching.
 - [ ] Query parser.
 - [ ] Query execution engine.
