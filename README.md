@@ -2,13 +2,13 @@
 
 A time series database engine currently being built in C++ with minimal dependencies.
 
-## About the project
+## About the engine
 
 `vkdb` is being built to be a performant database engine in C++, speciaised for time series data. With the implementation of the query language VQL, it will enable range and aggregation queries with a simple syntax, combining the readability of SQL with the flexibiity of Q.
 
 I wanted to gain a deeper understanding of databases, with time series databases being an area of complete inexperience in particular. Moreover, time series anaysis is integral to quantitative finance, and so `vkdb` single-handedly fuses both of these interests of mine.
 
-### Under the hood
+### What's under the hood
 
 #### The storage engine
 
