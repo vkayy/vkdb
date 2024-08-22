@@ -13,8 +13,8 @@
  */
 template <typename T = std::mt19937>
 T randomGenerator() {
-    auto constexpr seed_bytes = sizeof(typename T::result_type) * T::state_size;
-    auto constexpr seed_len = seed_bytes / sizeof(std::seed_seq::result_type);
+    constexpr auto seed_bytes = sizeof(typename T::result_type) * T::state_size;
+    constexpr auto seed_len = seed_bytes / sizeof(std::seed_seq::result_type);
     auto seed = std::array<std::seed_seq::result_type, seed_len>();
     auto rd = std::random_device();
     std::generate_n(begin(seed), seed_len, std::ref(rd));
