@@ -5,9 +5,6 @@
 #include <list>
 #include <map>
 
-template <typename TKey, typename TValue>
-struct LSMTreeCache;
-
 /**
  * @brief A simple LRU cache implementation.
  *
