@@ -13,7 +13,7 @@ std::time_t generateRandomTimestamp() {
 }
 
 std::string generateRandomString(size_t length) {
-    static constexpr auto chars =
+    constexpr static auto chars =
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";

@@ -51,6 +51,10 @@ public:
 template <typename TKey, typename TValue>
 class SkipList {
 private:
+    constexpr static int32_t MAX_LEVEL = 16;       // The max level of a skip list.
+    constexpr static size_t RETRY_THRESHOLD = 100; // The number of failed compare-and-search operations before exponentiating backoff.
+    const float SKIP_LIST_PROBABILITY = 0.5;       // The probability associated with random level generation.
+
     /**
      * @brief A skip list node providing lock-free concurrency via `AtomicMarkableReference`s.
      *
@@ -248,10 +252,6 @@ private:
             prev = new_node;
         }
     }
-
-    static constexpr int32_t MAX_LEVEL = 16;       // The max level of a skip list.
-    static constexpr size_t RETRY_THRESHOLD = 100; // The number of failed compare-and-search operations before exponentiating backoff.
-    const float SKIP_LIST_PROBABILITY = 0.5;       // The probability associated with random level generation.
 
     SkipListNode *head; // The head node of the skip list.
     SkipListNode *nil;  // The sentinel node used to mark the end of the list at all levels.

@@ -91,7 +91,7 @@ TEST(LSMTreeTest, ReadsRepeatedKey) {
     }
 
     for (int32_t i = 0; i < num_pairs; ++i) {
-        auto retrieved_value = lsm_tree.get(num_pairs - 1);
+        auto retrieved_value = lsm_tree.get(0);
         EXPECT_TRUE(retrieved_value.value.has_value());
     }
 

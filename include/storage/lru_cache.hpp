@@ -17,11 +17,11 @@ struct LSMTreeCache;
 template <typename TKey, typename TValue>
 class LRUCache {
 private:
+    constexpr static size_t DEFAULT_CAPACITY = 100 * 1000 * 8; // The default capacity of the cache (100KB).
+
     size_t capacity;                                                                 // The capacity of the cache.
     std::list<std::pair<TKey, TValue>> cache_list;                                   // The list of key-value pairs.
     std::map<TKey, typename std::list<std::pair<TKey, TValue>>::iterator> cache_map; // The map of keys to iterators.
-
-    constexpr static size_t DEFAULT_CAPACITY = 100 * 1000 * 8; // The default capacity of the cache (100KB).
 
 public:
     /**

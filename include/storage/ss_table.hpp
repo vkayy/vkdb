@@ -12,7 +12,6 @@
 #include <vector>
 
 constexpr double BLOOM_FILTER_FALSE_POSITIVE_RATE = 0.01; // The false positive rate for the Bloom filter.
-constexpr size_t MEMTABLE_SIZE_THRESHOLD = 1000 * 8;      // 1KB memtable size threshold.
 
 /**
  * @brief A block in an SSTable.
@@ -23,9 +22,8 @@ constexpr size_t MEMTABLE_SIZE_THRESHOLD = 1000 * 8;      // 1KB memtable size t
 template <typename TKey, typename TValue>
 struct SSTableBlock {
 private:
-    std::map<TKey, TimestampedValue<TValue>> index; // The key to value mapping.
-
 public:
+    std::map<TKey, TimestampedValue<TValue>> index; // The key to value mapping.
     /**
      * @brief Get the value associated with the key.
      *
@@ -125,34 +123,40 @@ private:
      * @return `SSTableBlock<TKey, TValue>` The block read from the file.
      * @throws `std::runtime_error` if the SSTable file fails to open or seek to the block offset.
      */
-    SSTableBlock<TKey, TValue> read_block(std::streampos block_offset, size_t block_size) const {
+    SSTableBlock<TKey, TValue> read_block(size_t block_index, size_t block_size) const {
         std::ifstream ifs(filename, std::ios::binary);
         if (!ifs.is_open()) {
             throw std::runtime_error("SSTable::read_block - unable to open SSTable file for reading");
         }
 
         ifs.seekg(0, std::ios::end);
-        std::streampos file_length = ifs.tellg();
-        ifs.seekg(0, std::ios::beg);
+        std::streampos file_size = ifs.tellg();
+        ifs.seekg(block_index * block_size);
 
-        ifs.seekg(block_offset);
         if (ifs.fail()) {
             throw std::runtime_error("SSTable::read_block - unable to seek to block offset");
         }
 
         SSTableBlock<TKey, TValue> block;
+        std::streampos remaining = file_size - ifs.tellg();
+        size_t bytes_to_read = std::min(static_cast<size_t>(remaining), block_size);
 
-        size_t bytes_read = 0;
+        std::vector<char> buffer(bytes_to_read);
+        ifs.read(buffer.data(), bytes_to_read);
+        size_t bytes_read = ifs.gcount();
 
-        while (bytes_read < block_size && ifs.tellg() < file_length) {
+        std::istringstream block_stream(std::string(buffer.data(), bytes_read));
+        while (block_stream.good() && block_stream.tellg() < static_cast<std::streampos>(bytes_read)) {
             TKey key;
-            deserializeValue(ifs, key);
-
             TimestampedValue<TValue> timestamped_value;
-            deserializeValue(ifs, timestamped_value);
-
-            bytes_read = ifs.tellg() - block_offset;
-            block.put(key, timestamped_value);
+            try {
+                deserializeValue(block_stream, key);
+                deserializeValue(block_stream, timestamped_value);
+                block.put(key, timestamped_value);
+            } catch (const std::exception &e) {
+                std::cerr << "Error deserializing entry: " << e.what() << std::endl;
+                break;
+            }
         }
 
         return block;
@@ -261,9 +265,8 @@ public:
         if (it == metadata.index.end()) {
             throw std::runtime_error("SSTable::get - key not found in SSTable index");
         }
-
-        std::streampos block_offset = it->second - (it->second % std::streampos(cache.block_size));
-        size_t cache_key = std::hash<std::string>{}(filename + std::to_string(block_offset));
+        std::streampos block_index = it->second / cache.block_size;
+        size_t cache_key = std::hash<std::string>{}(filename + std::to_string(block_index));
 
         SSTableBlock<TKey, TValue> key_block;
         auto cached_block_entry = cache.block_cache.get(cache_key);
@@ -271,7 +274,7 @@ public:
         if (cached_block_entry && cached_block_entry->second == cache.block_cache_version.load()) {
             key_block = cached_block_entry->first;
         } else {
-            key_block = read_block(block_offset, cache.block_size);
+            key_block = read_block(block_index, cache.block_size);
             cache.block_cache_version.fetch_add(1);
             cache.block_cache.put(cache_key, {key_block, cache.block_cache_version.load()});
         }
