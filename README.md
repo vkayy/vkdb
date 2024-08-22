@@ -8,7 +8,7 @@ A time series database engine currently being built in C++ with minimal dependen
 
 I wanted to gain a deeper understanding of databases, with time series databases being an area of complete inexperience in particular. Moreover, time series anaysis is integral to quantitative finance, and so `vkdb` single-handedly fuses both of these interests of mine.
 
-### What's under the hood
+### Under the hood
 
 #### The storage engine
 
