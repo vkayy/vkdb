@@ -18,16 +18,19 @@ From this point on, there are a few other optimisations I intend on implementing
 
 ## What's the roadmap?
 
-- [x] Memtables.
-- [x] Write-ahead log.
-- [x] SSTables.
-- [x] LSM tree architecture.
-- [x] Time-window compaction strategy.
-- [x] Bloom filters.
-- [x] Summary tables.
-- [x] LRU cache.
-- [x] LSM tree caching.
-  - [x] Key-value pair cache.
-  - [x] SSTable block cache. 
-- [ ] Query parser.
-- [ ] Query execution engine.
+- [x] Storage engine.
+  - [x] LSM tree architecture.
+    - [x] Memtables.
+    - [x] Write-ahead log.
+    - [x] SSTables.
+    - [x] Time-window compaction.
+    - [x] Bloom filters.
+    - [x] Summary tables.
+  - [x] LSM tree caching.
+    - [x] LRU cache implementation.
+    - [x] Key-value pair cache.
+    - [x] SSTable block cache.
+- [ ] Custom query language (VQL). 
+  - [ ] Query parser.
+  - [ ] Query execution engine.
+- [ ] Transport layer.
