@@ -20,6 +20,19 @@
 template <typename TKey, typename TValue>
 class LSMTree {
 private:
+    constexpr static std::time_t COMPACTION_TIME_WINDOW = 60 * 60 * 24; // Compaction time window.
+    constexpr static size_t LEVEL_SIZE_MULTIPLIER = 10;                 // SSTable size multiplier for each level.
+    constexpr static size_t NUM_LEVELS = 10;                            // Number of levels in the LSM tree.
+
+    constexpr static size_t SSTABLE_BLOCK_SIZE = 120;        // Cache size for SSTable blocks.
+    constexpr static size_t BLOCKS_PER_SSTABLE = 64;         // Blocks per SSTable.
+    constexpr static size_t BLOCKS_PER_CACHE = 512;          // Blocks per cache.
+    constexpr static size_t KEY_VALUE_CACHE_CAPACITY = 1000; // Key-value cache capacity.
+
+    constexpr static size_t ENTRY_SIZE = sizeof(TKey) + sizeof(TimestampedValue<TValue>);               // Size of an entry.
+    constexpr static size_t MEMTABLE_ITEM_COUNT = SSTABLE_BLOCK_SIZE * BLOCKS_PER_SSTABLE / ENTRY_SIZE; // SSTable item count.
+    constexpr static size_t BLOCK_CACHE_CAPACITY = SSTABLE_BLOCK_SIZE * BLOCKS_PER_CACHE;               // Block cache capacity.
+
     /**
      * @brief A level in the LSM tree.
      *
@@ -42,14 +55,6 @@ private:
 
     LSMTreeCache<TKey, TValue> cache; // The block cache.
 
-    constexpr static std::time_t COMPACTION_TIME_WINDOW = 60 * 60 * 24; // Compaction time window.
-    constexpr static size_t LEVEL_SIZE_MULTIPLIER = 10;                 // SSTable size multiplier for each level.
-    constexpr static size_t CACHE_BLOCK_SIZE = 1000;                    // Cache size for SSTable blocks.
-    constexpr static size_t NUM_LEVELS = 10;                            // Number of levels in the LSM tree.
-
-    constexpr static size_t BLOCK_CACHE_CAPACITY = CACHE_BLOCK_SIZE * 1000; // Block cache capacity.
-    constexpr static size_t KEY_VALUE_CACHE_CAPACITY = 1000;                // Key-value cache capacity.
-
     /**
      * @brief Initialise the levels of the LSM tree.
      *
@@ -57,7 +62,7 @@ private:
      */
     void initialise_levels(size_t num_levels) {
         levels.resize(num_levels);
-        for (size_t i = 0; i < num_levels; ++i) {
+        for (size_t i = 0; i < num_levels && i != 0; ++i) {
             levels[i].max_size = std::pow(LEVEL_SIZE_MULTIPLIER, i + 1);
         }
     }
@@ -75,9 +80,10 @@ private:
      *
      */
     void flush_memtable_if_exceeded() {
-        if (sizeof(memtable) < MEMTABLE_SIZE_THRESHOLD) {
+        if (memtable->getItemCount() < MEMTABLE_ITEM_COUNT) {
             return;
         }
+
         std::string sstable_filename = get_next_sstable_filename();
         auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(sstable_filename);
 
@@ -199,7 +205,7 @@ public:
           wal(wal_path),
           data_directory(data_dir),
           next_sstable_id(0),
-          cache{{BLOCK_CACHE_CAPACITY}, 0, CACHE_BLOCK_SIZE, {KEY_VALUE_CACHE_CAPACITY}} {
+          cache{{BLOCK_CACHE_CAPACITY}, 0, SSTABLE_BLOCK_SIZE, {KEY_VALUE_CACHE_CAPACITY}} {
         initialise_levels(NUM_LEVELS);
         std::filesystem::create_directories(data_directory);
         std::thread compaction_thread(&LSMTree::compact_periodically, this);
@@ -249,8 +255,7 @@ public:
         std::lock_guard<std::mutex> lock(lsm_tree_mutex);
 
         try {
-            auto result = memtable->get(key);
-            return result;
+            return memtable->get(key);
         } catch (const std::runtime_error &) {
         }
 
@@ -270,7 +275,6 @@ public:
 
                 auto cached_value_entry = cache.kv_cache.get(key);
                 if (cached_value_entry && cached_value_entry->second == cache.kv_cache_version.load()) {
-                    std::cout << "KV cache hit on " << key << std::endl;
                     return cached_value_entry->first;
                 }
 
@@ -319,7 +323,7 @@ public:
         auto temp_memtable = std::make_unique<MemTable<TKey, TValue>>();
 
         wal.recoverFromLog(temp_memtable);
-        if (sizeof(temp_memtable) >= MEMTABLE_SIZE_THRESHOLD) {
+        if (temp_memtable->getItemCount() >= MEMTABLE_ITEM_COUNT) {
             std::string sstable_filename = get_next_sstable_filename();
             auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(sstable_filename);
 

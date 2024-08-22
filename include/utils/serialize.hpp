@@ -5,55 +5,62 @@
 #include <string>
 
 /**
- * @brief Serialize data into a file.
- *
- * A utility function to serialize any data type to a binary file.
- *
- * @tparam T The type of the data to serialize.
- * @param ofs The `ofstream` to serialize into.
+ * @brief Serialize a value to an output stream.
+ * 
+ * @tparam TOutputStream The output stream type.
+ * @tparam TValue The value type.
+ * @param ofs The output stream.
  * @param value The value to serialize.
  */
-template <typename T>
-void serializeValue(std::ofstream &ofs, const T &value) {
+template <typename TOutputStream, typename TValue>
+void serializeValue(TOutputStream &ofs, const TValue &value) {
     size_t size = sizeof(value);
     ofs.write(reinterpret_cast<const char *>(&size), sizeof(size));
     ofs.write(reinterpret_cast<const char *>(&value), size);
 };
 
 /**
- * @brief Serialize a string into a file.
- *
- * A utility function to serialize strings to a binary file.
- *
- * @param ofs The `ofstream` to serialize into.
+ * @brief Serialize a string to an output stream.
+ * 
+ * @tparam TOutputStream The output stream type.
+ * @param ofs The output stream.
  * @param value The string to serialize.
  */
-void serializeValue(std::ofstream &ofs, const std::string &value);
+template <typename TOutputStream>
+void serializeValue(TOutputStream &ofs, const std::string &value) {
+    size_t size = value.size();
+    ofs.write(reinterpret_cast<const char *>(&size), sizeof(size));
+    ofs.write(value.data(), size);
+};
 
 /**
- * @brief Deserialize data from a file.
- *
- * A utility function to deserialize any data type to a binary file.
- *
- * @tparam T The type of the data to deserialize.
- * @param ifs The `ifstream` to deserialize from.
- * @param value The value to deserialize into.
+ * @brief Deserialize a value from an input stream.
+ * 
+ * @tparam TInputStream The input stream type.
+ * @tparam TValue The value type.
+ * @param ifs The input stream.
+ * @param value The value to deserialize.
  */
-template <typename T>
-void deserializeValue(std::ifstream &ifs, T &value) {
+template <typename TInputStream, typename TValue>
+void deserializeValue(TInputStream &ifs, TValue &value) {
     size_t size;
     ifs.read(reinterpret_cast<char *>(&size), sizeof(size));
     ifs.read(reinterpret_cast<char *>(&value), size);
 };
 
 /**
- * @brief Deserialize a string from a file.
- *
- * A utility function to deserialize strings to a binary file.
- *
- * @param ifs The `ifstream` to deserialize from.
- * @param value The string to deserialize into.
+ * @brief Deserialize a string from an input stream.
+ * 
+ * @tparam TInputStream The input stream type.
+ * @param ifs The input stream.
+ * @param value The string to deserialize.
  */
-void deserializeValue(std::ifstream &ifs, std::string &value);
+template <typename TInputStream>
+void deserializeValue(TInputStream &ifs, std::string &value) {
+    size_t size;
+    ifs.read(reinterpret_cast<char *>(&size), sizeof(size));
+    value.resize(size);
+    ifs.read(&value[0], size);
+};
 
 #endif // SERIALIZE_HPP
