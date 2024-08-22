@@ -29,9 +29,9 @@ private:
     constexpr static size_t BLOCKS_PER_CACHE = 512;          // Blocks per cache.
     constexpr static size_t KEY_VALUE_CACHE_CAPACITY = 1000; // Key-value cache capacity.
 
-    constexpr static size_t ENTRY_SIZE = sizeof(TKey) + sizeof(TimestampedValue<TValue>);               // Size of an entry.
-    constexpr static size_t MEMTABLE_ITEM_COUNT = SSTABLE_BLOCK_SIZE * BLOCKS_PER_SSTABLE / ENTRY_SIZE; // SSTable item count.
-    constexpr static size_t BLOCK_CACHE_CAPACITY = SSTABLE_BLOCK_SIZE * BLOCKS_PER_CACHE;               // Block cache capacity.
+    constexpr static size_t ENTRY_SIZE = sizeof(TKey) + sizeof(TimestampedValue<TValue>);              // Size of an entry.
+    constexpr static size_t SSTABLE_ITEM_COUNT = SSTABLE_BLOCK_SIZE * BLOCKS_PER_SSTABLE / ENTRY_SIZE; // SSTable item count.
+    constexpr static size_t BLOCK_CACHE_CAPACITY = SSTABLE_BLOCK_SIZE * BLOCKS_PER_CACHE;              // Block cache capacity.
 
     /**
      * @brief A level in the LSM tree.
@@ -80,10 +80,9 @@ private:
      *
      */
     void flush_memtable_if_exceeded() {
-        if (memtable->getItemCount() < MEMTABLE_ITEM_COUNT) {
+        if (memtable->getItemCount() < SSTABLE_ITEM_COUNT) {
             return;
         }
-
         std::string sstable_filename = get_next_sstable_filename();
         auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(sstable_filename);
 
@@ -323,7 +322,7 @@ public:
         auto temp_memtable = std::make_unique<MemTable<TKey, TValue>>();
 
         wal.recoverFromLog(temp_memtable);
-        if (temp_memtable->getItemCount() >= MEMTABLE_ITEM_COUNT) {
+        if (temp_memtable->getItemCount() >= SSTABLE_ITEM_COUNT) {
             std::string sstable_filename = get_next_sstable_filename();
             auto new_sstable = std::make_unique<SSTable<TKey, TValue>>(sstable_filename);
 
