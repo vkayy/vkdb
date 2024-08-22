@@ -2,11 +2,7 @@
 
 A time series database engine currently being built in C++ with minimal dependencies.
 
-## What will the architecture be?
-
-vkdb will be supported with an LSM tree architecture -- these are most suited to high write throughput, and as time series data workloads are generally append-only, I decided this was a sensible design choice.
-
-## How will this architecture work?
+## How will it work?
 
 Initially, key-value pairs are written to an in-memory table (memtable). As in-memory data is volatile, to ensure durability, every write operation is first recorded in a write-ahead log (WAL), guaranteeing no data is lost in the event of a crash. Once a memtable exceeds a certain threshold, it is frozen and made immutable. From this point, it is flushed to the disk as an SSTable.
 
@@ -20,7 +16,7 @@ TWCS organises and compacts data based on time intervals, and this is beneficial
 
 From this point on, there are a few other optimisations I intend on implementing, and also my own custom query language.
 
-## What's the progress plan?
+## What's the roadmap?
 
 - [x] Memtables.
 - [x] Write-ahead log.
@@ -31,5 +27,7 @@ From this point on, there are a few other optimisations I intend on implementing
 - [x] Summary tables.
 - [x] LRU cache.
 - [x] LSM tree caching.
+  - [x] Key-value pair cache.
+  - [x] SSTable block cache. 
 - [ ] Query parser.
 - [ ] Query execution engine.
