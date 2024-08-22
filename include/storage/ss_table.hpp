@@ -22,8 +22,9 @@ constexpr double BLOOM_FILTER_FALSE_POSITIVE_RATE = 0.01; // The false positive 
 template <typename TKey, typename TValue>
 struct SSTableBlock {
 private:
-public:
     std::map<TKey, TimestampedValue<TValue>> index; // The key to value mapping.
+
+public:
     /**
      * @brief Get the value associated with the key.
      *
