@@ -18,4 +18,4 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
     
-# target_link_libraries(vkdb_tests PRIVATE gtest gtest_main)
+target_link_libraries(vkdb_tests PRIVATE gtest gtest_main)
