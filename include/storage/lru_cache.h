@@ -8,8 +8,6 @@
 #include <concepts>
 #include "utils/concepts.h"
 
-using CacheSize = size_t;
-
 template <std::regular TKey, std::regular TValue>
   requires std::is_same_v<TKey, std::remove_cvref_t<TKey>> &&
             std::is_same_v<TValue, std::remove_cvref_t<TValue>>
@@ -18,16 +16,17 @@ public:
   using key_type = TKey;
   using mapped_type = TValue;
   using value_type = std::pair<const key_type, mapped_type>;
-  using size_type = CacheSize;
+  using size_type = size_t;
   using reference = value_type&;
   using const_reference = const value_type&;
-  using const_mapped_ref_wrap = std::reference_wrapper<const mapped_type>;
+  using const_mapped = const mapped_type;
+  using const_mapped_ref_wrap = std::reference_wrapper<const_mapped>;
   using opt_const_mapped_ref_wrap = std::optional<const_mapped_ref_wrap>;
 
   LRUCache() noexcept
     : capacity_{DEFAULT_CAPACITY} {}
 
-  explicit LRUCache(CacheSize capacity)
+  explicit LRUCache(size_type capacity)
     : capacity_{capacity} {
       if (capacity == 0) {
         throw std::invalid_argument{
@@ -76,12 +75,12 @@ public:
     return map_.find(std::forward<K>(key)) != map_.end();
   }
 
-  [[nodiscard]] CacheSize capacity() const noexcept {
+  [[nodiscard]] size_type capacity() const noexcept {
     std::lock_guard lock{mutex_};
     return capacity_;
   }
 
-  [[nodiscard]] CacheSize size() const noexcept {
+  [[nodiscard]] size_type size() const noexcept {
     std::lock_guard lock{mutex_};
     return list_.size();
   }
@@ -97,7 +96,7 @@ private:
   using CacheListIter = typename CacheList::iterator;
   using CacheListIterMap = std::unordered_map<key_type, CacheListIter>;
 
-  static constexpr auto DEFAULT_CAPACITY{static_cast<CacheSize>(1'000)};
+  static constexpr size_type DEFAULT_CAPACITY{1'000};
 
   void evict_if_needed() noexcept {
     if (list_.size() == capacity_) {
@@ -106,7 +105,7 @@ private:
     }
   }
 
-  CacheSize capacity_;
+  size_type capacity_;
   CacheList list_;
   CacheListIterMap map_;
   mutable std::mutex mutex_;
