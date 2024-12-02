@@ -1,6 +1,7 @@
 #ifndef UTILS_RANDOM_H
 #define UTILS_RANDOM_H
 
+#include <random>
 #include "utils/concepts.h"
 
 template <Arithmetic T>
