@@ -16,7 +16,7 @@ public:
   using key_type = TKey;
   using mapped_type = TValue;
   using value_type = std::pair<const key_type, mapped_type>;
-  using size_type = size_t;
+  using size_type = uint64_t;
   using reference = value_type&;
   using const_reference = const value_type&;
   using const_mapped = const mapped_type;

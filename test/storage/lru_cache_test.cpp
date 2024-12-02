@@ -3,8 +3,8 @@
 
 class LRUCacheTest : public ::testing::Test {
 protected:
-  using Key = int;
-  using Value = int;
+  using Key = int32_t;
+  using Value = int32_t;
   using Cache = LRUCache<Key, Value>;
   
   static constexpr size_t CACHE_CAPACITY{3};
