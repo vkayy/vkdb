@@ -8,7 +8,7 @@
 #include <concepts>
 #include "utils/concepts.h"
 
-using CacheCapacity = size_t;
+using CacheSize = size_t;
 
 template <std::regular TKey, std::regular TValue>
   requires std::is_same_v<TKey, std::remove_cvref_t<TKey>> &&
@@ -18,13 +18,16 @@ public:
   using key_type = TKey;
   using mapped_type = TValue;
   using value_type = std::pair<const key_type, mapped_type>;
-  using size_type = CacheCapacity;
+  using size_type = CacheSize;
   using reference = value_type&;
   using const_reference = const value_type&;
   using const_mapped_ref_wrap = std::reference_wrapper<const mapped_type>;
   using opt_const_mapped_ref_wrap = std::optional<const_mapped_ref_wrap>;
 
-  explicit LRUCache(CacheCapacity capacity = DEFAULT_CAPACITY)
+  LRUCache() noexcept
+    : capacity_{DEFAULT_CAPACITY} {}
+
+  explicit LRUCache(CacheSize capacity)
     : capacity_{capacity} {
       if (capacity == 0) {
         throw std::invalid_argument{
@@ -73,12 +76,12 @@ public:
     return map_.find(std::forward<K>(key)) != map_.end();
   }
 
-  [[nodiscard]] CacheCapacity capacity() const noexcept {
+  [[nodiscard]] CacheSize capacity() const noexcept {
     std::lock_guard lock{mutex_};
     return capacity_;
   }
 
-  [[nodiscard]] CacheCapacity size() const noexcept {
+  [[nodiscard]] CacheSize size() const noexcept {
     std::lock_guard lock{mutex_};
     return list_.size();
   }
@@ -94,7 +97,7 @@ private:
   using CacheListIter = typename CacheList::iterator;
   using CacheListIterMap = std::unordered_map<key_type, CacheListIter>;
 
-  static constexpr auto DEFAULT_CAPACITY{static_cast<CacheCapacity>(1'000)};
+  static constexpr auto DEFAULT_CAPACITY{static_cast<CacheSize>(1'000)};
 
   void evict_if_needed() noexcept {
     if (list_.size() == capacity_) {
@@ -103,7 +106,7 @@ private:
     }
   }
 
-  CacheCapacity capacity_;
+  CacheSize capacity_;
   CacheList list_;
   CacheListIterMap map_;
   mutable std::mutex mutex_;

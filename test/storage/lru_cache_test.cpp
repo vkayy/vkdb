@@ -7,12 +7,12 @@ protected:
   using Value = int;
   using Cache = LRUCache<Key, Value>;
   
-  static constexpr CacheCapacity CACHE_CAPACITY{3};
+  static constexpr CacheSize CACHE_CAPACITY{3};
 
   void SetUp() override {
     cache_ = std::make_unique<Cache>(CACHE_CAPACITY);
   }
-  
+
   std::unique_ptr<Cache> cache_;
 };
 
