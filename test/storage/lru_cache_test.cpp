@@ -3,18 +3,20 @@
 
 class LRUCacheTest : public ::testing::Test {
 protected:
-  using Cache = LRUCache<int, int>;
+  using Key = int;
+  using Value = int;
+  using Cache = LRUCache<Key, Value>;
   
   static constexpr CacheCapacity CACHE_CAPACITY{3};
 
   void SetUp() override {
     cache_ = std::make_unique<Cache>(CACHE_CAPACITY);
   }
-
+  
   std::unique_ptr<Cache> cache_;
 };
 
-TEST_F(LRUCacheTest, CanObtainValueWhenKeyExists) {
+TEST_F(LRUCacheTest, CanObtainValueWhenKeyPut) {
   cache_->put(1, 1);
   cache_->put(2, 2);
 
@@ -25,7 +27,7 @@ TEST_F(LRUCacheTest, CanObtainValueWhenKeyExists) {
   EXPECT_EQ(get2, 2);
 }
 
-TEST_F(LRUCacheTest, CanUpdateValueWhenKeyExists) {
+TEST_F(LRUCacheTest, CanUpdateValueWhenKeyPut) {
   cache_->put(1, 1);
   cache_->put(1, 2);
 
