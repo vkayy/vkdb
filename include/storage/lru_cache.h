@@ -41,7 +41,7 @@ public:
   
   template <SameNoCVRefQuals <key_type> K, SameNoCVRefQuals <mapped_type> V>
   void put(K&& key, V&& value) {
-    auto it{map_.find(key)};
+    const auto it{map_.find(key)};
     if (it != map_.end()) {
       it->second->second = std::forward<V>(value);
       list_.splice(list_.begin(), list_, it->second);
@@ -55,7 +55,7 @@ public:
 
   template <SameNoCVRefQuals <key_type> K>
   [[nodiscard]] opt_const_mapped_ref_wrap get(K&& key) {
-    auto it{map_.find(std::forward<K>(key))};
+    const auto it{map_.find(std::forward<K>(key))};
     if (it == map_.end()) {
       return std::nullopt;
     }
@@ -86,7 +86,7 @@ private:
   using CacheListIter = typename CacheList::iterator;
   using CacheListIterMap = std::unordered_map<key_type, CacheListIter>;
 
-  static constexpr CacheCapacity DEFAULT_CAPACITY{1'000};
+  static constexpr auto DEFAULT_CAPACITY{static_cast<CacheCapacity>(1'000)};
 
   void evict_if_needed() noexcept {
     if (list_.size() == capacity_) {
