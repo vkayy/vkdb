@@ -8,9 +8,7 @@
 #include <concepts>
 #include "utils/concepts.h"
 
-template <std::regular TKey, std::regular TValue>
-  requires std::is_same_v<TKey, std::remove_cvref_t<TKey>> &&
-            std::is_same_v<TValue, std::remove_cvref_t<TValue>>
+template <RegularAndNoCVRefQuals TKey, RegularAndNoCVRefQuals TValue>
 class LRUCache {
 public:
   using key_type = TKey;
