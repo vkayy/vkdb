@@ -92,7 +92,7 @@ private:
 
   void evict_if_needed() noexcept {
     if (list_.size() == capacity_) {
-      map_.erase(std::move(list_.back().first));
+      map_.erase(list_.back().first);
       list_.pop_back();
     }
   }
