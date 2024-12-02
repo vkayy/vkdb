@@ -36,13 +36,13 @@ public:
       }
     }
   
-  ~LRUCache() = default;
-  
   LRUCache(LRUCache&&) noexcept = default;
   LRUCache& operator=(LRUCache&&) noexcept = default;
 
   LRUCache(const LRUCache&) = delete;
   LRUCache& operator=(const LRUCache&) = delete;
+  
+  ~LRUCache() = default;
   
   template <SameNoCVRefQuals <key_type> K, SameNoCVRefQuals <mapped_type> V>
   void put(K&& key, V&& value) {
