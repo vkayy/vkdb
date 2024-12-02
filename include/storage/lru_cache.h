@@ -33,6 +33,8 @@ public:
       }
     }
   
+  ~LRUCache() = default;
+  
   LRUCache(LRUCache&&) noexcept = default;
   LRUCache& operator=(LRUCache&&) noexcept = default;
 
