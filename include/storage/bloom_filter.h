@@ -76,7 +76,7 @@ private:
     }
   }
 
-  HashValue hash(const key_type& key, size_type i) const noexcept {
+  [[nodiscard]] HashValue hash(const key_type& key, size_type i) const noexcept {
     HashValue hash_value{0};
     MurmurHash3_x86_32(&key, sizeof(key), i, &hash_value);
     return hash_value % bits_.size();

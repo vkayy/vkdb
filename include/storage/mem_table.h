@@ -45,7 +45,7 @@ private:
   using KeyRange = DataRange<key_type>;
   using Table = std::multimap<key_type, opt_const_mapped>;
 
-  bool in_range(const key_type& key) const noexcept {
+  [[nodiscard]] bool in_range(const key_type& key) const noexcept {
     return time_range_.in_range(key.timestamp()) && key_range_.in_range(key);
   }
 
