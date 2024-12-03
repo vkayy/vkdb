@@ -8,7 +8,9 @@
 
 using Timestamp = uint64_t;
 using Metric = std::string;
-using Tags = std::map<std::string, std::string>;
+using TagKey = std::string;
+using TagValue = std::string;
+using Tags = std::map<TagKey, TagValue>;
 
 class TimeSeriesKey {
 public:

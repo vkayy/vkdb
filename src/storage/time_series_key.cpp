@@ -74,8 +74,8 @@ TimeSeriesKey TimeSeriesKey::fromString(const std::string& str) {
   auto tags_str{str.substr(tags_start, tags_end - tags_start)};
 
   Tags tags;
-  std::string key;
-  std::string value;
+  TagKey key;
+  TagValue value;
   std::istringstream ss{tags_str};
   while (std::getline(ss, key, ':')) {
     std::getline(ss, value, ',');
