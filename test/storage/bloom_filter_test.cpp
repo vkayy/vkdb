@@ -3,6 +3,7 @@
 
 class BloomFilterTest : public ::testing::Test {
 protected:
+  using Key = int32_t;
   using Filter = BloomFilter<int32_t>;
   static constexpr uint64_t EXPECTED_NO_OF_ELEMS{100};
   static constexpr double FALSE_POSITIVE_RATE{0.01};
@@ -33,11 +34,11 @@ TEST_F(BloomFilterTest, CanCheckPresenceOfKey) {
 
 TEST_F(BloomFilterTest, ProducesAccurateFalsePositiveRate) {
   auto no_of_false_positives{0};
-  for (int i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
+  for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
     filter_->insert(i);
   }
 
-  for (int i{EXPECTED_NO_OF_ELEMS}; i < 2 * EXPECTED_NO_OF_ELEMS; ++i) {
+  for (Key i{EXPECTED_NO_OF_ELEMS}; i < 2 * EXPECTED_NO_OF_ELEMS; ++i) {
     no_of_false_positives += filter_->mayContain(i);
   }
 
@@ -49,12 +50,12 @@ TEST_F(BloomFilterTest, ProducesAccurateFalsePositiveRate) {
 }
 
 TEST_F(BloomFilterTest, ProducesZeroFalseNegatives) {
-  for (int i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
+  for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
     filter_->insert(i);
   }
 
   auto no_of_false_negatives{0};
-  for (int i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
+  for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
     no_of_false_negatives += !filter_->mayContain(i);
   }
 
@@ -63,7 +64,7 @@ TEST_F(BloomFilterTest, ProducesZeroFalseNegatives) {
 
 TEST_F(BloomFilterTest, ProducesZeroFalsePositivesWhenEmpty) {
   auto no_of_false_positives{0};
-  for (int i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
+  for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
     no_of_false_positives += filter_->mayContain(i);
   }
 
