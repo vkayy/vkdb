@@ -32,7 +32,7 @@ public:
   }
 
   [[nodiscard]] bool in_range(const data_type& data) const noexcept {
-    return data >= range_.first && data <= range_.second;
+    return is_set_ && data >= range_.first && data <= range_.second;
   }
 
   [[nodiscard]] const data_type& lower() const {
