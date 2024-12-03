@@ -95,3 +95,7 @@ TEST_F(LRUCacheTest, ContentsEmptiedWhenCacheCleared) {
   EXPECT_EQ(get1, std::nullopt);
   EXPECT_EQ(get2, std::nullopt);
 }
+
+TEST_F(LRUCacheTest, ThrowsWhenCapacityIsZero) {
+  EXPECT_THROW(Cache cache{0}, std::invalid_argument);
+}
