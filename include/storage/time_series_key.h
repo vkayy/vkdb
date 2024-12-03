@@ -14,7 +14,7 @@ class TimeSeriesKey {
 public:
   static constexpr auto TIMESTAMP_WIDTH{20};
 
-  TimeSeriesKey() = delete;
+  TimeSeriesKey() = default;
 
   explicit TimeSeriesKey(Timestamp timestamp,
                          Metric metric, Tags tags) noexcept;
@@ -31,6 +31,8 @@ public:
   [[nodiscard]] bool operator!=(const TimeSeriesKey& other) const noexcept;
   [[nodiscard]] bool operator<(const TimeSeriesKey& other) const noexcept;
   [[nodiscard]] bool operator>(const TimeSeriesKey& other) const noexcept;
+  [[nodiscard]] bool operator<=(const TimeSeriesKey& other) const noexcept;
+  [[nodiscard]] bool operator>=(const TimeSeriesKey& other) const noexcept;
 
   [[nodiscard]] Timestamp timestamp() const noexcept;
   [[nodiscard]] Metric metric() const noexcept;

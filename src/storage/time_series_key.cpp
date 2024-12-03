@@ -30,6 +30,14 @@ bool TimeSeriesKey::operator>(const TimeSeriesKey& other) const noexcept {
   return other < *this;
 }
 
+bool TimeSeriesKey::operator<=(const TimeSeriesKey& other) const noexcept {
+  return !(*this > other);
+}
+
+bool TimeSeriesKey::operator>=(const TimeSeriesKey& other) const noexcept {
+  return !(*this < other);
+}
+
 Timestamp TimeSeriesKey::timestamp() const noexcept {
   return timestamp_;
 }
