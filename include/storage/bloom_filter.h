@@ -57,7 +57,7 @@ public:
     }
   }
 
-  bool mayContain(const key_type& key) const noexcept {
+  [[nodiscard]] bool mayContain(const key_type& key) const noexcept {
     for (size_type i{0}; i < seeds_.size(); ++i) {
       if (!bits_[hash(key, i)]) {
         return false;
