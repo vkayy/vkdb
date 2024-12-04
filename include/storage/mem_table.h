@@ -15,7 +15,7 @@ public:
 
   MemTable() noexcept = default;
   
-  MemTable(const MemTable&&) noexcept = default;
+  MemTable(MemTable&&) noexcept = default;
   MemTable& operator=(MemTable&&) noexcept = default;
   
   MemTable(const MemTable&) = delete;
@@ -53,46 +53,41 @@ public:
 
   [[nodiscard]] std::string toString() const noexcept {
     std::stringstream ss;
-    ss << size() << "\n";
+    ss << size();
     for (const auto& [key, value] : table()) {
-      ss << key.toString() << " | ";
+      ss << "[" << key.toString() << "|";
       if (value.has_value()) {
         ss << value.value();
       } else {
         ss << "null";
       }
-      ss << "\n";
+      ss << "]";
     }
     return ss.str();
   }
 
   static void fromString(const std::string& str, MemTable& table) {
-    std::istringstream is(str);
+    std::stringstream ss(str);
+    size_type size;
+    ss >> size;
+
+    std::string entry;
+    std::getline(ss, entry, '[');
     
-    size_t size;
-    is >> size;
-    
-    std::string line;
-    std::getline(is, line);
-    
-    for (size_t i = 0; i < size; ++i) {
-      std::getline(is, line);
-      auto separator_pos = line.find(" | ");
-      
-      auto key_str = line.substr(0, separator_pos);
-      auto value_str = line.substr(separator_pos + 3);
-      
-      key_type key = key_type::fromString(key_str);
+    while (std::getline(ss, entry, '[')) {
+      auto sep{entry.find('|')};
+      auto end{entry.find(']')};
+      auto key_str{entry.substr(0, sep)};
+      auto value_str{entry.substr(sep + 1, end - sep - 1)};
+
+      auto key{key_type::fromString(key_str)};
       std::optional<TValue> value;
-      
-      if (value_str == "null") {
-        value = std::nullopt;
-      } else {
-        TValue temp;
-        std::istringstream{value_str} >> temp;
-        value = temp;
+      if (value_str != "null") {
+        std::stringstream value_ss{value_str};
+        TValue parsed_value;
+        value_ss >> parsed_value;
+        value = parsed_value;
       }
-      
       table.put(key, value);
     }
   }
@@ -115,5 +110,20 @@ private:
   KeyRange key_range_;
   Table table_;
 };
+
+template <Arithmetic TValue>
+std::ostream& operator<<(std::ostream& os, const MemTable<TValue>& table) {
+  os << table.toString();
+  return os;
+}
+
+template <Arithmetic TValue>
+std::istream& operator>>(std::istream& is, MemTable<TValue>& table) {
+  std::string str;
+  is >> str;
+  MemTable<TValue>::fromString(str, table);
+  return is;
+}
+
 
 #endif // STORAGE_MEM_TABLE_H
