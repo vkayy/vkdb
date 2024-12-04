@@ -49,8 +49,8 @@ private:
   Tags tags_;
 };
 
-std::ostream& operator<<(std::ostream& os, const TimeSeriesKey& table);
+std::ostream& operator<<(std::ostream& os, const TimeSeriesKey& key);
 
-std::istream& operator>>(std::istream& is, TimeSeriesKey& table);
+std::istream& operator>>(std::istream& is, TimeSeriesKey& key);
 
 #endif // STORAGE_TIME_SERIES_KEY_H
