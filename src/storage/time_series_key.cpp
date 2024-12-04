@@ -84,3 +84,15 @@ TimeSeriesKey TimeSeriesKey::fromString(const std::string& str) {
 
   return TimeSeriesKey{timestamp, metric, tags};
 }
+
+std::ostream& operator<<(std::ostream& os, const TimeSeriesKey& table) {
+  os << table.toString();
+  return os;
+}
+
+std::istream& operator>>(std::istream& is, TimeSeriesKey& table) {
+  std::string str;
+  is >> str;
+  table = TimeSeriesKey::fromString(str);
+  return is;
+}
