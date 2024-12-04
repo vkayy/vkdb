@@ -11,7 +11,7 @@ public:
 
   DataRange() noexcept = default;
 
-  DataRange(const DataRange&&) noexcept = default;
+  DataRange(DataRange&&) noexcept = default;
   DataRange& operator=(DataRange&&) noexcept = default;
 
   DataRange(const DataRange&) = delete;
