@@ -136,3 +136,30 @@ TEST_F(TimeSeriesKeyTest, CanConvertFromStringRepresentationWithSingleTag) {
 
   EXPECT_EQ(key, expected_key);
 }
+
+TEST_F(TimeSeriesKeyTest, CanInsertIntoStreamWithTags) {
+  TimeSeriesKey key{1, "metric1", tags_};
+
+  std::ostringstream ss;
+  ss << key;
+
+  auto expected_str{
+    "{00000000000000000001}{metric1}{tag1:value1,tag2:value2,tag3:value3}"
+  };
+
+  EXPECT_EQ(ss.str(), expected_str);
+}
+
+TEST_F(TimeSeriesKeyTest, CanExtractFromStreamWithTags) {
+  auto str{
+    "{00000000000000000001}{metric1}{tag1:value1,tag2:value2,tag3:value3}"
+  };
+
+  std::istringstream ss{str};
+  TimeSeriesKey key;
+  ss >> key;
+
+  TimeSeriesKey expected_key{1, "metric1", tags_};
+
+  EXPECT_EQ(key, expected_key);
+}
