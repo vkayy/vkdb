@@ -12,6 +12,7 @@ public:
   using mapped_type = std::optional<const TValue>;
   using value_type = std::pair<const key_type, mapped_type>;
   using size_type = uint64_t;
+  using table_type = std::multimap<const key_type, mapped_type>;
 
   MemTable() noexcept = default;
   
@@ -39,12 +40,8 @@ public:
     return it->second;
   }
 
-  [[nodiscard]] const std::vector<value_type> table() const noexcept {
-    std::vector<value_type> result;
-    for (const auto& [key, value] : table_) {
-      result.emplace_back(key, value);
-    }
-    return result;
+  [[nodiscard]] table_type table() const noexcept {
+    return table_;
   }
 
   [[nodiscard]] size_type size() const noexcept {
