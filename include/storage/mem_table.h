@@ -95,12 +95,12 @@ private:
   using Table = std::multimap<const key_type, mapped_type>;
 
   [[nodiscard]] bool in_range(const key_type& key) const noexcept {
-    return time_range_.in_range(key.timestamp()) && key_range_.in_range(key);
+    return time_range_.inRange(key.timestamp()) && key_range_.inRange(key);
   }
 
   void update_ranges(const key_type& key) noexcept {
-    time_range_.update_range(key.timestamp());
-    key_range_.update_range(key);
+    time_range_.updateRange(key.timestamp());
+    key_range_.updateRange(key);
   }
 
   TimeRange time_range_;
