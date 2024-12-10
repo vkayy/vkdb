@@ -14,9 +14,9 @@ protected:
 };
 
 TEST_F(DataRangeTest, CanUpdateRange) {
-  range_->update_range(1);
-  range_->update_range(2);
-  range_->update_range(3);
+  range_->updateRange(1);
+  range_->updateRange(2);
+  range_->updateRange(3);
 
   auto lower{range_->lower()};
   auto upper{range_->upper()};
@@ -26,14 +26,14 @@ TEST_F(DataRangeTest, CanUpdateRange) {
 }
 
 TEST_F(DataRangeTest, CanCheckIfDataIsInRange) {
-  range_->update_range(1);
-  range_->update_range(2);
-  range_->update_range(3);
+  range_->updateRange(1);
+  range_->updateRange(2);
+  range_->updateRange(3);
 
-  auto in_range1{range_->in_range(1)};
-  auto in_range2{range_->in_range(2)};
-  auto in_range3{range_->in_range(3)};
-  auto in_range4{range_->in_range(4)};
+  auto in_range1{range_->inRange(1)};
+  auto in_range2{range_->inRange(2)};
+  auto in_range3{range_->inRange(3)};
+  auto in_range4{range_->inRange(4)};
 
   EXPECT_TRUE(in_range1);
   EXPECT_TRUE(in_range2);
@@ -42,7 +42,7 @@ TEST_F(DataRangeTest, CanCheckIfDataIsInRange) {
 }
 
 TEST_F(DataRangeTest, CanCheckIfDataIsInEmptyRange) {
-  auto in_range{range_->in_range(1)};
+  auto in_range{range_->inRange(1)};
 
   EXPECT_FALSE(in_range);
 }

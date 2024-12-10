@@ -19,7 +19,7 @@ public:
 
   ~DataRange() = default;
 
-  void update_range(const data_type& data) noexcept {
+  void updateRange(const data_type& data) noexcept {
     if (!is_set_) {
       range_.first = data;
       range_.second = data;
@@ -31,7 +31,7 @@ public:
     range_.second = std::max(range_.second, data);
   }
 
-  [[nodiscard]] bool in_range(const data_type& data) const noexcept {
+  [[nodiscard]] bool inRange(const data_type& data) const noexcept {
     return is_set_ && data >= range_.first && data <= range_.second;
   }
 
