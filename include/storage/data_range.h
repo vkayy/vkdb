@@ -3,7 +3,7 @@
 
 #include "utils/concepts.h"
 
-template <RegularAndNoCVRefQuals TData>
+template <RegularNoCVRefQuals TData>
   requires std::totally_ordered<TData>
 class DataRange {
 public:

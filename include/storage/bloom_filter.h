@@ -4,7 +4,7 @@
 #include "utils/murmur_hash_3.h"
 #include "utils/random.h"
 
-template <RegularAndNoCVRefQuals TKey>
+template <RegularNoCVRefQuals TKey>
 class BloomFilter {
 public:
   using key_type = TKey;

@@ -8,7 +8,7 @@
 #include <concepts>
 #include "utils/concepts.h"
 
-template <RegularAndNoCVRefQuals TKey, RegularAndNoCVRefQuals TValue>
+template <RegularNoCVRefQuals TKey, RegularNoCVRefQuals TValue>
 class LRUCache {
 public:
   using key_type = TKey;

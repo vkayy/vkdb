@@ -5,7 +5,7 @@
 #include "storage/time_series_key.h"
 #include "storage/data_range.h"
 
-template <Arithmetic TValue>
+template <ArithmeticNoCVRefQuals TValue>
 class MemTable {
 public:
   using key_type = TimeSeriesKey;
@@ -108,13 +108,13 @@ private:
   Table table_;
 };
 
-template <Arithmetic TValue>
+template <ArithmeticNoCVRefQuals TValue>
 std::ostream& operator<<(std::ostream& os, const MemTable<TValue>& table) {
   os << table.toString();
   return os;
 }
 
-template <Arithmetic TValue>
+template <ArithmeticNoCVRefQuals TValue>
 std::istream& operator>>(std::istream& is, MemTable<TValue>& table) {
   std::string str;
   is >> str;

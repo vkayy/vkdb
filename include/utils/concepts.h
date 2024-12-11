@@ -11,9 +11,12 @@ template <typename T>
 concept HasNoCVRefQuals = std::is_same_v<T, std::remove_cvref_t<T>>;
 
 template <typename T>
-concept RegularAndNoCVRefQuals = std::regular<T> && HasNoCVRefQuals<T>;
+concept RegularNoCVRefQuals = std::regular<T> && HasNoCVRefQuals<T>;
 
 template <typename T>
 concept Arithmetic = std::is_arithmetic_v<T>;
+
+template <typename T>
+concept ArithmeticNoCVRefQuals = Arithmetic<T> && HasNoCVRefQuals<T>;
 
 #endif // UTILS_CONCEPTS_H

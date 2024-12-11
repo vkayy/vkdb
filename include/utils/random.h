@@ -4,7 +4,7 @@
 #include <random>
 #include "utils/concepts.h"
 
-template <Arithmetic T>
+template <ArithmeticNoCVRefQuals T>
 T random(T min = std::numeric_limits<T>::min(),
          T max = std::numeric_limits<T>::max()) {
   std::random_device rd;
