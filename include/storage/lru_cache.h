@@ -17,9 +17,8 @@ public:
   using size_type = uint64_t;
   using reference = value_type&;
   using const_reference = const value_type&;
-  using const_mapped = const mapped_type;
-  using const_mapped_ref_wrap = std::reference_wrapper<const_mapped>;
-  using opt_const_mapped_ref_wrap = std::optional<const_mapped_ref_wrap>;
+  using mapped_ref_wrap = std::reference_wrapper<mapped_type>;
+  using opt_mapped_ref_wrap = std::optional<mapped_ref_wrap>;
 
   LRUCache() noexcept
     : capacity_{DEFAULT_CAPACITY} {}
@@ -57,7 +56,7 @@ public:
   }
 
   template <SameNoCVRefQuals <key_type> K>
-  [[nodiscard]] opt_const_mapped_ref_wrap get(K&& key) {
+  [[nodiscard]] opt_mapped_ref_wrap get(K&& key) {
     std::lock_guard lock{mutex_};
     const auto it{map_.find(std::forward<K>(key))};
     if (it == map_.end()) {

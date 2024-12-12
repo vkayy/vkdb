@@ -10,10 +10,10 @@ template <ArithmeticNoCVRefQuals TValue>
 class MemTable {
 public:
   using key_type = TimeSeriesKey;
-  using mapped_type = std::optional<const TValue>;
+  using mapped_type = std::optional<TValue>;
   using value_type = std::pair<const key_type, mapped_type>;
   using size_type = uint64_t;
-  using table_type = std::multimap<const key_type, mapped_type>;
+  using table_type = std::map<const key_type, mapped_type>;
 
   static constexpr size_type MAX_ENTRIES{1000};
 
@@ -28,7 +28,7 @@ public:
   ~MemTable() = default;
 
   void put(const key_type& key, const mapped_type& value) {
-    table_.emplace(key, value);
+    table_.insert_or_assign(key, value);
     update_ranges(key);
   }
 
@@ -83,7 +83,6 @@ public:
 private:
   using TimeRange = DataRange<Timestamp>;
   using KeyRange = DataRange<key_type>;
-  using Table = std::multimap<const key_type, mapped_type>;
 
   [[nodiscard]] bool in_range(const key_type& key) const noexcept {
     return time_range_.inRange(key.timestamp()) && key_range_.inRange(key);
@@ -96,7 +95,7 @@ private:
 
   TimeRange time_range_;
   KeyRange key_range_;
-  Table table_;
+  table_type table_;
 };
 
 template <ArithmeticNoCVRefQuals TValue>

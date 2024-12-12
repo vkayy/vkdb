@@ -16,7 +16,7 @@ template <ArithmeticNoCVRefQuals TValue>
 class SSTable {
 public:
   using key_type = TimeSeriesKey;
-  using mapped_type = std::optional<const TValue>;
+  using mapped_type = std::optional<TValue>;
   using value_type = std::pair<const key_type, mapped_type>;
   using size_type = uint64_t;
 

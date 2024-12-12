@@ -68,6 +68,17 @@ TEST_F(MemTableTest, CanPutAndGetValuesOfKeysWithMultipleTags) {
   EXPECT_EQ(value3, 3);
 }
 
+TEST_F(MemTableTest, CanUpdateValuesOfKeysWithMultipleTags) {
+  TimeSeriesKey key1{1, "metric1", {{"tag1", "value1"}, {"tag2", "value2"}}};
+
+  table_->put(key1, 1);
+  table_->put(key1, 2);
+
+  auto value1{table_->get(key1)};
+
+  EXPECT_EQ(value1, 2);
+}
+
 TEST_F(MemTableTest, CanConvertToStringRepresentationWithTags) {
   TimeSeriesKey key1{1, "metric1", {{"tag1", "value1"}}};
   TimeSeriesKey key2{2, "metric2", {{"tag2", "value2"}}};
