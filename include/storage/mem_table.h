@@ -43,6 +43,12 @@ public:
     return it->second;
   }
 
+  void clear() noexcept {
+    table_.clear();
+    time_range_.clear();
+    key_range_.clear();
+  }
+
   [[nodiscard]] table_type table() const noexcept {
     return table_;
   }

@@ -49,6 +49,10 @@ public:
     return range_.second;
   }
 
+  void clear() noexcept {
+    is_set_ = false;
+  }
+
 private:
   bool is_set_;
   std::pair<data_type, data_type> range_;
