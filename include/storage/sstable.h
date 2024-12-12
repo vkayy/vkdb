@@ -31,14 +31,14 @@ public:
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       } {}
   
-  explicit SSTable(FilePath file_path, MemTable<TValue> mem_table)
+  explicit SSTable(FilePath file_path, MemTable<TValue>&& mem_table)
     : file_path_{file_path}
     , bloom_filter_{
         MemTable<TValue>::MAX_ENTRIES,
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       }
     {
-      writeFromMemTable(mem_table);
+      writeFromMemTable(std::move(mem_table));
     }
 
   SSTable(SSTable&&) noexcept = default;
@@ -49,7 +49,7 @@ public:
 
   ~SSTable() = default;
 
-  void writeMemTableToFile(const MemTable<TValue>& mem_table) {
+  void writeMemTableToFile(MemTable<TValue>&& mem_table) {
     std::ofstream file{file_path_};
     if (!file.is_open()) {
       throw std::runtime_error{

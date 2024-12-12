@@ -27,7 +27,7 @@ TEST_F(SSTableTest, CanWriteMemTableToFile) {
   mem_table_->put(key2, 2);
   mem_table_->put(key3, 3);
 
-  sstable_->writeMemTableToFile(*mem_table_);
+  sstable_->writeMemTableToFile(std::move(*mem_table_));
 
   std::ifstream file{file_path_};
   std::string str;
@@ -54,7 +54,7 @@ TEST_F(SSTableTest, CanGetFromSSTable) {
   mem_table_->put(key2, 2);
   mem_table_->put(key3, 3);
 
-  sstable_->writeMemTableToFile(*mem_table_);
+  sstable_->writeMemTableToFile(std::move(*mem_table_));
 
   auto value1{sstable_->get(key1)};
   auto value2{sstable_->get(key2)};
