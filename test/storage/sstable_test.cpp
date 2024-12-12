@@ -4,7 +4,7 @@
 class SSTableTest : public ::testing::Test {
 protected:
   void SetUp() override {
-    file_path_ = "test.sstable";
+    file_path_ = "test.sst";
     sstable_ = std::make_unique<SSTable<int>>(file_path_);
     mem_table_ = std::make_unique<MemTable<int>>();
   }
