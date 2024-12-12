@@ -53,4 +53,13 @@ std::ostream& operator<<(std::ostream& os, const TimeSeriesKey& key);
 
 std::istream& operator>>(std::istream& is, TimeSeriesKey& key);
 
+namespace std {
+template <>
+struct hash<TimeSeriesKey> {
+  size_t operator()(const TimeSeriesKey& key) const noexcept {
+    return hash<string>{}(key.toString());
+  }
+};
+}  // namespace std
+
 #endif // STORAGE_TIME_SERIES_KEY_H

@@ -163,3 +163,16 @@ TEST_F(TimeSeriesKeyTest, CanExtractFromStreamWithTags) {
 
   EXPECT_EQ(key, expected_key);
 }
+
+TEST_F(TimeSeriesKeyTest, CanBeKeyInUnorderedAssociativeContainers) {
+  std::unordered_map<TimeSeriesKey, int> map;
+
+  TimeSeriesKey key1{1, "metric1", tags_};
+  TimeSeriesKey key2{2, "metric2", tags_};
+
+  map[key1] = 1;
+  map[key2] = 2;
+
+  EXPECT_EQ(map[key1], 1);
+  EXPECT_EQ(map[key2], 2);
+}
