@@ -2,6 +2,7 @@
 #define STORAGE_MEM_TABLE_H
 
 #include "utils/concepts.h"
+#include "utils/string.h"
 #include "storage/time_series_key.h"
 #include "storage/data_range.h"
 
@@ -13,6 +14,8 @@ public:
   using value_type = std::pair<const key_type, mapped_type>;
   using size_type = uint64_t;
   using table_type = std::multimap<const key_type, mapped_type>;
+
+  static constexpr size_type MAX_ENTRIES{1000};
 
   MemTable() noexcept = default;
   
@@ -51,14 +54,8 @@ public:
   [[nodiscard]] std::string toString() const noexcept {
     std::stringstream ss;
     ss << size();
-    for (const auto& [key, value] : table()) {
-      ss << "[" << key.toString() << "|";
-      if (value.has_value()) {
-        ss << value.value();
-      } else {
-        ss << "null";
-      }
-      ss << "]";
+    for (const auto& entry : table()) {
+      ss << entryToString<TValue>(entry);
     }
     return ss.str();
   }
@@ -68,24 +65,12 @@ public:
     size_type size;
     ss >> size;
 
-    std::string entry;
-    std::getline(ss, entry, '[');
+    std::string entry_str;
+    std::getline(ss, entry_str, '[');
     
-    while (std::getline(ss, entry, '[')) {
-      auto sep{entry.find('|')};
-      auto end{entry.find(']')};
-      auto key_str{entry.substr(0, sep)};
-      auto value_str{entry.substr(sep + 1, end - sep - 1)};
-
-      auto key{key_type::fromString(key_str)};
-      std::optional<TValue> value;
-      if (value_str != "null") {
-        std::stringstream value_ss{value_str};
-        TValue parsed_value;
-        value_ss >> parsed_value;
-        value = parsed_value;
-      }
-      table.put(key, value);
+    while (std::getline(ss, entry_str, '[')) {
+      auto [entry_key, entry_value] = entryFromString<TValue>(entry_str);
+      table.put(entry_key, entry_value);
     }
   }
 

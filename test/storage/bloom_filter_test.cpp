@@ -4,7 +4,7 @@
 class BloomFilterTest : public ::testing::Test {
 protected:
   using Key = int32_t;
-  using Filter = BloomFilter<int32_t>;
+  using Filter = BloomFilter;
   static constexpr uint64_t EXPECTED_NO_OF_ELEMS{100};
   static constexpr double FALSE_POSITIVE_RATE{0.01};
 
@@ -17,14 +17,19 @@ protected:
 };
 
 TEST_F(BloomFilterTest, CanCheckPresenceOfKey) {
-  filter_->insert(1);
-  filter_->insert(2);
-  filter_->insert(3);
+  TimeSeriesKey key1{1, "metric1", {{"tag1", "value1"}}};
+  TimeSeriesKey key2{2, "metric2", {{"tag2", "value2"}}};
+  TimeSeriesKey key3{3, "metric3", {{"tag3", "value3"}}};
+  TimeSeriesKey key4{4, "metric4", {{"tag4", "value4"}}};
 
-  auto may_contain1{filter_->mayContain(1)};
-  auto may_contain2{filter_->mayContain(2)};
-  auto may_contain3{filter_->mayContain(3)};
-  auto may_contain4{filter_->mayContain(4)};
+  filter_->insert(key1);
+  filter_->insert(key2);
+  filter_->insert(key3);
+
+  auto may_contain1{filter_->mayContain(key1)};
+  auto may_contain2{filter_->mayContain(key2)};
+  auto may_contain3{filter_->mayContain(key3)};
+  auto may_contain4{filter_->mayContain(key4)};
 
   EXPECT_TRUE(may_contain1);
   EXPECT_TRUE(may_contain2);
@@ -35,11 +40,15 @@ TEST_F(BloomFilterTest, CanCheckPresenceOfKey) {
 TEST_F(BloomFilterTest, ProducesAccurateFalsePositiveRate) {
   auto no_of_false_positives{0};
   for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
-    filter_->insert(i);
+    auto t_i{static_cast<Timestamp>(i)};
+    TimeSeriesKey key{t_i, "metric", {{"tag", "value"}}};
+    filter_->insert(key);
   }
 
   for (Key i{EXPECTED_NO_OF_ELEMS}; i < 2 * EXPECTED_NO_OF_ELEMS; ++i) {
-    no_of_false_positives += filter_->mayContain(i);
+    auto t_i{static_cast<Timestamp>(i)};
+    TimeSeriesKey key{t_i, "metric", {{"tag", "value"}}};
+    no_of_false_positives += filter_->mayContain(key);
   }
 
   auto measured_false_positive_rate{
@@ -51,12 +60,16 @@ TEST_F(BloomFilterTest, ProducesAccurateFalsePositiveRate) {
 
 TEST_F(BloomFilterTest, ProducesZeroFalseNegatives) {
   for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
-    filter_->insert(i);
+    auto t_i{static_cast<Timestamp>(i)};
+    TimeSeriesKey key{t_i, "metric", {{"tag", "value"}}};
+    filter_->insert(key);
   }
 
   auto no_of_false_negatives{0};
   for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
-    no_of_false_negatives += !filter_->mayContain(i);
+    auto t_i{static_cast<Timestamp>(i)};
+    TimeSeriesKey key{t_i, "metric", {{"tag", "value"}}};
+    no_of_false_negatives += !filter_->mayContain(key);
   }
 
   EXPECT_EQ(no_of_false_negatives, 0);
@@ -65,7 +78,9 @@ TEST_F(BloomFilterTest, ProducesZeroFalseNegatives) {
 TEST_F(BloomFilterTest, ProducesZeroFalsePositivesWhenEmpty) {
   auto no_of_false_positives{0};
   for (Key i{0}; i < EXPECTED_NO_OF_ELEMS; ++i) {
-    no_of_false_positives += filter_->mayContain(i);
+    auto t_i{static_cast<Timestamp>(i)};
+    TimeSeriesKey key{t_i, "metric", {{"tag", "value"}}};
+    no_of_false_positives += filter_->mayContain(key);
   }
 
   EXPECT_EQ(no_of_false_positives, 0);

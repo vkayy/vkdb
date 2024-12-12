@@ -2,12 +2,12 @@
 #define STORAGE_BLOOM_FILTER_H
 
 #include "utils/murmur_hash_3.h"
+#include "storage/time_series_key.h"
 #include "utils/random.h"
 
-template <RegularNoCVRefQuals TKey>
 class BloomFilter {
 public:
-  using key_type = TKey;
+  using key_type = TimeSeriesKey;
   using size_type = uint64_t;
 
   static constexpr double MIN_FALSE_POSITIVE_RATE{0.0};
@@ -78,7 +78,8 @@ private:
 
   [[nodiscard]] HashValue hash(const key_type& key, size_type i) const noexcept {
     HashValue hash_value{0};
-    MurmurHash3_x86_32(&key, sizeof(key), i, &hash_value);
+    auto std_hash_value{std::hash<std::string>{}(key.toString())};
+    MurmurHash3_x86_32(&std_hash_value, sizeof(std_hash_value), i, &hash_value);
     return hash_value % bits_.size();
   }
 

@@ -5,6 +5,7 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
+#include "utils/concepts.h"
 
 using Timestamp = uint64_t;
 using Metric = std::string;
@@ -61,5 +62,8 @@ struct hash<TimeSeriesKey> {
   }
 };
 }  // namespace std
+
+template <ArithmeticNoCVRefQuals TValue>
+using TimeSeriesEntry = std::pair<const TimeSeriesKey, std::optional<TValue>>;
 
 #endif // STORAGE_TIME_SERIES_KEY_H
