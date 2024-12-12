@@ -47,6 +47,8 @@ TEST_F(SSTableTest, CanGetFromSSTable) {
   TimeSeriesKey key1{1, "metric1", {}};
   TimeSeriesKey key2{2, "metric2", {}};
   TimeSeriesKey key3{3, "metric3", {}};
+  TimeSeriesKey key4{4, "metric4", {}};
+
 
   mem_table_->put(key1, 1);
   mem_table_->put(key2, 2);
@@ -57,8 +59,10 @@ TEST_F(SSTableTest, CanGetFromSSTable) {
   auto value1{sstable_->get(key1)};
   auto value2{sstable_->get(key2)};
   auto value3{sstable_->get(key3)};
+  auto value4{sstable_->get(key4)};
 
   EXPECT_EQ(value1, 1);
   EXPECT_EQ(value2, 2);
   EXPECT_EQ(value3, 3);
+  EXPECT_EQ(value4, std::nullopt);
 }
