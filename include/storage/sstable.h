@@ -38,7 +38,7 @@ public:
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       }
     {
-      writeFromMemTable(std::move(mem_table));
+      writeMemTableToFile(std::move(mem_table));
     }
 
   SSTable(SSTable&&) noexcept = default;
@@ -53,7 +53,7 @@ public:
     std::ofstream file{file_path_};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "SSTable::writeFromMemTable(): Unable to open file."
+        "SSTable::writeMemTableToFile(): Unable to open file."
       };
     }
 
@@ -62,7 +62,7 @@ public:
       auto pos{file.tellp()};
       if (pos == -1) {
         throw std::runtime_error{
-          "SSTable::writeFromMemTable(): Unable to get file position."
+          "SSTable::writeMemTableToFile(): Unable to get file position."
         };
       }
       update_metadata(key, pos);
@@ -97,6 +97,10 @@ public:
     auto [entry_key, entry_value] = entryFromString<TValue>(entry_str);
 
     return entry_value;
+  }
+
+  [[nodiscard]] FilePath filePath() const noexcept {
+    return file_path_;
   }
 
 private:
