@@ -45,14 +45,12 @@ public:
   }
 
   [[nodiscard]] mapped_type get(const key_type& key) const {
-    auto memtable_value{mem_table_.get(key)};
-    if (memtable_value != std::nullopt) {
-      return memtable_value;
+    if (mem_table_.contains(key)) {
+      return mem_table_.get(key);
     }
     for (const auto& sstable : sstables_ | std::views::reverse) {
-      auto sstable_value{sstable.get(key)};
-      if (sstable_value.has_value()) {
-        return sstable_value;
+      if (sstable.contains(key)) {
+        return sstable.get(key);
       }
     }
     return std::nullopt;
