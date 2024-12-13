@@ -66,6 +66,52 @@ TEST_F(QueryBuilderTest, CanFilterByTag) {
   EXPECT_EQ(result[2].second, 3);
 }
 
+TEST_F(QueryBuilderTest, CanFilterByAnyTags) {
+  Tag tag1{"tag1", "value1"};
+  Tag tag2{"tag2", "value2"};
+  Tag tag3{"tag3", "value3"};
+
+  TimeSeriesKey key1{5'000, "metric", {tag1}};
+  TimeSeriesKey key2{5'001, "metric", {tag2}};
+  TimeSeriesKey key3{5'002, "metric", {tag3}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+
+  auto result{query()
+    .filterByAnyTags(tag1, tag2, tag3)
+    .execute()
+  };
+
+  EXPECT_EQ(result.size(), 3);
+  EXPECT_EQ(result[0].second, 1);
+  EXPECT_EQ(result[1].second, 2);
+  EXPECT_EQ(result[2].second, 3);
+}
+
+TEST_F(QueryBuilderTest, CanFilterByAllTags) {
+  Tag tag1{"tag1", "value1"};
+  Tag tag2{"tag2", "value2"};
+
+  TimeSeriesKey key1{5'000, "metric", {tag1}};
+  TimeSeriesKey key2{5'001, "metric", {tag1, tag2}};
+  TimeSeriesKey key3{5'002, "metric", {tag2}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+
+
+  auto result{query()
+    .filterByAllTags(tag1, tag2)
+    .execute()
+  };
+
+  EXPECT_EQ(result.size(), 1);
+  EXPECT_EQ(result[0].second, 2);
+}
+
 TEST_F(QueryBuilderTest, CanFilterByMetric) {
   TimeSeriesKey key1{5'000, "metric1", {}};
   TimeSeriesKey key2{5'001, "metric1", {}};
@@ -86,6 +132,29 @@ TEST_F(QueryBuilderTest, CanFilterByMetric) {
   EXPECT_EQ(result[2].second, 3);
 }
 
+TEST_F(QueryBuilderTest, CanFilterByAnyMetrics) {
+  Metric metric1{"metric1"};
+  Metric metric2{"metric2"};
+  Metric metric3{"metric3"};
+
+  TimeSeriesKey key1{5'000, metric1, {}};
+  TimeSeriesKey key2{5'001, metric2, {}};
+  TimeSeriesKey key3{5'002, metric3, {}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+
+  auto result{query()
+    .filterByAnyMetrics(metric1, metric2)
+    .execute()
+  };
+
+  EXPECT_EQ(result.size(), 2);
+  EXPECT_EQ(result[0].second, 1);
+  EXPECT_EQ(result[1].second, 2);
+}
+
 TEST_F(QueryBuilderTest, CanFilterByTimestamp) {
   auto result{query()
     .filterByTimestamp(5'000)
@@ -94,6 +163,20 @@ TEST_F(QueryBuilderTest, CanFilterByTimestamp) {
 
   EXPECT_EQ(result.size(), 1);
   EXPECT_EQ(result[0].second, 5'000);
+}
+
+TEST_F(QueryBuilderTest, CanFilterByAnyTimestamps) {
+  Timestamp timestamp1{5'000};
+  Timestamp timestamp2{5'001};
+
+  auto result{query()
+    .filterByAnyTimestamps(timestamp1, timestamp2)
+    .execute()
+  };
+
+  EXPECT_EQ(result.size(), 2);
+  EXPECT_EQ(result[0].second, 5'000);
+  EXPECT_EQ(result[1].second, 5'001);
 }
 
 TEST_F(QueryBuilderTest, CanFilterByTagAndMetric) {

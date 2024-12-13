@@ -57,6 +57,26 @@ public:
     return *this;
   }
 
+  template <AllSameNoCVRefEquals<Tag>... Tags>
+  QueryBuilder& filterByAnyTags(const Tags&... tags) {
+    handle_type_on_filter();
+    filters_.emplace_back([tags...](const key_type& k) {
+      return ((k.tags().contains(tags.first) &&
+               k.tags().at(tags.first) == tags.second) || ...);
+    });
+    return *this;
+  }
+
+  template <AllSameNoCVRefEquals<Tag>... Tags>
+  QueryBuilder& filterByAllTags(const Tags&... tags) {
+    handle_type_on_filter();
+    filters_.emplace_back([tags...](const key_type& k) {
+      return ((k.tags().contains(tags.first) &&
+               k.tags().at(tags.first) == tags.second) && ...);
+    });
+    return *this;
+  }
+
   QueryBuilder& filterByMetric(const Metric& metric) {
     handle_type_on_filter();
     filters_.emplace_back([metric](const key_type& k) {
@@ -65,10 +85,28 @@ public:
     return *this;
   }
 
+  template <AllSameNoCVRefEquals<Metric>... Metrics>
+  QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
+    handle_type_on_filter();
+    filters_.emplace_back([metrics...](const key_type& k) {
+      return ((k.metric() == metrics) || ...);
+    });
+    return *this;
+  }
+
   QueryBuilder& filterByTimestamp(const Timestamp& timestamp) {
     handle_type_on_filter();
     filters_.emplace_back([timestamp](const key_type& k) {
       return k.timestamp() == timestamp;
+    });
+    return *this;
+  }
+
+  template <AllSameNoCVRefEquals<Timestamp>... Timestamps>
+  QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
+    handle_type_on_filter();
+    filters_.emplace_back([timestamps...](const key_type& k) {
+      return ((k.timestamp() == timestamps) || ...);
     });
     return *this;
   }

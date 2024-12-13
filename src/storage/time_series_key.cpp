@@ -1,7 +1,7 @@
 #include "storage/time_series_key.h"
 
 TimeSeriesKey::TimeSeriesKey(Timestamp timestamp,
-                             Metric metric, Tags tags) noexcept
+                             Metric metric, TagTable tags) noexcept
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
   , tags_{std::move(tags)} {}
@@ -58,7 +58,7 @@ Metric TimeSeriesKey::metric() const noexcept {
   return metric_;
 }
 
-const Tags& TimeSeriesKey::tags() const noexcept {
+const TagTable& TimeSeriesKey::tags() const noexcept {
   return tags_;
 }
 
@@ -85,7 +85,7 @@ TimeSeriesKey TimeSeriesKey::fromString(const std::string& str) {
   auto metric{str.substr(metric_start, metric_end - metric_start)};
   auto tags_str{str.substr(tags_start, tags_end - tags_start)};
 
-  Tags tags;
+  TagTable tags;
   TagKey key;
   TagValue value;
   std::istringstream ss{tags_str};

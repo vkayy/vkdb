@@ -11,7 +11,7 @@ protected:
     };
   }
 
-  Tags tags_;
+  TagTable tags_;
 };
 
 TEST_F(TimeSeriesKeyTest, CanEqualityCompareKeys) {

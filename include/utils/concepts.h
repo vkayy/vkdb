@@ -19,4 +19,7 @@ concept Arithmetic = std::is_arithmetic_v<T>;
 template <typename T>
 concept ArithmeticNoCVRefQuals = Arithmetic<T> && HasNoCVRefQuals<T>;
 
+template <typename U, typename... Ts>
+concept AllSameNoCVRefEquals = (SameNoCVRefQuals<Ts, U> && ...);
+
 #endif // UTILS_CONCEPTS_H

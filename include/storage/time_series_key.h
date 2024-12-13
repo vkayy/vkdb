@@ -11,7 +11,8 @@ using Timestamp = uint64_t;
 using Metric = std::string;
 using TagKey = std::string;
 using TagValue = std::string;
-using Tags = std::map<TagKey, TagValue>;
+using Tag = std::pair<TagKey, TagValue>;
+using TagTable = std::map<TagKey, TagValue>;
 
 class TimeSeriesKey {
 public:
@@ -20,7 +21,7 @@ public:
   TimeSeriesKey() = default;
 
   explicit TimeSeriesKey(Timestamp timestamp,
-                         Metric metric, Tags tags) noexcept;
+                         Metric metric, TagTable tags) noexcept;
 
   TimeSeriesKey(TimeSeriesKey&&) noexcept = default;
   TimeSeriesKey& operator=(TimeSeriesKey&&) noexcept = default;
@@ -39,7 +40,7 @@ public:
 
   [[nodiscard]] Timestamp timestamp() const noexcept;
   [[nodiscard]] Metric metric() const noexcept;
-  [[nodiscard]] const Tags& tags() const noexcept;
+  [[nodiscard]] const TagTable& tags() const noexcept;
   [[nodiscard]] std::string toString() const noexcept;
 
   [[nodiscard]] static TimeSeriesKey fromString(const std::string& str);
@@ -47,7 +48,7 @@ public:
 private:
   Timestamp timestamp_;
   Metric metric_;
-  Tags tags_;
+  TagTable tags_;
 };
 
 std::ostream& operator<<(std::ostream& os, const TimeSeriesKey& key);
