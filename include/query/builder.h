@@ -32,7 +32,7 @@ public:
         "QueryBuilder::point(): Query type already set."
       };
     }
-    point_key_ = key;
+    query_params_ = QueryParams{PointParams{key}};
     query_type_ = QueryType::Point;
     return *this;
   }
@@ -43,8 +43,7 @@ public:
         "QueryBuilder::range(): Query type already set."
       };
     }
-    range_start_ = start;
-    range_end_ = end;
+    query_params_ = QueryParams{RangeParams{start, end}};
     query_type_ = QueryType::Range;
     return *this;
   }
@@ -117,8 +116,7 @@ public:
         "QueryBuilder::put(): Query type already set."
       };
     }
-    put_key_ = key;
-    put_value_ = value;
+    query_params_ = QueryParams{PutParams{key, value}};
     query_type_ = QueryType::Put;
     return *this;
   }
@@ -129,7 +127,7 @@ public:
         "QueryBuilder::remove(): Query type already set."
       };
     }
-    remove_key_ = key;
+    query_params_ = QueryParams{RemoveParams{key}};
     query_type_ = QueryType::Remove;
     return *this;
   }
@@ -141,13 +139,15 @@ public:
         "QueryBuilder::execute(): Query type not set."
       };
     } case QueryType::Point: {
-      auto value{lsm_tree_.get(point_key_)};
+      auto& params{std::get<PointParams>(query_params_)};
+      auto value{lsm_tree_.get(params.key_)};
       if (!value.has_value()) {
         return {};
       }
-      return {{point_key_, value}};
+      return {{params.key_, value}};
     } case QueryType::Range: {
-      auto range{lsm_tree_.getRange(range_start_, range_end_)
+      auto& params{std::get<RangeParams>(query_params_)};
+      auto range{lsm_tree_.getRange(params.start_, params.end_)
         | std::views::filter([&](const value_type& entry) {
           return std::all_of(filters_.begin(), filters_.end(),
             [&](const Filter& filter) {
@@ -157,10 +157,12 @@ public:
       };
       return {range.begin(), range.end()};
     } case QueryType::Put: {
-      lsm_tree_.put(put_key_, put_value_.value());
+      auto& params{std::get<PutParams>(query_params_)};
+      lsm_tree_.put(params.key_, params.value_);
       return {};
     } case QueryType::Remove: {
-      lsm_tree_.remove(remove_key_);
+      auto& params{std::get<RemoveParams>(query_params_)};
+      lsm_tree_.remove(params.key_);
       return {};
     } default: {
       throw std::runtime_error{
@@ -171,26 +173,49 @@ public:
   }
 
 private:
-  using Filter = std::function<bool(const key_type&)>;
   enum class QueryType { None, Point, Range, Put, Remove };
+  using Filter = std::function<bool(const key_type&)>;
+
+  struct PointParams {
+    key_type key_;
+  };
+
+  struct RangeParams {
+    key_type start_;
+    key_type end_;
+  };
+
+  struct PutParams {
+    key_type key_;
+    TValue value_;
+  };
+
+  struct RemoveParams {
+    key_type key_;
+  };
+
+  using QueryParams = std::variant<
+    std::monostate,
+    PointParams,
+    RangeParams,
+    PutParams,
+    RemoveParams
+  >;
 
   void handle_type_on_filter() {
     if (query_type_ == QueryType::None) {
+      query_params_ = QueryParams{RangeParams{
+        MIN_TIME_SERIES_KEY,
+        MAX_TIME_SERIES_KEY
+      }};
       query_type_ = QueryType::Range;
-      range_start_ = MIN_TIME_SERIES_KEY;
-      range_end_ = MAX_TIME_SERIES_KEY;
     }
   }
 
   LSMTree<TValue>& lsm_tree_;
   QueryType query_type_;
-  key_type point_key_;
-  key_type range_start_;
-  key_type range_end_;
+  QueryParams query_params_;
   std::vector<Filter> filters_;
-  key_type put_key_;
-  mapped_type put_value_;
-  key_type remove_key_;
 };
 
 #endif // QUERY_BUILDER_H
