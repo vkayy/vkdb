@@ -22,4 +22,10 @@ concept ArithmeticNoCVRefQuals = Arithmetic<T> && HasNoCVRefQuals<T>;
 template <typename U, typename... Ts>
 concept AllSameNoCVRefEquals = (SameNoCVRefQuals<Ts, U> && ...);
 
+template <typename T, typename U>
+concept ConvertibleNoCVRefEquals = std::convertible_to<T, U> && HasNoCVRefQuals<T>;
+
+template <typename U, typename... Ts>
+concept AllConvertibleNoCVRefEquals = (ConvertibleNoCVRefEquals<Ts, U> && ...);
+
 #endif // UTILS_CONCEPTS_H

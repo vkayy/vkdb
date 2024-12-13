@@ -57,7 +57,7 @@ public:
     return *this;
   }
 
-  template <AllSameNoCVRefEquals<Tag>... Tags>
+  template <AllConvertibleNoCVRefEquals<Tag>... Tags>
   QueryBuilder& filterByAnyTags(const Tags&... tags) {
     handle_type_on_filter();
     filters_.emplace_back([tags...](const key_type& k) {
@@ -67,7 +67,7 @@ public:
     return *this;
   }
 
-  template <AllSameNoCVRefEquals<Tag>... Tags>
+  template <AllConvertibleNoCVRefEquals<Tag>... Tags>
   QueryBuilder& filterByAllTags(const Tags&... tags) {
     handle_type_on_filter();
     filters_.emplace_back([tags...](const key_type& k) {
@@ -85,7 +85,7 @@ public:
     return *this;
   }
 
-  template <AllSameNoCVRefEquals<Metric>... Metrics>
+  template <AllConvertibleNoCVRefEquals<Metric>... Metrics>
   QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
     handle_type_on_filter();
     filters_.emplace_back([metrics...](const key_type& k) {
@@ -102,7 +102,7 @@ public:
     return *this;
   }
 
-  template <AllSameNoCVRefEquals<Timestamp>... Timestamps>
+  template <AllConvertibleNoCVRefEquals<Timestamp>... Timestamps>
   QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
     handle_type_on_filter();
     filters_.emplace_back([timestamps...](const key_type& k) {
