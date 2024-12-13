@@ -15,7 +15,8 @@ public:
   QueryBuilder() = delete;
 
   explicit QueryBuilder(LSMTree<TValue>& lsm_tree)
-    : lsm_tree_{lsm_tree} {}
+    : lsm_tree_{lsm_tree}
+    , query_type_{QueryType::None} {}
   
   QueryBuilder(QueryBuilder&&) noexcept = default;
   QueryBuilder& operator=(QueryBuilder&&) noexcept = default;
@@ -47,7 +48,7 @@ public:
     query_type_ = QueryType::Range;
     return *this;
   }
-  
+
   QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
     handle_type_on_filter();
     filters_.emplace_back([key, value](const key_type& k) {
