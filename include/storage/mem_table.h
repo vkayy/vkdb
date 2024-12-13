@@ -43,6 +43,20 @@ public:
     return it->second;
   }
 
+  [[nodiscard]] std::vector<value_type> getRange(
+    const key_type& start,
+    const key_type& end
+  ) const {
+    std::vector<value_type> result;
+    for (auto it{table_.lower_bound(start)}; it != table_.end(); ++it) {
+      if (it->first > end) {
+        break;
+      }
+      result.push_back(*it);
+    }
+    return result;
+  }
+
   void clear() noexcept {
     table_.clear();
     time_range_.clear();

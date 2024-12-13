@@ -99,6 +99,20 @@ public:
     return entry_value;
   }
 
+  [[nodiscard]] std::vector<value_type> getRange(
+    const key_type& start,
+    const key_type& end
+  ) const {
+    std::vector<value_type> result;
+    for (auto it{index_.lower_bound(start)}; it != index_.end(); ++it) {
+      if (it->first > end) {
+        break;
+      }
+      result.emplace_back(it->first, get(it->first));
+    }
+    return result;
+  }
+
   [[nodiscard]] FilePath filePath() const noexcept {
     return file_path_;
   }

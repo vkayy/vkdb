@@ -68,6 +68,25 @@ TEST_F(MemTableTest, CanPutAndGetValuesOfKeysWithMultipleTags) {
   EXPECT_EQ(value3, 3);
 }
 
+TEST_F(MemTableTest, CanGetRangeOfEntriesWithKeys) {
+  TimeSeriesKey key1{1, "metric1", {{"tag1", "value1"}, {"tag2", "value2"}}};
+  TimeSeriesKey key2{2, "metric2", {{"tag3", "value3"}, {"tag4", "value4"}}};
+  TimeSeriesKey key3{3, "metric3", {{"tag5", "value5"}, {"tag6", "value6"}}};
+  TimeSeriesKey key4{4, "metric4", {{"tag7", "value7"}, {"tag8", "value8"}}};
+
+  table_->put(key1, 1);
+  table_->put(key2, 2);
+  table_->put(key3, 3);
+  table_->put(key4, 4);
+
+  auto entries{table_->getRange(key2, key4)};
+
+  EXPECT_EQ(entries.size(), 3);
+  EXPECT_EQ(entries[0].second, 2);
+  EXPECT_EQ(entries[1].second, 3);
+  EXPECT_EQ(entries[2].second, 4);
+}
+
 TEST_F(MemTableTest, CanUpdateValuesOfKeysWithMultipleTags) {
   TimeSeriesKey key1{1, "metric1", {{"tag1", "value1"}, {"tag2", "value2"}}};
 

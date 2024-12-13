@@ -49,7 +49,6 @@ TEST_F(SSTableTest, CanGetFromSSTable) {
   TimeSeriesKey key3{3, "metric3", {}};
   TimeSeriesKey key4{4, "metric4", {}};
 
-
   mem_table_->put(key1, 1);
   mem_table_->put(key2, 2);
   mem_table_->put(key3, 3);
@@ -65,4 +64,25 @@ TEST_F(SSTableTest, CanGetFromSSTable) {
   EXPECT_EQ(value2, 2);
   EXPECT_EQ(value3, 3);
   EXPECT_EQ(value4, std::nullopt);
+}
+
+TEST_F(SSTableTest, CanGetRangeFromSSTable) {
+  TimeSeriesKey key1{1, "metric1", {}};
+  TimeSeriesKey key2{2, "metric2", {}};
+  TimeSeriesKey key3{3, "metric3", {}};
+  TimeSeriesKey key4{4, "metric4", {}};
+
+  mem_table_->put(key1, 1);
+  mem_table_->put(key2, 2);
+  mem_table_->put(key3, 3);
+  mem_table_->put(key4, 4);
+
+  sstable_->writeMemTableToFile(std::move(*mem_table_));
+
+  auto entries{sstable_->getRange(key2, key4)};
+
+  EXPECT_EQ(entries.size(), 3);
+  EXPECT_EQ(entries[0].second, 2);
+  EXPECT_EQ(entries[1].second, 3);
+  EXPECT_EQ(entries[2].second, 4);
 }
