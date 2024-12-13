@@ -164,10 +164,6 @@ public:
       auto& params{std::get<RemoveParams>(query_params_)};
       lsm_tree_.remove(params.key_);
       return {};
-    } default: {
-      throw std::runtime_error{
-        "QueryBuilder::execute(): Unknown query type."
-      };
     }
     }
   }
