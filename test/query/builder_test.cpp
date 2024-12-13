@@ -248,3 +248,56 @@ TEST_F(QueryBuilderTest, CanRangeQueryAndFilterByTagAndMetricAndTimestamp) {
   EXPECT_EQ(result[0].second, 3);
   EXPECT_EQ(result[1].second, 4);
 }
+
+TEST_F(QueryBuilderTest, CanPutAndUpdate) {
+  TimeSeriesKey key{5'000, "metric", {}};
+
+  query()
+    .put(key, 1)
+    .execute();
+
+  auto result{query()
+    .point(key)
+    .execute()
+  };
+
+  EXPECT_EQ(result.size(), 1);
+  EXPECT_EQ(result[0].second, 1);
+
+  query()
+    .put(key, 2)
+    .execute();
+
+  result = query()
+    .point(key)
+    .execute();
+
+  EXPECT_EQ(result.size(), 1);
+  EXPECT_EQ(result[0].second, 2);
+}
+
+TEST_F(QueryBuilderTest, CanRemove) {
+  TimeSeriesKey key{5'000, "metric", {}};
+
+  query()
+    .put(key, 1)
+    .execute();
+
+  auto result{query()
+    .point(key)
+    .execute()
+  };
+
+  EXPECT_EQ(result.size(), 1);
+  EXPECT_EQ(result[0].second, 1);
+
+  query()
+    .remove(key)
+    .execute();
+
+  result = query()
+    .point(key)
+    .execute();
+
+  EXPECT_EQ(result.size(), 0);
+}

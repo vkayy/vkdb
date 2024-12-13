@@ -111,6 +111,29 @@ public:
     return *this;
   }
 
+  QueryBuilder& put(const key_type& key, const TValue& value) {
+    if (query_type_ != QueryType::None) {
+      throw std::runtime_error{
+        "QueryBuilder::put(): Query type already set."
+      };
+    }
+    put_key_ = key;
+    put_value_ = value;
+    query_type_ = QueryType::Put;
+    return *this;
+  }
+
+  QueryBuilder& remove(const key_type& key) {
+    if (query_type_ != QueryType::None) {
+      throw std::runtime_error{
+        "QueryBuilder::remove(): Query type already set."
+      };
+    }
+    remove_key_ = key;
+    query_type_ = QueryType::Remove;
+    return *this;
+  }
+
   result_type execute() {
     switch (query_type_) {
     case QueryType::None: {
@@ -133,13 +156,23 @@ public:
         })
       };
       return {range.begin(), range.end()};
+    } case QueryType::Put: {
+      lsm_tree_.put(put_key_, put_value_.value());
+      return {};
+    } case QueryType::Remove: {
+      lsm_tree_.remove(remove_key_);
+      return {};
+    } default: {
+      throw std::runtime_error{
+        "QueryBuilder::execute(): Unknown query type."
+      };
     }
     }
   }
 
 private:
   using Filter = std::function<bool(const key_type&)>;
-  enum class QueryType { None, Point, Range };
+  enum class QueryType { None, Point, Range, Put, Remove };
 
   void handle_type_on_filter() {
     if (query_type_ == QueryType::None) {
@@ -155,6 +188,9 @@ private:
   key_type range_start_;
   key_type range_end_;
   std::vector<Filter> filters_;
+  key_type put_key_;
+  mapped_type put_value_;
+  key_type remove_key_;
 };
 
 #endif // QUERY_BUILDER_H
