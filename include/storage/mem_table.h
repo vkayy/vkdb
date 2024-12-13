@@ -37,14 +37,10 @@ public:
   }
 
   [[nodiscard]] mapped_type get(const key_type& key) const {
-    if (!in_range(key)) {
+    if (!contains(key)) {
       return std::nullopt;
     }
-    auto it{table_.find(key)};
-    if (it == table_.end()) {
-      return std::nullopt;
-    }
-    return it->second;
+    return table_.at(key);
   }
 
   [[nodiscard]] std::vector<value_type> getRange(

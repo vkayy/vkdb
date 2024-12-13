@@ -77,7 +77,7 @@ public:
   }
 
   [[nodiscard]] mapped_type get(const key_type& key) const {
-    if (!may_contain(key) || !in_range(key) || !in_index(key)) {
+    if (!contains(key)) {
       return std::nullopt;
     }
 
