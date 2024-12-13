@@ -213,7 +213,7 @@ TEST_F(QueryBuilderTest, CanFilterByTagAndMetricAndTimestamp) {
   auto result{query()
     .filterByTag("tag1", "val1")
     .filterByMetric("metric2")
-    .filterByTimestamp(5002)
+    .filterByTimestamp(5'002)
     .execute()
   };
 
@@ -240,7 +240,7 @@ TEST_F(QueryBuilderTest, CanRangeQueryAndFilterByTagAndMetricAndTimestamp) {
     .range(range_start, range_end)
     .filterByTag("tag1", "val1")
     .filterByMetric("metric2")
-    .filterByTimestamp(5002)
+    .filterByTimestamp(5'002)
     .execute()
   };
 
