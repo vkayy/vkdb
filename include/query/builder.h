@@ -134,37 +134,16 @@ public:
 
   result_type execute() {
     switch (query_type_) {
-    case QueryType::None: {
-      throw std::runtime_error{
-        "QueryBuilder::execute(): Query type not set."
-      };
-    } case QueryType::Point: {
-      auto& params{std::get<PointParams>(query_params_)};
-      auto value{lsm_tree_.get(params.key_)};
-      if (!value.has_value()) {
-        return {};
-      }
-      return {{params.key_, value}};
-    } case QueryType::Range: {
-      auto& params{std::get<RangeParams>(query_params_)};
-      auto range{lsm_tree_.getRange(params.start_, params.end_)
-        | std::views::filter([&](const value_type& entry) {
-          return std::all_of(filters_.begin(), filters_.end(),
-            [&](const Filter& filter) {
-              return filter(entry.first);
-            });
-        })
-      };
-      return {range.begin(), range.end()};
-    } case QueryType::Put: {
-      auto& params{std::get<PutParams>(query_params_)};
-      lsm_tree_.put(params.key_, params.value_);
-      return {};
-    } case QueryType::Remove: {
-      auto& params{std::get<RemoveParams>(query_params_)};
-      lsm_tree_.remove(params.key_);
-      return {};
-    }
+    case QueryType::None:
+      throw std::runtime_error{"QueryBuilder::execute(): Query type not set."};
+    case QueryType::Point:
+      return execute_point_query();
+    case QueryType::Range:
+      return execute_range_query();
+    case QueryType::Put:
+      return execute_put_query();
+    case QueryType::Remove:
+      return execute_remove_query();
     }
   }
 
@@ -197,6 +176,40 @@ private:
     PutParams,
     RemoveParams
   >;
+
+  [[nodiscard]] result_type execute_point_query() {
+    auto& params{std::get<PointParams>(query_params_)};
+    auto value{lsm_tree_.get(params.key_)};
+    if (!value.has_value()) {
+      return {};
+    }
+    return {{params.key_, value}};
+  }
+
+  [[nodiscard]] result_type execute_range_query() {
+    auto& params{std::get<RangeParams>(query_params_)};
+    auto range{lsm_tree_.getRange(params.start_, params.end_)
+      | std::views::filter([&](const value_type& entry) {
+        return std::all_of(filters_.begin(), filters_.end(),
+          [&](const Filter& filter) {
+            return filter(entry.first);
+          });
+      })
+    };
+    return {range.begin(), range.end()};
+  }
+
+  [[nodiscard]] result_type execute_put_query() {
+    auto& params{std::get<PutParams>(query_params_)};
+    lsm_tree_.put(params.key_, params.value_);
+    return {};
+  }
+
+  [[nodiscard]] result_type execute_remove_query() {
+    auto& params{std::get<RemoveParams>(query_params_)};
+    lsm_tree_.remove(params.key_);
+    return {};
+  }
 
   void handle_type_on_filter() {
     if (query_type_ == QueryType::None) {
