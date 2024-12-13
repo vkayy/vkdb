@@ -49,11 +49,7 @@ public:
   }
   
   QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
-    if (query_type_ == QueryType::None) {
-      query_type_ = QueryType::Range;
-      range_start_ = MIN_TIME_SERIES_KEY;
-      range_end_ = MAX_TIME_SERIES_KEY;
-    }
+    handle_type_on_filter();
     filters_.emplace_back([key, value](const key_type& k) {
       return k.tags().contains(key) && k.tags().at(key) == value;
     });
@@ -61,11 +57,7 @@ public:
   }
 
   QueryBuilder& filterByMetric(const Metric& metric) {
-    if (query_type_ == QueryType::None) {
-      query_type_ = QueryType::Range;
-      range_start_ = MIN_TIME_SERIES_KEY;
-      range_end_ = MAX_TIME_SERIES_KEY;
-    }
+    handle_type_on_filter();
     filters_.emplace_back([metric](const key_type& k) {
       return k.metric() == metric;
     });
@@ -73,11 +65,7 @@ public:
   }
 
   QueryBuilder& filterByTimestamp(const Timestamp& timestamp) {
-    if (query_type_ == QueryType::None) {
-      query_type_ = QueryType::Range;
-      range_start_ = MIN_TIME_SERIES_KEY;
-      range_end_ = MAX_TIME_SERIES_KEY;
-    }
+    handle_type_on_filter();
     filters_.emplace_back([timestamp](const key_type& k) {
       return k.timestamp() == timestamp;
     });
@@ -113,6 +101,14 @@ public:
 private:
   using Filter = std::function<bool(const key_type&)>;
   enum class QueryType { None, Point, Range };
+
+  void handle_type_on_filter() {
+    if (query_type_ == QueryType::None) {
+      query_type_ = QueryType::Range;
+      range_start_ = MIN_TIME_SERIES_KEY;
+      range_end_ = MAX_TIME_SERIES_KEY;
+    }
+  }
 
   LSMTree<TValue>& lsm_tree_;
   QueryType query_type_;
