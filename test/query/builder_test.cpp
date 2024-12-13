@@ -5,7 +5,6 @@ class QueryBuilderTest : public ::testing::Test {
 protected:
   void SetUp() override {
     lsm_tree_ = std::make_unique<LSMTree<int>>("/Users/vkay/Dev/vkdb/output");
-    query_builder_ = std::make_unique<QueryBuilder<int>>(*lsm_tree_);
 
     for (Timestamp i{0}; i < 10'000; ++i) {
       TimeSeriesKey key{i, "metric", {}};
@@ -13,15 +12,18 @@ protected:
     }
   }
 
+  QueryBuilder<int> query() {
+    return QueryBuilder<int>(*lsm_tree_);
+  }
+
   std::unique_ptr<LSMTree<int>> lsm_tree_;
-  std::unique_ptr<QueryBuilder<int>> query_builder_;
 };
 
 TEST_F(QueryBuilderTest, CanPointQuery) {
   TimeSeriesKey key{5'000, "metric", {}};
 
-  auto result{query_builder_
-    ->point(key)
+  auto result{query()
+    .point(key)
     .execute()
   };
 
@@ -33,8 +35,8 @@ TEST_F(QueryBuilderTest, CanRangeQuery) {
   TimeSeriesKey start{5'000, "metric", {}};
   TimeSeriesKey end{10'000, "metric", {}};
 
-  auto result{query_builder_
-    ->range(start, end)
+  auto result{query()
+    .range(start, end)
     .execute()
   };
 
@@ -53,8 +55,8 @@ TEST_F(QueryBuilderTest, CanFilterByTag) {
   lsm_tree_->put(key2, 2);
   lsm_tree_->put(key3, 3);
 
-  auto result{query_builder_
-    ->filterByTag("tag1", "value1")
+  auto result{query()
+    .filterByTag("tag1", "value1")
     .execute()
   };
 
@@ -73,8 +75,8 @@ TEST_F(QueryBuilderTest, CanFilterByMetric) {
   lsm_tree_->put(key2, 2);
   lsm_tree_->put(key3, 3);
 
-  auto result{query_builder_
-    ->filterByMetric("metric1")
+  auto result{query()
+    .filterByMetric("metric1")
     .execute()
   };
 
@@ -85,8 +87,8 @@ TEST_F(QueryBuilderTest, CanFilterByMetric) {
 }
 
 TEST_F(QueryBuilderTest, CanFilterByTimestamp) {
-  auto result{query_builder_
-    ->filterByTimestamp(5'000)
+  auto result{query()
+    .filterByTimestamp(5'000)
     .execute()
   };
 
@@ -103,8 +105,8 @@ TEST_F(QueryBuilderTest, CanFilterByTagAndMetric) {
   lsm_tree_->put(key2, 2);
   lsm_tree_->put(key3, 3);
 
-  auto result{query_builder_
-    ->filterByTag("tag1", "value1")
+  auto result{query()
+    .filterByTag("tag1", "value1")
     .filterByMetric("metric2")
     .execute()
   };
@@ -125,8 +127,8 @@ TEST_F(QueryBuilderTest, CanFilterByTagAndMetricAndTimestamp) {
   lsm_tree_->put(key3, 3);
   lsm_tree_->put(key4, 4);  
 
-  auto result{query_builder_
-    ->filterByTag("tag1", "val1")
+  auto result{query()
+    .filterByTag("tag1", "val1")
     .filterByMetric("metric2")
     .filterByTimestamp(5002)
     .execute()
@@ -151,8 +153,8 @@ TEST_F(QueryBuilderTest, CanRangeQueryAndFilterByTagAndMetricAndTimestamp) {
   TimeSeriesKey range_start{5'000, "metric1", {}};
   TimeSeriesKey range_end{5'002, "metric3", {}};  
 
-  auto result{query_builder_
-    ->range(range_start, range_end)
+  auto result{query()
+    .range(range_start, range_end)
     .filterByTag("tag1", "val1")
     .filterByMetric("metric2")
     .filterByTimestamp(5002)
