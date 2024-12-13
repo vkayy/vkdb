@@ -103,14 +103,19 @@ public:
     const key_type& start,
     const key_type& end
   ) const {
-    std::vector<value_type> result;
-    for (auto it{index_.lower_bound(start)}; it != index_.end(); ++it) {
-      if (it->first > end) {
+    std::vector<value_type> entries;
+    for (auto it{index_.lower_bound(start)};
+         it != index_.end() && it->first < end; ++it) {
+      const auto [key, pos] = *it;
+      if (key < start) {
+        continue;
+      }
+      if (key > end) {
         break;
       }
-      result.emplace_back(it->first, get(it->first));
+      entries.emplace_back(key, get(key));
     }
-    return result;
+    return entries;
   }
 
   [[nodiscard]] FilePath filePath() const noexcept {

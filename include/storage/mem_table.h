@@ -47,14 +47,12 @@ public:
     const key_type& start,
     const key_type& end
   ) const {
-    std::vector<value_type> result;
-    for (auto it{table_.lower_bound(start)}; it != table_.end(); ++it) {
-      if (it->first > end) {
-        break;
-      }
-      result.push_back(*it);
+    std::vector<value_type> entries;
+    for (auto it{table_.lower_bound(start)};
+         it != table_.end() && it->first < end; ++it) {
+      entries.push_back(*it);
     }
-    return result;
+    return entries;
   }
 
   void clear() noexcept {

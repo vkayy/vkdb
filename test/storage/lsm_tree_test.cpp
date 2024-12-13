@@ -93,3 +93,101 @@ TEST_F(LSMTreeTest, CanUpdateValuesOfKeysWithFlushing) {
 
   EXPECT_EQ(lsm_tree_->sstableCount(), 10);
 }
+
+TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithoutFlushing) {
+  for (Timestamp i{0}; i < 100; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  auto entries{lsm_tree_->getRange(
+    TimeSeriesKey{0, "metric", {}},
+    TimeSeriesKey{100, "metric", {}})
+  };
+
+  EXPECT_EQ(entries.size(), 100);
+  for (Timestamp i{0}; i < 100; ++i) {
+    EXPECT_EQ(entries[i].second, i);
+  }
+
+  auto empty_entries{lsm_tree_->getRange(
+    TimeSeriesKey{100, "metric", {}},
+    TimeSeriesKey{200, "metric", {}})
+  };
+  EXPECT_EQ(empty_entries.size(), 0);
+}
+
+TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushing) {
+  for (Timestamp i{0}; i < 10'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  auto entries{lsm_tree_->getRange(
+    TimeSeriesKey{0, "metric", {}},
+    TimeSeriesKey{10'000, "metric", {}})
+  };
+
+  EXPECT_EQ(entries.size(), 10'000);
+  for (Timestamp i{0}; i < 10'000; ++i) {
+    EXPECT_EQ(entries[i].second, i);
+  }
+
+  auto empty_entries{lsm_tree_->getRange(
+    TimeSeriesKey{10'000, "metric", {}},
+    TimeSeriesKey{20'000, "metric", {}})
+  };
+  EXPECT_EQ(empty_entries.size(), 0);
+}
+
+TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndUpdates) {
+  for (Timestamp i{0}; i < 5'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  for (Timestamp i{0}; i < 5'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i + 1);
+  }
+
+  auto entries{lsm_tree_->getRange(
+    TimeSeriesKey{0, "metric", {}},
+    TimeSeriesKey{5'000, "metric", {}})
+  };
+
+  EXPECT_EQ(entries.size(), 5'000);
+  for (Timestamp i{0}; i < 5'000; ++i) {
+    EXPECT_EQ(entries[i].second, i + 1);
+  }
+
+  auto empty_entries{lsm_tree_->getRange(
+    TimeSeriesKey{5'000, "metric", {}},
+    TimeSeriesKey{10'000, "metric", {}})
+  };
+  EXPECT_EQ(empty_entries.size(), 0);
+}
+
+TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndDeletions) {
+  for (Timestamp i{0}; i < 5'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  for (Timestamp i{0}; i < 5'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->remove(key);
+  }
+
+  auto entries{lsm_tree_->getRange(
+    TimeSeriesKey{0, "metric", {}},
+    TimeSeriesKey{5'000, "metric", {}})
+  };
+  EXPECT_EQ(entries.size(), 0);
+
+  auto empty_entries{lsm_tree_->getRange(
+    TimeSeriesKey{5'000, "metric", {}},
+    TimeSeriesKey{10'000, "metric", {}})
+  };
+  EXPECT_EQ(empty_entries.size(), 0);
+}

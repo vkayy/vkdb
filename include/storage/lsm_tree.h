@@ -37,6 +37,13 @@ public:
     }
   }
 
+  void remove(const key_type& key) {
+    mem_table_.put(key, std::nullopt);
+    if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
+      flush_memtable();
+    }
+  }
+
   [[nodiscard]] mapped_type get(const key_type& key) const {
     auto memtable_value{mem_table_.get(key)};
     if (memtable_value != std::nullopt) {
@@ -49,6 +56,40 @@ public:
       }
     }
     return std::nullopt;
+  }
+
+  [[nodiscard]] std::vector<value_type> getRange(
+    const key_type& start,
+    const key_type& end
+  ) const {
+    typename MemTable<TValue>::table_type result_map;
+    for (const auto& sstable : sstables_) {
+      for (const auto& [key, value] : sstable.getRange(start, end)) {
+        if (!value.has_value()) {
+          result_map.erase(key);
+          continue;
+        }
+        result_map[key] = value;
+      }
+    }
+    for (const auto& [key, value] : mem_table_.getRange(start, end)) {
+      if (!value.has_value()) {
+        result_map.erase(key);
+        continue;
+      }
+      result_map[key] = value;
+    }
+    std::vector<value_type> results{result_map.begin(), result_map.end()};
+    return results;
+  }
+
+  [[nodiscard]] std::string toString() const noexcept {
+    std::stringstream ss;
+    ss << mem_table_.toString();
+    for (const auto& sstable : sstables_) {
+      ss << sstable.toString();
+    }
+    return ss.str();
   }
 
   [[nodiscard]] size_type sstableCount() const noexcept {
