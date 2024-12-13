@@ -32,6 +32,10 @@ public:
     update_ranges(key);
   }
 
+  [[nodiscard]] bool contains(const key_type& key) const noexcept {
+    return in_range(key) && table_.contains(key);
+  }
+
   [[nodiscard]] mapped_type get(const key_type& key) const {
     if (!in_range(key)) {
       return std::nullopt;

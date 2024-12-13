@@ -72,6 +72,10 @@ public:
     file.close();
   }
 
+  [[nodiscard]] bool contains(const key_type& key) const noexcept {
+    return may_contain(key) && in_range(key) && in_index(key);
+  }
+
   [[nodiscard]] mapped_type get(const key_type& key) const {
     if (!may_contain(key) || !in_range(key) || !in_index(key)) {
       return std::nullopt;

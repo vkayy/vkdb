@@ -43,6 +43,29 @@ TEST_F(SSTableTest, CanWriteMemTableToFile) {
   EXPECT_EQ(str, expected_str);
 }
 
+TEST_F(SSTableTest, CanCheckContains) {
+  TimeSeriesKey key1{1, "metric1", {}};
+  TimeSeriesKey key2{2, "metric2", {}};
+  TimeSeriesKey key3{3, "metric3", {}};
+  TimeSeriesKey key4{4, "metric4", {}};
+
+  mem_table_->put(key1, 1);
+  mem_table_->put(key2, 2);
+  mem_table_->put(key3, 3);
+
+  sstable_->writeMemTableToFile(std::move(*mem_table_));
+
+  auto value1{sstable_->contains(key1)};
+  auto value2{sstable_->contains(key2)};
+  auto value3{sstable_->contains(key3)};
+  auto value4{sstable_->contains(key4)};
+
+  EXPECT_EQ(value1, true);
+  EXPECT_EQ(value2, true);
+  EXPECT_EQ(value3, true);
+  EXPECT_EQ(value4, false);
+}
+
 TEST_F(SSTableTest, CanGetFromSSTable) {
   TimeSeriesKey key1{1, "metric1", {}};
   TimeSeriesKey key2{2, "metric2", {}};

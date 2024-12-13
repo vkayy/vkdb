@@ -14,10 +14,32 @@ protected:
   std::unique_ptr<Table> table_;
 };
 
+TEST_F(MemTableTest, CanCheckContainsKeys) {
+  TimeSeriesKey key1{1, "metric1", {}};
+  TimeSeriesKey key2{2, "metric2", {}};
+  TimeSeriesKey key3{3, "metric3", {}};
+  TimeSeriesKey key4{4, "metric4", {}};
+
+  table_->put(key1, 1);
+  table_->put(key2, 2);
+  table_->put(key3, 3);
+
+  auto value1{table_->contains(key1)};
+  auto value2{table_->contains(key2)};
+  auto value3{table_->contains(key3)};
+  auto value4{table_->contains(key4)};
+
+  EXPECT_EQ(value1, true);
+  EXPECT_EQ(value2, true);
+  EXPECT_EQ(value3, true);
+  EXPECT_EQ(value4, false);
+}
+
 TEST_F(MemTableTest, CanPutAndGetValuesOfKeys) {
   TimeSeriesKey key1{1, "metric1", {}};
   TimeSeriesKey key2{2, "metric2", {}};
   TimeSeriesKey key3{3, "metric3", {}};
+  TimeSeriesKey key4{4, "metric4", {}};
 
   table_->put(key1, 1);
   table_->put(key2, 2);
@@ -26,10 +48,12 @@ TEST_F(MemTableTest, CanPutAndGetValuesOfKeys) {
   auto value1{table_->get(key1)};
   auto value2{table_->get(key2)};
   auto value3{table_->get(key3)};
+  auto value4{table_->get(key4)};
 
   EXPECT_EQ(value1, 1);
   EXPECT_EQ(value2, 2);
   EXPECT_EQ(value3, 3);
+  EXPECT_EQ(value4, std::nullopt);
 }
 
 TEST_F(MemTableTest, CanPutAndGetValuesOfKeysWithTags) {
