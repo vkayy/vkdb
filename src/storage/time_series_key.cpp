@@ -17,6 +17,18 @@ bool TimeSeriesKey::operator!=(const TimeSeriesKey& other) const noexcept {
 }
 
 bool TimeSeriesKey::operator<(const TimeSeriesKey& other) const noexcept {
+  if (other == MIN_TIME_SERIES_KEY) {
+    return false;
+  }
+  if (*this == MIN_TIME_SERIES_KEY) {
+    return true;
+  }
+  if (*this == MAX_TIME_SERIES_KEY) {
+    return false;
+  }
+  if (other == MAX_TIME_SERIES_KEY) {
+    return true;
+  }
   if (metric_ != other.metric_) {
     return metric_ < other.metric_;
   }

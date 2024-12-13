@@ -66,4 +66,16 @@ struct hash<TimeSeriesKey> {
 template <ArithmeticNoCVRefQuals TValue>
 using TimeSeriesEntry = std::pair<const TimeSeriesKey, std::optional<TValue>>;
 
+static const TimeSeriesKey MIN_TIME_SERIES_KEY{
+  0,
+  "MIN_TIME_SERIES_KEY",
+  {{"MIN_TIME_SERIES_KEY", "MIN_TIME_SERIES_KEY"}}
+};
+
+static const TimeSeriesKey MAX_TIME_SERIES_KEY{
+  std::numeric_limits<Timestamp>::max(),
+  "MAX_TIME_SERIES_KEY",
+  {{"MAX_TIME_SERIES_KEY", "MAX_TIME_SERIES_KEY"}}
+};
+
 #endif // STORAGE_TIME_SERIES_KEY_H
