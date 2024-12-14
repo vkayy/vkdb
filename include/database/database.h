@@ -4,11 +4,12 @@
 #include "database/table.h"
 
 namespace vkdb {
+using DatabaseName = std::string;
 class Database {
 public:
   Database() = delete;
 
-  explicit Database(std::string name)
+  explicit Database(DatabaseName name)
     : name_{std::move(name)} {}
 
   Database(Database&&) noexcept = default;
@@ -19,35 +20,35 @@ public:
 
   ~Database() = default;
 
-  void createTable(const TableName& name) {
-    if (tables_.contains(name)) {
+  void createTable(const TableName& table_name) {
+    if (tables_.contains(table_name)) {
       throw std::runtime_error{
         "Database::createTable(): Table already exists."
       };
     }
-    tables_.emplace(name, Table{name_, name});
+    tables_.emplace(table_name, Table{name_, table_name});
   }
 
-  [[nodiscard]] Table& getTable(const TableName& name) {
-    if (!tables_.contains(name)) {
+  [[nodiscard]] Table& getTable(const TableName& table_name) {
+    if (!tables_.contains(table_name)) {
       throw std::runtime_error{
         "Database::getTable(): Table does not exist."
       };
     }
-    return tables_.at(name);
+    return tables_.at(table_name);
   }
 
-  void dropTable(const TableName& name) {
-    if (!tables_.contains(name)) {
+  void dropTable(const TableName& table_name) {
+    if (!tables_.contains(table_name)) {
       throw std::runtime_error{
         "Database::dropTable(): Table does not exist."
       };
     }
-    tables_.erase(name);
+    tables_.erase(table_name);
   }
 private:
   std::unordered_map<TableName, Table> tables_;
-  std::string name_;
+  DatabaseName name_;
 };
 }  // namespace vkdb
 
