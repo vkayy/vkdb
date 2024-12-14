@@ -158,7 +158,7 @@ public:
   result_type execute() {
     switch (query_type_) {
     case QueryType::None:
-      throw std::logic_error{"QueryBuilder::execute(): Query type not set."};
+      throw std::runtime_error{"QueryBuilder::execute(): Query type not set."};
     case QueryType::Point:
       return execute_point_query();
     case QueryType::Range:
@@ -201,7 +201,7 @@ private:
 
   void set_query_type(QueryType query_type) {
     if (query_type_ != QueryType::None) {
-      throw std::logic_error{
+      throw std::runtime_error{
         "QueryBuilder::set_query_type(): Query type already set."
       };
     }
@@ -218,17 +218,17 @@ private:
     }
   }
 
-  void check_range_query() const {
-    if (query_type_ != QueryType::Range) {
-      throw std::logic_error{
-        "QueryBuilder::check_range_query(): Query type must be range."
+  void check_if_aggregable() const {
+    if (query_type_ != QueryType::Range && query_type_ != QueryType::Point) {
+      throw std::runtime_error{
+        "QueryBuilder::check_if_aggregable(): Query type must be aggregatable."
       };
     }
   }
 
   void setup_aggregate() {
     set_default_range_if_none();
-    check_range_query();
+    check_if_aggregable();
   }
 
   void add_filter(TimeSeriesKeyFilter&& filter) {
@@ -239,6 +239,9 @@ private:
   }
 
   [[nodiscard]] result_type get_filtered_range() const {
+    if (query_type_ == QueryType::Point) {
+      return execute_point_query();
+    }
     const auto& params{std::get<RangeParams>(query_params_)};
     return lsm_tree_.getRange(params.start_, params.end_, combined_filter_);
   }
@@ -253,7 +256,7 @@ private:
     return filtered_range;
   }
 
-  [[nodiscard]] result_type execute_point_query() {
+  [[nodiscard]] result_type execute_point_query() const {
     const auto& params{std::get<PointParams>(query_params_)};
     auto value{lsm_tree_.get(params.key_)};
     if (!value.has_value()) {
@@ -262,7 +265,7 @@ private:
     return {{params.key_, value}};
   }
 
-  [[nodiscard]] result_type execute_range_query() {
+  [[nodiscard]] result_type execute_range_query() const {
     auto range{get_filtered_range()};
     return {range.begin(), range.end()};
   }

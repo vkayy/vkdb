@@ -441,3 +441,78 @@ TEST_F(QueryBuilderTest, CanGetMaxWithFilters) {
 
   EXPECT_EQ(result, 4);
 }
+
+TEST_F(QueryBuilderTest, CanAggregateOverPointQueries) {
+  TimeSeriesKey key1{5'000, "metric", {}};
+
+  lsm_tree_->put(key1, 1);
+
+  auto count_result{query()
+    .point(key1)
+    .count()
+  };
+
+  auto sum_result{query()
+    .point(key1)
+    .sum()
+  };
+
+  auto avg_result{query()
+    .point(key1)
+    .avg()
+  };
+
+  auto min_result{query()
+    .point(key1)
+    .min()
+  };
+
+  auto max_result{query()
+    .point(key1)
+    .max()
+  };
+
+  EXPECT_EQ(count_result, 1);
+  EXPECT_EQ(sum_result, 1);
+  EXPECT_DOUBLE_EQ(avg_result, 1);
+  EXPECT_EQ(min_result, 1);
+  EXPECT_EQ(max_result, 1);
+}
+
+TEST_F(QueryBuilderTest, ThrowsWhenQueryTypeIsNone) {
+  EXPECT_THROW(query().execute(), std::runtime_error);
+}
+
+TEST_F(QueryBuilderTest, ThrowsWhenSettingQueryTypeMoreThanOnce) {
+  TimeSeriesKey key{5'000, "metric", {}};
+  EXPECT_THROW(query().point(key).point(key).execute(), std::runtime_error);
+}
+
+TEST_F(QueryBuilderTest, ThrowsWhenAggregatingOnAnInappropriateQuery) {
+  TimeSeriesKey key{5'000, "metric", {}};
+  EXPECT_THROW(auto result{query().put(key, 1).sum()}, std::runtime_error);
+}
+
+TEST_F(QueryBuilderTest, ThrowsWhenAggregatingOnEmptyRangeExceptCount) {
+  Metric metric{"non-existent-metric"};
+  EXPECT_THROW(
+    auto result{query().filterByMetric(metric).sum()},
+    std::runtime_error
+  );
+  EXPECT_THROW(
+    auto result{query().filterByMetric(metric).avg()},
+    std::runtime_error
+  );
+  EXPECT_THROW(
+    auto result{query().filterByMetric(metric).min()},
+    std::runtime_error
+  );
+  EXPECT_THROW(
+    auto result{query().filterByMetric(metric).max()},
+    std::runtime_error
+  );
+  EXPECT_EQ(
+    query().filterByMetric(metric).count(),
+    0
+  );
+}
