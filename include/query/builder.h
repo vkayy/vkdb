@@ -141,7 +141,7 @@ public:
 
   [[nodiscard]] TValue min() {
     setup_aggregate();
-    auto range{get_filtered_range()};
+    auto range{get_nonempty_filtered_range()};
     return std::ranges::min_element(range, {}, [](const value_type& entry) {
       return entry.second.value();
     })->second.value();
