@@ -29,11 +29,11 @@ public:
     tag_columns_ = tag_columns;
   }
 
-  [[nodiscard]] bool addTagColumn(const TagKey& tag_column) {
+  bool addTagColumn(const TagKey& tag_column) {
     return tag_columns_.insert(tag_column).second;
   }
 
-  [[nodiscard]] bool removeTagColumn(const TagKey& tag_column) {
+  bool removeTagColumn(const TagKey& tag_column) {
     return tag_columns_.erase(tag_column) > 0;
   }
 
