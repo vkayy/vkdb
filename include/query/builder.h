@@ -4,6 +4,7 @@
 #include "utils/concepts.h"
 #include "storage/lsm_tree.h"
 #include <ranges>
+#include <set>
 
 namespace vkdb {
 using TagColumns = std::set<TagKey>;
