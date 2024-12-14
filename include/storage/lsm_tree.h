@@ -18,6 +18,7 @@ public:
   using mapped_type = std::optional<TValue>;
   using value_type = std::pair<const key_type, mapped_type>;
   using size_type = uint64_t;
+  using table_type = typename MemTable<TValue>::table_type;
 
   explicit LSMTree(FilePath directory) noexcept
     : directory_{std::move(directory)}
@@ -66,7 +67,7 @@ public:
     const key_type& end,
     TimeSeriesKeyFilter filter = TRUE_TIME_SERIES_KEY_FILTER
   ) const {
-    typename MemTable<TValue>::table_type result_map;
+    table_type result_map;
     for (const auto& sstable : sstables_) {
       for (const auto& [key, value] : sstable.getRange(start, end)) {
         if (!filter(key)) {
@@ -89,8 +90,7 @@ public:
       }
       result_map[key] = value;
     }
-    std::vector<value_type> results{result_map.begin(), result_map.end()};
-    return results;
+    return {result_map.begin(), result_map.end()};
   }
 
   [[nodiscard]] std::string toString() const noexcept {
