@@ -7,7 +7,7 @@
 #include <set>
 
 namespace vkdb {
-const FilePath TABLE_DIRECTORY{"/Users/vkay/Dev/vkdb/output/"};
+const FilePath VKDB_DATABASE_DIRECTORY{"/Users/vkay/Dev/vkdb/output/"};
 
 using DatabaseName = std::string;
 using TableName = std::string;
@@ -16,10 +16,11 @@ class Table {
 public:
   Table() = delete;
 
-  explicit Table(const DatabaseName& db_name, const TableName& name)
+  explicit Table(const FilePath& db_path, const TableName& name)
     : name_{name}
-    , storage_engine_{TABLE_DIRECTORY + db_name + "/" + name} {
-      std::filesystem::create_directories(TABLE_DIRECTORY + db_name + "/" + name);
+    , db_path_{db_path}
+    , storage_engine_{getDirectory()} {
+      std::filesystem::create_directories(getDirectory());
     }
 
   Table(Table&&) noexcept = default;
@@ -42,6 +43,11 @@ public:
     return tag_columns_.erase(tag_column) > 0;
   }
 
+  void clear() const noexcept {
+    std::filesystem::remove_all(getDirectory());
+    std::filesystem::create_directories(getDirectory());
+  }
+
   [[nodiscard]] FriendlyQueryBuilder<double> query() {
     return FriendlyQueryBuilder<double>(storage_engine_, tag_columns_);
   }
@@ -49,10 +55,15 @@ public:
   [[nodiscard]] TableName name() const noexcept {
     return name_;
   }
+
+  [[nodiscard]] FilePath getDirectory() const noexcept {
+    return db_path_ + "/" + name_;
+  }
   
 private:
   using StorageEngine = LSMTree<double>;
 
+  DatabaseName db_path_;
   TableName name_;
   TagColumns tag_columns_;
   StorageEngine storage_engine_;

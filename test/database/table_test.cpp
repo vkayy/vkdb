@@ -13,6 +13,10 @@ protected:
     ASSERT_TRUE(table_->addTagColumn("tag3"));
   }
 
+  void TearDown() override {
+    table_->clear();
+  }
+
   std::unique_ptr<Table> table_;
 };
 

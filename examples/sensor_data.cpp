@@ -47,5 +47,7 @@ int main() {
   std::cout << "Max humidity between T1000 and T3000: ";
   std::cout << max_humidity << "%\n";
 
+  db.clear();
+
   return 0;
 }

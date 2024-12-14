@@ -9,6 +9,10 @@ protected:
     database_ = std::make_unique<Database>("test_db");
   }
 
+  void TearDown() override {
+    database_->clear();
+  }
+
   std::unique_ptr<Database> database_;
 };
 
@@ -25,6 +29,10 @@ TEST_F(DatabaseTest, CanDropTable) {
 TEST_F(DatabaseTest, CanGetTable) {
   database_->createTable("sensor_data");
   EXPECT_EQ(database_->getTable("sensor_data").name(), "sensor_data");
+}
+
+TEST_F(DatabaseTest, CanGetName) {
+  EXPECT_EQ(database_->name(), "test_db");
 }
 
 TEST_F(DatabaseTest, ThrowsWhenCreatingExistingTable) {
