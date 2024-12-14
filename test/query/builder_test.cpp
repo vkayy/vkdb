@@ -302,6 +302,34 @@ TEST_F(QueryBuilderTest, CanRemove) {
   EXPECT_EQ(result.size(), 0);
 }
 
+TEST_F(QueryBuilderTest, CanGetCountWithoutFilters) {
+  auto result{query()
+    .count()
+  };
+
+  EXPECT_EQ(result, 10'000);
+}
+
+TEST_F(QueryBuilderTest, CanGetCountWithFilters) {
+  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+  lsm_tree_->put(key4, 4);
+
+  auto result{query()
+    .filterByTag("tag1", "val1")
+    .filterByMetric("metric2")
+    .count()
+  };
+
+  EXPECT_EQ(result, 3);
+}
+
 TEST_F(QueryBuilderTest, CanGetSumWithoutFilters) {
   auto result{query()
     .sum()

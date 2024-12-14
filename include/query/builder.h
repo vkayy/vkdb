@@ -11,6 +11,7 @@ public:
   using key_type = TimeSeriesKey;
   using mapped_type = std::optional<TValue>;
   using value_type = std::pair<const key_type, mapped_type>;
+  using size_type = uint64_t;
   using result_type = std::vector<value_type>;
 
   QueryBuilder() = delete;
@@ -111,6 +112,11 @@ public:
     set_query_type(QueryType::Remove);
     query_params_ = QueryParams{RemoveParams{key}};
     return *this;
+  }
+
+  [[nodiscard]] size_type count() {
+    setup_aggregate();
+    return std::ranges::distance(get_filtered_range());
   }
 
   [[nodiscard]] TValue sum() {
