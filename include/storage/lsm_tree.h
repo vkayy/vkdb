@@ -67,17 +67,17 @@ public:
     const key_type& end,
     TimeSeriesKeyFilter filter = TRUE_TIME_SERIES_KEY_FILTER
   ) const {
-    table_type result_map;
+    table_type entry_table;
     for (const auto& sstable : sstables_) {
       for (const auto& [key, value] : sstable.getRange(start, end)) {
         if (!filter(key)) {
           continue;
         }
         if (!value.has_value()) {
-          result_map.erase(key);
+          entry_table.erase(key);
           continue;
         }
-        result_map[key] = value;
+        entry_table[key] = value;
       }
     }
     for (const auto& [key, value] : mem_table_.getRange(start, end)) {
@@ -85,12 +85,12 @@ public:
         continue;
       }
       if (!value.has_value()) {
-        result_map.erase(key);
+        entry_table.erase(key);
         continue;
       }
-      result_map[key] = value;
+      entry_table[key] = value;
     }
-    return {result_map.begin(), result_map.end()};
+    return {entry_table.begin(), entry_table.end()};
   }
 
   [[nodiscard]] std::string toString() const noexcept {
