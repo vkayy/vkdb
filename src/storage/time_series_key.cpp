@@ -1,10 +1,15 @@
 #include "storage/time_series_key.h"
 
-TimeSeriesKey::TimeSeriesKey(Timestamp timestamp,
-                             Metric metric, TagTable tags) noexcept
+TimeSeriesKey::TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags)
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
-  , tags_{std::move(tags)} {}
+  , tags_{std::move(tags)} {
+    if (metric_.length() > MAX_METRIC_LENGTH) {
+      throw std::invalid_argument{
+        "TimeSeriesKey::TimeSeriesKey(): Invalid metric."
+      };
+    }
+  }
 
 bool TimeSeriesKey::operator==(const TimeSeriesKey& other) const noexcept {
   return timestamp_ == other.timestamp_ &&

@@ -17,11 +17,11 @@ using TagTable = std::map<TagKey, TagValue>;
 class TimeSeriesKey {
 public:
   static constexpr auto TIMESTAMP_WIDTH{20};
+  static constexpr auto MAX_METRIC_LENGTH{64};
 
   TimeSeriesKey() = default;
 
-  explicit TimeSeriesKey(Timestamp timestamp,
-                         Metric metric, TagTable tags) noexcept;
+  explicit TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags);
 
   TimeSeriesKey(TimeSeriesKey&&) noexcept = default;
   TimeSeriesKey& operator=(TimeSeriesKey&&) noexcept = default;
@@ -78,5 +78,8 @@ static const TimeSeriesKey MAX_TIME_SERIES_KEY{
   "MAX_TIME_SERIES_KEY",
   {{"MAX_TIME_SERIES_KEY", "MAX_TIME_SERIES_KEY"}}
 };
+
+const Metric MIN_METRIC{std::string()};
+const Metric MAX_METRIC{std::string(TimeSeriesKey::MAX_METRIC_LENGTH + 1, '\xFF')};
 
 #endif // STORAGE_TIME_SERIES_KEY_H
