@@ -47,6 +47,9 @@ public:
     const key_type& start,
     const key_type& end
   ) const {
+    if (!overlaps_with(start, end)) {
+      return {};
+    }
     std::vector<value_type> entries;
     for (auto it{table_.lower_bound(start)};
          it != table_.end() && it->first < end; ++it) {
@@ -103,6 +106,12 @@ private:
   void update_ranges(const key_type& key) noexcept {
     time_range_.updateRange(key.timestamp());
     key_range_.updateRange(key);
+  }
+
+  [[nodiscard]] bool overlaps_with(const key_type& start,
+                              const key_type& end) const noexcept {
+    return time_range_.overlaps_with(start.timestamp(), end.timestamp())
+      || key_range_.overlaps_with(start, end);
   }
 
   TimeRange time_range_;

@@ -107,6 +107,9 @@ public:
     const key_type& start,
     const key_type& end
   ) const {
+    if (!overlaps_with(start, end)) {
+      return {};
+    }
     std::vector<value_type> entries;
     for (auto it{index_.lower_bound(start)};
          it != index_.end() && it->first < end; ++it) {
@@ -148,6 +151,12 @@ private:
 
   [[nodiscard]] bool in_index(const key_type& key) const noexcept {
     return index_.count(key) > 0;
+  }
+
+  [[nodiscard]] bool overlaps_with(const key_type& start,
+                              const key_type& end) const noexcept {
+    return time_range_.overlaps_with(start.timestamp(), end.timestamp())
+      || key_range_.overlaps_with(start, end);
   }
 
   BloomFilter bloom_filter_;
