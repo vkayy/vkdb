@@ -7,6 +7,7 @@
 #include <ranges>
 #include <future>
 
+namespace vkdb {
 using TimeSeriesKeyFilter = std::function<bool(const TimeSeriesKey&)>;
 
 static const TimeSeriesKeyFilter TRUE_TIME_SERIES_KEY_FILTER =
@@ -179,5 +180,6 @@ private:
   FilePath directory_;
   size_type sstable_id_;
 };
+}  // namespace vkdb
 
 #endif // STORAGE_LSM_TREE_H

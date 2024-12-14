@@ -3,6 +3,7 @@
 
 #include "query/builder.h"
 
+namespace vkdb {
 template <ArithmeticNoCVRefQuals TValue>
 class FriendlyQueryBuilder {
 public:
@@ -141,5 +142,6 @@ public:
 private:
   QueryBuilder<TValue> query_builder_;
 };
+}  // namespace vkdb
 
 #endif // QUERY_FRIENDLY_BUILDER_H

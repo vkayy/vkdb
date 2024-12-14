@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "storage/lsm_tree.h"
 
+using namespace vkdb;
+
 class LSMTreeTest : public ::testing::Test {
 protected:
   void SetUp() override {

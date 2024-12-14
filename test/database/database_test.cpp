@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "database/database.h"
 
+using namespace vkdb;
+
 class DatabaseTest : public ::testing::Test {
 protected:
   void SetUp() override {

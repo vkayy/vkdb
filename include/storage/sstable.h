@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 
+namespace vkdb {
 using FilePath = std::string;
 
 template <ArithmeticNoCVRefQuals TValue>
@@ -165,5 +166,6 @@ private:
   Index index_;
   FilePath file_path_;
 };
+}  // namespace vkdb
 
 #endif // STORAGE_SSTABLE_H

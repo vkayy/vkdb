@@ -3,6 +3,7 @@
 
 #include "utils/concepts.h"
 
+namespace vkdb {
 template <RegularNoCVRefQuals TData>
   requires std::totally_ordered<TData>
 class DataRange {
@@ -62,5 +63,6 @@ private:
   bool is_set_;
   std::pair<data_type, data_type> range_;
 };
+}  // namespace vkdb
 
 #endif // STORAGE_DATA_RANGE_H

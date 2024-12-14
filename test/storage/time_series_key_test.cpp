@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "storage/time_series_key.h"
 
+using namespace vkdb;
+
 class TimeSeriesKeyTest : public ::testing::Test {
 protected:
   void SetUp() override {

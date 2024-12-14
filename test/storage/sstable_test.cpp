@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "storage/sstable.h"
 
+using namespace vkdb;
+
 class SSTableTest : public ::testing::Test {
 protected:
   void SetUp() override {

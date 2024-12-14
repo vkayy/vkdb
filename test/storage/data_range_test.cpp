@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "storage/data_range.h"
 
+using namespace vkdb;
+
 class DataRangeTest : public ::testing::Test {
 protected:
   using Data = int;

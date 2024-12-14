@@ -6,6 +6,7 @@
 #include "storage/time_series_key.h"
 #include "storage/data_range.h"
 
+namespace vkdb {
 template <ArithmeticNoCVRefQuals TValue>
 class MemTable {
 public:
@@ -132,6 +133,7 @@ std::istream& operator>>(std::istream& is, MemTable<TValue>& table) {
   MemTable<TValue>::fromString(str, table);
   return is;
 }
+}  // namespace vkdb
 
 
 #endif // STORAGE_MEM_TABLE_H

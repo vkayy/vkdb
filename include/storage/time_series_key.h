@@ -7,6 +7,7 @@
 #include <iomanip>
 #include "utils/concepts.h"
 
+namespace vkdb {
 using Timestamp = uint64_t;
 using Metric = std::string;
 using TagKey = std::string;
@@ -59,35 +60,39 @@ private:
   TagTable tags_;
 };
 
-std::ostream& operator<<(std::ostream& os, const TimeSeriesKey& key);
-
-std::istream& operator>>(std::istream& is, TimeSeriesKey& key);
-
-namespace std {
-template <>
-struct hash<TimeSeriesKey> {
-  size_t operator()(const TimeSeriesKey& key) const noexcept {
-    return hash<string>{}(key.toString());
-  }
-};
-}  // namespace std
-
 template <ArithmeticNoCVRefQuals TValue>
 using TimeSeriesEntry = std::pair<const TimeSeriesKey, std::optional<TValue>>;
+}  // namespace vkdb
 
-static const TimeSeriesKey MIN_TIME_SERIES_KEY{
+std::ostream& operator<<(std::ostream& os, const vkdb::TimeSeriesKey& key);
+
+std::istream& operator>>(std::istream& is, vkdb::TimeSeriesKey& key);
+
+static const vkdb::TimeSeriesKey MIN_TIME_SERIES_KEY{
   0,
   "MIN_TIME_SERIES_KEY",
   {{"MIN_TIME_SERIES_KEY", "MIN_TIME_SERIES_KEY"}}
 };
 
-static const TimeSeriesKey MAX_TIME_SERIES_KEY{
-  std::numeric_limits<Timestamp>::max(),
+static const vkdb::TimeSeriesKey MAX_TIME_SERIES_KEY{
+  std::numeric_limits<vkdb::Timestamp>::max(),
   "MAX_TIME_SERIES_KEY",
   {{"MAX_TIME_SERIES_KEY", "MAX_TIME_SERIES_KEY"}}
 };
 
-const Metric MIN_METRIC{std::string()};
-const Metric MAX_METRIC{std::string(TimeSeriesKey::MAX_METRIC_LENGTH + 1, '\xFF')};
+const vkdb::Metric MIN_METRIC{std::string()};
+const vkdb::Metric MAX_METRIC{
+  std::string(vkdb::TimeSeriesKey::MAX_METRIC_LENGTH + 1, '\xFF')
+};
+
+namespace std {
+template <>
+struct hash<vkdb::TimeSeriesKey> {
+  size_t operator()(const vkdb::TimeSeriesKey& key) const noexcept {
+    return hash<string>{}(key.toString());
+  }
+};
+}  // namespace std
+
 
 #endif // STORAGE_TIME_SERIES_KEY_H

@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <cmath>
 
+namespace vkdb {
 class BloomFilter {
 public:
   using key_type = TimeSeriesKey;
@@ -42,5 +43,6 @@ private:
   std::vector<size_type> seeds_;
   std::vector<bool> bits_;
 };
+}  // namespace vkdb
 
 #endif // STORAGE_BLOOM_FILTER_H

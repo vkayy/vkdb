@@ -1,5 +1,6 @@
 #include "storage/time_series_key.h"
 
+namespace vkdb {
 TimeSeriesKey::TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags)
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
@@ -95,15 +96,16 @@ TimeSeriesKey TimeSeriesKey::fromString(const std::string& str) {
 
   return TimeSeriesKey{timestamp, metric, tags};
 }
+}  // namespace vkdb
 
-std::ostream& operator<<(std::ostream& os, const TimeSeriesKey& key) {
+std::ostream& operator<<(std::ostream& os, const vkdb::TimeSeriesKey& key) {
   os << key.toString();
   return os;
 }
 
-std::istream& operator>>(std::istream& is, TimeSeriesKey& key) {
+std::istream& operator>>(std::istream& is, vkdb::TimeSeriesKey& key) {
   std::string str;
   is >> str;
-  key = TimeSeriesKey::fromString(str);
+  key = vkdb::TimeSeriesKey::fromString(str);
   return is;
 }

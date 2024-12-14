@@ -8,6 +8,7 @@
 #include <concepts>
 #include "utils/concepts.h"
 
+namespace vkdb {
 template <RegularNoCVRefQuals TKey, RegularNoCVRefQuals TValue>
 class LRUCache {
 public:
@@ -107,5 +108,6 @@ private:
   CacheListIterMap map_;
   mutable std::mutex mutex_;
 };
+}  // namespace vkdb
 
 #endif // STORAGE_LRU_CACHE_H

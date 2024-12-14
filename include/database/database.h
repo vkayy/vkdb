@@ -3,6 +3,7 @@
 
 #include "database/table.h"
 
+namespace vkdb {
 class Database {
 public:
   Database() = default;
@@ -44,5 +45,6 @@ public:
 private:
   std::unordered_map<TableName, Table> tables_;
 };
+}  // namespace vkdb
 
 #endif // DATABASE_DATABASE_H

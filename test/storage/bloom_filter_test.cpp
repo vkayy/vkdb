@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "storage/bloom_filter.h"
 
+using namespace vkdb;
+
 class BloomFilterTest : public ::testing::Test {
 protected:
   using Key = int32_t;

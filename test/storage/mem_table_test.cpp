@@ -1,7 +1,8 @@
 #include "gtest/gtest.h"
 #include "storage/mem_table.h"
-
 #include <sstream>
+
+using namespace vkdb;
 
 class MemTableTest : public ::testing::Test {
 protected:

@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "storage/lru_cache.h"
 
+using namespace vkdb;
+
 class LRUCacheTest : public ::testing::Test {
 protected:
   using Key = int32_t;

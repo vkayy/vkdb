@@ -6,6 +6,7 @@
 #include "query/friendly_builder.h"
 #include <set>
 
+namespace vkdb {
 using TableName = std::string;
 
 class Table {
@@ -51,5 +52,6 @@ private:
   TagColumns tag_columns_;
   StorageEngine storage_engine_;
 };
+}  // namespace vkdb
 
 #endif // DATABASE_TABLE_H

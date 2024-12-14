@@ -1,5 +1,6 @@
 #include "storage/bloom_filter.h"
 
+namespace vkdb {
 BloomFilter::BloomFilter(uint64_t expected_no_of_elems, double false_positive_rate) {
   if (expected_no_of_elems == 0) {
     throw std::invalid_argument{
@@ -56,3 +57,4 @@ BloomFilter::HashValue BloomFilter::hash(const key_type& key, size_type i) const
   MurmurHash3_x86_32(&std_hash_value, sizeof(std_hash_value), i, &hash_value);
   return hash_value % bits_.size();
 }
+}  // namespace vkdb

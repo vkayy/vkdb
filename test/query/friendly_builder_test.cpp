@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "query/friendly_builder.h"
 
+using namespace vkdb;
+
 class FriendlyQueryBuilderTest : public ::testing::Test {
 protected:
   void SetUp() override {

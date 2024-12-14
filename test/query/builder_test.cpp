@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "query/builder.h"
 
+using namespace vkdb;
+
 class QueryBuilderTest : public ::testing::Test {
 protected:
   void SetUp() override {

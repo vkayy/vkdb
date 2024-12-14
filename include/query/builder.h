@@ -5,6 +5,7 @@
 #include "storage/lsm_tree.h"
 #include <ranges>
 
+namespace vkdb {
 using TagColumns = std::set<TagKey>;
 
 template <ArithmeticNoCVRefQuals TValue>
@@ -306,5 +307,6 @@ private:
   QueryParams query_params_;
   std::vector<TimeSeriesKeyFilter> filters_;
 };
+}  // namespace vkdb
 
 #endif // QUERY_BUILDER_H
