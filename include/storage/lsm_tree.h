@@ -5,6 +5,7 @@
 #include "storage/sstable.h"
 #include "storage/mem_table.h"
 #include <ranges>
+#include <future>
 
 using TimeSeriesKeyFilter = std::function<bool(const TimeSeriesKey&)>;
 
@@ -91,6 +92,61 @@ public:
       entry_table[key] = value;
     }
     return {entry_table.begin(), entry_table.end()};
+  }
+
+  [[nodiscard]] std::vector<value_type> getRangeParallel(
+      const key_type& start,
+      const key_type& end,
+      TimeSeriesKeyFilter filter = TRUE_TIME_SERIES_KEY_FILTER
+  ) const {
+    std::vector<std::future<std::vector<value_type>>> range_futures;
+    range_futures.reserve(sstables_.size() + 1);
+    
+    range_futures.push_back(std::async(std::launch::async,
+      [this, &start, &end, &filter]() {
+        std::vector<value_type> mem_table_entries;
+        for (const auto& [key, value] : mem_table_.getRange(start, end)) {
+          if (filter(key)) {
+            mem_table_entries.emplace_back(key, value);
+          }
+        }
+        return mem_table_entries;
+      }
+    ));
+
+    for (const auto& sstable : sstables_ | std::views::reverse) {
+      range_futures.push_back(std::async(std::launch::async, 
+        [&sstable, &start, &end, &filter]() {
+          std::vector<value_type> sstable_entries;
+          for (const auto& [key, value] : sstable.getRange(start, end)) {
+            if (filter(key)) {
+              sstable_entries.emplace_back(key, value);
+            }
+          }
+          return sstable_entries;
+        }
+      ));
+    }
+
+    table_type entry_table;
+    for (auto& range_future : range_futures) {
+      const auto entries{range_future.get()};
+      for (const auto& [key, value] : entries) {
+        if (!entry_table.contains(key)) {
+          entry_table[key] = value;
+        }
+      }
+    }
+
+    std::vector<value_type> entries;
+    entries.reserve(entry_table.size());
+    for (const auto& [key, value] : entry_table) {
+      if (value.has_value()) {
+        entries.emplace_back(key, value);
+      }
+    }
+
+    return entries;
   }
 
   [[nodiscard]] std::string toString() const noexcept {
