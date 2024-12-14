@@ -19,13 +19,23 @@ concept Arithmetic = std::is_arithmetic_v<T>;
 template <typename T>
 concept ArithmeticNoCVRefQuals = Arithmetic<T> && HasNoCVRefQuals<T>;
 
-template <typename U, typename... Ts>
-concept AllSameNoCVRefEquals = (SameNoCVRefQuals<Ts, U> && ...);
+template <typename... Ts, typename U>
+concept AllSameNoCVRefQuals = (SameNoCVRefQuals<Ts, U> && ...);
 
 template <typename T, typename U>
-concept ConvertibleNoCVRefEquals = std::convertible_to<T, U> && HasNoCVRefQuals<T>;
+concept ConvertibleToNoCVRefQuals =
+  std::convertible_to<T, U> && HasNoCVRefQuals<T>;
 
-template <typename U, typename... Ts>
-concept AllConvertibleNoCVRefEquals = (ConvertibleNoCVRefEquals<Ts, U> && ...);
+template <typename... Ts, typename U>
+concept AllConvertibleToNoCVRefQuals = (ConvertibleToNoCVRefQuals<Ts, U> && ...);
+
+template <typename T, typename U>
+concept ConstructibleToNoCVRefQuals =
+  std::constructible_from<U, T> && HasNoCVRefQuals<T>;
+
+template <typename... Ts, typename U>
+concept AllConstructibleToNoCVRefQuals =
+  (ConstructibleToNoCVRefQuals<Ts, U> && ...);
+
 
 #endif // UTILS_CONCEPTS_H

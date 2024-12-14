@@ -54,7 +54,7 @@ public:
     return *this;
   }
 
-  template <AllConvertibleNoCVRefEquals<Tag>... Tags>
+  template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAnyTags(const Tags&... tags) {
     set_default_range_if_none();
     validate_tags(tags...);
@@ -65,7 +65,7 @@ public:
     return *this;
   }
 
-  template <AllConvertibleNoCVRefEquals<Tag>... Tags>
+  template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAllTags(const Tags&... tags) {
     set_default_range_if_none();
     validate_tags(tags...);
@@ -84,7 +84,7 @@ public:
     return *this;
   }
 
-  template <AllConvertibleNoCVRefEquals<Metric>... Metrics>
+  template <AllConvertibleToNoCVRefQuals<Metric>... Metrics>
   [[nodiscard]] QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
     set_default_range_if_none();
     add_filter([metrics...](const auto& k) {
@@ -101,7 +101,7 @@ public:
     return *this;
   }
 
-  template <AllConvertibleNoCVRefEquals<Timestamp>... Timestamps>
+  template <AllConvertibleToNoCVRefQuals<Timestamp>... Timestamps>
   [[nodiscard]] QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
     set_default_range_if_none();
     add_filter([timestamps...](const auto& k) {
@@ -291,7 +291,7 @@ private:
     return {};
   }
 
-  template <AllSameNoCVRefEquals<Tag>... Tags>
+  template <AllSameNoCVRefQuals<Tag>... Tags>
   void validate_tags(const Tags&... tags) const {
     if (!(tag_columns_.contains(tags.first) && ...)) {
       throw std::runtime_error{
