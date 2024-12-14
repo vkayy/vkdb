@@ -15,7 +15,7 @@ public:
 
   ~Database() = default;
 
-  [[nodiscard]] void createTable(const TableName& name) {
+  void createTable(const TableName& name) {
     if (tables_.contains(name)) {
       throw std::runtime_error{
         "Database::createTable(): Table already exists."
@@ -33,7 +33,7 @@ public:
     return tables_.at(name);
   }
 
-  [[nodiscard]] void dropTable(const TableName& name) {
+  void dropTable(const TableName& name) {
     if (!tables_.contains(name)) {
       throw std::runtime_error{
         "Database::dropTable(): Table does not exist."
