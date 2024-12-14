@@ -301,3 +301,115 @@ TEST_F(QueryBuilderTest, CanRemove) {
 
   EXPECT_EQ(result.size(), 0);
 }
+
+TEST_F(QueryBuilderTest, CanGetSumWithoutFilters) {
+  auto result{query()
+    .sum()
+  };
+
+  EXPECT_EQ(result, 49'995'000);
+}
+
+TEST_F(QueryBuilderTest, CanGetSumWithFilters) {
+  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+  lsm_tree_->put(key4, 4);
+
+  auto result{query()
+    .filterByTag("tag1", "val1")
+    .filterByMetric("metric2")
+    .sum()
+  };
+
+  EXPECT_EQ(result, 9);
+}
+
+TEST_F(QueryBuilderTest, CanGetAvgWithoutFilters) {
+  auto result{query()
+    .avg()
+  };
+
+  EXPECT_DOUBLE_EQ(result, 4'999.5);
+}
+
+TEST_F(QueryBuilderTest, CanGetAvgWithFilters) {
+  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+  lsm_tree_->put(key4, 4);
+
+  auto result{query()
+    .filterByTag("tag1", "val1")
+    .filterByMetric("metric2")
+    .avg()
+  };
+
+  EXPECT_DOUBLE_EQ(result, 3);
+}
+
+TEST_F(QueryBuilderTest, CanGetMinWithoutFilters) {
+  auto result{query()
+    .min()
+  };
+
+  EXPECT_EQ(result, 0);
+}
+
+TEST_F(QueryBuilderTest, CanGetMinWithFilters) {
+  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+  lsm_tree_->put(key4, 4);
+
+  auto result{query()
+    .filterByTag("tag1", "val1")
+    .filterByMetric("metric2")
+    .min()
+  };
+
+  EXPECT_EQ(result, 2);
+}
+
+TEST_F(QueryBuilderTest, CanGetMaxWithoutFilters) {
+  auto result{query()
+    .max()
+  };
+
+  EXPECT_EQ(result, 9'999);
+}
+
+TEST_F(QueryBuilderTest, CanGetMaxWithFilters) {
+  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+
+  lsm_tree_->put(key1, 1);
+  lsm_tree_->put(key2, 2);
+  lsm_tree_->put(key3, 3);
+  lsm_tree_->put(key4, 4);
+
+  auto result{query()
+    .filterByTag("tag1", "val1")
+    .filterByMetric("metric2")
+    .max()
+  };
+
+  EXPECT_EQ(result, 4);
+}
