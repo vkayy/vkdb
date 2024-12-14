@@ -14,6 +14,14 @@ using TagValue = std::string;
 using Tag = std::pair<TagKey, TagValue>;
 using TagTable = std::map<TagKey, TagValue>;
 
+template <ArithmeticNoCVRefQuals TValue>
+struct DataPoint {
+  Timestamp timestamp;
+  Metric metric;
+  TagTable tags;
+  TValue value;
+};
+
 class TimeSeriesKey {
 public:
   static constexpr auto TIMESTAMP_WIDTH{20};

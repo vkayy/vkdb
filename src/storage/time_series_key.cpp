@@ -3,13 +3,7 @@
 TimeSeriesKey::TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags)
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
-  , tags_{std::move(tags)} {
-    if (metric_.empty() || metric_.length() > MAX_METRIC_LENGTH) {
-      throw std::invalid_argument{
-        "TimeSeriesKey::TimeSeriesKey(): Invalid metric."
-      };
-    }
-  }
+  , tags_{std::move(tags)} {}
 
 bool TimeSeriesKey::operator==(const TimeSeriesKey& other) const noexcept {
   return timestamp_ == other.timestamp_ &&
@@ -34,13 +28,13 @@ bool TimeSeriesKey::operator<(const TimeSeriesKey& other) const noexcept {
   if (other == MAX_TIME_SERIES_KEY) {
     return true;
   }
+  if (timestamp_ != other.timestamp_) {
+    return timestamp_ < other.timestamp_;
+  }
   if (metric_ != other.metric_) {
     return metric_ < other.metric_;
   }
-  if (tags_ != other.tags_) {
-    return tags_ < other.tags_;
-  }
-  return timestamp_ < other.timestamp_;
+  return tags_ < other.tags_;
 }
 
 bool TimeSeriesKey::operator>(const TimeSeriesKey& other) const noexcept {

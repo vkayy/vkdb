@@ -36,7 +36,7 @@ TEST_F(TimeSeriesKeyTest, CanTotallyOrderKeys) {
   EXPECT_LT(key1, key2);
   EXPECT_LT(key1, key3);
   EXPECT_GT(key1, key4);
-  EXPECT_LT(key2, key3);
+  EXPECT_GT(key2, key3);
   EXPECT_GT(key2, key4);
   EXPECT_GT(key3, key4);
 }
@@ -175,13 +175,4 @@ TEST_F(TimeSeriesKeyTest, CanBeKeyInUnorderedAssociativeContainers) {
 
   EXPECT_EQ(map[key1], 1);
   EXPECT_EQ(map[key2], 2);
-}
-
-TEST_F(TimeSeriesKeyTest, ThrowsWhenMetricEmpty) {
-  EXPECT_THROW((TimeSeriesKey{1, "", tags_}), std::invalid_argument);
-}
-
-TEST_F(TimeSeriesKeyTest, ThrowsWhenMetricTooLong) {
-  Metric metric{std::string(TimeSeriesKey::MAX_METRIC_LENGTH + 1, '\0')};
-  EXPECT_THROW((TimeSeriesKey{1, metric, tags_}), std::invalid_argument);
 }
