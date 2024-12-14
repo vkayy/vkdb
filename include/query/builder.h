@@ -237,15 +237,12 @@ private:
 
   [[nodiscard]] auto get_filtered_range() const {
     const auto& params{std::get<RangeParams>(query_params_)};
-    auto range{lsm_tree_.getRange(params.start_, params.end_)
+    return lsm_tree_.getRange(params.start_, params.end_)
       | std::views::filter([&](const value_type& entry) {
-        return std::all_of(filters_.begin(), filters_.end(),
-          [&](const Filter& filter) {
-            return filter(entry.first);
-          });
-      })
-    };
-    return range;
+        return std::ranges::all_of(filters_, [&](const Filter& filter) {
+          return filter(entry.first);
+        });
+      });
   }
 
   [[nodiscard]] auto get_nonempty_filtered_range() const {
