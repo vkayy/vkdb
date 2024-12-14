@@ -4,6 +4,7 @@
 #include <random>
 #include "utils/concepts.h"
 
+namespace vkdb {
 template <ArithmeticNoCVRefQuals T>
 T random(T min = std::numeric_limits<T>::min(),
          T max = std::numeric_limits<T>::max()) {
@@ -12,5 +13,6 @@ T random(T min = std::numeric_limits<T>::min(),
   std::uniform_int_distribution<T> dist{min, max};
   return dist(gen);
 }
+}  // namespace vkdb
 
 #endif // UTILS_RANDOM_H
