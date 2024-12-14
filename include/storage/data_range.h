@@ -35,6 +35,11 @@ public:
     return is_set_ && data >= range_.first && data <= range_.second;
   }
 
+  [[nodiscard]] bool overlaps_with(const data_type& start,
+                              const data_type& end) const noexcept {
+    return is_set_ && range_.first <= end && range_.second >= start;
+  }
+
   [[nodiscard]] const data_type& lower() const {
     if (!is_set_) {
       throw std::logic_error{"DataRange::lower(): Range is not set."};

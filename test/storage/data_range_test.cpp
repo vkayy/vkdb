@@ -47,6 +47,30 @@ TEST_F(DataRangeTest, CanCheckIfDataIsInEmptyRange) {
   EXPECT_FALSE(in_range);
 }
 
+TEST_F(DataRangeTest, CanCheckIfRangeOverlapsWithRange) {
+  range_->updateRange(1);
+  range_->updateRange(2);
+  range_->updateRange(3);
+
+  auto overlaps1{range_->overlaps_with(0, 1)};
+  auto overlaps2{range_->overlaps_with(1, 2)};
+  auto overlaps3{range_->overlaps_with(2, 3)};
+  auto overlaps4{range_->overlaps_with(3, 4)};
+  auto overlaps5{range_->overlaps_with(4, 5)};
+
+  EXPECT_TRUE(overlaps1);
+  EXPECT_TRUE(overlaps2);
+  EXPECT_TRUE(overlaps3);
+  EXPECT_TRUE(overlaps4);
+  EXPECT_FALSE(overlaps5);
+}
+
+TEST_F(DataRangeTest, CanCheckIfEmptyRangeOverlapsWithRange) {
+  auto overlaps{range_->overlaps_with(0, 1)};
+
+  EXPECT_FALSE(overlaps);
+}
+
 TEST_F(DataRangeTest, ThrowsExceptionWhenCheckingEmptyRange) {
   EXPECT_THROW(auto lower{range_->lower()}, std::logic_error);
   EXPECT_THROW(auto upper{range_->upper()}, std::logic_error);
