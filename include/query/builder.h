@@ -27,7 +27,7 @@ public:
 
   ~QueryBuilder() = default;
 
-  QueryBuilder& point(const key_type& key) {
+  [[nodiscard]] QueryBuilder& point(const key_type& key) {
     if (query_type_ != QueryType::None) {
       throw std::runtime_error{
         "QueryBuilder::point(): Query type already set."
@@ -38,7 +38,7 @@ public:
     return *this;
   }
 
-  QueryBuilder& range(const key_type& start, const key_type& end) {
+  [[nodiscard]] QueryBuilder& range(const key_type& start, const key_type& end) {
     if (query_type_ != QueryType::None) {
       throw std::runtime_error{
         "QueryBuilder::range(): Query type already set."
@@ -49,7 +49,7 @@ public:
     return *this;
   }
 
-  QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
+  [[nodiscard]] QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
     set_default_range_if_none();
     add_filter([key, value](const key_type& k) {
       return k.tags().contains(key) && k.tags().at(key) == value;
@@ -58,7 +58,7 @@ public:
   }
 
   template <AllConvertibleNoCVRefEquals<Tag>... Tags>
-  QueryBuilder& filterByAnyTags(const Tags&... tags) {
+  [[nodiscard]] QueryBuilder& filterByAnyTags(const Tags&... tags) {
     set_default_range_if_none();
     add_filter([tags...](const key_type& k) {
       return ((k.tags().contains(tags.first) &&
@@ -68,7 +68,7 @@ public:
   }
 
   template <AllConvertibleNoCVRefEquals<Tag>... Tags>
-  QueryBuilder& filterByAllTags(const Tags&... tags) {
+  [[nodiscard]] QueryBuilder& filterByAllTags(const Tags&... tags) {
     set_default_range_if_none();
     add_filter([tags...](const key_type& k) {
       return ((k.tags().contains(tags.first) &&
@@ -77,7 +77,7 @@ public:
     return *this;
   }
 
-  QueryBuilder& filterByMetric(const Metric& metric) {
+  [[nodiscard]] QueryBuilder& filterByMetric(const Metric& metric) {
     set_default_range_if_none();
     add_filter([metric](const key_type& k) {
       return k.metric() == metric;
@@ -86,7 +86,7 @@ public:
   }
 
   template <AllConvertibleNoCVRefEquals<Metric>... Metrics>
-  QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
+  [[nodiscard]] QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
     set_default_range_if_none();
     add_filter([metrics...](const key_type& k) {
       return ((k.metric() == metrics) || ...);
@@ -94,7 +94,7 @@ public:
     return *this;
   }
 
-  QueryBuilder& filterByTimestamp(const Timestamp& timestamp) {
+  [[nodiscard]] QueryBuilder& filterByTimestamp(const Timestamp& timestamp) {
     set_default_range_if_none();
     add_filter([timestamp](const key_type& k) {
       return k.timestamp() == timestamp;
@@ -103,7 +103,7 @@ public:
   }
 
   template <AllConvertibleNoCVRefEquals<Timestamp>... Timestamps>
-  QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
+  [[nodiscard]] QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
     set_default_range_if_none();
     add_filter([timestamps...](const key_type& k) {
       return ((k.timestamp() == timestamps) || ...);
@@ -111,7 +111,7 @@ public:
     return *this;
   }
 
-  QueryBuilder& put(const key_type& key, const TValue& value) {
+  [[nodiscard]] QueryBuilder& put(const key_type& key, const TValue& value) {
     if (query_type_ != QueryType::None) {
       throw std::logic_error{
         "QueryBuilder::put(): Query type already set."
@@ -122,7 +122,7 @@ public:
     return *this;
   }
 
-  QueryBuilder& remove(const key_type& key) {
+  [[nodiscard]] QueryBuilder& remove(const key_type& key) {
     if (query_type_ != QueryType::None) {
       throw std::logic_error{
         "QueryBuilder::remove(): Query type already set."
@@ -133,7 +133,7 @@ public:
     return *this;
   }
 
-  TValue sum() {
+  [[nodiscard]] TValue sum() {
     setup_aggregate();
     auto range{get_nonempty_filtered_range()};
     return std::accumulate(range.begin(), range.end(), TValue{},
@@ -142,7 +142,7 @@ public:
       });
   }
 
-  double avg() {
+  [[nodiscard]] double avg() {
     setup_aggregate();
     auto range{get_nonempty_filtered_range()};
     auto sum{std::accumulate(range.begin(), range.end(), TValue{},
@@ -152,7 +152,7 @@ public:
     return static_cast<double>(sum) / std::ranges::distance(range);
   }
 
-  TValue min() {
+  [[nodiscard]] TValue min() {
     setup_aggregate();
     auto range{get_filtered_range()};
     return std::ranges::min_element(range, {}, [](const value_type& entry) {
@@ -160,7 +160,7 @@ public:
     })->second.value();
   }
 
-  TValue max() {
+  [[nodiscard]] TValue max() {
     setup_aggregate();
     auto range{get_nonempty_filtered_range()};
     return std::ranges::max_element(range, {}, [](const value_type& entry) {
