@@ -6,7 +6,7 @@ using namespace vkdb;
 class DatabaseTest : public ::testing::Test {
 protected:
   void SetUp() override {
-    database_ = std::make_unique<Database>();
+    database_ = std::make_unique<Database>("test_db");
   }
 
   std::unique_ptr<Database> database_;

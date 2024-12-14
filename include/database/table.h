@@ -9,16 +9,17 @@
 namespace vkdb {
 const FilePath TABLE_DIRECTORY{"/Users/vkay/Dev/vkdb/output/"};
 
+using DatabaseName = std::string;
 using TableName = std::string;
 
 class Table {
 public:
   Table() = delete;
 
-  explicit Table(const TableName& name)
+  explicit Table(const DatabaseName& db_name, const TableName& name)
     : name_{name}
-    , storage_engine_{TABLE_DIRECTORY + name} {
-      std::filesystem::create_directories(TABLE_DIRECTORY + name);
+    , storage_engine_{TABLE_DIRECTORY + db_name + "/" + name} {
+      std::filesystem::create_directories(TABLE_DIRECTORY + db_name + "/" + name);
     }
 
   Table(Table&&) noexcept = default;

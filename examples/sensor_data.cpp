@@ -3,11 +3,11 @@
 #include <iostream>
 
 int main() {
-  vkdb::Database db;
+  vkdb::Database db{"sensor_data"};
 
-  db.createTable("sensor_data");
+  db.createTable("atmospheric");
 
-  auto& table{db.getTable("sensor_data")};
+  auto& table{db.getTable("atmospheric")};
 
   vkdb::Metric temp_metric{"temperature"};
   vkdb::Metric humidity_metric{"humidity"};

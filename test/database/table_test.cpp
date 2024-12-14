@@ -6,7 +6,7 @@ using namespace vkdb;
 class TableTest : public ::testing::Test {
 protected:
   void SetUp() override {
-    table_ = std::make_unique<Table>("table");
+    table_ = std::make_unique<Table>("test_db", "table");
 
     ASSERT_TRUE(table_->addTagColumn("tag1"));
     ASSERT_TRUE(table_->addTagColumn("tag2"));

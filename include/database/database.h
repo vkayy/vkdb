@@ -6,7 +6,10 @@
 namespace vkdb {
 class Database {
 public:
-  Database() = default;
+  Database() = delete;
+
+  explicit Database(std::string name)
+    : name_{std::move(name)} {}
 
   Database(Database&&) noexcept = default;
   Database& operator=(Database&&) noexcept = default;
@@ -22,7 +25,7 @@ public:
         "Database::createTable(): Table already exists."
       };
     }
-    tables_.emplace(name, Table{name});
+    tables_.emplace(name, Table{name_, name});
   }
 
   [[nodiscard]] Table& getTable(const TableName& name) {
@@ -44,6 +47,7 @@ public:
   }
 private:
   std::unordered_map<TableName, Table> tables_;
+  std::string name_;
 };
 }  // namespace vkdb
 
