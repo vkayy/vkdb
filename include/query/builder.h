@@ -18,7 +18,8 @@ public:
 
   explicit QueryBuilder(LSMTree<TValue>& lsm_tree)
     : lsm_tree_{lsm_tree}
-    , query_type_{QueryType::None} {}
+    , query_type_{QueryType::None}
+    , combined_filter_{[](const key_type&) { return true; }} {}
   
   QueryBuilder(QueryBuilder&&) noexcept = default;
   QueryBuilder& operator=(QueryBuilder&&) noexcept = default;
@@ -232,16 +233,17 @@ private:
   }
 
   void add_filter(Filter&& filter) {
-    filters_.emplace_back(std::move(filter));
+    combined_filter_ = [filter, combined_filter{std::move(combined_filter_)}]
+      (const key_type& key) {
+      return filter(key) && combined_filter(key);
+    };
   }
 
   [[nodiscard]] auto get_filtered_range() const {
     const auto& params{std::get<RangeParams>(query_params_)};
     return lsm_tree_.getRange(params.start_, params.end_)
       | std::views::filter([&](const value_type& entry) {
-        return std::ranges::all_of(filters_, [&](const Filter& filter) {
-          return filter(entry.first);
-        });
+        return combined_filter_(entry.first);
       });
   }
 
@@ -284,7 +286,7 @@ private:
   LSMTree<TValue>& lsm_tree_;
   QueryType query_type_;
   QueryParams query_params_;
-  std::vector<Filter> filters_;
+  Filter combined_filter_;
 };
 
 #endif // QUERY_BUILDER_H
