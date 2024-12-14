@@ -19,7 +19,7 @@ public:
   explicit QueryBuilder(LSMTree<TValue>& lsm_tree)
     : lsm_tree_{lsm_tree}
     , query_type_{QueryType::None}
-    , combined_filter_{[](const key_type&) { return true; }} {}
+    , combined_filter_{TRUE_TIME_SERIES_KEY_FILTER} {}
   
   QueryBuilder(QueryBuilder&&) noexcept = default;
   QueryBuilder& operator=(QueryBuilder&&) noexcept = default;
@@ -172,7 +172,6 @@ public:
 
 private:
   enum class QueryType { None, Point, Range, Put, Remove };
-  using Filter = std::function<bool(const key_type&)>;
 
   struct PointParams {
     key_type key_;
@@ -232,22 +231,19 @@ private:
     check_range_query();
   }
 
-  void add_filter(Filter&& filter) {
+  void add_filter(TimeSeriesKeyFilter&& filter) {
     combined_filter_ = [filter, combined_filter{std::move(combined_filter_)}]
       (const key_type& key) {
       return filter(key) && combined_filter(key);
     };
   }
 
-  [[nodiscard]] auto get_filtered_range() const {
+  [[nodiscard]] result_type get_filtered_range() const {
     const auto& params{std::get<RangeParams>(query_params_)};
-    return lsm_tree_.getRange(params.start_, params.end_)
-      | std::views::filter([&](const value_type& entry) {
-        return combined_filter_(entry.first);
-      });
+    return lsm_tree_.getRange(params.start_, params.end_, combined_filter_);
   }
 
-  [[nodiscard]] auto get_nonempty_filtered_range() const {
+  [[nodiscard]] result_type get_nonempty_filtered_range() const {
     auto filtered_range{get_filtered_range()};
     if (filtered_range.empty()) {
       throw std::runtime_error{
@@ -286,7 +282,7 @@ private:
   LSMTree<TValue>& lsm_tree_;
   QueryType query_type_;
   QueryParams query_params_;
-  Filter combined_filter_;
+  TimeSeriesKeyFilter combined_filter_;
 };
 
 #endif // QUERY_BUILDER_H
