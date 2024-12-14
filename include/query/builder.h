@@ -28,24 +28,14 @@ public:
   ~QueryBuilder() = default;
 
   [[nodiscard]] QueryBuilder& point(const key_type& key) {
-    if (query_type_ != QueryType::None) {
-      throw std::runtime_error{
-        "QueryBuilder::point(): Query type already set."
-      };
-    }
+    set_query_type(QueryType::Point);
     query_params_ = QueryParams{PointParams{key}};
-    query_type_ = QueryType::Point;
     return *this;
   }
 
   [[nodiscard]] QueryBuilder& range(const key_type& start, const key_type& end) {
-    if (query_type_ != QueryType::None) {
-      throw std::runtime_error{
-        "QueryBuilder::range(): Query type already set."
-      };
-    }
+    set_query_type(QueryType::Range);
     query_params_ = QueryParams{RangeParams{start, end}};
-    query_type_ = QueryType::Range;
     return *this;
   }
 
@@ -112,24 +102,14 @@ public:
   }
 
   [[nodiscard]] QueryBuilder& put(const key_type& key, const TValue& value) {
-    if (query_type_ != QueryType::None) {
-      throw std::logic_error{
-        "QueryBuilder::put(): Query type already set."
-      };
-    }
+    set_query_type(QueryType::Put);
     query_params_ = QueryParams{PutParams{key, value}};
-    query_type_ = QueryType::Put;
     return *this;
   }
 
   [[nodiscard]] QueryBuilder& remove(const key_type& key) {
-    if (query_type_ != QueryType::None) {
-      throw std::logic_error{
-        "QueryBuilder::remove(): Query type already set."
-      };
-    }
+    set_query_type(QueryType::Remove);
     query_params_ = QueryParams{RemoveParams{key}};
-    query_type_ = QueryType::Remove;
     return *this;
   }
 
