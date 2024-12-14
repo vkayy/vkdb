@@ -66,7 +66,7 @@ public:
   }
 
   [[nodiscard]] FriendlyQueryBuilder& whereTagsContain(const Tag& tag) {
-    std::ignore = query_builder_.filterByTag(tag);
+    std::ignore = query_builder_.filterByTag(tag.first, tag.second);
     return *this;
   }
 

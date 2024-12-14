@@ -91,6 +91,22 @@ TEST_F(FriendlyQueryBuilderTest, CanWhereTimestampIsAnyOfQuery) {
   EXPECT_EQ(result[1].value, 5'001);
 }
 
+TEST_F(FriendlyQueryBuilderTest, CanWhereTagsContainQuery) {
+  TimeSeriesKey key1{0, "metric", {{"tag1", "value1"}}};
+  TimeSeriesKey key2{1, "metric", {{"tag2", "value2"}}};
+
+  lsm_tree_->put(key1, 0);
+  lsm_tree_->put(key2, 1);
+
+  auto result{query()
+    .whereTagsContain({"tag1", "value1"})
+    .execute()
+  };
+
+  ASSERT_EQ(result.size(), 1);
+  EXPECT_EQ(result[0].value, 0);
+}
+
 TEST_F(FriendlyQueryBuilderTest, CanWhereTagsContainAnyOfQuery) {
   TimeSeriesKey key1{0, "metric", {{"tag1", "value1"}}};
   TimeSeriesKey key2{1, "metric", {{"tag2", "value2"}}};
