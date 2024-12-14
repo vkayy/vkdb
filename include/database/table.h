@@ -7,6 +7,8 @@
 #include <set>
 
 namespace vkdb {
+const FilePath TABLE_DIRECTORY{"/Users/vkay/Dev/vkdb/output/"};
+
 using TableName = std::string;
 
 class Table {
@@ -15,7 +17,9 @@ public:
 
   explicit Table(const TableName& name)
     : name_{name}
-    , storage_engine_{"/Users/vkay/Dev/vkdb/output/" + name} {}
+    , storage_engine_{TABLE_DIRECTORY + name} {
+      std::filesystem::create_directories(TABLE_DIRECTORY + name);
+    }
 
   Table(Table&&) noexcept = default;
   Table& operator=(Table&&) noexcept = default;
