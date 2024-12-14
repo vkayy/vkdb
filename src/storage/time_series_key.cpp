@@ -4,7 +4,7 @@ TimeSeriesKey::TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags)
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
   , tags_{std::move(tags)} {
-    if (metric_.length() > MAX_METRIC_LENGTH) {
+    if (metric_.empty() || metric_.length() > MAX_METRIC_LENGTH) {
       throw std::invalid_argument{
         "TimeSeriesKey::TimeSeriesKey(): Invalid metric."
       };

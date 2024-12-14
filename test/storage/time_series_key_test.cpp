@@ -176,3 +176,12 @@ TEST_F(TimeSeriesKeyTest, CanBeKeyInUnorderedAssociativeContainers) {
   EXPECT_EQ(map[key1], 1);
   EXPECT_EQ(map[key2], 2);
 }
+
+TEST_F(TimeSeriesKeyTest, ThrowsWhenMetricEmpty) {
+  EXPECT_THROW((TimeSeriesKey{1, "", tags_}), std::invalid_argument);
+}
+
+TEST_F(TimeSeriesKeyTest, ThrowsWhenMetricTooLong) {
+  Metric metric{std::string(TimeSeriesKey::MAX_METRIC_LENGTH + 1, '\0')};
+  EXPECT_THROW((TimeSeriesKey{1, metric, tags_}), std::invalid_argument);
+}
