@@ -9,31 +9,43 @@ int main() {
 
   auto& table{db.getTable("sensor_data")};
 
+  vkdb::Metric temp_metric{"temperature"};
+  vkdb::Metric humidity_metric{"humidity"};
+  vkdb::Tag region_eu_tag{"region", "eu"};
+  vkdb::Tag city_london_tag{"city", "london"};
+
   table.addTagColumn("region");
   table.addTagColumn("city");
   
-  for (vkdb::Timestamp i{0}; i < 10'000; ++i) {
-    auto t{static_cast<double>(vkdb::random<int>(0, 400)) / 10.0};
-    auto h{static_cast<double>(vkdb::random<int>(0, 1000)) / 10.0};
+  for (vkdb::Timestamp t{0}; t < 10'000; ++t) {
+    double temperature{vkdb::random<int>(0, 400) / 10.0};
+    double humidity{vkdb::random<int>(0, 1000) / 10.0};
     table.query()
-      .put(i, "temperature", {{"region", "eu"}, {"city", "london"}}, t)
+      .put(t, temp_metric, {region_eu_tag, city_london_tag}, temperature)
       .execute();
     table.query()
-      .put(i, "humidity", {{"region", "eu"}, {"city", "london"}}, h)
+      .put(t, humidity_metric, {region_eu_tag, city_london_tag}, humidity)
       .execute();
   }
 
-  auto result{table.query()
+  auto average_temperature{table.query()
     .between(2'500, 7'500)
-    .whereMetricIs("temperature")
-    .whereTagsContainAllOf(
-      std::make_pair("region", "eu"),
-      std::make_pair("city", "london")
-    )
+    .whereMetricIs(temp_metric)
+    .whereTagsContainAllOf(region_eu_tag, city_london_tag)
     .avg()
   };
 
-  std::cout << "Average temperature between T2500 and T7500: " << result << std::endl;
+  auto max_humidity{table.query()
+    .between(1'000, 3'000)
+    .whereMetricIs(humidity_metric)
+    .whereTagsContainAllOf(region_eu_tag, city_london_tag)
+    .max()
+  };
+
+  std::cout << "Average temperature between T2500 and T7500: ";
+  std::cout << average_temperature << "C\n";
+  std::cout << "Max humidity between T1000 and T3000: ";
+  std::cout << max_humidity << "%\n";
 
   return 0;
 }
