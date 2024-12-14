@@ -5,6 +5,8 @@
 #include "storage/lsm_tree.h"
 #include <ranges>
 
+using TagColumns = std::set<TagKey>;
+
 template <ArithmeticNoCVRefQuals TValue>
 class QueryBuilder {
 public:
@@ -16,8 +18,10 @@ public:
 
   QueryBuilder() = delete;
 
-  explicit QueryBuilder(LSMTree<TValue>& lsm_tree)
+  explicit QueryBuilder(LSMTree<TValue>& lsm_tree,
+                        const TagColumns& tag_columns)
     : lsm_tree_{lsm_tree}
+    , tag_columns_{tag_columns}
     , query_type_{QueryType::None}
     , filters_{TRUE_TIME_SERIES_KEY_FILTER} {}
   
@@ -43,6 +47,7 @@ public:
 
   [[nodiscard]] QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
     set_default_range_if_none();
+    validate_tags(Tag{key, value});
     add_filter([key, value](const auto& k) {
       return k.tags().contains(key) && k.tags().at(key) == value;
     });
@@ -52,6 +57,7 @@ public:
   template <AllConvertibleNoCVRefEquals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAnyTags(const Tags&... tags) {
     set_default_range_if_none();
+    validate_tags(tags...);
     add_filter([tags...](const auto& k) {
       return ((k.tags().contains(tags.first) &&
                k.tags().at(tags.first) == tags.second) || ...);
@@ -62,6 +68,7 @@ public:
   template <AllConvertibleNoCVRefEquals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAllTags(const Tags&... tags) {
     set_default_range_if_none();
+    validate_tags(tags...);
     add_filter([tags...](const auto& k) {
       return ((k.tags().contains(tags.first) &&
                k.tags().at(tags.first) == tags.second) && ...);
@@ -284,7 +291,17 @@ private:
     return {};
   }
 
+  template <AllSameNoCVRefEquals<Tag>... Tags>
+  void validate_tags(const Tags&... tags) const {
+    if (!(tag_columns_.contains(tags.first) && ...)) {
+      throw std::runtime_error{
+        "QueryBuilder::validate_tags(): Tag not in tag columns."
+      };
+    }
+  }
+
   LSMTree<TValue>& lsm_tree_;
+  const TagColumns& tag_columns_;
   QueryType query_type_;
   QueryParams query_params_;
   std::vector<TimeSeriesKeyFilter> filters_;

@@ -10,12 +10,17 @@ protected:
       TimeSeriesKey key{i, "metric", {}};
       lsm_tree_->put(key, i);
     }
+
+    tag_columns_.insert("tag1");
+    tag_columns_.insert("tag2");
+    tag_columns_.insert("tag3");
   }
 
   QueryBuilder<int> query() {
-    return QueryBuilder<int>(*lsm_tree_);
+    return QueryBuilder<int>(*lsm_tree_, tag_columns_);
   }
 
+  std::set<TagKey> tag_columns_;
   std::unique_ptr<LSMTree<int>> lsm_tree_;
 };
 
@@ -514,5 +519,12 @@ TEST_F(QueryBuilderTest, ThrowsWhenAggregatingOnEmptyRangeExceptCount) {
   EXPECT_EQ(
     query().filterByMetric(metric).count(),
     0
+  );
+}
+
+TEST_F(QueryBuilderTest, ThrowsWhenFilteringOnInvalidTags) {
+  EXPECT_THROW(
+    query().filterByTag("invalid-tag", "value").execute(),
+    std::runtime_error
   );
 }
