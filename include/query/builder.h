@@ -19,7 +19,7 @@ public:
   explicit QueryBuilder(LSMTree<TValue>& lsm_tree)
     : lsm_tree_{lsm_tree}
     , query_type_{QueryType::None}
-    , combined_filter_{TRUE_TIME_SERIES_KEY_FILTER} {}
+    , filters_{TRUE_TIME_SERIES_KEY_FILTER} {}
   
   QueryBuilder(QueryBuilder&&) noexcept = default;
   QueryBuilder& operator=(QueryBuilder&&) noexcept = default;
@@ -43,7 +43,7 @@ public:
 
   [[nodiscard]] QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
     set_default_range_if_none();
-    add_filter([key, value](const key_type& k) {
+    add_filter([key, value](const auto& k) {
       return k.tags().contains(key) && k.tags().at(key) == value;
     });
     return *this;
@@ -52,7 +52,7 @@ public:
   template <AllConvertibleNoCVRefEquals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAnyTags(const Tags&... tags) {
     set_default_range_if_none();
-    add_filter([tags...](const key_type& k) {
+    add_filter([tags...](const auto& k) {
       return ((k.tags().contains(tags.first) &&
                k.tags().at(tags.first) == tags.second) || ...);
     });
@@ -62,7 +62,7 @@ public:
   template <AllConvertibleNoCVRefEquals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAllTags(const Tags&... tags) {
     set_default_range_if_none();
-    add_filter([tags...](const key_type& k) {
+    add_filter([tags...](const auto& k) {
       return ((k.tags().contains(tags.first) &&
                k.tags().at(tags.first) == tags.second) && ...);
     });
@@ -71,7 +71,7 @@ public:
 
   [[nodiscard]] QueryBuilder& filterByMetric(const Metric& metric) {
     set_default_range_if_none();
-    add_filter([metric](const key_type& k) {
+    add_filter([metric](const auto& k) {
       return k.metric() == metric;
     });
     return *this;
@@ -80,7 +80,7 @@ public:
   template <AllConvertibleNoCVRefEquals<Metric>... Metrics>
   [[nodiscard]] QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
     set_default_range_if_none();
-    add_filter([metrics...](const key_type& k) {
+    add_filter([metrics...](const auto& k) {
       return ((k.metric() == metrics) || ...);
     });
     return *this;
@@ -88,7 +88,7 @@ public:
 
   [[nodiscard]] QueryBuilder& filterByTimestamp(const Timestamp& timestamp) {
     set_default_range_if_none();
-    add_filter([timestamp](const key_type& k) {
+    add_filter([timestamp](const auto& k) {
       return k.timestamp() == timestamp;
     });
     return *this;
@@ -97,7 +97,7 @@ public:
   template <AllConvertibleNoCVRefEquals<Timestamp>... Timestamps>
   [[nodiscard]] QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
     set_default_range_if_none();
-    add_filter([timestamps...](const key_type& k) {
+    add_filter([timestamps...](const auto& k) {
       return ((k.timestamp() == timestamps) || ...);
     });
     return *this;
@@ -133,7 +133,7 @@ public:
     setup_aggregate();
     auto range{get_nonempty_filtered_range()};
     auto sum{std::accumulate(range.begin(), range.end(), TValue{},
-      [](const TValue& acc, const value_type& entry) {
+      [](const auto& acc, const auto& entry) {
         return acc + entry.second.value();
       })};
     return static_cast<double>(sum) / std::ranges::distance(range);
@@ -142,7 +142,7 @@ public:
   [[nodiscard]] TValue min() {
     setup_aggregate();
     auto range{get_nonempty_filtered_range()};
-    return std::ranges::min_element(range, {}, [](const value_type& entry) {
+    return std::ranges::min_element(range, {}, [](const auto& entry) {
       return entry.second.value();
     })->second.value();
   }
@@ -150,7 +150,7 @@ public:
   [[nodiscard]] TValue max() {
     setup_aggregate();
     auto range{get_nonempty_filtered_range()};
-    return std::ranges::max_element(range, {}, [](const value_type& entry) {
+    return std::ranges::max_element(range, {}, [](const auto& entry) {
       return entry.second.value();
     })->second.value();
   }
@@ -232,10 +232,7 @@ private:
   }
 
   void add_filter(TimeSeriesKeyFilter&& filter) {
-    combined_filter_ = [filter, combined_filter{std::move(combined_filter_)}]
-      (const key_type& key) {
-      return filter(key) && combined_filter(key);
-    };
+    filters_.push_back(std::move(filter));
   }
 
   [[nodiscard]] result_type get_filtered_range() const {
@@ -243,7 +240,12 @@ private:
       return execute_point_query();
     }
     const auto& params{std::get<RangeParams>(query_params_)};
-    return lsm_tree_.getRange(params.start_, params.end_, combined_filter_);
+    return lsm_tree_.getRange(params.start_, params.end_,
+      [this](const auto& k) {
+        return std::ranges::all_of(filters_, [&k](const auto& filter) {
+          return filter(k);
+        });
+      });
   }
 
   [[nodiscard]] result_type get_nonempty_filtered_range() const {
@@ -285,7 +287,7 @@ private:
   LSMTree<TValue>& lsm_tree_;
   QueryType query_type_;
   QueryParams query_params_;
-  TimeSeriesKeyFilter combined_filter_;
+  std::vector<TimeSeriesKeyFilter> filters_;
 };
 
 #endif // QUERY_BUILDER_H

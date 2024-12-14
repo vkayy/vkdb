@@ -102,7 +102,9 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithoutFlushing) {
 
   auto entries{lsm_tree_->getRange(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{100, "metric", {}})
+    TimeSeriesKey{100, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
 
   EXPECT_EQ(entries.size(), 100);
@@ -112,7 +114,9 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithoutFlushing) {
 
   auto empty_entries{lsm_tree_->getRange(
     TimeSeriesKey{100, "metric", {}},
-    TimeSeriesKey{200, "metric", {}})
+    TimeSeriesKey{200, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
   EXPECT_EQ(empty_entries.size(), 0);
 }
@@ -125,7 +129,9 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushing) {
 
   auto entries{lsm_tree_->getRange(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{10'000, "metric", {}})
+    TimeSeriesKey{10'000, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
 
   EXPECT_EQ(entries.size(), 10'000);
@@ -135,7 +141,9 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushing) {
 
   auto empty_entries{lsm_tree_->getRange(
     TimeSeriesKey{10'000, "metric", {}},
-    TimeSeriesKey{20'000, "metric", {}})
+    TimeSeriesKey{20'000, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
   EXPECT_EQ(empty_entries.size(), 0);
 }
@@ -153,7 +161,9 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndUpdates) {
 
   auto entries{lsm_tree_->getRange(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{5'000, "metric", {}})
+    TimeSeriesKey{5'000, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
 
   EXPECT_EQ(entries.size(), 5'000);
@@ -163,7 +173,9 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndUpdates) {
 
   auto empty_entries{lsm_tree_->getRange(
     TimeSeriesKey{5'000, "metric", {}},
-    TimeSeriesKey{10'000, "metric", {}})
+    TimeSeriesKey{10'000, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
   EXPECT_EQ(empty_entries.size(), 0);
 }
@@ -181,13 +193,17 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndDeletions) {
 
   auto entries{lsm_tree_->getRange(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{5'000, "metric", {}})
+    TimeSeriesKey{5'000, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
   EXPECT_EQ(entries.size(), 0);
 
   auto empty_entries{lsm_tree_->getRange(
     TimeSeriesKey{5'000, "metric", {}},
-    TimeSeriesKey{10'000, "metric", {}})
+    TimeSeriesKey{10'000, "metric", {}},
+    [](const auto&) { return true; }
+  )
   };
   EXPECT_EQ(empty_entries.size(), 0);
 }
@@ -201,7 +217,7 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndFilter) {
   auto entries{lsm_tree_->getRange(
     TimeSeriesKey{0, "metric", {}},
     TimeSeriesKey{10'000, "metric", {}},
-    [](const TimeSeriesKey& key) {
+    [](const auto& key) {
       return key.timestamp() % 2 == 0;
     })
   };
@@ -220,8 +236,9 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithoutFlushing) {
 
   auto entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{100, "metric", {}})
-  };
+    TimeSeriesKey{100, "metric", {}},
+    [](const auto&) { return true; }
+  )};
 
   EXPECT_EQ(entries.size(), 100);
   for (Timestamp i{0}; i < 100; ++i) {
@@ -230,8 +247,9 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithoutFlushing) {
 
   auto empty_entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{100, "metric", {}},
-    TimeSeriesKey{200, "metric", {}})
-  };
+    TimeSeriesKey{200, "metric", {}},
+    [](const auto&) { return true; }
+  )};
   EXPECT_EQ(empty_entries.size(), 0);
 }
 
@@ -243,8 +261,9 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithFlushing) {
 
   auto entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{10'000, "metric", {}})
-  };
+    TimeSeriesKey{10'000, "metric", {}},
+    [](const auto&) { return true; }
+  )};
 
   EXPECT_EQ(entries.size(), 10'000);
   for (Timestamp i{0}; i < 10'000; ++i) {
@@ -253,8 +272,9 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithFlushing) {
 
   auto empty_entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{10'000, "metric", {}},
-    TimeSeriesKey{20'000, "metric", {}})
-  };
+    TimeSeriesKey{20'000, "metric", {}},
+    [](const auto&) { return true; }
+  )};
   EXPECT_EQ(empty_entries.size(), 0);
 }
 
@@ -271,8 +291,9 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithFlushingAndUpdates) {
 
   auto entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{5'000, "metric", {}})
-  };
+    TimeSeriesKey{5'000, "metric", {}},
+    [](const auto&) { return true; }
+  )};
 
   EXPECT_EQ(entries.size(), 5'000);
   for (Timestamp i{0}; i < 5'000; ++i) {
@@ -281,8 +302,9 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithFlushingAndUpdates) {
 
   auto empty_entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{5'000, "metric", {}},
-    TimeSeriesKey{10'000, "metric", {}})
-  };
+    TimeSeriesKey{10'000, "metric", {}},
+    [](const auto&) { return true; }
+  )};
   EXPECT_EQ(empty_entries.size(), 0);
 }
 
@@ -299,14 +321,16 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithFlushingAndDeletions) {
 
   auto entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{0, "metric", {}},
-    TimeSeriesKey{5'000, "metric", {}})
-  };
+    TimeSeriesKey{5'000, "metric", {}},
+    [](const auto&) { return true; }
+  )};
   EXPECT_EQ(entries.size(), 0);
 
   auto empty_entries{lsm_tree_->getRangeParallel(
     TimeSeriesKey{5'000, "metric", {}},
-    TimeSeriesKey{10'000, "metric", {}})
-  };
+    TimeSeriesKey{10'000, "metric", {}},
+    [](const auto&) { return true; }
+  )};
   EXPECT_EQ(empty_entries.size(), 0);
 }
 

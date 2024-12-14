@@ -66,7 +66,7 @@ public:
   [[nodiscard]] std::vector<value_type> getRange(
     const key_type& start,
     const key_type& end,
-    TimeSeriesKeyFilter filter = TRUE_TIME_SERIES_KEY_FILTER
+    TimeSeriesKeyFilter&& filter
   ) const {
     table_type entry_table;
     for (const auto& sstable : sstables_) {
@@ -97,7 +97,7 @@ public:
   [[nodiscard]] std::vector<value_type> getRangeParallel(
       const key_type& start,
       const key_type& end,
-      TimeSeriesKeyFilter filter = TRUE_TIME_SERIES_KEY_FILTER
+      TimeSeriesKeyFilter filter
   ) const {
     std::vector<std::future<std::vector<value_type>>> range_futures;
     range_futures.reserve(sstables_.size() + 1);
