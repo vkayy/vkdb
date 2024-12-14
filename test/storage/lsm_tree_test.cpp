@@ -191,3 +191,23 @@ TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndDeletions) {
   };
   EXPECT_EQ(empty_entries.size(), 0);
 }
+
+TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithFlushingAndFilter) {
+  for (Timestamp i{0}; i < 10'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  auto entries{lsm_tree_->getRange(
+    TimeSeriesKey{0, "metric", {}},
+    TimeSeriesKey{10'000, "metric", {}},
+    [](const TimeSeriesKey& key) {
+      return key.timestamp() % 2 == 0;
+    })
+  };
+
+  EXPECT_EQ(entries.size(), 5'000);
+  for (Timestamp i{0}; i < 5'000; ++i) {
+    EXPECT_EQ(entries[i].second, 2 * i);
+  }
+}

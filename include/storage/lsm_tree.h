@@ -6,6 +6,11 @@
 #include "storage/mem_table.h"
 #include <ranges>
 
+using TimeSeriesKeyFilter = std::function<bool(const TimeSeriesKey&)>;
+
+static const TimeSeriesKeyFilter TRUE_TIME_SERIES_KEY_FILTER =
+  [](const TimeSeriesKey&) { return true; };
+
 template <ArithmeticNoCVRefQuals TValue>
 class LSMTree {
 public:
@@ -58,11 +63,15 @@ public:
 
   [[nodiscard]] std::vector<value_type> getRange(
     const key_type& start,
-    const key_type& end
+    const key_type& end,
+    TimeSeriesKeyFilter filter = TRUE_TIME_SERIES_KEY_FILTER
   ) const {
     typename MemTable<TValue>::table_type result_map;
     for (const auto& sstable : sstables_) {
       for (const auto& [key, value] : sstable.getRange(start, end)) {
+        if (!filter(key)) {
+          continue;
+        }
         if (!value.has_value()) {
           result_map.erase(key);
           continue;
@@ -71,6 +80,9 @@ public:
       }
     }
     for (const auto& [key, value] : mem_table_.getRange(start, end)) {
+      if (!filter(key)) {
+        continue;
+      }
       if (!value.has_value()) {
         result_map.erase(key);
         continue;
