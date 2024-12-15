@@ -16,11 +16,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
 add_library(vkdb STATIC)
-target_include_directories(vkdb 
-  PUBLIC
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:include>
-)
+target_include_directories(vkdb INTERFACE include)
 target_sources(vkdb PRIVATE ${SOURCES})
 
 add_subdirectory(src)
