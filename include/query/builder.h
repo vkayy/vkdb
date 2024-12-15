@@ -36,12 +36,15 @@ public:
   ~QueryBuilder() = default;
 
   [[nodiscard]] QueryBuilder& point(const key_type& key) {
+    validate_tags(key.tags());
     set_query_type(QueryType::Point);
     query_params_ = QueryParams{PointParams{key}};
     return *this;
   }
 
   [[nodiscard]] QueryBuilder& range(const key_type& start, const key_type& end) {
+    validate_tags(start.tags());
+    validate_tags(end.tags());
     set_query_type(QueryType::Range);
     query_params_ = QueryParams{RangeParams{start, end}};
     return *this;
@@ -113,12 +116,14 @@ public:
   }
 
   [[nodiscard]] QueryBuilder& put(const key_type& key, const TValue& value) {
+    validate_tags(key.tags());
     set_query_type(QueryType::Put);
     query_params_ = QueryParams{PutParams{key, value}};
     return *this;
   }
 
   [[nodiscard]] QueryBuilder& remove(const key_type& key) {
+    validate_tags(key.tags());
     set_query_type(QueryType::Remove);
     query_params_ = QueryParams{RemoveParams{key}};
     return *this;
@@ -291,6 +296,16 @@ private:
     const auto& params{std::get<RemoveParams>(query_params_)};
     lsm_tree_.remove(params.key_);
     return {};
+  }
+
+  void validate_tags(const TagTable& tag_table) const {
+    for (const auto& [key, value] : tag_table) {
+      if (!tag_columns_.contains(key)) {
+        throw std::runtime_error{
+          "QueryBuilder::validate_tags(): Tag not in tag columns."
+        };
+      }
+    }
   }
 
   template <AllSameNoCVRefQuals<Tag>... Tags>

@@ -526,7 +526,12 @@ TEST_F(QueryBuilderTest, ThrowsWhenAggregatingOnEmptyRangeExceptCount) {
   );
 }
 
-TEST_F(QueryBuilderTest, ThrowsWhenFilteringOnInvalidTags) {
+TEST_F(QueryBuilderTest, ThrowsWhenUsingInvalidTags) {
+  TimeSeriesKey key{0, "metric", {{"invalid-tag", "value"}}};
+  EXPECT_THROW(
+    query().put(key, 0).execute(),
+    std::runtime_error
+  );
   EXPECT_THROW(
     query().filterByTag("invalid-tag", "value").execute(),
     std::runtime_error
