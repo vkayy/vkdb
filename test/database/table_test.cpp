@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "database/table.h"
+#include "vkdb/table.h"
 
 using namespace vkdb;
 

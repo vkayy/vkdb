@@ -1,8 +1,8 @@
 #ifndef UTILS_STRING_H
 #define UTILS_STRING_H
 
-#include "storage/time_series_key.h"
-#include "utils/concepts.h"
+#include "vkdb/time_series_key.h"
+#include "vkdb/concepts.h"
 #include <optional>
 #include <sstream>
 

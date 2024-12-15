@@ -1,5 +1,5 @@
-#include "database/database.h"
-#include "utils/random.h"
+#include "vkdb/database.h"
+#include "vkdb/random.h"
 #include <iostream>
 
 int main() {

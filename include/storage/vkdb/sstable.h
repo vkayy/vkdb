@@ -1,12 +1,12 @@
 #ifndef STORAGE_SSTABLE_H
 #define STORAGE_SSTABLE_H
 
-#include "storage/time_series_key.h"
-#include "storage/bloom_filter.h"
-#include "storage/data_range.h"
-#include "storage/mem_table.h"
-#include "utils/concepts.h"
-#include "utils/string.h"
+#include "vkdb/time_series_key.h"
+#include "vkdb/bloom_filter.h"
+#include "vkdb/data_range.h"
+#include "vkdb/mem_table.h"
+#include "vkdb/concepts.h"
+#include "vkdb/string.h"
 #include <string>
 #include <fstream>
 

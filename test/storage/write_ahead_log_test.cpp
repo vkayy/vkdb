@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "storage/write_ahead_log.h"
+#include "vkdb/write_ahead_log.h"
 
 using namespace vkdb;
 

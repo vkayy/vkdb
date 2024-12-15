@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "storage/lsm_tree.h"
+#include "vkdb/lsm_tree.h"
 
 using namespace vkdb;
 

@@ -1,10 +1,10 @@
 #ifndef STORAGE_MEM_TABLE_H
 #define STORAGE_MEM_TABLE_H
 
-#include "utils/concepts.h"
-#include "utils/string.h"
-#include "storage/time_series_key.h"
-#include "storage/data_range.h"
+#include "vkdb/concepts.h"
+#include "vkdb/string.h"
+#include "vkdb/time_series_key.h"
+#include "vkdb/data_range.h"
 
 namespace vkdb {
 template <ArithmeticNoCVRefQuals TValue>

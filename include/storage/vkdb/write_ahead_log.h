@@ -1,8 +1,8 @@
 #ifndef STORAGE_WRITE_AHEAD_LOG_H
 #define STORAGE_WRITE_AHEAD_LOG_H
 
-#include "storage/lsm_tree.h"
-#include "storage/wal_lsm.h"
+#include "vkdb/lsm_tree.h"
+#include "vkdb/wal_lsm.h"
 
 namespace vkdb {
 const FilePath WAL_FILENAME{"wal.log"};

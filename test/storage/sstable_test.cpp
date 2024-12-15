@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "storage/sstable.h"
+#include "vkdb/sstable.h"
 
 using namespace vkdb;
 

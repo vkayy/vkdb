@@ -1,11 +1,11 @@
 #ifndef STORAGE_LSM_TREE_H
 #define STORAGE_LSM_TREE_H
 
-#include "utils/concepts.h"
-#include "storage/sstable.h"
-#include "storage/mem_table.h"
-#include "storage/write_ahead_log.h"
-#include "storage/wal_lsm.h"
+#include "vkdb/concepts.h"
+#include "vkdb/sstable.h"
+#include "vkdb/mem_table.h"
+#include "vkdb/write_ahead_log.h"
+#include "vkdb/wal_lsm.h"
 #include <ranges>
 #include <future>
 

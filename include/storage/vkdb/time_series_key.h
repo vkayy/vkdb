@@ -5,7 +5,7 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
-#include "utils/concepts.h"
+#include "vkdb/concepts.h"
 
 namespace vkdb {
 using Timestamp = uint64_t;
