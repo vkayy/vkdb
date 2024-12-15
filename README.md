@@ -33,6 +33,13 @@ int main()  {
 }
 ```
 
+if you want to play around with some mock timestamps/values, feel free to use `vkdb::random<>`. any arithmetic type (with no cv- or ref- qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
+
+```cpp
+auto random_int{vkdb::random<int64_t>(-1'000, 1'000)};
+auto random_dbl{vkdb::random<double>(-100.0, 100.0)};
+```
+
 ## how does it work?
 
 vkdb is built on log-structured merge (lsm) trees. in their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (wal) for persistence of in-memory changes.
