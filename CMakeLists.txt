@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+add_library(vkdb INTERFACE)
+target_include_directories(vkdb INTERFACE include)
 
 add_subdirectory(src)
 add_subdirectory(test)
@@ -19,7 +21,4 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
     
-target_link_libraries(vkdb_tests PRIVATE gtest gtest_main)
-
-add_library(vkdb INTERFACE)
-target_include_directories(vkdb INTERFACE include)
+target_link_libraries(vkdb_tests PRIVATE gtest gtest_main vkdb)
