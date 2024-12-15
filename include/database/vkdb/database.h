@@ -63,7 +63,7 @@ public:
   }
 
   [[nodiscard]] FilePath path() const noexcept {
-    return VKDB_DATABASE_DIRECTORY / name_;
+    return DATABASE_DIRECTORY / name_;
   }
 
 private:
