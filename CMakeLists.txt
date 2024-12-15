@@ -14,8 +14,6 @@ endif()
 
 add_subdirectory(src)
 
-target_include_directories(vkdb_lib INTERFACE ${PROJECT_SOURCE_DIR}/include)
-
 if(VKDB_BUILD_TESTS)
     add_subdirectory(test)
     enable_testing()

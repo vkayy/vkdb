@@ -1,9 +1,14 @@
-file(GLOB_RECURSE vkdb_lib_SRC
+file(GLOB_RECURSE vkdb_SRC
     "*.cpp"
 )
 
-add_library(vkdb_lib
-    ${vkdb_lib_SRC}
+add_library(vkdb
+    ${vkdb_SRC}
 )
 
-target_include_directories(vkdb_lib PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(vkdb PUBLIC
+  ${PROJECT_SOURCE_DIR}/include/database
+  ${PROJECT_SOURCE_DIR}/include/query
+  ${PROJECT_SOURCE_DIR}/include/storage
+  ${PROJECT_SOURCE_DIR}/include/utils
+)
