@@ -22,8 +22,8 @@ public:
   using size_type = uint64_t;
   using table_type = typename MemTable<TValue>::table_type;
 
-  explicit LSMTree(FilePath directory) noexcept
-    : directory_{std::move(directory)}
+  explicit LSMTree(FilePath path) noexcept
+    : path_{std::move(path)}
     , sstable_id_{0} {}
 
   LSMTree(LSMTree&&) noexcept = default;
@@ -169,7 +169,7 @@ private:
 
   void flush_memtable() {
     FilePath sstable_file_path{
-      directory_ + "/sstable_" + std::to_string(sstable_id_++) + ".sst"
+      path_ + "/sstable_" + std::to_string(sstable_id_++) + ".sst"
     };
     sstables_.emplace_back(sstable_file_path, std::move(mem_table_));
     mem_table_.clear();
@@ -177,7 +177,7 @@ private:
 
   C0Layer mem_table_;
   C1Layer sstables_;
-  FilePath directory_;
+  FilePath path_;
   size_type sstable_id_;
 };
 }  // namespace vkdb
