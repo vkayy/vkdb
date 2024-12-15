@@ -36,8 +36,8 @@ int main()  {
 if you want to play around with some mock timestamps/values, feel free to use `vkdb::random<>`. any arithmetic type (with no cv- or ref- qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
 
 ```cpp
-auto random_int{vkdb::random<int64_t>(-1'000, 1'000)};
-auto random_dbl{vkdb::random<double>(-100.0, 100.0)};
+auto random_int{vkdb::random<int>(-100'000, 100'000)};
+auto random_double{vkdb::random<double>(-10.0, 10.0)};
 ```
 
 ## how does it work?
