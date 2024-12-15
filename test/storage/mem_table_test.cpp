@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "vkdb/mem_table.h"
+#include <vkdb/mem_table.h>
 #include <sstream>
 
 using namespace vkdb;

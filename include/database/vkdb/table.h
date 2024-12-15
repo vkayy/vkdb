@@ -1,9 +1,9 @@
 #ifndef DATABASE_TABLE_H
 #define DATABASE_TABLE_H
 
-#include "vkdb/concepts.h"
-#include "vkdb/lsm_tree.h"
-#include "vkdb/friendly_builder.h"
+#include <vkdb/concepts.h>
+#include <vkdb/lsm_tree.h>
+#include <vkdb/friendly_builder.h>
 #include <fstream>
 
 namespace vkdb {

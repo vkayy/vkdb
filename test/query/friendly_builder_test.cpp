@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "vkdb/friendly_builder.h"
+#include <vkdb/friendly_builder.h>
 
 using namespace vkdb;
 

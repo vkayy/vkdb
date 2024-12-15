@@ -6,7 +6,7 @@
 #include <optional>
 #include <utility>
 #include <concepts>
-#include "vkdb/concepts.h"
+#include <vkdb/concepts.h>
 
 namespace vkdb {
 template <RegularNoCVRefQuals TKey, RegularNoCVRefQuals TValue>

@@ -1,7 +1,7 @@
 #ifndef STORAGE_DATA_RANGE_H
 #define STORAGE_DATA_RANGE_H
 
-#include "vkdb/concepts.h"
+#include <vkdb/concepts.h>
 
 namespace vkdb {
 template <RegularNoCVRefQuals TData>

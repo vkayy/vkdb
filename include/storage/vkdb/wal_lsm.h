@@ -1,7 +1,7 @@
 #ifndef STORAGE_WAL_LSM_H
 #define STORAGE_WAL_LSM_H
 
-#include "vkdb/lsm_tree.h"
+#include <vkdb/lsm_tree.h>
 
 namespace vkdb {
 template <ArithmeticNoCVRefQuals TValue>

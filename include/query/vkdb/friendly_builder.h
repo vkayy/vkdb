@@ -1,7 +1,7 @@
 #ifndef QUERY_FRIENDLY_BUILDER_H
 #define QUERY_FRIENDLY_BUILDER_H
 
-#include "vkdb/builder.h"
+#include <vkdb/builder.h>
 
 namespace vkdb {
 template <ArithmeticNoCVRefQuals TValue>

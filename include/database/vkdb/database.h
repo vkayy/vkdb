@@ -1,7 +1,7 @@
 #ifndef DATABASE_DATABASE_H
 #define DATABASE_DATABASE_H
 
-#include "vkdb/table.h"
+#include <vkdb/table.h>
 
 namespace vkdb {
 using DatabaseName = std::string;

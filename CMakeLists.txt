@@ -13,10 +13,10 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif()
 
 include_directories(
-  ${PROJECT_SOURCE_DIR}/include/database
-  ${PROJECT_SOURCE_DIR}/include/query
-  ${PROJECT_SOURCE_DIR}/include/storage
-  ${PROJECT_SOURCE_DIR}/include/utils
+  ${CMAKE_SOURCE_DIR}/include/database
+  ${CMAKE_SOURCE_DIR}/include/query
+  ${CMAKE_SOURCE_DIR}/include/storage
+  ${CMAKE_SOURCE_DIR}/include/utils
 )
 file(GLOB_RECURSE SOURCES src/*.cpp)
 

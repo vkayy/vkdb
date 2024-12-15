@@ -1,8 +1,8 @@
 #ifndef QUERY_BUILDER_H
 #define QUERY_BUILDER_H
 
-#include "vkdb/concepts.h"
-#include "vkdb/lsm_tree.h"
+#include <vkdb/concepts.h>
+#include <vkdb/lsm_tree.h>
 #include <ranges>
 #include <unordered_set>
 
