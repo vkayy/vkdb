@@ -5,10 +5,12 @@ using namespace vkdb;
 
 class FriendlyQueryBuilderTest : public ::testing::Test {
 protected:
-  void SetUp() override {
-    lsm_tree_ = std::make_unique<LSMTree<int>>("/Users/vkay/Dev/vkdb/output");
+  static constexpr auto ENTRY_COUNT{10'000};
 
-    for (Timestamp i{0}; i < 10'000; ++i) {
+  void SetUp() override {
+    lsm_tree_ = std::make_unique<LSMTree<int32_t>>("/Users/vkay/Dev/vkdb/output");
+
+    for (Timestamp i{0}; i < ENTRY_COUNT; ++i) {
       TimeSeriesKey key{i, "metric", {}};
       lsm_tree_->put(key, i);
     }
@@ -18,12 +20,12 @@ protected:
     tag_columns_.insert("tag3");
   }
 
-  FriendlyQueryBuilder<int> query() {
-    return FriendlyQueryBuilder<int>(*lsm_tree_, tag_columns_);
+  FriendlyQueryBuilder<int32_t> query() {
+    return FriendlyQueryBuilder<int32_t>(*lsm_tree_, tag_columns_);
   }
 
   std::unordered_set<TagKey> tag_columns_;
-  std::unique_ptr<LSMTree<int>> lsm_tree_;
+  std::unique_ptr<LSMTree<int32_t>> lsm_tree_;
 };
 
 TEST_F(FriendlyQueryBuilderTest, CanGetQuery) {
@@ -38,13 +40,13 @@ TEST_F(FriendlyQueryBuilderTest, CanGetQuery) {
 
 TEST_F(FriendlyQueryBuilderTest, CanBetweenQuery) {
   auto result{query()
-    .between(5'000, 10'000)
+    .between(ENTRY_COUNT / 2, ENTRY_COUNT)
     .execute()
   };
 
-  ASSERT_EQ(result.size(), 5'000);
-  for (Timestamp i{0}; i < 5'000; ++i) {
-    EXPECT_EQ(result[i].value, i + 5'000);
+  ASSERT_EQ(result.size(), ENTRY_COUNT / 2);
+  for (Timestamp i{0}; i < ENTRY_COUNT / 2; ++i) {
+    EXPECT_EQ(result[i].value, i + ENTRY_COUNT / 2);
   }
 }
 
@@ -54,8 +56,8 @@ TEST_F(FriendlyQueryBuilderTest, CanWhereMetricIsQuery) {
     .execute()
   };
 
-  ASSERT_EQ(result.size(), 10'000);
-  for (Timestamp i{0}; i < 10'000; ++i) {
+  ASSERT_EQ(result.size(), ENTRY_COUNT);
+  for (Timestamp i{0}; i < ENTRY_COUNT; ++i) {
     EXPECT_EQ(result[i].value, i);
   }
 }
@@ -66,31 +68,31 @@ TEST_F(FriendlyQueryBuilderTest, CanWhereMetricIsAnyOfQuery) {
     .execute()
   };
 
-  ASSERT_EQ(result.size(), 10'000);
-  for (Timestamp i{0}; i < 10'000; ++i) {
+  ASSERT_EQ(result.size(), ENTRY_COUNT);
+  for (Timestamp i{0}; i < ENTRY_COUNT; ++i) {
     EXPECT_EQ(result[i].value, i);
   }
 }
 
 TEST_F(FriendlyQueryBuilderTest, CanWhereTimestampIsQuery) {
   auto result{query()
-    .whereTimestampIs(5'000)
+    .whereTimestampIs(ENTRY_COUNT / 2)
     .execute()
   };
 
   ASSERT_EQ(result.size(), 1);
-  EXPECT_EQ(result[0].value, 5'000);
+  EXPECT_EQ(result[0].value, ENTRY_COUNT / 2);
 }
 
 TEST_F(FriendlyQueryBuilderTest, CanWhereTimestampIsAnyOfQuery) {
   auto result{query()
-    .whereTimestampIsAnyOf(5'000, 5'001)
+    .whereTimestampIsAnyOf(ENTRY_COUNT / 2, ENTRY_COUNT / 2 + 1)
     .execute()
   };
 
   ASSERT_EQ(result.size(), 2);
-  EXPECT_EQ(result[0].value, 5'000);
-  EXPECT_EQ(result[1].value, 5'001);
+  EXPECT_EQ(result[0].value, ENTRY_COUNT / 2);
+  EXPECT_EQ(result[1].value, ENTRY_COUNT / 2 + 1);
 }
 
 TEST_F(FriendlyQueryBuilderTest, CanWhereTagsContainQuery) {
@@ -150,19 +152,19 @@ TEST_F(FriendlyQueryBuilderTest, CanWhereTagsContainAllOfQuery) {
 
 TEST_F(FriendlyQueryBuilderTest, CanPutAndGetQuery) {
   auto result{query()
-    .put(10'000, "metric", {}, 10'000)
+    .put(ENTRY_COUNT, "metric", {}, ENTRY_COUNT)
     .execute()
   };
 
   ASSERT_EQ(result.size(), 0);
 
   auto get_result{query()
-    .get(10'000, "metric", {})
+    .get(ENTRY_COUNT, "metric", {})
     .execute()
   };
 
   ASSERT_EQ(get_result.size(), 1);
-  EXPECT_EQ(get_result[0].value, 10'000);
+  EXPECT_EQ(get_result[0].value, ENTRY_COUNT);
 }
 
 TEST_F(FriendlyQueryBuilderTest, CanRemoveQuery) {
@@ -186,7 +188,7 @@ TEST_F(FriendlyQueryBuilderTest, CanCountQuery) {
     .count()
   };
 
-  EXPECT_EQ(count, 10'000);
+  EXPECT_EQ(count, ENTRY_COUNT);
 }
 
 TEST_F(FriendlyQueryBuilderTest, CanSumQuery) {
@@ -194,7 +196,7 @@ TEST_F(FriendlyQueryBuilderTest, CanSumQuery) {
     .sum()
   };
 
-  EXPECT_EQ(sum, 49'995'000);
+  EXPECT_EQ(sum, ENTRY_COUNT * (ENTRY_COUNT - 1) / 2);
 }
 
 TEST_F(FriendlyQueryBuilderTest, CanAvgQuery) {
@@ -202,7 +204,7 @@ TEST_F(FriendlyQueryBuilderTest, CanAvgQuery) {
     .avg()
   };
 
-  EXPECT_DOUBLE_EQ(avg, 4'999.5);
+  EXPECT_DOUBLE_EQ(avg, (ENTRY_COUNT - 1.0) / 2.0);
 }
 
 TEST_F(FriendlyQueryBuilderTest, CanMinQuery) {
@@ -218,7 +220,7 @@ TEST_F(FriendlyQueryBuilderTest, CanMaxQuery) {
     .max()
   };
 
-  EXPECT_EQ(max, 9'999);
+  EXPECT_EQ(max, ENTRY_COUNT - 1);
 }
 
 TEST_F(FriendlyQueryBuilderTest, ThrowsWhenInvalidMetric) {

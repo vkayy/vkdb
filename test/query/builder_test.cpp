@@ -5,10 +5,12 @@ using namespace vkdb;
 
 class QueryBuilderTest : public ::testing::Test {
 protected:
+  static constexpr auto ENTRY_COUNT{10'000};
+
   void SetUp() override {
     lsm_tree_ = std::make_unique<LSMTree<int>>("/Users/vkay/Dev/vkdb/output");
 
-    for (Timestamp i{0}; i < 10'000; ++i) {
+    for (Timestamp i{0}; i < ENTRY_COUNT; ++i) {
       TimeSeriesKey key{i, "metric", {}};
       lsm_tree_->put(key, i);
     }
@@ -27,7 +29,7 @@ protected:
 };
 
 TEST_F(QueryBuilderTest, CanPointQuery) {
-  TimeSeriesKey key{5'000, "metric", {}};
+  TimeSeriesKey key{ENTRY_COUNT / 2, "metric", {}};
 
   auto result{query()
     .point(key)
@@ -35,28 +37,28 @@ TEST_F(QueryBuilderTest, CanPointQuery) {
   };
 
   EXPECT_EQ(result.size(), 1);
-  EXPECT_EQ(result[0].second, 5'000);
+  EXPECT_EQ(result[0].second, ENTRY_COUNT / 2);
 }
 
 TEST_F(QueryBuilderTest, CanRangeQuery) {
-  TimeSeriesKey start{5'000, "metric", {}};
-  TimeSeriesKey end{10'000, "metric", {}};
+  TimeSeriesKey start{ENTRY_COUNT / 2, "metric", {}};
+  TimeSeriesKey end{ENTRY_COUNT, "metric", {}};
 
   auto result{query()
     .range(start, end)
     .execute()
   };
 
-  EXPECT_EQ(result.size(), 5'000);
-  for (Timestamp i{5'000}; i < 10'000; ++i) {
-    EXPECT_EQ(result[i - 5'000].second, i);
+  EXPECT_EQ(result.size(), ENTRY_COUNT / 2);
+  for (Timestamp i{ENTRY_COUNT / 2}; i < ENTRY_COUNT; ++i) {
+    EXPECT_EQ(result[i - ENTRY_COUNT / 2].second, i);
   }
 }
 
 TEST_F(QueryBuilderTest, CanFilterByTag) {
-  TimeSeriesKey key1{5'000, "metric", {{"tag1", "value1"}}};
-  TimeSeriesKey key2{5'001, "metric", {{"tag1", "value1"}}};
-  TimeSeriesKey key3{5'002, "metric", {{"tag1", "value1"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric", {{"tag1", "value1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric", {{"tag1", "value1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric", {{"tag1", "value1"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -78,9 +80,9 @@ TEST_F(QueryBuilderTest, CanFilterByAnyTags) {
   Tag tag2{"tag2", "value2"};
   Tag tag3{"tag3", "value3"};
 
-  TimeSeriesKey key1{5'000, "metric", {tag1}};
-  TimeSeriesKey key2{5'001, "metric", {tag2}};
-  TimeSeriesKey key3{5'002, "metric", {tag3}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric", {tag1}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric", {tag2}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric", {tag3}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -101,9 +103,9 @@ TEST_F(QueryBuilderTest, CanFilterByAllTags) {
   Tag tag1{"tag1", "value1"};
   Tag tag2{"tag2", "value2"};
 
-  TimeSeriesKey key1{5'000, "metric", {tag1}};
-  TimeSeriesKey key2{5'001, "metric", {tag1, tag2}};
-  TimeSeriesKey key3{5'002, "metric", {tag2}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric", {tag1}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric", {tag1, tag2}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric", {tag2}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -120,9 +122,9 @@ TEST_F(QueryBuilderTest, CanFilterByAllTags) {
 }
 
 TEST_F(QueryBuilderTest, CanFilterByMetric) {
-  TimeSeriesKey key1{5'000, "metric1", {}};
-  TimeSeriesKey key2{5'001, "metric1", {}};
-  TimeSeriesKey key3{5'002, "metric1", {}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric1", {}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric1", {}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -144,9 +146,9 @@ TEST_F(QueryBuilderTest, CanFilterByAnyMetrics) {
   Metric metric2{"metric2"};
   Metric metric3{"metric3"};
 
-  TimeSeriesKey key1{5'000, metric1, {}};
-  TimeSeriesKey key2{5'001, metric2, {}};
-  TimeSeriesKey key3{5'002, metric3, {}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, metric1, {}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, metric2, {}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, metric3, {}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -164,17 +166,17 @@ TEST_F(QueryBuilderTest, CanFilterByAnyMetrics) {
 
 TEST_F(QueryBuilderTest, CanFilterByTimestamp) {
   auto result{query()
-    .filterByTimestamp(5'000)
+    .filterByTimestamp(ENTRY_COUNT / 2)
     .execute()
   };
 
   EXPECT_EQ(result.size(), 1);
-  EXPECT_EQ(result[0].second, 5'000);
+  EXPECT_EQ(result[0].second, ENTRY_COUNT / 2);
 }
 
 TEST_F(QueryBuilderTest, CanFilterByAnyTimestamps) {
-  Timestamp timestamp1{5'000};
-  Timestamp timestamp2{5'001};
+  Timestamp timestamp1{ENTRY_COUNT / 2};
+  Timestamp timestamp2{ENTRY_COUNT / 2 + 1};
 
   auto result{query()
     .filterByAnyTimestamps(timestamp1, timestamp2)
@@ -182,14 +184,14 @@ TEST_F(QueryBuilderTest, CanFilterByAnyTimestamps) {
   };
 
   EXPECT_EQ(result.size(), 2);
-  EXPECT_EQ(result[0].second, 5'000);
-  EXPECT_EQ(result[1].second, 5'001);
+  EXPECT_EQ(result[0].second, ENTRY_COUNT / 2);
+  EXPECT_EQ(result[1].second, ENTRY_COUNT / 2 + 1);
 }
 
 TEST_F(QueryBuilderTest, CanFilterByTagAndMetric) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "value1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "value1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "value1"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "value1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "value1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "value1"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -207,10 +209,10 @@ TEST_F(QueryBuilderTest, CanFilterByTagAndMetric) {
 }
 
 TEST_F(QueryBuilderTest, CanFilterByTagAndMetricAndTimestamp) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -220,7 +222,7 @@ TEST_F(QueryBuilderTest, CanFilterByTagAndMetricAndTimestamp) {
   auto result{query()
     .filterByTag("tag1", "val1")
     .filterByMetric("metric2")
-    .filterByTimestamp(5'002)
+    .filterByTimestamp(ENTRY_COUNT / 2 + 2)
     .execute()
   };
 
@@ -230,24 +232,24 @@ TEST_F(QueryBuilderTest, CanFilterByTagAndMetricAndTimestamp) {
 }
 
 TEST_F(QueryBuilderTest, CanRangeQueryAndFilterByTagAndMetricAndTimestamp) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
   lsm_tree_->put(key3, 3);
   lsm_tree_->put(key4, 4);
 
-  TimeSeriesKey range_start{5'000, "metric1", {}};
-  TimeSeriesKey range_end{5'002, "metric3", {}};  
+  TimeSeriesKey range_start{ENTRY_COUNT / 2, "metric1", {}};
+  TimeSeriesKey range_end{ENTRY_COUNT / 2 + 2, "metric3", {}};  
 
   auto result{query()
     .range(range_start, range_end)
     .filterByTag("tag1", "val1")
     .filterByMetric("metric2")
-    .filterByTimestamp(5'002)
+    .filterByTimestamp(ENTRY_COUNT / 2 + 2)
     .execute()
   };
 
@@ -257,7 +259,7 @@ TEST_F(QueryBuilderTest, CanRangeQueryAndFilterByTagAndMetricAndTimestamp) {
 }
 
 TEST_F(QueryBuilderTest, CanPutAndUpdate) {
-  TimeSeriesKey key{5'000, "metric", {}};
+  TimeSeriesKey key{ENTRY_COUNT / 2, "metric", {}};
 
   query()
     .put(key, 1)
@@ -284,7 +286,7 @@ TEST_F(QueryBuilderTest, CanPutAndUpdate) {
 }
 
 TEST_F(QueryBuilderTest, CanRemove) {
-  TimeSeriesKey key{5'000, "metric", {}};
+  TimeSeriesKey key{ENTRY_COUNT / 2, "metric", {}};
 
   query()
     .put(key, 1)
@@ -314,14 +316,14 @@ TEST_F(QueryBuilderTest, CanGetCountWithoutFilters) {
     .count()
   };
 
-  EXPECT_EQ(result, 10'000);
+  EXPECT_EQ(result, ENTRY_COUNT);
 }
 
 TEST_F(QueryBuilderTest, CanGetCountWithFilters) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -342,14 +344,14 @@ TEST_F(QueryBuilderTest, CanGetSumWithoutFilters) {
     .sum()
   };
 
-  EXPECT_EQ(result, 49'995'000);
+  EXPECT_EQ(result, ENTRY_COUNT * (ENTRY_COUNT - 1) / 2);
 }
 
 TEST_F(QueryBuilderTest, CanGetSumWithFilters) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -370,14 +372,14 @@ TEST_F(QueryBuilderTest, CanGetAvgWithoutFilters) {
     .avg()
   };
 
-  EXPECT_DOUBLE_EQ(result, 4'999.5);
+  EXPECT_DOUBLE_EQ(result, (ENTRY_COUNT - 1.0) / 2.0);
 }
 
 TEST_F(QueryBuilderTest, CanGetAvgWithFilters) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -402,10 +404,10 @@ TEST_F(QueryBuilderTest, CanGetMinWithoutFilters) {
 }
 
 TEST_F(QueryBuilderTest, CanGetMinWithFilters) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -430,10 +432,10 @@ TEST_F(QueryBuilderTest, CanGetMaxWithoutFilters) {
 }
 
 TEST_F(QueryBuilderTest, CanGetMaxWithFilters) {
-  TimeSeriesKey key1{5'000, "metric1", {{"tag1", "val1"}}};
-  TimeSeriesKey key2{5'001, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key3{5'002, "metric2", {{"tag1", "val1"}}};
-  TimeSeriesKey key4{5'002, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric1", {{"tag1", "val1"}}};
+  TimeSeriesKey key2{ENTRY_COUNT / 2 + 1, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key3{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}}};
+  TimeSeriesKey key4{ENTRY_COUNT / 2 + 2, "metric2", {{"tag1", "val1"}, {"tag2", "val2"}}};
 
   lsm_tree_->put(key1, 1);
   lsm_tree_->put(key2, 2);
@@ -450,7 +452,7 @@ TEST_F(QueryBuilderTest, CanGetMaxWithFilters) {
 }
 
 TEST_F(QueryBuilderTest, CanAggregateOverPointQueries) {
-  TimeSeriesKey key1{5'000, "metric", {}};
+  TimeSeriesKey key1{ENTRY_COUNT / 2, "metric", {}};
 
   lsm_tree_->put(key1, 1);
 
@@ -491,12 +493,12 @@ TEST_F(QueryBuilderTest, ThrowsWhenQueryTypeIsNone) {
 }
 
 TEST_F(QueryBuilderTest, ThrowsWhenSettingQueryTypeMoreThanOnce) {
-  TimeSeriesKey key{5'000, "metric", {}};
+  TimeSeriesKey key{ENTRY_COUNT / 2, "metric", {}};
   EXPECT_THROW(query().point(key).point(key).execute(), std::runtime_error);
 }
 
 TEST_F(QueryBuilderTest, ThrowsWhenAggregatingOnAnInappropriateQuery) {
-  TimeSeriesKey key{5'000, "metric", {}};
+  TimeSeriesKey key{ENTRY_COUNT / 2, "metric", {}};
   EXPECT_THROW(auto result{query().put(key, 1).sum()}, std::runtime_error);
 }
 

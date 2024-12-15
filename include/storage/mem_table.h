@@ -16,7 +16,7 @@ public:
   using size_type = uint64_t;
   using table_type = std::map<const key_type, mapped_type>;
 
-  static constexpr size_type MAX_ENTRIES{1000};
+  static constexpr size_type MAX_ENTRIES{1'000};
 
   MemTable() noexcept = default;
   
