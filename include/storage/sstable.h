@@ -11,7 +11,7 @@
 #include <fstream>
 
 namespace vkdb {
-using FilePath = std::string;
+using FilePath = std::filesystem::path;
 
 template <ArithmeticNoCVRefQuals TValue>
 class SSTable {

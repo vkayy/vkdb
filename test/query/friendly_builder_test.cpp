@@ -22,7 +22,7 @@ protected:
     return FriendlyQueryBuilder<int>(*lsm_tree_, tag_columns_);
   }
 
-  std::set<TagKey> tag_columns_;
+  std::unordered_set<TagKey> tag_columns_;
   std::unique_ptr<LSMTree<int>> lsm_tree_;
 };
 

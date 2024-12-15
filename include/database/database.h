@@ -60,12 +60,12 @@ public:
   }
 
   [[nodiscard]] FilePath path() const noexcept {
-    return VKDB_DATABASE_DIRECTORY + name_;
+    return VKDB_DATABASE_DIRECTORY / name_;
   }
 
 private:
   void load() {
-    const std::filesystem::path db_path{path()};
+    const auto db_path{path()};
     if (!std::filesystem::exists(db_path)) {
       std::filesystem::create_directories(db_path);
       return;

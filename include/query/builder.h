@@ -4,10 +4,10 @@
 #include "utils/concepts.h"
 #include "storage/lsm_tree.h"
 #include <ranges>
-#include <set>
+#include <unordered_set>
 
 namespace vkdb {
-using TagColumns = std::set<TagKey>;
+using TagColumns = std::unordered_set<TagKey>;
 
 template <ArithmeticNoCVRefQuals TValue>
 class QueryBuilder {

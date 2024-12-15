@@ -11,7 +11,7 @@ protected:
   }
 
   void TearDown() override {
-    std::filesystem::remove(directory_ + "/" + WAL_FILENAME);
+    std::filesystem::remove(directory_ /  WAL_FILENAME);
   }
 
   FilePath directory_;

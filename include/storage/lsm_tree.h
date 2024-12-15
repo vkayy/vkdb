@@ -41,20 +41,24 @@ public:
     }
   };
 
-  void put(const key_type& key, const TValue& value) {
+  void put(const key_type& key, const TValue& value, bool log = true) {
     mem_table_.put(key, value);
     if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
       flush();
     }
-    wal_.append({WALRecordType::Put, {key, value}});
+    if (log) {
+      wal_.append({WALRecordType::Put, {key, value}});
+    }
   }
 
-  void remove(const key_type& key) {
+  void remove(const key_type& key, bool log = true) {
     mem_table_.put(key, std::nullopt);
     if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
       flush();
     }
-    wal_.append({WALRecordType::Remove, {key, std::nullopt}});
+    if (log) {
+      wal_.append({WALRecordType::Remove, {key, std::nullopt}});
+    }
   }
 
   [[nodiscard]] mapped_type get(const key_type& key) const {
@@ -178,7 +182,7 @@ private:
 
   void flush() {
     FilePath sstable_file_path{
-      path_ + "/sstable_" + std::to_string(sstable_id_++) + ".sst"
+      path_ / ("sstable_" + std::to_string(sstable_id_++) + ".sst")
     };
     sstables_.emplace_back(sstable_file_path, std::move(mem_table_));
     mem_table_.clear();

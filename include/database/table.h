@@ -4,10 +4,11 @@
 #include "utils/concepts.h"
 #include "storage/lsm_tree.h"
 #include "query/friendly_builder.h"
-#include <set>
+#include <fstream>
 
 namespace vkdb {
-const FilePath VKDB_DATABASE_DIRECTORY{"/Users/vkay/Dev/vkdb/output/"};
+const FilePath VKDB_DATABASE_DIRECTORY{"/Users/vkay/Dev/vkdb/output"};
+const FilePath TAG_COLUMNS_FILENAME{"tag_columns.metadata"};
 
 using DatabaseName = std::string;
 using TableName = std::string;
@@ -21,6 +22,7 @@ public:
     , db_path_{db_path}
     , storage_engine_{path()} {
       std::filesystem::create_directories(path());
+      load_tag_columns();
       storage_engine_.replayWAL();
     }
 
@@ -37,11 +39,19 @@ public:
   }
 
   bool addTagColumn(const TagKey& tag_column) {
-    return tag_columns_.insert(tag_column).second;
+    auto inserted{tag_columns_.insert(tag_column).second};
+    if (inserted) {
+      save_tag_columns();
+    }
+    return inserted;
   }
 
   bool removeTagColumn(const TagKey& tag_column) {
-    return tag_columns_.erase(tag_column) > 0;
+    auto removed{tag_columns_.erase(tag_column) > 0};
+    if (removed) {
+      save_tag_columns();
+    }
+    return removed;
   }
 
   void clear() const noexcept {
@@ -58,11 +68,48 @@ public:
   }
 
   [[nodiscard]] FilePath path() const noexcept {
-    return db_path_ + "/" + name_;
+    return db_path_ / FilePath{name_};
   }
-  
+
 private:
   using StorageEngine = LSMTree<double>;
+
+  void save_tag_columns() const {
+    std::ofstream file{tag_columns_path()};
+    if (!file.is_open()) {
+      throw std::runtime_error{
+        "Table::save_tag_columns(): Unable to open file."
+      };
+    }
+    for (const auto& column : tag_columns_) {
+      file << column << "\n";
+    }
+    file.close();
+  }
+
+  void load_tag_columns() {
+    tag_columns_.clear();
+    if (!std::filesystem::exists(tag_columns_path())) {
+      return;
+    }
+    std::ifstream file{tag_columns_path()};
+    if (!file.is_open()) {
+      throw std::runtime_error{
+        "Table::load_tag_columns(): Unable to open file."
+      };
+    }
+    std::string column;
+    while (std::getline(file, column)) {
+      if (!column.empty()) {
+        tag_columns_.insert(column);
+      }
+    }
+    file.close();
+  }
+
+  [[nodiscard]] FilePath tag_columns_path() const noexcept {
+    return path() / TAG_COLUMNS_FILENAME;
+  }
 
   DatabaseName db_path_;
   TableName name_;

@@ -13,7 +13,7 @@ public:
   WriteAheadLog() = delete;
 
   explicit WriteAheadLog(FilePath lsm_tree_path)
-    : path_{lsm_tree_path + "/" + WAL_FILENAME} {}
+    : path_{lsm_tree_path / WAL_FILENAME} {}
 
   WriteAheadLog(WriteAheadLog&&) noexcept = default;
   WriteAheadLog& operator=(WriteAheadLog&&) noexcept = default;
@@ -62,10 +62,10 @@ public:
 
       switch (type) {
       case WALRecordType::Put:
-        lsm_tree.put(entry.first, entry.second.value());
+        lsm_tree.put(entry.first, entry.second.value(), false);
         break;
       case WALRecordType::Remove:
-        lsm_tree.remove(entry.first);
+        lsm_tree.remove(entry.first, false);
         break;
       }
     }
