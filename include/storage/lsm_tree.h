@@ -4,6 +4,8 @@
 #include "utils/concepts.h"
 #include "storage/sstable.h"
 #include "storage/mem_table.h"
+#include "storage/write_ahead_log.h"
+#include "storage/wal_lsm.h"
 #include <ranges>
 #include <future>
 
@@ -23,7 +25,8 @@ public:
   using table_type = typename MemTable<TValue>::table_type;
 
   explicit LSMTree(FilePath path) noexcept
-    : path_{std::move(path)}
+    : wal_{path}
+    , path_{std::move(path)}
     , sstable_id_{0} {}
 
   LSMTree(LSMTree&&) noexcept = default;
@@ -41,15 +44,17 @@ public:
   void put(const key_type& key, const TValue& value) {
     mem_table_.put(key, value);
     if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
-      flush_memtable();
+      flush();
     }
+    wal_.append({WALRecordType::Put, {key, value}});
   }
 
   void remove(const key_type& key) {
     mem_table_.put(key, std::nullopt);
     if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
-      flush_memtable();
+      flush();
     }
+    wal_.append({WALRecordType::Remove, {key, std::nullopt}});
   }
 
   [[nodiscard]] mapped_type get(const key_type& key) const {
@@ -150,6 +155,10 @@ public:
     return entries;
   }
 
+  void replayWAL() {
+    wal_.replay(*this);
+  }
+
   [[nodiscard]] std::string toString() const noexcept {
     std::stringstream ss;
     ss << mem_table_.toString();
@@ -167,16 +176,18 @@ private:
   using C0Layer = MemTable<TValue>;
   using C1Layer = std::vector<SSTable<TValue>>;
 
-  void flush_memtable() {
+  void flush() {
     FilePath sstable_file_path{
       path_ + "/sstable_" + std::to_string(sstable_id_++) + ".sst"
     };
     sstables_.emplace_back(sstable_file_path, std::move(mem_table_));
     mem_table_.clear();
+    wal_.clear();
   }
 
   C0Layer mem_table_;
   C1Layer sstables_;
+  WriteAheadLog<TValue> wal_;
   FilePath path_;
   size_type sstable_id_;
 };

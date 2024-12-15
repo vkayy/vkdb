@@ -10,6 +10,10 @@ protected:
     lsm_tree_ = std::make_unique<LSMTree<int>>(directory_);
   }
 
+  void TearDown() override {
+    std::filesystem::remove(directory_ + "/wal.log");
+  }
+
   FilePath directory_;
   std::unique_ptr<LSMTree<int>> lsm_tree_;
 };
@@ -354,4 +358,29 @@ TEST_F(LSMTreeTest, CanGetRangeInParallelOfEntriesWithFlushingAndFilter) {
   for (Timestamp i{0}; i < 5'000; ++i) {
     EXPECT_EQ(entries[i].second, 2 * i);
   }
+}
+
+TEST_F(LSMTreeTest, CanReplayWriteAheadLog) {
+  for (Timestamp i{0}; i < 100; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  lsm_tree_.reset();
+  lsm_tree_ = std::make_unique<LSMTree<int>>(directory_);
+  lsm_tree_->replayWAL();
+
+  for (Timestamp i{0}; i < 100; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    auto value = lsm_tree_->get(key);
+    EXPECT_EQ(value, i);
+  }
+
+  for (Timestamp i{100}; i < 200; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    auto value = lsm_tree_->get(key);
+    EXPECT_EQ(value, std::nullopt);
+  }
+
+  EXPECT_EQ(lsm_tree_->sstableCount(), 0);
 }

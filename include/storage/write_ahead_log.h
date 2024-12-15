@@ -2,19 +2,9 @@
 #define STORAGE_WRITE_AHEAD_LOG_H
 
 #include "storage/lsm_tree.h"
+#include "storage/wal_lsm.h"
 
 namespace vkdb {
-enum class WALRecordType {
-  Put,
-  Remove
-};
-
-template <ArithmeticNoCVRefQuals TValue>
-struct WALRecord {
-  WALRecordType type;
-  TimeSeriesEntry<TValue> entry;
-};
-
 template <ArithmeticNoCVRefQuals TValue>
 class WriteAheadLog {
 public:
