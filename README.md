@@ -6,14 +6,6 @@ a time series database engine built in c++ with minimal dependencies.
 
 wanted to challenge myself architecturally and push my boundaries with c++ in terms of both knowledge and performance.
 
-## how does it work?
-
-vkdb is built on log-structured merge (lsm) trees. in their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (wal) for persistence of in-memory changes.
-
-when you create your database (by instantiating a `vkdb::Database`), it persists on disk until you clear it via `vkdb::Database::clear`. it's best to make all interactions via this type, or perhaps the `vkdb::Table` type via `vkdb::Database::getTable`.
-
-in terms of typing, i've tried to make vkdb as robust as possible (as you can see with some of the verbose concepts), but there are bound to be some flaws here and there. bring them up!
-
 ## how do i use it?
 
 using cmake will make your life easier. just add this to your `CMakeLists.txt` file:
@@ -40,6 +32,14 @@ int main()  {
   // ...
 }
 ```
+
+## how does it work?
+
+vkdb is built on log-structured merge (lsm) trees. in their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (wal) for persistence of in-memory changes.
+
+when you create your database (by instantiating a `vkdb::Database`), it persists on disk until you clear it via `vkdb::Database::clear`. it's best to make all interactions via this type, or perhaps the `vkdb::Table` type via `vkdb::Database::getTable`.
+
+in terms of typing, i've tried to make vkdb as robust as possible (as you can see with some of the verbose concepts), but there are bound to be some flaws here and there. bring them up!
 
 ## authors
 
