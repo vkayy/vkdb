@@ -12,19 +12,9 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     set(VKDB_BUILD_EXAMPLES ON)
 endif()
 
-include_directories(
-  ${CMAKE_SOURCE_DIR}/include/database
-  ${CMAKE_SOURCE_DIR}/include/query
-  ${CMAKE_SOURCE_DIR}/include/storage
-  ${CMAKE_SOURCE_DIR}/include/utils
-)
-file(GLOB_RECURSE SOURCES src/*.cpp)
-
-add_library(vkdb STATIC)
-target_include_directories(vkdb INTERFACE include)
-target_sources(vkdb PRIVATE ${SOURCES})
-
 add_subdirectory(src)
+
+target_include_directories(vkdb_lib INTERFACE ${PROJECT_SOURCE_DIR}/include)
 
 if(VKDB_BUILD_TESTS)
     add_subdirectory(test)

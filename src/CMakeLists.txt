@@ -6,4 +6,4 @@ add_library(vkdb_lib
     ${vkdb_lib_SRC}
 )
 
-target_include_directories(vkdb_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(vkdb_lib PUBLIC ${PROJECT_SOURCE_DIR}/include)
