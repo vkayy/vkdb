@@ -18,8 +18,8 @@ int main() {
   table.addTagColumn("city");
   
   for (vkdb::Timestamp t{0}; t < 10'000; ++t) {
-    double temperature{vkdb::random<int>(0, 400) / 10.0};
-    double humidity{vkdb::random<int>(0, 1000) / 10.0};
+    double temperature{vkdb::random<double>(0.0, 40.0)};
+    double humidity{vkdb::random<double>(0.0, 100.0)};
     table.query()
       .put(t, temp_metric, {region_eu_tag, city_london_tag}, temperature)
       .execute();
