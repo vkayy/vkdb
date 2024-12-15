@@ -19,8 +19,9 @@ public:
   explicit Table(const FilePath& db_path, const TableName& name)
     : name_{name}
     , db_path_{db_path}
-    , storage_engine_{getDirectory()} {
-      std::filesystem::create_directories(getDirectory());
+    , storage_engine_{path()} {
+      std::filesystem::create_directories(path());
+      storage_engine_.replayWAL();
     }
 
   Table(Table&&) noexcept = default;
@@ -44,8 +45,8 @@ public:
   }
 
   void clear() const noexcept {
-    std::filesystem::remove_all(getDirectory());
-    std::filesystem::create_directories(getDirectory());
+    std::filesystem::remove_all(path());
+    std::filesystem::create_directories(path());
   }
 
   [[nodiscard]] FriendlyQueryBuilder<double> query() {
@@ -56,7 +57,7 @@ public:
     return name_;
   }
 
-  [[nodiscard]] FilePath getDirectory() const noexcept {
+  [[nodiscard]] FilePath path() const noexcept {
     return db_path_ + "/" + name_;
   }
   

@@ -5,13 +5,15 @@
 #include "storage/wal_lsm.h"
 
 namespace vkdb {
+const FilePath WAL_FILENAME{"wal.log"};
+
 template <ArithmeticNoCVRefQuals TValue>
 class WriteAheadLog {
 public:
   WriteAheadLog() = delete;
 
   explicit WriteAheadLog(FilePath lsm_tree_path)
-    : path_{lsm_tree_path + "/wal.log"} {}
+    : path_{lsm_tree_path + "/" + WAL_FILENAME} {}
 
   WriteAheadLog(WriteAheadLog&&) noexcept = default;
   WriteAheadLog& operator=(WriteAheadLog&&) noexcept = default;
@@ -34,6 +36,9 @@ public:
   }
 
   void replay(LSMTree<TValue>& lsm_tree) {
+    if (!std::filesystem::exists(path_)) {
+      return;
+    }
     std::ifstream file{path_};
     if (!file.is_open()) {
       throw std::runtime_error{
@@ -80,6 +85,7 @@ public:
   [[nodiscard]] FilePath path() const noexcept {
     return path_;
   }
+
 private:
   FilePath path_;
 };

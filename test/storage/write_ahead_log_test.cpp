@@ -45,14 +45,24 @@ TEST_F(WriteAheadLogTest, CanReplayRecord) {
   EXPECT_EQ(entry.value(), 1);
 }
 
-TEST_F(WriteAheadLogTest, ThrowsWhenUnableToOpenFile) {
-  TimeSeriesKey key{1, "metric", {}};
-  WALRecord<int> record{WALRecordType::Put, TimeSeriesEntry<int>{key, 1}};
-  wal_->append(record);
+TEST_F(WriteAheadLogTest, ThrowsWhenUnableToOpenFileAndFileExists) {
+  std::ofstream wal_file{wal_->path()};
+  ASSERT_TRUE(wal_file.is_open());
+  wal_file.close();
 
-  auto wal_path{lsm_tree_path_ + "/wal.log"};
-  std::remove(wal_path.c_str());
+  std::filesystem::permissions(
+    wal_->path(),
+    std::filesystem::perms::none,
+    std::filesystem::perm_options::replace
+  );
 
   LSMTree<int> lsm_tree{lsm_tree_path_};
-  EXPECT_THROW(wal_->replay(lsm_tree), std::runtime_error);
+  EXPECT_THROW(lsm_tree.replayWAL(), std::runtime_error);
+
+  
+  std::filesystem::permissions(
+    wal_->path(),
+    std::filesystem::perms::all,
+    std::filesystem::perm_options::replace
+  );
 }

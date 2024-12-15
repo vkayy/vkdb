@@ -28,8 +28,8 @@ public:
         "Database::createTable(): Table already exists."
       };
     }
-    tables_.emplace(table_name, Table{get_directory(), table_name});
-    std::filesystem::create_directories(tables_.at(table_name).getDirectory());
+    tables_.emplace(table_name, Table{path(), table_name});
+    std::filesystem::create_directories(tables_.at(table_name).path());
   }
 
   [[nodiscard]] Table& getTable(const TableName& table_name) {
@@ -47,21 +47,25 @@ public:
         "Database::dropTable(): Table does not exist."
       };
     }
-    std::filesystem::remove_all(tables_.at(table_name).getDirectory());
+    std::filesystem::remove_all(tables_.at(table_name).path());
     tables_.erase(table_name);
   }
 
   void clear() {
-    std::filesystem::remove_all(get_directory());
+    std::filesystem::remove_all(path());
   }
 
   [[nodiscard]] DatabaseName name() const noexcept {
     return name_;
   }
 
+  [[nodiscard]] FilePath path() const noexcept {
+    return VKDB_DATABASE_DIRECTORY + name_;
+  }
+
 private:
   void load() {
-    const std::filesystem::path db_path{get_directory()};
+    const std::filesystem::path db_path{path()};
     if (!std::filesystem::exists(db_path)) {
       std::filesystem::create_directories(db_path);
       return;
@@ -70,13 +74,9 @@ private:
     for (const auto& entry : std::filesystem::directory_iterator(db_path)) {
       if (entry.is_directory()) {
         auto table_name{entry.path().filename().string()};
-        tables_.emplace(table_name, Table{get_directory(), table_name});
+        tables_.emplace(table_name, Table{path(), table_name});
       }
     }
-  }
-
-  FilePath get_directory() const noexcept {
-    return VKDB_DATABASE_DIRECTORY + name_;
   }
 
   std::unordered_map<TableName, Table> tables_;
