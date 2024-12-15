@@ -20,3 +20,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
     
 target_link_libraries(vkdb_tests PRIVATE gtest gtest_main)
+
+add_library(vkdb INTERFACE)
+target_include_directories(vkdb INTERFACE include)
