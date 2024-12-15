@@ -7,8 +7,7 @@
 #include <fstream>
 
 namespace vkdb {
-const FilePath VKDB_DATABASE_DIRECTORY{"/Users/vkay/Dev/vkdb/output"};
-const FilePath TAG_COLUMNS_FILENAME{"tag_columns.metadata"};
+static const FilePath TAG_COLUMNS_FILENAME{"tag_columns.metadata"};
 
 using DatabaseName = std::string;
 using TableName = std::string;

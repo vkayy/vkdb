@@ -4,7 +4,10 @@
 #include <vkdb/table.h>
 
 namespace vkdb {
+static const FilePath DATABASE_DIRECTORY{""};
+
 using DatabaseName = std::string;
+
 class Database {
 public:
   Database() = delete;
