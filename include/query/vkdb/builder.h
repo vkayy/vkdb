@@ -30,8 +30,8 @@ public:
   QueryBuilder(QueryBuilder&&) noexcept = default;
   QueryBuilder& operator=(QueryBuilder&&) noexcept = default;
 
-  QueryBuilder(const QueryBuilder&) = delete;
-  QueryBuilder& operator=(const QueryBuilder&) = delete;
+  QueryBuilder(const QueryBuilder&) noexcept = default;
+  QueryBuilder& operator=(const QueryBuilder&) noexcept = default;
 
   ~QueryBuilder() = default;
 
@@ -51,7 +51,6 @@ public:
   }
 
   [[nodiscard]] QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
-    set_default_range_if_none();
     validate_tags(Tag{key, value});
     add_filter([key, value](const auto& k) {
       return k.tags().contains(key) && k.tags().at(key) == value;
@@ -61,7 +60,6 @@ public:
 
   template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAnyTags(const Tags&... tags) {
-    set_default_range_if_none();
     validate_tags(tags...);
     add_filter([tags...](const auto& k) {
       return ((k.tags().contains(tags.first) &&
@@ -72,7 +70,6 @@ public:
 
   template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
   [[nodiscard]] QueryBuilder& filterByAllTags(const Tags&... tags) {
-    set_default_range_if_none();
     validate_tags(tags...);
     add_filter([tags...](const auto& k) {
       return ((k.tags().contains(tags.first) &&
@@ -82,7 +79,6 @@ public:
   }
 
   [[nodiscard]] QueryBuilder& filterByMetric(const Metric& metric) {
-    set_default_range_if_none();
     add_filter([metric](const auto& k) {
       return k.metric() == metric;
     });
@@ -91,7 +87,6 @@ public:
 
   template <AllConvertibleToNoCVRefQuals<Metric>... Metrics>
   [[nodiscard]] QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
-    set_default_range_if_none();
     add_filter([metrics...](const auto& k) {
       return ((k.metric() == metrics) || ...);
     });
@@ -99,7 +94,6 @@ public:
   }
 
   [[nodiscard]] QueryBuilder& filterByTimestamp(const Timestamp& timestamp) {
-    set_default_range_if_none();
     add_filter([timestamp](const auto& k) {
       return k.timestamp() == timestamp;
     });
@@ -108,7 +102,6 @@ public:
 
   template <AllConvertibleToNoCVRefQuals<Timestamp>... Timestamps>
   [[nodiscard]] QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
-    set_default_range_if_none();
     add_filter([timestamps...](const auto& k) {
       return ((k.timestamp() == timestamps) || ...);
     });
@@ -172,7 +165,13 @@ public:
   result_type execute() {
     switch (query_type_) {
     case QueryType::None:
-      throw std::runtime_error{"QueryBuilder::execute(): Query type not set."};
+      if (filters_.size() == 1) {
+        throw std::runtime_error{
+          "QueryBuilder::execute(): No query specified."
+        };
+      }
+      set_default_range_if_none();
+      return get_filtered_range();
     case QueryType::Point:
       return execute_point_query();
     case QueryType::Range:
@@ -235,7 +234,7 @@ private:
   void check_if_aggregable() const {
     if (query_type_ != QueryType::Range && query_type_ != QueryType::Point) {
       throw std::runtime_error{
-        "QueryBuilder::check_if_aggregable(): Query type must be aggregatable."
+        "QueryBuilder::check_if_aggregable(): Query type must be aggregable."
       };
     }
   }

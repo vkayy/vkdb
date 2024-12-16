@@ -5,6 +5,7 @@
 #include <vkdb/concepts.h>
 #include <optional>
 #include <sstream>
+#include <iostream>
 
 namespace vkdb {
 template <ArithmeticNoCVRefQuals TValue>
@@ -37,6 +38,38 @@ std::string entryToString(const TimeSeriesEntry<TValue>& entry) {
   }
   ss << "]";
   return ss.str();
+}
+
+template <ArithmeticNoCVRefQuals TValue>
+std::string datapointsToString(const std::vector<DataPoint<TValue>>& datapoints) {
+  std::ostringstream output;
+  output << "[";
+  for (const auto& datapoint : datapoints) {
+    TimeSeriesKey key{datapoint.timestamp, datapoint.metric, datapoint.tags};
+    TimeSeriesEntry<TValue> entry{key, datapoint.value};
+    output << entryToString(entry) << ";";
+  }
+  output.seekp(-!datapoints.empty(), std::ios_base::end);
+  output << "]";
+  return output.str();
+}
+
+template <ArithmeticNoCVRefQuals TValue>
+std::vector<DataPoint<TValue>> datapointsFromString(const std::string& datapoints) {
+  std::vector<DataPoint<TValue>> result;
+  std::string data{datapoints.substr(1, datapoints.size() - 2)};
+  std::istringstream ss{data};
+  std::string entry_str;
+  while (std::getline(ss, entry_str, ';')) {
+    auto entry_data{entryFromString<TValue>(entry_str.substr(1))};
+    result.push_back({
+      entry_data.first.timestamp(),
+      entry_data.first.metric(),
+      entry_data.first.tags(),
+      entry_data.second.value()
+    });
+  }
+  return result;
 }
 }  // namespace vkdb
 

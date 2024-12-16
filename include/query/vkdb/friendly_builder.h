@@ -23,8 +23,8 @@ public:
   FriendlyQueryBuilder(FriendlyQueryBuilder&&) noexcept = default;
   FriendlyQueryBuilder& operator=(FriendlyQueryBuilder&&) noexcept = default;
 
-  FriendlyQueryBuilder(const FriendlyQueryBuilder&) = delete;
-  FriendlyQueryBuilder& operator=(const FriendlyQueryBuilder&) = delete;
+  FriendlyQueryBuilder(const FriendlyQueryBuilder&) noexcept = default;
+  FriendlyQueryBuilder& operator=(const FriendlyQueryBuilder&) noexcept = default;
 
   ~FriendlyQueryBuilder() = default;
 
