@@ -50,7 +50,7 @@ in terms of typing, i've tried to make vkdb as robust as possible (as you can se
 
 ## what's the query language?
 
-i whipped something up called vql, and i have not refined it at all. here are some examples queries! i'm shamelessly using sql highlighting here to save you from plain, white text.
+i whipped something up called vq, and i have not refined it at all. here are some examples queries! i'm shamelessly using sql highlighting here to save you from plain, white text.
 
 ```sql
 SELECT DATA temperature FROM sensors ALL;

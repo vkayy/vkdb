@@ -11,7 +11,7 @@ int main() {
   table.addTagColumn("city");
   
   db.executeFile(
-    std::filesystem::current_path() / "../examples/atmospheric.vql"
+    std::filesystem::current_path() / "../examples/atmospheric.vq"
   );
   
   std::cout
