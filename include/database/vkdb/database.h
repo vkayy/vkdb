@@ -89,10 +89,16 @@ public:
       };
     }
 
-    std::string query;
+    std::string line;
     std::string result;
-    while (std::getline(file, query)) {
-      result += executeQuery(query) + '\n';
+    while (std::getline(file, line)) {
+      if (line.empty() || line[0] == '#') {
+        continue;
+      }
+      auto query_result{executeQuery(line)};
+      if (!query_result.empty()) {
+        result += query_result + '\n';
+      }
     }
 
     return result;
@@ -197,9 +203,12 @@ private:
   [[nodiscard]] QueryResult handle_all_clause(
     std::istringstream& stream,
     auto& query,
-    const std::string& select_type
+    const std::string& select_type,
+    bool has_where = false
   ) {
-    parse_tags(stream, query);
+    if (has_where) {
+      parse_tags(stream, query);
+    }
 
     if (select_type == "DATA") {
       auto results{query.execute()};
@@ -269,8 +278,13 @@ private:
     std::string clause;
     stream >> clause;
     
-    if (clause == "ALL") {
-      return handle_all_clause(stream, query, select_type);
+    if (clause == "ALL" || clause == "ALL;") {
+      return handle_all_clause(
+        stream,
+        query,
+        select_type,
+        clause.back() != ';'
+      );
     }
 
     if (clause == "BETWEEN") {

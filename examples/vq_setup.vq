@@ -1,0 +1,93 @@
+# Table 1: sensors
+PUT temperature 1000 22.4 INTO sensors location=room1 type=celsius;
+PUT temperature 1005 23.1 INTO sensors location=room1 type=celsius;
+PUT temperature 1010 21.8 INTO sensors location=room2 type=celsius;
+PUT humidity 1000 55.3 INTO sensors location=warehouse type=humidity;
+PUT humidity 1005 57.1 INTO sensors location=warehouse type=humidity;
+PUT pressure 1015 101.3 INTO sensors location=external type=pressure;
+PUT pressure 1020 100.9 INTO sensors location=external type=pressure;
+PUT temperature 1030 24.7 INTO sensors location=room2 type=celsius;
+PUT humidity 1040 49.8 INTO sensors location=room1 type=humidity;
+
+# Table 2: devices
+PUT power 1000 150 INTO devices location=lab1 type=watts;
+PUT power 1005 160 INTO devices location=lab1 type=watts;
+PUT status 1010 1 INTO devices location=lab2 type=on_off;
+PUT power 1020 120 INTO devices location=lab2 type=watts;
+PUT status 1025 0 INTO devices location=lab2 type=on_off;
+PUT power 1030 175 INTO devices location=lab1 type=watts;
+PUT status 1040 1 INTO devices location=lab1 type=on_off;
+PUT power 1050 140 INTO devices location=lab2 type=watts;
+PUT status 1060 0 INTO devices location=lab2 type=on_off;
+
+# Queries for sensors
+SELECT DATA temperature FROM sensors ALL;
+SELECT AVG temperature FROM sensors BETWEEN 1000 AND 1030;
+SELECT MIN humidity FROM sensors AT 1005 WHERE location=warehouse;
+SELECT MAX pressure FROM sensors BETWEEN 1015 AND 1020;
+SELECT COUNT temperature FROM sensors ALL WHERE location=room1;
+SELECT SUM humidity FROM sensors BETWEEN 1000 AND 1040 WHERE location=room1;
+
+# Queries for devices
+SELECT DATA power FROM devices ALL;
+SELECT AVG power FROM devices BETWEEN 1000 AND 1050 WHERE location=lab1;
+SELECT COUNT status FROM devices BETWEEN 1010 AND 1060 WHERE type=on_off;
+SELECT MIN power FROM devices AT 1020 WHERE location=lab2;
+SELECT MAX power FROM devices BETWEEN 1005 AND 1030 WHERE location=lab1;
+
+# Additional inserts for sensors
+PUT humidity 1060 45.7 INTO sensors location=room2 type=humidity;
+PUT pressure 1070 101.7 INTO sensors location=external type=pressure;
+PUT temperature 1080 26.3 INTO sensors location=room1 type=celsius;
+PUT humidity 1090 53.2 INTO sensors location=warehouse type=humidity;
+PUT pressure 1100 99.8 INTO sensors location=external type=pressure;
+
+# Additional inserts for devices
+PUT power 1070 185 INTO devices location=lab1 type=watts;
+PUT status 1080 1 INTO devices location=lab1 type=on_off;
+PUT power 1090 130 INTO devices location=lab2 type=watts;
+PUT status 1100 0 INTO devices location=lab2 type=on_off;
+
+# More queries for sensors
+SELECT DATA humidity FROM sensors BETWEEN 1000 AND 1090;
+SELECT SUM pressure FROM sensors ALL WHERE location=external;
+SELECT MAX temperature FROM sensors BETWEEN 1030 AND 1080 WHERE location=room1;
+SELECT COUNT humidity FROM sensors AT 1040 WHERE location=room1;
+
+# More queries for devices
+SELECT DATA status FROM devices BETWEEN 1010 AND 1100;
+SELECT AVG power FROM devices ALL WHERE location=lab2;
+SELECT SUM power FROM devices BETWEEN 1020 AND 1090 WHERE location=lab1;
+SELECT COUNT status FROM devices BETWEEN 1060 AND 1100 WHERE type=on_off;
+
+# Deletion commands
+DELETE humidity 1040 FROM sensors location=room1 type=humidity;
+DELETE power 1020 FROM devices location=lab2 type=watts;
+DELETE status 1060 FROM devices location=lab2 type=on_off;
+DELETE pressure 1015 FROM sensors location=external type=pressure;
+DELETE temperature 1080 FROM sensors location=room1 type=celsius;
+
+# Validate state after deletions
+SELECT DATA temperature FROM sensors ALL;
+SELECT DATA power FROM devices ALL;
+SELECT SUM humidity FROM sensors BETWEEN 1000 AND 1090 WHERE location=warehouse;
+SELECT AVG power FROM devices BETWEEN 1000 AND 1100 WHERE location=lab1;
+SELECT COUNT pressure FROM sensors ALL WHERE location=external;
+SELECT MIN status FROM devices BETWEEN 1010 AND 1100;
+
+# Final inserts for sensors
+PUT humidity 1110 48.2 INTO sensors location=room2 type=humidity;
+PUT temperature 1120 25.6 INTO sensors location=room1 type=celsius;
+PUT pressure 1130 100.5 INTO sensors location=external type=pressure;
+
+# Final inserts for devices
+PUT power 1140 190 INTO devices location=lab1 type=watts;
+PUT status 1150 1 INTO devices location=lab2 type=on_off;
+PUT power 1160 145 INTO devices location=lab2 type=watts;
+
+# Final validation queries
+SELECT DATA humidity FROM sensors ALL;
+SELECT DATA power FROM devices ALL;
+SELECT MAX temperature FROM sensors BETWEEN 1030 AND 1120;
+SELECT SUM power FROM devices BETWEEN 1070 AND 1160 WHERE location=lab2;
+SELECT COUNT status FROM devices BETWEEN 1010 AND 1150 WHERE type=on_off;
