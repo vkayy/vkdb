@@ -48,6 +48,66 @@ when you create your database (by instantiating a `vkdb::Database`), it persists
 
 in terms of typing, i've tried to make vkdb as robust as possible (as you can see with some of the verbose concepts), but there are bound to be some flaws here and there. bring them up!
 
+## what's the query language?
+
+i whipped something up called vql, and i have not refined it at all. here are some examples queries! i'm shamelessly using sql highlighting here to save you from plain, white text.
+
+```sql
+SELECT DATA temperature FROM sensors ALL;
+
+SELECT AVG humidity FROM sensors BETWEEN 1000 AND 2000 WHERE location=warehouse type=sensor;
+
+SELECT MIN pressure FROM sensors AT 1500 WHERE type=pressure location=external;
+
+PUT temperature 1234567890 23.5 INTO sensors location=room1 type=celsius;
+
+DELETE temperature 1234567890 FROM sensors location=room1 type=celsius;
+```
+
+and here's the grammar that the parsing and execution (hopefully) entails.
+
+```bnf
+<query> ::= <select_query> ";" | <put_query> ";" | <delete_query> ";"
+
+<select_query> ::= "SELECT" <select_type> <metric> "FROM" <table_name> <select_clause>
+
+<select_type> ::= "DATA" | "AVG" | "SUM" | "COUNT" | "MIN" | "MAX"
+
+<select_clause> ::= <all_clause> | <between_clause> | <at_clause>
+
+<all_clause> ::= "ALL" [<where_clause>]
+
+<between_clause> ::= "BETWEEN" <timestamp> "AND" <timestamp> [<where_clause>]
+
+<at_clause> ::= "AT" <timestamp> [<where_clause>]
+
+<where_clause> ::= "WHERE" <tag_condition> {<tag_condition>}
+
+<tag_condition> ::= <tag_name> "=" <tag_value>
+
+<put_query> ::= "PUT" <metric> <timestamp> <value> "INTO" <table_name> {<tag_assignment>}
+
+<tag_assignment> ::= <tag_name> "=" <tag_value>
+
+<delete_query> ::= "DELETE" <metric> <timestamp> "FROM" <table_name> {<tag_assignment>}
+
+<metric> ::= <string>
+<table_name> ::= <string>
+<tag_name> ::= <string>
+<tag_value> ::= <string>
+<timestamp> ::= <integer>
+<value> ::= <number>
+
+<string> ::= <char> {<char>}
+<char> ::= <letter> | <digit> | "_" | "-"
+<letter> ::= "A" | ... | "Z" | "a" | ... | "z"
+<digit> ::= "0" | ... | "9"
+<number> ::= ["-"] <digit> {<digit>} ["." <digit> {<digit>}]
+<integer> ::= ["-"] <digit> {<digit>}
+```
+
+again, if there are any holes in my logic, let me know. the midnight commits typically aren't the best. i think there's some logic to sort out when it comes to ensuring all tag columns involved are present in insertion/deletion, so i'll be looking into that.
+
 ## authors
 
 [vinz kakilala](https://linkedin.com/in/vinzkakilala) (me).
