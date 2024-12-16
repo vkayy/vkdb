@@ -202,7 +202,7 @@ private:
     parse_tags(stream, query);
 
     if (select_type == "DATA") {
-      auto results = query.execute();
+      auto results{query.execute()};
       return datapointsToString<double>(results);
     }
 
@@ -229,7 +229,7 @@ private:
     parse_tags(stream, query);
 
     if (select_type == "DATA") {
-      auto results = query.execute();
+      auto results{query.execute()};
       return datapointsToString<double>(results);
     }
 
@@ -248,7 +248,7 @@ private:
     parse_tags(stream, query);
 
     if (select_type == "DATA") {
-      auto results = query.execute();
+      auto results{query.execute()};
       return datapointsToString<double>(results);
     }
 
@@ -304,7 +304,16 @@ private:
       tag_table[tag] = val;
     }
 
-    auto& table = getTable(table_name);
+
+    auto& table{getTable(table_name)};
+    for (const auto& tag_column : table.tagColumns()) {
+      if (!tag_table.contains(tag_column)) {
+        throw std::runtime_error{
+          "Database::handle_put(): Missing tag column."
+        };
+      }
+    }
+
     table.query().put(timestamp, metric, tag_table, value).execute();
 
     return {};
@@ -327,7 +336,15 @@ private:
       tag_table[tag_key] = tag_value;
     }
 
-    auto& table = getTable(table_name);
+    auto& table{getTable(table_name)};
+    for (const auto& tag_column : table.tagColumns()) {
+      if (!tag_table.contains(tag_column)) {
+        throw std::runtime_error{
+          "Database::handle_delete(): Missing tag column."
+        };
+      }
+    }
+
     table.query().remove(timestamp, metric, tag_table).execute();
 
     return {};

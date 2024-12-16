@@ -106,7 +106,7 @@ and here's the grammar that the parsing and execution (hopefully) entails.
 <integer> ::= ["-"] <digit> {<digit>}
 ```
 
-again, if there are any holes in my logic, let me know. the midnight commits typically aren't the best. i think there's some logic to sort out when it comes to ensuring all tag columns involved are present in insertion/deletion, so i'll be looking into that.
+again, if there are any holes in my logic, let me know. the midnight commits typically aren't the best.
 
 ## authors
 

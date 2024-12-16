@@ -66,6 +66,10 @@ public:
     return name_;
   }
 
+  [[nodiscard]] TagColumns tagColumns() const noexcept {
+    return tag_columns_;
+  }
+
   [[nodiscard]] FilePath path() const noexcept {
     return db_path_ / FilePath{name_};
   }
