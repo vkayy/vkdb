@@ -40,7 +40,7 @@ auto random_int{vkdb::random<int>(-100'000, 100'000)};
 auto random_double{vkdb::random<double>(-10.0, 10.0)};
 ```
 
-lastly, you can execute queries both from strings and files. for instance, to yank a few examples from the `examples` directory:
+lastly, you can execute queries both from strings and files. for instance, to yank a few examples from the aptly named `examples` directory:
 
 ```cpp
 auto query_result{db.executeQuery(
