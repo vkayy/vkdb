@@ -1,4 +1,11 @@
-# Table 1: sensors
+# Create and setup tables
+CREATE TABLE sensors TAGS location type;
+CREATE TABLE devices;
+ADD TAGS host TO devices;
+REMOVE TAGS host FROM devices;
+ADD TAGS location type TO devices;
+
+# Sensors table
 PUT temperature 1000 22.4 INTO sensors location=room1 type=celsius;
 PUT temperature 1005 23.1 INTO sensors location=room1 type=celsius;
 PUT temperature 1010 21.8 INTO sensors location=room2 type=celsius;
@@ -9,7 +16,7 @@ PUT pressure 1020 100.9 INTO sensors location=external type=pressure;
 PUT temperature 1030 24.7 INTO sensors location=room2 type=celsius;
 PUT humidity 1040 49.8 INTO sensors location=room1 type=humidity;
 
-# Table 2: devices
+# Devices table
 PUT power 1000 150 INTO devices location=lab1 type=watts;
 PUT power 1005 160 INTO devices location=lab1 type=watts;
 PUT status 1010 1 INTO devices location=lab2 type=on_off;
@@ -91,3 +98,7 @@ SELECT DATA power FROM devices ALL;
 SELECT MAX temperature FROM sensors BETWEEN 1030 AND 1120;
 SELECT SUM power FROM devices BETWEEN 1070 AND 1160 WHERE location=lab2;
 SELECT COUNT status FROM devices BETWEEN 1010 AND 1150 WHERE type=on_off;
+
+# Delete tables
+DROP TABLE sensors;
+DROP TABLE devices;

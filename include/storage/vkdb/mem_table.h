@@ -73,6 +73,10 @@ public:
     return table_.size();
   }
 
+  [[nodiscard]] bool empty() const noexcept {
+    return table_.empty();
+  }
+
   [[nodiscard]] std::string toString() const noexcept {
     std::stringstream ss;
     ss << size();

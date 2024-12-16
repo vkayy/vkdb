@@ -176,6 +176,10 @@ public:
     return sstables_.size();
   }
 
+  [[nodiscard]] bool empty() const noexcept {
+    return mem_table_.empty() && sstables_.empty();
+  }
+
 private:
   using C0Layer = MemTable<TValue>;
   using C1Layer = std::vector<SSTable<TValue>>;

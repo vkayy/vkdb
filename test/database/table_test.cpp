@@ -8,9 +8,9 @@ protected:
   void SetUp() override {
     table_ = std::make_unique<Table>("test_db", "table");
 
-    ASSERT_TRUE(table_->addTagColumn("tag1"));
-    ASSERT_TRUE(table_->addTagColumn("tag2"));
-    ASSERT_TRUE(table_->addTagColumn("tag3"));
+    table_->addTagColumn("tag1");
+    table_->addTagColumn("tag2");
+    table_->addTagColumn("tag3");
   }
 
   void TearDown() override {
@@ -21,17 +21,17 @@ protected:
 };
 
 TEST_F(TableTest, CanAddTagColumn) {
-  EXPECT_TRUE(table_->addTagColumn("tag4"));
-  EXPECT_FALSE(table_->addTagColumn("tag4"));
+  EXPECT_NO_THROW(table_->addTagColumn("tag4"));
+  EXPECT_THROW(table_->addTagColumn("tag4"), std::runtime_error);
 }
 
 TEST_F(TableTest, CanRemoveTagColumn) {
-  EXPECT_TRUE(table_->removeTagColumn("tag1"));
-  EXPECT_FALSE(table_->removeTagColumn("tag1"));
+  EXPECT_NO_THROW(table_->removeTagColumn("tag1"));
+  EXPECT_THROW(table_->removeTagColumn("tag1"), std::runtime_error);
 }
 
 TEST_F(TableTest, CanQueryData) {
-  ASSERT_TRUE(table_->addTagColumn("region"));
+  ASSERT_NO_THROW(table_->addTagColumn("region"));
 
   for (Timestamp i{0}; i < 10'000; ++i) {
     table_->query()
@@ -50,7 +50,7 @@ TEST_F(TableTest, CanQueryData) {
 }
 
 TEST_F(TableTest, CanQueryDataWithMultipleMetrics) {
-  ASSERT_TRUE(table_->addTagColumn("region"));
+  ASSERT_NO_THROW(table_->addTagColumn("region"));
 
   for (Timestamp i{0}; i < 10'000; ++i) {
     table_->query()
@@ -72,8 +72,8 @@ TEST_F(TableTest, CanQueryDataWithMultipleMetrics) {
 }
 
 TEST_F(TableTest, CanQueryDataWithMultipleMetricsAndTags) {
-  ASSERT_TRUE(table_->addTagColumn("region"));
-  ASSERT_TRUE(table_->addTagColumn("device"));
+  ASSERT_NO_THROW(table_->addTagColumn("region"));
+  ASSERT_NO_THROW(table_->addTagColumn("device"));
 
   for (Timestamp i{0}; i < 10'000; ++i) {
     table_->query()

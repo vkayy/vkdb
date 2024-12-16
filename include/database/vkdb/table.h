@@ -37,20 +37,24 @@ public:
     tag_columns_ = tag_columns;
   }
 
-  bool addTagColumn(const TagKey& tag_column) {
+  void addTagColumn(const TagKey& tag_column) {
     auto inserted{tag_columns_.insert(tag_column).second};
-    if (inserted) {
-      save_tag_columns();
+    if (!inserted) {
+      throw std::runtime_error{
+        "Table::addTagColumn(): Tag column already exists."
+      };
     }
-    return inserted;
+    save_tag_columns();
   }
 
-  bool removeTagColumn(const TagKey& tag_column) {
+  void removeTagColumn(const TagKey& tag_column) {
     auto removed{tag_columns_.erase(tag_column) > 0};
-    if (removed) {
-      save_tag_columns();
+    if (!removed) {
+      throw std::runtime_error{
+        "Table::removeTagColumn(): Tag column does not exist."
+      };
     }
-    return removed;
+    save_tag_columns();
   }
 
   void clear() const noexcept {
@@ -72,6 +76,10 @@ public:
 
   [[nodiscard]] FilePath path() const noexcept {
     return db_path_ / FilePath{name_};
+  }
+  
+  [[nodiscard]] bool beenPopulated() const noexcept {
+    return !storage_engine_.empty();
   }
 
 private:

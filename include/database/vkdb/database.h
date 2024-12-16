@@ -17,6 +17,12 @@ static const std::unordered_set<std::string> SELECT_TYPES{
   "DATA", "AVG", "SUM", "COUNT", "MIN", "MAX"
 };
 
+static const std::unordered_set<std::string> KEYWORDS{
+  "SELECT", "PUT", "DELETE", "CREATE", "DROP", "ADD", "REMOVE",
+  "TABLE", "TAGS", "ALL", "WHERE", "BETWEEN", "AND", "AT",
+  "FROM", "TO", "DATA", "AVG", "SUM", "COUNT", "MIN", "MAX"
+};
+
 class Database {
 public:
   Database() = delete;
@@ -69,16 +75,38 @@ public:
     stream >> command;
 
     if (command == "SELECT") {
-      return handle_select(stream);
+      return parse_select_clause(stream);
     } else if (command == "PUT") {
-      return handle_put(stream);
+      return parse_put_clause(stream);
     } else if (command == "DELETE") {
-      return handle_delete(stream);
-    } else {
-      throw std::runtime_error{
-        "Database::executeQuery(): Unknown query command."
-      };
+      return parse_delete_clause(stream);
+    } else if (command == "CREATE") {
+      std::string sub_command;          
+      stream >> sub_command;
+      if (sub_command == "TABLE") {
+        return parse_create_clause(stream);
+      }
+    } else if (command == "DROP") {
+      std::string sub_command;
+      stream >> sub_command;
+      if (sub_command == "TABLE") {
+        return parse_drop_clause(stream);
+      }
+    } else if (command == "ADD") {
+      std::string sub_command;
+      stream >> sub_command;
+      if (sub_command == "TAGS") {
+        return parse_add_clause(stream);
+      }
+    } else if (command == "REMOVE") {
+      std::string tags_str;
+      stream >> tags_str;
+      if (tags_str == "TAGS") {
+        return parse_remove_clause(stream);
+      }
     }
+
+    throw std::runtime_error{"Database::executeQuery(): Unknown query command."};
   }
 
   QueryResult executeFile(const FilePath& file_path) {
@@ -132,21 +160,24 @@ private:
     }
   }
 
-  [[nodiscard]] Tag split_tag_string(const std::string& tag_str) {
+  static Tag parse_tag(const std::string& tag_str) {
     auto sep{tag_str.find('=')};
     if (sep == std::string::npos) {
       throw std::runtime_error{
-        "Database::split_tag_string(): Invalid tag string."
+        "Database::parse_tag(): Invalid tag equality."
       };
     }
 
-    auto tag{tag_str.substr(0, sep)};
-    auto value{tag_str.substr(sep + 1)};
-    if (!value.empty() && value.back() == ';') {
-      value.pop_back();
+    auto tag_key{tag_str.substr(0, sep)};
+    auto tag_value{tag_str.substr(sep + 1)};
+    if (!tag_value.empty() && tag_value.back() == ';') {
+      tag_value.pop_back();
     }
 
-    return {tag, value};
+    check_not_keyword(tag_key);
+    check_not_keyword(tag_value);
+
+    return {tag_key, tag_value};
   }
 
   [[nodiscard]] QueryResult handle_aggregate(
@@ -173,18 +204,58 @@ private:
     };
   }
 
-  void parse_tags(std::istringstream& stream, auto& query) {
-    std::string where;
-    if (stream >> where && where == "WHERE") {
-      std::string tag_condition;
-      while (stream >> tag_condition) {
-        auto [tag, value] = split_tag_string(tag_condition);
-        std::ignore = query.whereTagsContain({tag, value});
-      }
+  void parse_where_clause(std::istringstream& stream, auto& query) {
+    std::string where_str;
+    stream >> where_str;
+    if (where_str != "WHERE" && !where_str.empty()) {
+      throw std::runtime_error{
+        "Database::parse_where_clause(): Missing WHERE keyword."
+      };
+    }
+    if (where_str != "WHERE") {
+      throw std::runtime_error{
+        "Database::parse_where_clause(): Invalid WHERE syntax."
+      };
+    }
+
+    auto tag_table{parse_tag_list_clause(stream, query)};
+    for (const auto& [tag_key, tag_value] : tag_table) {
+      std::ignore = query.whereTagsContain({tag_key, tag_value});
     }
   }
 
-  [[nodiscard]] std::tuple<std::string, std::string, Table&> parse_select(
+  static TagTable parse_tag_list_clause(
+    std::istringstream& stream,
+    auto& query
+  ) {
+    TagTable tag_table;
+    std::string tag;
+    while (stream >> tag) {
+      auto [tag_key, tag_value] = parse_tag(tag);
+      tag_table.emplace(tag_key, tag_value);
+    }
+    return tag_table;
+  }
+
+  static TagColumns parse_tag_columns_clause(std::istringstream& stream) {
+    std::string tags_str;
+    stream >> tags_str;
+    check_match_or_empty(tags_str, "TAGS");
+
+    TagColumns tags;
+    std::string tag_key;
+    while (stream >> tag_key) {
+      if (tag_key.back() == ';') {
+        tag_key.pop_back();
+      }
+      check_not_keyword(tag_key);
+      tags.insert(tag_key);
+    }
+
+    return tags;
+  }
+
+  std::tuple<std::string, std::string, Table&> get_select_header(
     std::istringstream& stream
   ) {
     std::string select_type, metric, from_str, table_name;
@@ -192,7 +263,7 @@ private:
 
     if (from_str != "FROM") {
       throw std::runtime_error{
-        "Database::parse_select(): Missing FROM keyword."
+        "Database::get_select_header(): Missing FROM keyword."
       };
     }
 
@@ -200,25 +271,20 @@ private:
     return {select_type, metric, table};
   }
 
-  [[nodiscard]] QueryResult handle_all_clause(
+  [[nodiscard]] QueryResult parse_all_clause(
     std::istringstream& stream,
     auto& query,
-    const std::string& select_type,
-    bool has_where = false
+    const std::string& select_type
   ) {
-    if (has_where) {
-      parse_tags(stream, query);
-    }
-
+    parse_where_clause(stream, query);
     if (select_type == "DATA") {
       auto results{query.execute()};
       return datapointsToString<double>(results);
     }
-
     return handle_aggregate(query, select_type);
   }
 
-  [[nodiscard]] QueryResult handle_between_clause(
+  [[nodiscard]] QueryResult parse_between_clause(
     std::istringstream& stream,
     auto& query,
     const std::string& select_type
@@ -230,12 +296,12 @@ private:
 
     if (and_str != "AND") {
       throw std::runtime_error{
-        "Database::handle_between_clause(): Invalid BETWEEN syntax."
+        "Database::parse_between_clause(): Invalid BETWEEN syntax."
       };
     }
 
     std::ignore = query.between(start, end);
-    parse_tags(stream, query);
+    parse_where_clause(stream, query);
 
     if (select_type == "DATA") {
       auto results{query.execute()};
@@ -245,16 +311,17 @@ private:
     return handle_aggregate(query, select_type);
   }
 
-  [[nodiscard]] QueryResult handle_at_clause(
+  [[nodiscard]] QueryResult parse_at_clause(
     std::istringstream& stream,
     auto& query,
     const std::string& select_type
   ) {
-    Timestamp at_time;
-    stream >> at_time;
+    std::string time_str;
+    stream >> time_str;
+    auto time{try_convert_to_timestamp(time_str)};
+    std::ignore = query.whereTimestampIs(time);
 
-    std::ignore = query.whereTimestampIs(at_time);
-    parse_tags(stream, query);
+    parse_where_clause(stream, query);
 
     if (select_type == "DATA") {
       auto results{query.execute()};
@@ -264,12 +331,12 @@ private:
     return handle_aggregate(query, select_type);
   }
 
-  [[nodiscard]] QueryResult handle_select(std::istringstream& stream) {
-    auto [select_type, metric, table] = parse_select(stream);
+  [[nodiscard]] QueryResult parse_select_clause(std::istringstream& stream) {
+    auto [select_type, metric, table] = get_select_header(stream);
 
     if (!SELECT_TYPES.contains(select_type)) {
       throw std::runtime_error{
-        "Database::handle_select(): Unknown SELECT type."
+        "Database::parse_select_clause(): Unknown SELECT type."
       };
     }
 
@@ -278,91 +345,320 @@ private:
     std::string clause;
     stream >> clause;
     
+    QueryResult result{};
+
     if (clause == "ALL" || clause == "ALL;") {
-      return handle_all_clause(
-        stream,
-        query,
-        select_type,
-        clause.back() != ';'
-      );
+      return parse_all_clause(stream, query, select_type);
     }
 
     if (clause == "BETWEEN") {
-      return handle_between_clause(stream, query, select_type);
+      return parse_between_clause(stream, query, select_type);
     }
 
     if (clause == "AT") {
-      return handle_at_clause(stream, query, select_type);
+      return parse_at_clause(stream, query, select_type);
     }
 
     throw std::runtime_error{
-      "Database::handle_select(): Invalid SELECT syntax."
+      "Database::parse_select_clause(): Invalid SELECT syntax."
     };
   }
 
-  [[nodiscard]] QueryResult handle_put(std::istringstream& stream) {
-    std::string metric, into_str, table_name, tag_value;
-    Timestamp timestamp;
-    double value;
+  [[nodiscard]] QueryResult parse_put_clause(std::istringstream& stream) {
+    std::string metric, timestamp_str, value_str, into_str, table_name;
 
-    stream >> metric >> timestamp >> value >> into_str >> table_name;
+    stream >> metric >> timestamp_str >> value_str >> into_str >> table_name;
     if (into_str != "INTO") {
       throw std::runtime_error{
-        "Database::handle_put(): Invalid PUT syntax."
+        "Database::parse_put_clause(): Invalid PUT syntax."
       };
     }
 
-    TagTable tag_table;
-    while (stream >> tag_value) {
-      auto [tag, val] = split_tag_string(tag_value);
-      tag_table[tag] = val;
-    }
-
+    check_valid_name(metric);
+    auto timestamp{try_convert_to_timestamp(timestamp_str)};
+    auto value{try_convert_to_double(value_str)};
+    auto tag_table{parse_tag_list_clause(stream, table_name)};
 
     auto& table{getTable(table_name)};
     for (const auto& tag_column : table.tagColumns()) {
       if (!tag_table.contains(tag_column)) {
         throw std::runtime_error{
-          "Database::handle_put(): Missing tag column."
+          "Database::parse_put_clause(): Missing tag column."
         };
       }
     }
-
     table.query().put(timestamp, metric, tag_table, value).execute();
-
-    return {};
+    return format_put_output(timestamp, metric, tag_table, table_name, value);
   }
 
-  [[nodiscard]] QueryResult handle_delete(std::istringstream& stream) {
-    std::string metric, from_str, table_name, tag;
-    Timestamp timestamp;
+  [[nodiscard]] QueryResult parse_delete_clause(std::istringstream& stream) {
+    std::string metric, timestamp_str, from_str, table_name;
 
-    stream >> metric >> timestamp >> from_str >> table_name;
+    stream >> metric >> timestamp_str >> from_str >> table_name;
     if (from_str != "FROM") {
       throw std::runtime_error{
-        "Database::handle_delete(): Invalid DELETE syntax."
+        "Database::parse_delete_clause(): Invalid DELETE syntax."
       };
     }
 
-    TagTable tag_table;
-    while (stream >> tag) {
-      auto [tag_key, tag_value] = split_tag_string(tag);
-      tag_table[tag_key] = tag_value;
-    }
+    check_valid_name(metric);
+    auto timestamp{try_convert_to_timestamp(timestamp_str)};
+    auto tag_table{parse_tag_list_clause(stream, table_name)};
 
     auto& table{getTable(table_name)};
     for (const auto& tag_column : table.tagColumns()) {
       if (!tag_table.contains(tag_column)) {
         throw std::runtime_error{
-          "Database::handle_delete(): Missing tag column."
+          "Database::parse_delete_clause(): Missing tag column."
         };
       }
     }
 
     table.query().remove(timestamp, metric, tag_table).execute();
 
-    return {};
+    return format_delete_output(timestamp, metric, tag_table, table_name);
   }
+
+  QueryResult parse_create_clause(std::istringstream& stream) {
+    std::string table_name, tags_str;
+    stream >> table_name;
+    if (table_name.empty() || table_name == "TAGS") {
+      throw std::runtime_error{
+        "Database::parse_create_clause(): Missing table name."
+      };
+    }
+    
+    if (table_name.back() == ';') {
+      table_name.pop_back();
+    }
+    check_not_keyword(table_name);
+
+    createTable(table_name);
+    auto tag_columns{parse_tag_columns_clause(stream)};
+    if (!tag_columns.empty()) {
+      getTable(table_name).setTagColumns(tag_columns);
+    }
+    
+    return format_create_output(table_name, tag_columns);
+  }
+
+  QueryResult parse_drop_clause(std::istringstream& stream) {
+    std::string table_name;
+    stream >> table_name;
+    if (table_name.empty()) {
+      throw std::runtime_error{
+        "Database::parse_drop_clause(): Missing table name."
+      };
+    }
+
+    table_name.pop_back();
+    check_not_keyword(table_name);
+
+    dropTable(table_name);
+    return "Dropped table " + table_name;
+  }
+
+  QueryResult parse_add_clause(std::istringstream& stream) {
+    std::string table_name, to_str;
+    std::vector<std::string> new_tags;
+
+    std::string tag_key;
+    while (stream >> tag_key && tag_key != "TO") {
+      check_not_keyword(tag_key);
+      new_tags.push_back(tag_key);
+    }
+
+    if (new_tags.empty()) {
+      throw std::runtime_error{
+        "Database::parse_add_clause(): Missing tags to add."
+      };
+    }
+
+    to_str = tag_key;
+    if (to_str.empty() || to_str != "TO") {
+      throw std::runtime_error{
+        "Database::parse_add_clause(): Invalid ADD TAGS syntax."
+      };
+    }
+
+    stream >> table_name;
+    if (table_name.empty()) {
+      throw std::runtime_error{
+        "Database::parse_add_clause(): Invalid ADD TAGS syntax."
+      };
+    }
+
+    table_name.pop_back();
+    check_not_keyword(table_name);
+
+    auto& table{getTable(table_name)};
+    for (const auto& tag : new_tags) {
+      table.addTagColumn(tag);
+    }
+
+    return format_add_output(table_name, new_tags);
+  }
+
+  static QueryResult format_create_output(
+    const TableName& table_name,
+    const TagColumns& tag_columns
+  ) {
+    QueryResult result{"Created table " + table_name};
+    if (tag_columns.empty()) {
+      return result;
+    }
+    result += " with tag columns (";
+    for (const auto& tag : tag_columns) {
+      result += tag + ", ";
+    }
+    result.pop_back();
+    result.pop_back();
+
+    return result;
+  }
+
+  QueryResult parse_remove_clause(std::istringstream& stream) {
+    std::string table_name, from_str;
+    std::vector<TagKey> tags_to_remove;
+
+    std::string tag_key;
+    while (stream >> tag_key && tag_key != "FROM") {
+      tags_to_remove.push_back(tag_key);
+    }
+
+    if (tags_to_remove.empty()) {
+      throw std::runtime_error{
+        "Database::parse_remove_clause(): Missing tags to remove."
+      };
+    }
+
+    stream >> table_name;
+    if (table_name.empty()) {
+      throw std::runtime_error{
+        "Database::parse_remove_clause(): Invalid REMOVE TAGS syntax."
+      };
+    }
+    table_name.pop_back();
+    
+    auto& table{getTable(table_name)};
+    for (const auto& tag : tags_to_remove) {
+      table.removeTagColumn(tag);
+    }
+
+    return format_remove_output(table_name, tags_to_remove);
+  }
+
+  static QueryResult format_put_output(
+    Timestamp timestamp,
+    const Metric& metric,
+    const TagTable& tag_table,
+    const TableName& table_name,
+    double value
+  ) {
+    QueryResult result{"Put key "};
+    TimeSeriesKey key{timestamp, metric, tag_table};
+    result += key.toString() + " into table " + table_name;
+    result += " with value " + std::to_string(value);
+    return result;
+  }
+
+  static QueryResult format_delete_output(
+    Timestamp timestamp,
+    const Metric& metric,
+    const TagTable& tag_table,
+    const TableName& table_name
+  ) {
+    QueryResult result{"Deleted key "};
+    TimeSeriesKey key{timestamp, metric, tag_table};
+    result += key.toString() + " from table: " + table_name;
+    return result;
+  }
+
+  static QueryResult format_add_output(
+    const TableName& table_name,
+    const std::vector<TagKey>& new_tags
+  ) {
+    QueryResult result{"Added tags ("};
+    for (const auto& tag : new_tags) {
+      result += tag + ", ";
+    }
+    result.pop_back();
+    result.pop_back();
+    result += ") ";
+
+    return result += "to table " + table_name;
+  }
+
+  static QueryResult format_remove_output(
+    const TableName& table_name,
+    const std::vector<TagKey>& tags_to_remove
+  ) {
+    QueryResult result{"Removed tags ("};
+    for (const auto& tag : tags_to_remove) {
+      result += tag + ", ";
+    }
+    result.pop_back();
+    result.pop_back();
+    result += ") ";
+
+    return result += "from table " + table_name;
+  }
+
+  static void check_not_keyword(const std::string& str) {
+    if (KEYWORDS.contains(str)) {
+      throw std::runtime_error{
+        "Database::check_not_keyword(): Invalid keyword."
+      };
+    }
+  }
+
+  static void check_match_or_empty(
+    const std::string& str,
+    const std::string& to_match
+  ) {
+    if (!str.empty() && str != to_match) {
+      throw std::runtime_error{
+        "Database::check_match_or_empty(): Invalid syntax."
+      };
+    }
+  }
+
+  static double try_convert_to_double(const std::string& str) {
+    char *end;
+    auto number{std::strtod(str.c_str(), &end)};
+    if (*end != '\0') {
+      throw std::runtime_error{
+        "Database::try_convert_to_number(): Not a number."
+      };
+    }
+    return number;
+  }
+
+  static Timestamp try_convert_to_timestamp(const std::string& str) {
+    char *end;
+    auto number{std::strtoull(str.c_str(), &end, 10)};
+    if (*end != '\0') {
+      throw std::runtime_error{
+        "Database::try_convert_to_number(): Not a number."
+      };
+    }
+    return number;
+  }
+
+  static void check_valid_name(const std::string& str) {
+    if (str.empty() || std::isdigit(str[0])) {
+      throw std::runtime_error{
+        "Database::check_valid_name(): Invalid name."
+      };
+    }
+    for (const auto& c : str) {
+      if (!std::isalnum(c)) {
+        throw std::runtime_error{
+          "Database::check_valid_name(): Invalid name."
+        };
+      }
+    }
+  }                          
 
   std::unordered_map<TableName, Table> tables_;
   DatabaseName name_;
