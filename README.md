@@ -53,6 +53,7 @@ auto query_result{db.executeQuery(
 auto file_result{db.executeFile(
     std::filesystem::current_path() / "../examples/vq_setup.vq"
 )};
+```
 
 ## how does it work?
 
