@@ -64,10 +64,24 @@ PUT temperature 1234567890 23.5 INTO sensors location=room1 type=celsius;
 DELETE temperature 1234567890 FROM sensors location=room1 type=celsius;
 ```
 
-and here's the grammar that the parsing and execution (hopefully) entails.
+moreover, here are some table management queries.
+```sql
+CREATE TABLE sensors TAGS location type;
+
+CREATE TABLE devices;
+
+ADD TAGS host TO devices;
+
+REMOVE TAGS host FROM devices;
+
+ADD TAGS location type TO devices;
+```
+
+and here's the grammar claude interpreted from the parsing! take from it what you will.
 
 ```bnf
-<query> ::= <select_query> ";" | <put_query> ";" | <delete_query> ";"
+<query> ::= <select_query> | <put_query> | <delete_query> | <create_query> 
+          | <drop_query> | <add_query> | <remove_query>
 
 <select_query> ::= "SELECT" <select_type> <metric> "FROM" <table_name> <select_clause>
 
@@ -75,35 +89,55 @@ and here's the grammar that the parsing and execution (hopefully) entails.
 
 <select_clause> ::= <all_clause> | <between_clause> | <at_clause>
 
-<all_clause> ::= "ALL" [<where_clause>]
+<all_clause> ::= "ALL" [<where_clause>] ";"
 
-<between_clause> ::= "BETWEEN" <timestamp> "AND" <timestamp> [<where_clause>]
+<between_clause> ::= "BETWEEN" <timestamp> "AND" <timestamp> [<where_clause>] ";"
 
-<at_clause> ::= "AT" <timestamp> [<where_clause>]
+<at_clause> ::= "AT" <timestamp> [<where_clause>] ";"
 
-<where_clause> ::= "WHERE" <tag_condition> {<tag_condition>}
+<where_clause> ::= "WHERE" <tag_list>
 
-<tag_condition> ::= <tag_name> "=" <tag_value>
+<put_query> ::= "PUT" <metric> <timestamp> <value> "INTO" <table_name> [<tag_list>] ";"
 
-<put_query> ::= "PUT" <metric> <timestamp> <value> "INTO" <table_name> {<tag_assignment>}
+<delete_query> ::= "DELETE" <metric> <timestamp> "FROM" <table_name> [<tag_list>] ";"
 
-<tag_assignment> ::= <tag_name> "=" <tag_value>
+<create_query> ::= "CREATE" "TABLE" <table_name> ["TAGS" <tag_columns>] ";"
 
-<delete_query> ::= "DELETE" <metric> <timestamp> "FROM" <table_name> {<tag_assignment>}
+<drop_query> ::= "DROP" "TABLE" <table_name> ";"
 
-<metric> ::= <string>
-<table_name> ::= <string>
-<tag_name> ::= <string>
-<tag_value> ::= <string>
-<timestamp> ::= <integer>
+<add_query> ::= "ADD" "TAGS" <tag_key_list> "TO" <table_name> ";"
+
+<remove_query> ::= "REMOVE" "TAGS" <tag_key_list> "FROM" <table_name> ";"
+
+<tag_list> ::= <tag> [<tag>]*
+
+<tag> ::= <tag_key> "=" <tag_value> [";"]*
+
+<tag_columns> ::= <tag_key> [<tag_key>]*
+
+<tag_key_list> ::= <tag_key> [<tag_key>]*
+
+<metric> ::= <identifier>
+
+<table_name> ::= <identifier>
+
+<tag_key> ::= <identifier>
+
+<tag_value> ::= <identifier>
+
+<timestamp> ::= <unsigned_integer>
+
 <value> ::= <number>
 
-<string> ::= <char> {<char>}
-<char> ::= <letter> | <digit> | "_" | "-"
+<identifier> ::= <letter> [<letter> | <digit>]*
+
+<number> ::= ["-"] <digit> [<digit>]* ["." <digit>*]
+
+<unsigned_integer> ::= <digit> [<digit>]*
+
 <letter> ::= "A" | ... | "Z" | "a" | ... | "z"
-<digit> ::= "0" | ... | "9"
-<number> ::= ["-"] <digit> {<digit>} ["." <digit> {<digit>}]
-<integer> ::= ["-"] <digit> {<digit>}
+
+<digit> ::= "0" | "1" | ... | "9"
 ```
 
 again, if there are any holes in my logic, let me know. the midnight commits typically aren't the best.
