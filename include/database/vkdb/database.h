@@ -226,12 +226,17 @@ private:
 
   static TagTable parse_tag_list_clause(
     std::istringstream& stream,
-    auto& query
+    auto& query,
+    bool is_put = false
   ) {
     TagTable tag_table;
     std::string tag;
     while (stream >> tag) {
       auto [tag_key, tag_value] = parse_tag(tag);
+      if (is_put) {
+        check_valid_identifier(tag_key);
+        check_valid_identifier(tag_value);
+      }
       tag_table.emplace(tag_key, tag_value);
     }
     return tag_table;
@@ -374,10 +379,10 @@ private:
       };
     }
 
-    check_valid_name(metric);
+    check_valid_identifier(metric);
     auto timestamp{try_convert_to_timestamp(timestamp_str)};
     auto value{try_convert_to_double(value_str)};
-    auto tag_table{parse_tag_list_clause(stream, table_name)};
+    auto tag_table{parse_tag_list_clause(stream, table_name, true)};
 
     auto& table{getTable(table_name)};
     for (const auto& tag_column : table.tagColumns()) {
@@ -401,7 +406,7 @@ private:
       };
     }
 
-    check_valid_name(metric);
+    check_valid_identifier(metric);
     auto timestamp{try_convert_to_timestamp(timestamp_str)};
     auto tag_table{parse_tag_list_clause(stream, table_name)};
 
@@ -465,6 +470,7 @@ private:
     std::string tag_key;
     while (stream >> tag_key && tag_key != "TO") {
       check_not_keyword(tag_key);
+      check_valid_identifier(tag_key);
       new_tags.push_back(tag_key);
     }
 
@@ -645,16 +651,16 @@ private:
     return number;
   }
 
-  static void check_valid_name(const std::string& str) {
+  static void check_valid_identifier(const std::string& str) {
     if (str.empty() || std::isdigit(str[0])) {
       throw std::runtime_error{
-        "Database::check_valid_name(): Invalid name."
+        "Database::check_valid_identifier(): Invalid name."
       };
     }
     for (const auto& c : str) {
       if (!std::isalnum(c)) {
         throw std::runtime_error{
-          "Database::check_valid_name(): Invalid name."
+          "Database::check_valid_identifier(): Invalid name."
         };
       }
     }
