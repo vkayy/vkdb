@@ -40,6 +40,20 @@ auto random_int{vkdb::random<int>(-100'000, 100'000)};
 auto random_double{vkdb::random<double>(-10.0, 10.0)};
 ```
 
+lastly, you can execute queries both from strings and files. for instance, to yank a few from the `examples` directory:
+
+```cpp
+auto query_result{db.executeQuery(
+  "SELECT COUNT temperature "
+  "FROM atmospheric "
+  "BETWEEN 1702550000 AND 1702650000 "
+  "WHERE region=na"
+)};
+
+auto file_result{db.executeFile(
+    std::filesystem::current_path() / "../examples/vq_setup.vq"
+)};
+
 ## how does it work?
 
 vkdb is built on log-structured merge (lsm) trees. in their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (wal) for persistence of in-memory changes.
