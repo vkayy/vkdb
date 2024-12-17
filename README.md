@@ -55,6 +55,8 @@ auto file_result{db.executeFile(
 )};
 ```
 
+note: these are outdated examples. if you're seeing this, you're on the `vq-interpreter` branch. this branch is currently in development, so `examples` is effectively broken here.
+
 ## how does it work?
 
 vkdb is built on log-structured merge (lsm) trees. in their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (wal) for persistence of in-memory changes.
