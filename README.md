@@ -55,7 +55,7 @@ auto file_result{db.executeFile(
 )};
 ```
 
-note: these are outdated examples. if you're seeing this, you're on the `vq-interpreter` branch. this branch is currently in development, so `examples` is effectively broken here.
+note: these are outdated examples. if you're seeing this, you're on the `vq-interpreter` branch. this branch is currently in development, so `examples` does not reflect the new grammar for vq (or any solid one at all).
 
 ## how does it work?
 
