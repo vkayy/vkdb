@@ -117,7 +117,7 @@ private:
     return current;
   }
   
-  template <typename Pred>
+  template <std::predicate<char> Pred>
   void advance_while(const Pred& pred) {
     while (chars_remaining() && pred(peek())) {
       advance();
