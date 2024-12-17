@@ -6,68 +6,6 @@
 #include <unordered_map>
 #include <concepts>
 
-/*
-  CONCRETE GRAMMAR:
-
-  <query> ::= <select_query> | <put_query> | <delete_query> | <create_query> 
-            | <drop_query> | <add_query> | <remove_query>
-
-  <select_query> ::= "SELECT" <select_type> <metric> "FROM" <table_name> <select_clause>
-
-  <select_type> ::= "DATA" | "AVG" | "SUM" | "COUNT" | "MIN" | "MAX"
-
-  <select_clause> ::= <all_clause> | <between_clause> | <at_clause>
-
-  <all_clause> ::= "ALL" [<where_clause>] ";"
-
-  <between_clause> ::= "BETWEEN" <timestamp> "AND" <timestamp> [<where_clause>] ";"
-
-  <at_clause> ::= "AT" <timestamp> [<where_clause>] ";"
-
-  <where_clause> ::= "WHERE" <tag_list>
-
-  <put_query> ::= "PUT" <metric> <timestamp> <value> "INTO" <table_name> [<tag_list>] ";"
-
-  <delete_query> ::= "DELETE" <metric> <timestamp> "FROM" <table_name> [<tag_list>] ";"
-
-  <create_query> ::= "CREATE" "TABLE" <table_name> ["TAGS" <tag_columns>] ";"
-
-  <drop_query> ::= "DROP" "TABLE" <table_name> ";"
-
-  <add_query> ::= "ADD" "TAGS" <tag_key_list> "TO" <table_name> ";"
-
-  <remove_query> ::= "REMOVE" "TAGS" <tag_key_list> "FROM" <table_name> ";"
-
-  <tag_list> ::= <tag> [<tag>]*
-
-  <tag> ::= <tag_key> "=" <tag_value>
-
-  <tag_columns> ::= <tag_key> [<tag_key>]*
-
-  <tag_key_list> ::= <tag_key> [<tag_key>]*
-
-  <metric> ::= <identifier>
-
-  <table_name> ::= <identifier>
-
-  <tag_key> ::= <identifier>
-
-  <tag_value> ::= <identifier>
-
-  <timestamp> ::= <unsigned_integer>
-
-  <value> ::= <number>
-
-  <identifier> ::= <letter> [<letter> | <digit>]*
-
-  <number> ::= ["-"] <digit> [<digit>]* ["." <digit>*]
-
-  <unsigned_integer> ::= <digit> [<digit>]*
-
-  <letter> ::= "A" | ... | "Z" | "a" | ... | "z" | "_"
-
-  <digit> ::= "0" | "1" | ... | "9"
-*/
 namespace vkdb {
 static const std::unordered_map<Lexeme, TokenType> WORD_TO_TOKEN_TYPE{
   {"SELECT", TokenType::SELECT},
