@@ -12,11 +12,11 @@ using TagColumns = std::unordered_set<TagKey>;
 template <ArithmeticNoCVRefQuals TValue>
 class QueryBuilder {
 public:
-  using key_type = TimeSeriesKey;
+  using keytype = TimeSeriesKey;
   using mapped_type = std::optional<TValue>;
-  using value_type = std::pair<const key_type, mapped_type>;
+  using valuetype = std::pair<const keytype, mapped_type>;
   using size_type = uint64_t;
-  using result_type = std::vector<value_type>;
+  using result_type = std::vector<valuetype>;
 
   QueryBuilder() = delete;
 
@@ -35,14 +35,14 @@ public:
 
   ~QueryBuilder() = default;
 
-  [[nodiscard]] QueryBuilder& point(const key_type& key) {
+  [[nodiscard]] QueryBuilder& point(const keytype& key) {
     validate_tags(key.tags());
     set_query_type(QueryType::Point);
     query_params_ = QueryParams{PointParams{key}};
     return *this;
   }
 
-  [[nodiscard]] QueryBuilder& range(const key_type& start, const key_type& end) {
+  [[nodiscard]] QueryBuilder& range(const keytype& start, const keytype& end) {
     validate_tags(start.tags());
     validate_tags(end.tags());
     set_query_type(QueryType::Range);
@@ -108,14 +108,14 @@ public:
     return *this;
   }
 
-  [[nodiscard]] QueryBuilder& put(const key_type& key, const TValue& value) {
+  [[nodiscard]] QueryBuilder& put(const keytype& key, const TValue& value) {
     validate_tags(key.tags());
     set_query_type(QueryType::Put);
     query_params_ = QueryParams{PutParams{key, value}};
     return *this;
   }
 
-  [[nodiscard]] QueryBuilder& remove(const key_type& key) {
+  [[nodiscard]] QueryBuilder& remove(const keytype& key) {
     validate_tags(key.tags());
     set_query_type(QueryType::Remove);
     query_params_ = QueryParams{RemoveParams{key}};
@@ -131,7 +131,7 @@ public:
     setup_aggregate();
     auto range{get_nonempty_filtered_range()};
     return std::accumulate(range.begin(), range.end(), TValue{},
-      [](const TValue& acc, const value_type& entry) {
+      [](const TValue& acc, const valuetype& entry) {
         return acc + entry.second.value();
       });
   }
@@ -187,21 +187,21 @@ private:
   enum class QueryType { None, Point, Range, Put, Remove };
 
   struct PointParams {
-    key_type key_;
+    keytype key;
   };
 
   struct RangeParams {
-    key_type start_;
-    key_type end_;
+    keytype start;
+    keytype end;
   };
 
   struct PutParams {
-    key_type key_;
-    TValue value_;
+    keytype key;
+    TValue value;
   };
 
   struct RemoveParams {
-    key_type key_;
+    keytype key;
   };
 
   using QueryParams = std::variant<
@@ -253,7 +253,7 @@ private:
       return execute_point_query();
     }
     const auto& params{std::get<RangeParams>(query_params_)};
-    return lsm_tree_.getRange(params.start_, params.end_,
+    return lsm_tree_.getRange(params.start, params.end,
       [this](const auto& k) {
         return std::ranges::all_of(filters_, [&k](const auto& filter) {
           return filter(k);
@@ -273,11 +273,11 @@ private:
 
   [[nodiscard]] result_type execute_point_query() const {
     const auto& params{std::get<PointParams>(query_params_)};
-    auto value{lsm_tree_.get(params.key_)};
+    auto value{lsm_tree_.get(params.key)};
     if (!value.has_value()) {
       return {};
     }
-    return {{params.key_, value}};
+    return {{params.key, value}};
   }
 
   [[nodiscard]] result_type execute_range_query() const {
@@ -287,13 +287,13 @@ private:
 
   [[nodiscard]] result_type execute_put_query() {
     const auto& params{std::get<PutParams>(query_params_)};
-    lsm_tree_.put(params.key_, params.value_);
+    lsm_tree_.put(params.key, params.value);
     return {};
   }
 
   [[nodiscard]] result_type execute_remove_query() {
     const auto& params{std::get<RemoveParams>(query_params_)};
-    lsm_tree_.remove(params.key_);
+    lsm_tree_.remove(params.key);
     return {};
   }
 
