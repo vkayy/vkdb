@@ -138,15 +138,13 @@ and here's the EBNF grammar encapsulating vq.
 
 <table_name> ::= <identifier>
 
-<timestamp> ::= <unsigned_integer>
+<timestamp> ::= <number>
 
 <value> ::= <number>
 
 <identifier> ::= <char> [<char> | <digit>]*
 
 <number> ::= ["-"] <digit> [<digit>]* ["." <digit>+]
-
-<unsigned_integer> ::= <digit> [<digit>]*
 
 <char> ::= "A" | ... | "Z" | "a" | ... | "z" | "_"
 
