@@ -65,36 +65,34 @@ in terms of typing, i've tried to make vkdb as robust as possible (as you can se
 
 ## what's the query language?
 
-i whipped something up called vq, and i have not refined it at all. here are some examples queries! i'm shamelessly using sql highlighting here to save you from plain, white text.
+i made a language called vq. here are some example queries! i'm shamelessly using sql highlighting here to save you from plain, white text.
 
 ```sql
-SELECT DATA temperature FROM sensors ALL;
+SELECT DATA status FROM sensors ALL;
 
-SELECT AVG humidity FROM sensors BETWEEN 1000 AND 2000 WHERE location=warehouse type=sensor;
+SELECT AVG temperature FROM weather BETWEEN 1234 AND 1240 WHERE city=london, unit=celsius;
 
-SELECT MIN pressure FROM sensors AT 1500 WHERE type=pressure location=external;
+PUT temperature 1234 23.5 INTO weather TAGS city=paris, unit=celsius;
 
-PUT temperature 1234567890 23.5 INTO sensors location=room1 type=celsius;
-
-DELETE temperature 1234567890 FROM sensors location=room1 type=celsius;
+DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
 ```
 
 moreover, here are some table management queries.
 ```sql
-CREATE TABLE sensors TAGS location type;
+CREATE TABLE climate TAGS region, season;
 
-CREATE TABLE devices;
+DROP TABLE devices;
 
-ADD TAGS host TO devices;
+ADD TAGS host, status TO servers;
 
-REMOVE TAGS host FROM devices;
-
-ADD TAGS location type TO devices;
+REMOVE TAGS host FROM servers;
 ```
 
-and here's the grammar claude interpreted from the parsing! take from it what you will.
+and here's the EBNF grammar encapsulating vq.
 
 ```bnf
+<expr> ::= <query> ";"
+
 <query> ::= <select_query> | <put_query> | <delete_query> | <create_query> 
           | <drop_query> | <add_query> | <remove_query>
 
@@ -104,53 +102,51 @@ and here's the grammar claude interpreted from the parsing! take from it what yo
 
 <select_clause> ::= <all_clause> | <between_clause> | <at_clause>
 
-<all_clause> ::= "ALL" [<where_clause>] ";"
+<all_clause> ::= "ALL" {<where_clause>}?
 
-<between_clause> ::= "BETWEEN" <timestamp> "AND" <timestamp> [<where_clause>] ";"
+<between_clause> ::= "BETWEEN" <timestamp> "AND" <timestamp> {<where_clause>}?
 
-<at_clause> ::= "AT" <timestamp> [<where_clause>] ";"
+<at_clause> ::= "AT" <timestamp> {<where_clause>}?
 
 <where_clause> ::= "WHERE" <tag_list>
 
-<put_query> ::= "PUT" <metric> <timestamp> <value> "INTO" <table_name> [<tag_list>] ";"
+<put_query> ::= "PUT" <metric> <timestamp> <value> "INTO" <table_name> {"TAGS" <tag_list>}?
 
-<delete_query> ::= "DELETE" <metric> <timestamp> "FROM" <table_name> [<tag_list>] ";"
+<delete_query> ::= "DELETE" <metric> <timestamp> "FROM" <table_name> {"TAGS" <tag_list>}?
 
-<create_query> ::= "CREATE" "TABLE" <table_name> ["TAGS" <tag_columns>] ";"
+<create_query> ::= "CREATE" "TABLE" <table_name> {"TAGS" <tag_list>}?
 
-<drop_query> ::= "DROP" "TABLE" <table_name> ";"
+<drop_query> ::= "DROP" "TABLE" <table_name>
 
-<add_query> ::= "ADD" "TAGS" <tag_key_list> "TO" <table_name> ";"
+<add_query> ::= "ADD" "TAGS" <tag_columns> "TO" <table_name>
 
-<remove_query> ::= "REMOVE" "TAGS" <tag_key_list> "FROM" <table_name> ";"
+<remove_query> ::= "REMOVE" "TAGS" <tag_columns> "FROM" <table_name>
 
-<tag_list> ::= <tag> [<tag>]*
+<tag_list> ::= <tag> {"," <tag>}*
 
-<tag> ::= <tag_key> "=" <tag_value> [";"]*
+<tag> ::= <tag_key> "=" <tag_value>
 
-<tag_columns> ::= <tag_key> [<tag_key>]*
-
-<tag_key_list> ::= <tag_key> [<tag_key>]*
-
-<metric> ::= <identifier>
-
-<table_name> ::= <identifier>
+<tag_columns> ::= <tag_key> {"," <tag_key>}*
 
 <tag_key> ::= <identifier>
 
 <tag_value> ::= <identifier>
 
+<metric> ::= <identifier>
+
+<table_name> ::= <identifier>
+
 <timestamp> ::= <unsigned_integer>
 
 <value> ::= <number>
 
-<identifier> ::= <letter> [<letter> | <digit>]*
+<identifier> ::= <char> [<char> | <digit>]*
 
-<number> ::= ["-"] <digit> [<digit>]* ["." <digit>*]
+<number> ::= ["-"] <digit> [<digit>]* ["." <digit>+]
 
 <unsigned_integer> ::= <digit> [<digit>]*
 
-<letter> ::= "A" | ... | "Z" | "a" | ... | "z"
+<char> ::= "A" | ... | "Z" | "a" | ... | "z" | "_"
 
 <digit> ::= "0" | "1" | ... | "9"
 ```
