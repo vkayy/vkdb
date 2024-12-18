@@ -38,6 +38,7 @@ public:
 
   [[nodiscard]] DatabaseName name() const noexcept;
   [[nodiscard]] FilePath path() const noexcept;
+  [[nodiscard]] std::vector<TableName> tables() const noexcept;
 
   Database& run(const std::string& source, std::ostream& stream = std::cout);
   Database& runFile(const std::filesystem::path path, std::ostream& stream = std::cout);

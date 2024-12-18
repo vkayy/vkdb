@@ -40,6 +40,15 @@ TEST_F(DatabaseTest, CanGetPath) {
   EXPECT_EQ(database_->path(), DATABASE_DIRECTORY / "test_db");
 }
 
+TEST_F(DatabaseTest, CanGetTables) {
+  database_->createTable("table1");
+  database_->createTable("table2");
+  auto tables{database_->tables()};
+  ASSERT_EQ(tables.size(), 2);
+  EXPECT_EQ(tables[0], "table1");
+  EXPECT_EQ(tables[1], "table2");
+}
+
 TEST_F(DatabaseTest, CanRunCreateQuery) {
   database_->run("CREATE TABLE table TAGS tag;");
   EXPECT_NO_THROW(std::ignore = database_->getTable("table"));

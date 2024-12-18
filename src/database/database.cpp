@@ -62,6 +62,11 @@ FilePath Database::path() const noexcept {
   return DATABASE_DIRECTORY / name_;
 }
 
+std::vector<TableName> Database::tables() const noexcept {
+  auto tables{std::ranges::views::keys(table_map_)};
+  return {tables.begin(), tables.end()};
+}
+
 Database& Database::run(
   const std::string& source,
   std::ostream& stream
