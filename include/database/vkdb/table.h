@@ -91,8 +91,8 @@ private:
     std::ofstream file{tag_columns_path()};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "Table::save_tag_columns(): Unable to open file '"
-        + std::string(tag_columns_path()) + "'."
+        "Table::save_tag_columns(): Unable to open file "
+        + std::string(tag_columns_path()) + "."
       };
     }
     for (const auto& column : tag_columns_) {
@@ -109,8 +109,8 @@ private:
     std::ifstream file{tag_columns_path()};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "Table::load_tag_columns(): Unable to open file '"
-        + std::string(tag_columns_path()) + "'."
+        "Table::load_tag_columns(): Unable to open file "
+        + std::string(tag_columns_path()) + "."
       };
     }
     std::string column;

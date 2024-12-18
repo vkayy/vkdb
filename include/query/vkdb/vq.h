@@ -26,9 +26,15 @@ public:
   ~VQ() = default;
 
   static void runFile(const std::filesystem::path path) {
+    if (path.extension() != ".vq") {
+      std::cerr << "\033[1;32mVQ::runFile(): File extension cannot be "
+      << path.extension() << ", must be .vq.\033[0m\n";
+      return;
+    }
     std::ifstream file{path};
     if (!file.is_open()) {
-      std::cerr << "VQ::runFile(): Could not open file " << path << "\n";
+      std::cerr << "\033[1;32mVQ::runFile(): Unable to open file "
+      << path << ".\033[0m\n";
       return;
     }
     std::stringstream buffer;

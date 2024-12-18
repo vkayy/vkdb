@@ -27,8 +27,8 @@ public:
     std::ofstream file{path_, std::ios::app};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "WriteAheadLog::append(): Unable to open file '"
-        + std::string(path_) + "'."
+        "WriteAheadLog::append(): Unable to open file "
+        + std::string(path_) + "."
       };
     }
     file << std::to_string(static_cast<int>(record.type));
@@ -43,8 +43,8 @@ public:
     std::ifstream file{path_};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "WriteAheadLog::replay(): Unable to open file '"
-        + std::string(path_) + "'."
+        "WriteAheadLog::replay(): Unable to open file "
+        + std::string(path_) + "."
       };
     }
 
@@ -78,8 +78,8 @@ public:
     std::ofstream file{path_};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "WriteAheadLog::clear(): Unable to open file '"
-        + std::string(path_) + "'."
+        "WriteAheadLog::clear(): Unable to open file "
+        + std::string(path_) + "."
       };
     }
     file.close();
