@@ -60,7 +60,7 @@ private:
     visit(query.value);
     output_ << " INTO ";
     visit(query.table_name);
-    if (query.tag_list) {
+    if (query.tag_list.has_value()) {
       output_ << " TAGS ";
       visit(query.tag_list.value());
     }
@@ -73,7 +73,7 @@ private:
     visit(query.timestamp);
     output_ << " FROM ";
     visit(query.table_name);
-    if (query.tag_list) {
+    if (query.tag_list.has_value()) {
       output_ << " TAGS ";
       visit(query.tag_list.value());
     }
@@ -82,7 +82,7 @@ private:
   void visit(const CreateQuery& query) noexcept {
     output_ << "CREATE TABLE ";
     visit(query.table_name);
-    if (query.tag_columns) {
+    if (query.tag_columns.has_value()) {
       output_ << " TAGS ";
       visit(query.tag_columns.value());
     }
