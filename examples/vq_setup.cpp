@@ -1,4 +1,6 @@
 #include <vkdb/vq.h>
+#include <vkdb/database.h>
+#include <vkdb/interpreter.h>
 #include <iostream>
 
 int main() {

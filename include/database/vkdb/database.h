@@ -1,6 +1,7 @@
 #ifndef DATABASE_DATABASE_H
 #define DATABASE_DATABASE_H
 
+#include <vkdb/vq.h>
 #include <vkdb/table.h>
 
 namespace vkdb {
@@ -10,12 +11,17 @@ using DatabaseName = std::string;
 
 class Database {
 public:
+  using size_type = uint64_t;
+  using error_callback = std::function<void(Token, const std::string&)>;
+  using runtime_error_callback = std::function<void(const RuntimeError&)>;
+
   Database() = delete;
 
-  explicit Database(DatabaseName name)
-    : name_{std::move(name)} {
-    load();
-  }
+  explicit Database(
+    DatabaseName name,
+    error_callback error = VQ::error,
+    runtime_error_callback runtime_error = VQ::runtimeError
+  );
 
   Database(Database&&) noexcept = default;
   Database& operator=(Database&&) noexcept = default;
@@ -25,67 +31,37 @@ public:
 
   ~Database() = default;
 
-  void createTable(const TableName& table_name) {
-    if (table_map_.contains(table_name)) {
-      throw std::runtime_error{
-        "Database::createTable(): Table '" + table_name + "' already exists."
-      };
-    }
-    table_map_.emplace(table_name, Table{path(), table_name});
-    std::filesystem::create_directories(table_map_.at(table_name).path());
-  }
+  Table& createTable(const TableName& table_name);
+  [[nodiscard]] Table& getTable(const TableName& table_name);
+  void dropTable(const TableName& table_name);
+  void clear();
 
-  [[nodiscard]] Table& getTable(const TableName& table_name) {
-    if (!table_map_.contains(table_name)) {
-      throw std::runtime_error{
-        "Database::getTable(): Table '" + table_name + "' does not exist."
-      };
-    }
-    return table_map_.at(table_name);
-  }
+  [[nodiscard]] DatabaseName name() const noexcept;
+  [[nodiscard]] FilePath path() const noexcept;
 
-  void dropTable(const TableName& table_name) {
-    if (!table_map_.contains(table_name)) {
-      throw std::runtime_error{
-        "Database::dropTable(): Table '" + table_name + "' does not exist."
-      };
-    }
-    std::filesystem::remove_all(table_map_.at(table_name).path());
-    table_map_.erase(table_name);
-  }
-
-  void clear() {
-    std::filesystem::remove_all(path());
-  }
-
-  [[nodiscard]] DatabaseName name() const noexcept {
-    return name_;
-  }
-
-  [[nodiscard]] FilePath path() const noexcept {
-    return DATABASE_DIRECTORY / name_;
-  }
+  Database& run(const std::string& source, std::ostream& stream = std::cout);
+  Database& runFile(const std::filesystem::path path, std::ostream& stream = std::cout);
+  Database& runPrompt();
 
 private:
   using TableMap = std::unordered_map<TableName, Table>;
 
-  void load() {
-    const auto db_path{path()};
-    if (!std::filesystem::exists(db_path)) {
-      std::filesystem::create_directories(db_path);
-      return;
-    }
+  void error(Token token, const std::string& message);
+  void runtime_error(const RuntimeError& error);
+  void report(
+    size_type line,
+    const std::string& where,
+    const std::string& message
+  );
 
-    for (const auto& entry : std::filesystem::directory_iterator(db_path)) {
-      if (entry.is_directory()) {
-        auto table_name{entry.path().filename().string()};
-        table_map_.emplace(table_name, Table{path(), table_name});
-      }
-    }
-  }      
+  void load();
 
   TableMap table_map_;
   DatabaseName name_;
+  bool had_error_;
+  bool had_runtime_error_;
+  error_callback callback_;
+  runtime_error_callback runtime_callback_;
 };
 }  // namespace vkdb
 

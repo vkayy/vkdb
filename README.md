@@ -33,7 +33,20 @@ int main()  {
 }
 ```
 
-moreover, you could play around with the vq repl by running `vkdb::VQ::runPrompt()`! at the moment, the repl operates on a default database associated with all interpreter-based execution, so be mindful of that for now.
+where you'd like to chain calls, you most likely can.
+
+```cpp
+db.createTable("sensor_data")
+  .addTagColumn("location")
+  .addTagColumn("type");
+
+db.run("REMOVE TAGS type FROM sensor_data;")
+  .run("PUT temperature 10 20.0 INTO sensor_data;")
+  .runPrompt()
+  .clear();
+```
+
+moreover, you could play around with the vq repl by running `vkdb::Database::runPrompt()` or `vkdb::VQ::runPrompt()`! doing the latter means you operate on a default interpreter database, whilst the former allows you to operate on the specific database you call from.
 
 ```cpp
 #include <vkdb/vq.h>
@@ -70,9 +83,15 @@ auto sum{table_replay.query()
   .whereTagsContain({"tag1", "value1"})
   .sum()
 };
+
+test_db
+  .run("CREATE TABLE temp TAGS tag1, tag2;")
+  .runFile(std::filesystem::current_path() / "../examples/vq_setup.vq")
+  .runPrompt()
+  .clear();
 ```
 
-note that, for now, executing directly from strings/files only applies to interpreter-based execution (see the first two examples). this will be updated very soon.
+again, note that execution using `vkdb::VQ` (see the first two examples) only executes on a default interpreter database. however, using the `vkdb::Database::run...` interface (see last two examples) will execute on the called database. this is recommended!
 
 ## how does it work?
 
@@ -114,8 +133,7 @@ and here's the EBNF grammar encapsulating vq.
 ```bnf
 <expr> ::= {<query> ";"}+
 
-<query> ::= <select_query> | <put_query> | <delete_query> | <create_query> 
-          | <drop_query> | <add_query> | <remove_query>
+<query> ::= <select_query> | <put_query> | <delete_query> | <create_query>  | <drop_query> | <add_query> | <remove_query>
 
 <select_query> ::= "SELECT" <select_type> <metric> "FROM" <table_name> <select_clause>
 
