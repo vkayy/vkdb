@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include <vkdb/interpreter.h>
+#include <vkdb/database.h>
 
 using namespace vkdb;
 

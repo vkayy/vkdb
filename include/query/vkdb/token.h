@@ -62,47 +62,22 @@ public:
   Token() = delete;
 
   explicit Token(TokenType type, const Lexeme& lexeme, size_type line,
-        size_type column)
-    : type_{type}, lexeme_{lexeme}, line_{line}, column_{column} {}
-  
+        size_type column) noexcept;
+
   Token(Token&&) noexcept = default;
   Token& operator=(Token&&) noexcept = default;
-  
+
   Token(const Token&) noexcept = default;
   Token& operator=(const Token&) noexcept = default;
 
   ~Token() = default;
 
-  [[nodiscard]] bool operator==(const Token& other) const noexcept {
-    return type_ == other.type() &&
-      lexeme_ == other.lexeme() &&
-      line_ == other.line() &&
-      column_ == other.column();
-  }
-  
-  [[nodiscard]] TokenType type() const noexcept {
-    return type_;
-  }
-
-  [[nodiscard]] Lexeme lexeme() const noexcept {
-    return lexeme_;
-  }
-
-  [[nodiscard]] size_type line() const noexcept {
-    return line_;
-  }
-
-  [[nodiscard]] size_type column() const noexcept {
-    return column_;
-  }
-
-  [[nodiscard]] std::string toString() const noexcept {
-    auto type_str{TOKEN_TYPE_TO_STRING.at(type_)};
-    return type_str + " "
-      + lexeme_ + " "
-      + std::to_string(line_) + " "
-      + std::to_string(column_);
-  }
+  [[nodiscard]] bool operator==(const Token& other) const noexcept;
+  [[nodiscard]] TokenType type() const noexcept;
+  [[nodiscard]] Lexeme lexeme() const noexcept;
+  [[nodiscard]] size_type line() const noexcept;
+  [[nodiscard]] size_type column() const noexcept;
+  [[nodiscard]] std::string toString() const noexcept;
 
 private:
   TokenType type_;
