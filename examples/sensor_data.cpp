@@ -29,14 +29,14 @@ int main() {
   }
 
   auto average_temperature{table.query()
-    .between(2'500, 7'500)
+    .whereTimestampBetween(2'500, 7'500)
     .whereMetricIs(temp_metric)
     .whereTagsContainAllOf(region_eu_tag, city_london_tag)
     .avg()
   };
 
   auto max_humidity{table.query()
-    .between(1'000, 3'000)
+    .whereTimestampBetween(1'000, 3'000)
     .whereMetricIs(humidity_metric)
     .whereTagsContainAllOf(region_eu_tag, city_london_tag)
     .max()

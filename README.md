@@ -33,6 +33,16 @@ int main()  {
 }
 ```
 
+moreover, you could play around with the vq repl by running `vkdb::VQ::runPrompt()`! at the moment, the repl operates on a default database associated with all interpreter-based execution, so be mindful of that for now.
+
+```cpp
+#include <vkdb/vq.h>
+
+int main() {
+  vkdb::VQ::runPrompt();
+}
+```
+
 if you want to play around with some mock timestamps/values, feel free to use `vkdb::random<>`. any arithmetic type (with no cv- or ref- qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
 
 ```cpp
@@ -40,28 +50,37 @@ auto random_int{vkdb::random<int>(-100'000, 100'000)};
 auto random_double{vkdb::random<double>(-10.0, 10.0)};
 ```
 
-lastly, you can execute queries both from strings and files. for instance, to yank a few examples from the aptly named `examples` directory:
+lastly, you can execute queries both from strings/files and via the builder interface. for instance, to yank a few examples from the aptly named `examples` directory:
 
 ```cpp
-auto query_result{db.executeQuery(
+vkdb::VQ::run(
   "SELECT COUNT temperature "
   "FROM atmospheric "
   "BETWEEN 1702550000 AND 1702650000 "
-  "WHERE region=na"
-)};
+  "WHERE region=na;"
+);
 
-auto file_result{db.executeFile(
-    std::filesystem::current_path() / "../examples/vq_setup.vq"
-)};
+vkdb::VQ::runFile(
+  std::filesystem::current_path() / "../examples/vq_setup.vq"
+);
+
+auto sum{table_replay.query()
+  .whereTimestampBetween(0, 999)
+  .whereMetricIs("metric")
+  .whereTagsContain({"tag1", "value1"})
+  .sum()
+};
 ```
 
-note: these are outdated examples. if you're seeing this, you're on the `vq-interpreter` branch. this branch is currently in development, so `examples` does not reflect the new grammar for vq (or any solid one at all).
+note that, for now, executing directly from strings/files only applies to interpreter-based execution (see the first two examples). this will be updated very soon.
 
 ## how does it work?
 
 vkdb is built on log-structured merge (lsm) trees. in their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (wal) for persistence of in-memory changes.
 
 when you create your database (by instantiating a `vkdb::Database`), it persists on disk until you clear it via `vkdb::Database::clear`. it's best to make all interactions via this type, or perhaps the `vkdb::Table` type via `vkdb::Database::getTable`.
+
+one important thing to note is that you should not manipulate the interpreter's database (`vkdb::INTERPRETER_DEFAULT_DATABASE`) via `vkdb::Database`. this is because the interpreter-based instance can become out-of-sync (due to some operations modifying memory and not disk).
 
 in terms of typing, i've tried to make vkdb as robust as possible (as you can see with some of the verbose concepts), but there are bound to be some flaws here and there. bring them up!
 
@@ -93,7 +112,7 @@ REMOVE TAGS host FROM servers;
 and here's the EBNF grammar encapsulating vq.
 
 ```bnf
-<expr> ::= <query> ";"
+<expr> ::= {<query> ";"}+
 
 <query> ::= <select_query> | <put_query> | <delete_query> | <create_query> 
           | <drop_query> | <add_query> | <remove_query>
@@ -151,7 +170,7 @@ and here's the EBNF grammar encapsulating vq.
 <digit> ::= "0" | "1" | ... | "9"
 ```
 
-again, if there are any holes in my logic, let me know. the midnight commits typically aren't the best.
+again, if there are any holes in my logic, let me know. i'm going to be working on adding more utility (including changing databases within interpreter-based execution), so look forward to that.
 
 ## authors
 

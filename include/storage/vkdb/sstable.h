@@ -54,7 +54,8 @@ public:
     std::ofstream file{file_path_};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "SSTable::writeMemTableToFile(): Unable to open file."
+        "SSTable::writeMemTableToFile(): Unable to open file '"
+        + std::string(file_path_) + "'."
       };
     }
 
@@ -63,7 +64,8 @@ public:
       auto pos{file.tellp()};
       if (pos == -1) {
         throw std::runtime_error{
-          "SSTable::writeMemTableToFile(): Unable to get file position."
+          "SSTable::writeMemTableToFile(): Unable to get current position "
+          " of filestream for '" + std::string(file_path_) + "'."
         };
       }
       update_metadata(key, pos);
@@ -85,14 +87,17 @@ public:
     std::ifstream file{file_path_};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "SSTable::get(): Unable to open file."
+        "SSTable::get(): Unable to open file '"
+        + std::string(file_path_) + "'."
       };
     }
 
     file.seekg(index_.at(key));
     if (!file) {
       throw std::runtime_error{
-        "SSTable::get(): Unable to seek to position."
+        "SSTable::get(): Unable to seek to position "
+        + std::to_string(index_.at(key)) + " in file '"
+        + std::string(file_path_) + "'."
       };
     }
 

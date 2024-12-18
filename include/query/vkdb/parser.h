@@ -18,7 +18,8 @@ public:
   Parser(
     const std::vector<Token>& tokens,
     error_callback callback = [](const Token&, const std::string&) {}
-  ) : tokens_{tokens}, callback_{callback}, position_{0} {}
+  ) noexcept
+    : tokens_{tokens}, callback_{callback}, position_{0} {}
 
   [[nodiscard]] std::optional<Expr> parse() {
     try {
@@ -87,16 +88,19 @@ private:
   }
 
   Token consume(TokenType type, const std::string& message) {
-    if (check(type)) {
-      return advance();
-    }
-    throw error(peek(), message);
+  if (check(type)) {
+    return advance();
+  }
+  throw error(peek(), message);
   }
 
   [[nodiscard]] Expr parse_expression() {
-    auto query{parse_query()};
-    consume(TokenType::SEMICOLON, "Expected semicolon.");
-    return query;
+    Expr expr{};
+    do {
+      expr.push_back(parse_query());
+      consume(TokenType::SEMICOLON, "Expected semicolon.");
+    } while (tokens_remaining() && !check(TokenType::END_OF_FILE));
+    return expr;
   }
 
   [[nodiscard]] Query parse_query() {
@@ -116,7 +120,7 @@ private:
     case TokenType::REMOVE:
       return parse_remove_query();
     default:
-      throw error(peek(), "Expected query keyword.");
+      throw error(peek(), "Expected query base word.");
     }
   }
 
@@ -142,7 +146,7 @@ private:
     auto value{parse_value()};
     consume(TokenType::INTO, "Expected INTO.");
     auto table_name{parse_table_name()};
-    TagList tag_list;
+    TagListExpr tag_list;
     if (match(TokenType::TAGS)) {
       tag_list = parse_tag_list();
     }
@@ -161,7 +165,7 @@ private:
     auto timestamp{parse_timestamp()};
     consume(TokenType::FROM, "Expected FROM.");
     auto table_name{parse_table_name()};
-    TagList tag_list;
+    TagListExpr tag_list;
     if (match(TokenType::TAGS)) {
       tag_list = parse_tag_list();
     }
@@ -177,7 +181,7 @@ private:
     consume(TokenType::CREATE, "Expected CREATE.");
     consume(TokenType::TABLE, "Expected TABLE.");
     auto table_name{parse_table_name()};
-    TagColumns tag_columns;
+    TagColumnsExpr tag_columns;
     if (match(TokenType::TAGS)) {
       tag_columns = parse_tag_columns();
     }
@@ -219,26 +223,26 @@ private:
   }
 
   [[nodiscard]] SelectType parse_select_type() {
-    auto select_type{[this]() {
+    auto select_type{[this]() -> SelectType {
       switch (peek().type()) {
       case TokenType::DATA:
         advance();
-        return SelectType::DATA;
-      case TokenType::AVG:
-        advance();
-        return SelectType::AVG;
-      case TokenType::SUM:
-        advance();
-        return SelectType::SUM;
+        return SelectTypeDataExpr{peek()};
       case TokenType::COUNT:
         advance();
-        return SelectType::COUNT;
+        return SelectTypeCountExpr{peek()};
+      case TokenType::AVG:
+        advance();
+        return SelectTypeAvgExpr{peek()};
+      case TokenType::SUM:
+        advance();
+        return SelectTypeSumExpr{peek()};
       case TokenType::MIN:
         advance();
-        return SelectType::MIN;
+        return SelectTypeMinExpr{peek()};
       case TokenType::MAX:
         advance();
-        return SelectType::MAX;
+        return SelectTypeMaxExpr{peek()};
       default:
         throw error(peek(), "Expected select type.");
       }
@@ -303,15 +307,15 @@ private:
     return {tag_list};
   }
 
-  [[nodiscard]] TagList parse_tag_list() {
-    std::vector<Tag> tags;
+  [[nodiscard]] TagListExpr parse_tag_list() {
+    std::vector<TagExpr> tags;
     do {
       tags.push_back(parse_tag());
     } while (match(TokenType::COMMA));
     return {tags};
   }
 
-  [[nodiscard]] Tag parse_tag() {
+  [[nodiscard]] TagExpr parse_tag() {
     auto tag_key{parse_tag_key()};
     consume(TokenType::EQUAL, "Expected '='.");
     auto tag_value{parse_tag_value()};
@@ -321,42 +325,42 @@ private:
     };
   }
 
-  [[nodiscard]] TagColumns parse_tag_columns() {
-    std::vector<TagKey> keys;
+  [[nodiscard]] TagColumnsExpr parse_tag_columns() {
+    std::vector<TagKeyExpr> keys;
     do {
       keys.push_back(parse_tag_key());
     } while (match(TokenType::COMMA));
     return {keys};
   }
 
-  [[nodiscard]] TagKey parse_tag_key() {
+  [[nodiscard]] TagKeyExpr parse_tag_key() {
     auto tag_key{consume(TokenType::IDENTIFIER, "Expected tag key.")};
-    return {tag_key.lexeme()};
+    return {tag_key};
   }
 
-  [[nodiscard]] TagValue parse_tag_value() {
+  [[nodiscard]] TagValueExpr parse_tag_value() {
     auto tag_value{consume(TokenType::IDENTIFIER, "Expected tag value.")};
-    return {tag_value.lexeme()};
+    return {tag_value};
   }
 
-  [[nodiscard]] Metric parse_metric() {
+  [[nodiscard]] MetricExpr parse_metric() {
     auto metric{consume(TokenType::IDENTIFIER, "Expected metric.")};
-    return {metric.lexeme()};
+    return {metric};
   }
 
-  [[nodiscard]] TableName parse_table_name() {
+  [[nodiscard]] TableNameExpr parse_table_name() {
     auto table_name{consume(TokenType::IDENTIFIER, "Expected table name.")};
-    return {table_name.lexeme()};
+    return {table_name};
   }
 
-  [[nodiscard]] Timestamp parse_timestamp() {
+  [[nodiscard]] TimestampExpr parse_timestamp() {
     auto timestamp{consume(TokenType::NUMBER, "Expected timestamp.")};
-    return {timestamp.lexeme()};
+    return {timestamp};
   }
 
-  [[nodiscard]] Value parse_value() {
+  [[nodiscard]] ValueExpr parse_value() {
     auto value{consume(TokenType::NUMBER, "Expected value.")};
-    return {value.lexeme()};
+    return {value};
   }
 
   const std::vector<Token> tokens_;

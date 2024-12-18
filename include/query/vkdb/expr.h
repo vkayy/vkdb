@@ -1,51 +1,52 @@
 #ifndef QUERY_EXPR_H
 #define QUERY_EXPR_H
 
+#include <vkdb/token.h>
 #include <string>
 #include <vector>
 #include <optional>
 #include <variant>
 
 namespace vkdb {
-struct Metric {
-  std::string identifier;
+struct MetricExpr {
+  Token token;
 };
 
-struct TableName {
-  std::string identifier;
+struct TableNameExpr {
+  Token token;
 };
 
-struct Timestamp {
-  std::string number;
+struct TimestampExpr {
+  Token token;
 };
 
-struct Value {
-  std::string number;
+struct ValueExpr {
+  Token token;
 };
 
-struct TagKey {
-  std::string identifier;
+struct TagKeyExpr {
+  Token token;
 };
 
-struct TagColumns {
-  std::vector<TagKey> keys;
+struct TagColumnsExpr {
+  std::vector<TagKeyExpr> keys;
 };
 
-struct TagValue {
-  std::string identifier;
+struct TagValueExpr {
+  Token token;
 };
 
-struct Tag {
-  TagKey key;
-  TagValue value;
+struct TagExpr {
+  TagKeyExpr key;
+  TagValueExpr value;
 };
 
-struct TagList {
-  std::vector<Tag> tags;
+struct TagListExpr {
+  std::vector<TagExpr> tags;
 };
 
 struct WhereClause {
-  TagList tag_list;
+  TagListExpr tag_list;
 };
 
 struct AllClause {
@@ -53,19 +54,48 @@ struct AllClause {
 };
 
 struct BetweenClause {
-  Timestamp start;
-  Timestamp end;
+  TimestampExpr start;
+  TimestampExpr end;
   std::optional<WhereClause> where_clause;
 };
 
 struct AtClause {
-  Timestamp timestamp;
+  TimestampExpr timestamp;
   std::optional<WhereClause> where_clause;
 };
 
-enum class SelectType {
-  DATA, AVG, SUM, COUNT, MIN, MAX
+struct SelectTypeDataExpr {
+  Token token;
 };
+
+struct SelectTypeCountExpr {
+  Token token;
+};
+
+struct SelectTypeAvgExpr {
+  Token token;
+};
+
+struct SelectTypeSumExpr {
+  Token token;
+};
+
+struct SelectTypeMinExpr {
+  Token token;
+};
+
+struct SelectTypeMaxExpr {
+  Token token;
+};
+
+using SelectType = std::variant<
+  SelectTypeDataExpr,
+  SelectTypeCountExpr,
+  SelectTypeAvgExpr,
+  SelectTypeSumExpr,
+  SelectTypeMinExpr,
+  SelectTypeMaxExpr
+>;  
 
 using SelectClause = std::variant<
   AllClause,
@@ -75,43 +105,43 @@ using SelectClause = std::variant<
 
 struct SelectQuery {
   SelectType type;
-  Metric metric;
-  TableName table_name;
+  MetricExpr metric;
+  TableNameExpr table_name;
   SelectClause clause;
 };
 
 struct PutQuery {
-  Metric metric;
-  Timestamp timestamp;
-  Value value;
-  TableName table_name;
-  std::optional<TagList> tag_list;
+  MetricExpr metric;
+  TimestampExpr timestamp;
+  ValueExpr value;
+  TableNameExpr table_name;
+  std::optional<TagListExpr> tag_list;
 };
 
 struct DeleteQuery {
-  Metric metric;
-  Timestamp timestamp;
-  TableName table_name;
-  std::optional<TagList> tag_list;
+  MetricExpr metric;
+  TimestampExpr timestamp;
+  TableNameExpr table_name;
+  std::optional<TagListExpr> tag_list;
 };
 
 struct CreateQuery {
-  TableName table_name;
-  std::optional<TagColumns> tag_columns;
+  TableNameExpr table_name;
+  std::optional<TagColumnsExpr> tag_columns;
 };
 
 struct DropQuery {
-  TableName table_name;
+  TableNameExpr table_name;
 };
 
 struct AddQuery {
-  TagColumns tag_columns;
-  TableName table_name;
+  TagColumnsExpr tag_columns;
+  TableNameExpr table_name;
 };
 
 struct RemoveQuery {
-  TagColumns tag_columns;
-  TableName table_name;
+  TagColumnsExpr tag_columns;
+  TableNameExpr table_name;
 };
 
 using Query = std::variant<
@@ -120,7 +150,7 @@ using Query = std::variant<
   AddQuery, RemoveQuery
 >;
 
-using Expr = Query;
+using Expr = std::vector<Query>;
 }  // namespace vkdb
 
 #endif // QUERY_EXPR_H

@@ -40,7 +40,7 @@ TEST_F(FriendlyQueryBuilderTest, CanGetQuery) {
 
 TEST_F(FriendlyQueryBuilderTest, CanBetweenQuery) {
   auto result{query()
-    .between(ENTRY_COUNT / 2, ENTRY_COUNT)
+    .whereTimestampBetween(ENTRY_COUNT / 2, ENTRY_COUNT)
     .execute()
   };
 

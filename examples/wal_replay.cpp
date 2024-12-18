@@ -21,7 +21,7 @@ int main() {
   auto& table_replay{db_replay->getTable("sample_table")};
   
   auto sum{table_replay.query()
-    .between(0, 999)
+    .whereTimestampBetween(0, 999)
     .whereMetricIs("metric")
     .whereTagsContain({"tag1", "value1"})
     .sum()
