@@ -35,13 +35,6 @@ public:
     return *this;
   }
 
-  [[nodiscard]] FriendlyQueryBuilder& between(const Timestamp& start, const Timestamp& end) {
-    TimeSeriesKey start_key{start, MIN_METRIC, {}};
-    TimeSeriesKey end_key{end, MAX_METRIC, {}};
-    std::ignore = query_builder_.range(start_key, end_key);
-    return *this;
-  }
-
   [[nodiscard]] FriendlyQueryBuilder& whereMetricIs(const Metric& metric) {
     std::ignore = query_builder_.filterByMetric(metric);
     return *this;
@@ -57,6 +50,17 @@ public:
     std::ignore = query_builder_.filterByTimestamp(timestamp);
     return *this;
   }
+
+
+  [[nodiscard]] FriendlyQueryBuilder& whereTimestampBetween(
+    const Timestamp& start, const Timestamp& end
+  ) {
+    TimeSeriesKey start_key{start, MIN_METRIC, {}};
+    TimeSeriesKey end_key{end, MAX_METRIC, {}};
+    std::ignore = query_builder_.range(start_key, end_key);
+    return *this;
+  }
+
 
   template <AllConvertibleToNoCVRefQuals<Timestamp>... Timestamps>
   [[nodiscard]] FriendlyQueryBuilder& whereTimestampIsAnyOf(
@@ -91,7 +95,7 @@ public:
                                           const TagTable& tag_table, TValue value) {
     if (metric.empty() || metric.length() >= TimeSeriesKey::MAX_METRIC_LENGTH) {
       throw std::runtime_error{
-        "FriendlyQueryBuilder::get(): Invalid metric."
+        "FriendlyQueryBuilder::get(): Invalid metric '" + metric + "'."
       };
     }
     TimeSeriesKey key{timestamp, metric, tag_table};
@@ -126,7 +130,7 @@ public:
     return query_builder_.max();
   }
 
-  result_type execute() {
+  result_type execute(){
     auto result{query_builder_.execute() |
     std::views::transform([](const auto& entry) {
       return DataPoint<TValue>{

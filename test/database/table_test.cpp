@@ -40,7 +40,7 @@ TEST_F(TableTest, CanQueryData) {
   }
 
   auto result{table_->query()
-    .between(2'500, 7'500)
+    .whereTimestampBetween(2'500, 7'500)
     .whereMetricIs("temperature")
     .whereTagsContain({"region", "ldn"})
     .avg()
@@ -62,7 +62,7 @@ TEST_F(TableTest, CanQueryDataWithMultipleMetrics) {
   }
 
   auto result{table_->query()
-    .between(2'500, 7'500)
+    .whereTimestampBetween(2'500, 7'500)
     .whereMetricIsAnyOf("temperature", "humidity")
     .whereTagsContain({"region", "ldn"})
     .avg()
@@ -85,7 +85,7 @@ TEST_F(TableTest, CanQueryDataWithMultipleMetricsAndTags) {
   }
 
   auto result{table_->query()
-    .between(2'500, 7'500)
+    .whereTimestampBetween(2'500, 7'500)
     .whereMetricIsAnyOf("temperature", "humidity")
     .whereTagsContainAllOf(
       std::make_pair("region", "ldn"),

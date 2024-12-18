@@ -167,7 +167,7 @@ public:
     case QueryType::None:
       if (filters_.size() == 1) {
         throw std::runtime_error{
-          "QueryBuilder::execute(): No query specified."
+          "QueryBuilder::execute(): No query type specified."
         };
       }
       set_default_range_if_none();
@@ -265,7 +265,8 @@ private:
     auto filtered_range{get_filtered_range()};
     if (filtered_range.empty()) {
       throw std::runtime_error{
-        "QueryBuilder::get_nonempty_filtered_range(): Empty range."
+        "QueryBuilder::get_nonempty_filtered_range(): "
+        "Cannot aggregate on empty range."
       };
     }
     return filtered_range;
@@ -301,7 +302,8 @@ private:
     for (const auto& [key, value] : tag_table) {
       if (!tag_columns_.contains(key)) {
         throw std::runtime_error{
-          "QueryBuilder::validate_tags(): Tag not in tag columns."
+          "QueryBuilder::validate_tags(): Tag '"
+          + key + "' not in tag columns."
         };
       }
     }
@@ -309,10 +311,13 @@ private:
 
   template <AllSameNoCVRefQuals<Tag>... Tags>
   void validate_tags(const Tags&... tags) const {
-    if (!(tag_columns_.contains(tags.first) && ...)) {
-      throw std::runtime_error{
-        "QueryBuilder::validate_tags(): Tag not in tag columns."
-      };
+    for (const auto& [key, value] : std::initializer_list<Tag>{tags...}) {
+      if (!tag_columns_.contains(key)) {
+        throw std::runtime_error{
+          "QueryBuilder::validate_tags(): Tag '"
+          + key + "' not in tag columns."
+        };
+      }
     }
   }
 

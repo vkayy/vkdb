@@ -41,7 +41,8 @@ public:
     auto inserted{tag_columns_.insert(tag_column).second};
     if (!inserted) {
       throw std::runtime_error{
-        "Table::addTagColumn(): Tag column already exists."
+        "Table::addTagColumn(): Tag column '" + tag_column
+        + "' already exists in '" + name_ + "'." 
       };
     }
     save_tag_columns();
@@ -51,7 +52,8 @@ public:
     auto removed{tag_columns_.erase(tag_column) > 0};
     if (!removed) {
       throw std::runtime_error{
-        "Table::removeTagColumn(): Tag column does not exist."
+        "Table::removeTagColumn(): Tag column '" + tag_column
+        + "' does not exist in '" + name_ + "'."
       };
     }
     save_tag_columns();
@@ -89,7 +91,8 @@ private:
     std::ofstream file{tag_columns_path()};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "Table::save_tag_columns(): Unable to open file."
+        "Table::save_tag_columns(): Unable to open file "
+        + std::string(tag_columns_path()) + "."
       };
     }
     for (const auto& column : tag_columns_) {
@@ -106,7 +109,8 @@ private:
     std::ifstream file{tag_columns_path()};
     if (!file.is_open()) {
       throw std::runtime_error{
-        "Table::load_tag_columns(): Unable to open file."
+        "Table::load_tag_columns(): Unable to open file "
+        + std::string(tag_columns_path()) + "."
       };
     }
     std::string column;
