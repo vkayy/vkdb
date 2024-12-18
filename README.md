@@ -46,7 +46,9 @@ db.run("REMOVE TAGS type FROM sensor_data;")
   .clear();
 ```
 
-moreover, you could play around with the vq repl by running `vkdb::Database::runPrompt()` or `vkdb::VQ::runPrompt()`! doing the the former allows you to operate on the specific database you call from, whilst the latter means you operate on a default interpreter database. the default repls are honestly purely for experimental purposes—there's not much to gain besides having a vq playground.
+moreover, you could play around with the vq repl by running `vkdb::Database::runPrompt()` or `vkdb::VQ::runPrompt()`. the former operates on the database you call from, whilst the latter operates on a reserved database called `interpreter_default`.
+
+the default repls are honestly purely for experimental purposes—there's not much to gain besides having a vq playground.
 
 ```cpp
 #include <vkdb/vq.h>
