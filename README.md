@@ -46,17 +46,19 @@ db.run("REMOVE TAGS type FROM sensor_data;")
   .clear();
 ```
 
-moreover, you could play around with the vq repl by running `vkdb::Database::runPrompt()` or `vkdb::VQ::runPrompt()`! doing the latter means you operate on a default interpreter database, whilst the former allows you to operate on the specific database you call from.
+moreover, you could play around with the vq repl by running `vkdb::Database::runPrompt()` or `vkdb::VQ::runPrompt()`! doing the the former allows you to operate on the specific database you call from, whilst the latter means you operate on a default interpreter database. the default repls are honestly purely for experimental purposes—there's not much to gain besides having a vq playground.
 
 ```cpp
 #include <vkdb/vq.h>
 
 int main() {
+  vkdb::Database database{"test"};
+  database.runPrompt();
   vkdb::VQ::runPrompt();
 }
 ```
 
-if you want to play around with some mock timestamps/values, feel free to use `vkdb::random<>`. any arithmetic type (with no cv- or ref- qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
+if you want to play around with some mock timestamps/values, feel free to use `vkdb::random<>`. any arithmetic type (with no cv- or ref-qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
 
 ```cpp
 auto random_int{vkdb::random<int>(-100'000, 100'000)};
