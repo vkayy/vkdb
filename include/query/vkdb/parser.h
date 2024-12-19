@@ -52,6 +52,7 @@ private:
   [[nodiscard]] DropQuery parse_drop_query();
   [[nodiscard]] AddQuery parse_add_query();
   [[nodiscard]] RemoveQuery parse_remove_query();
+  [[nodiscard]] TablesQuery parse_tables_query();
   [[nodiscard]] SelectType parse_select_type();
   [[nodiscard]] SelectClause parse_select_clause();
   [[nodiscard]] AllClause parse_all_clause();

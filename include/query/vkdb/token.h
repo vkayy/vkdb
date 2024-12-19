@@ -11,7 +11,7 @@ using Lexeme = std::string;
 enum class TokenType {
   SELECT, PUT, DELETE, CREATE, DROP, ADD, REMOVE,
   DATA, AVG, SUM, COUNT, MIN, MAX,
-  TABLE, TAGS, ALL, BETWEEN, AND, AT, WHERE, FROM, INTO, TO,
+  TABLE, TABLES, TAGS, ALL, BETWEEN, AND, AT, WHERE, FROM, INTO, TO,
   EQUAL, COMMA, SEMICOLON,
   IDENTIFIER, NUMBER,
   END_OF_FILE, UNKNOWN
@@ -19,7 +19,8 @@ enum class TokenType {
 
 static const std::unordered_set<TokenType> QUERY_BASE_WORDS{
   TokenType::SELECT, TokenType::PUT, TokenType::DELETE,
-  TokenType::CREATE, TokenType::DROP, TokenType::ADD, TokenType::REMOVE
+  TokenType::CREATE, TokenType::DROP, TokenType::ADD, TokenType::REMOVE,
+  TokenType::TABLES
 };
 
 static const std::unordered_map<TokenType, std::string> TOKEN_TYPE_TO_STRING{
@@ -30,6 +31,7 @@ static const std::unordered_map<TokenType, std::string> TOKEN_TYPE_TO_STRING{
   {TokenType::DROP, "DROP"},
   {TokenType::ADD, "ADD"},
   {TokenType::REMOVE, "REMOVE"},
+  {TokenType::TABLES, "TABLES"},
   {TokenType::DATA, "DATA"},
   {TokenType::AVG, "AVG"},
   {TokenType::SUM, "SUM"},

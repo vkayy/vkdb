@@ -20,6 +20,7 @@ namespace vkdb {
     void visit(const DropQuery& query) noexcept;
     void visit(const AddQuery& query) noexcept;
     void visit(const RemoveQuery& query) noexcept;
+    void visit(const TablesQuery& query) noexcept;
     void visit(const AllClause& clause) noexcept;
     void visit(const BetweenClause& clause) noexcept;
     void visit(const AtClause& clause) noexcept;

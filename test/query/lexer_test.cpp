@@ -9,12 +9,12 @@ TEST(LexerTest, CanTokenizeInputWithAllLexemes) {
     "DATA AVG SUM COUNT MIN MAX "
     "TABLE TAGS ALL BETWEEN AND AT WHERE FROM INTO TO "
     "= , ; "
-    "id123 123id 123 -123 123.00 -123.00"
+    "id123 123id 123 -123 123.00 -123.00 TABLES"
   };
 
   auto tokens{lexer.tokenize()};
 
-  ASSERT_EQ(tokens.size(), 34); 
+  ASSERT_EQ(tokens.size(), 35); 
 
   EXPECT_EQ(tokens[0], Token(TokenType::SELECT, "SELECT", 1, 1));
   EXPECT_EQ(tokens[1], Token(TokenType::PUT, "PUT", 1, 8));
@@ -54,7 +54,9 @@ TEST(LexerTest, CanTokenizeInputWithAllLexemes) {
   EXPECT_EQ(tokens[31], Token(TokenType::NUMBER, "123.00", 1, 145));
   EXPECT_EQ(tokens[32], Token(TokenType::NUMBER, "-123.00", 1, 152));
 
-  EXPECT_EQ(tokens.back(), Token(TokenType::END_OF_FILE, "", 1, 159));
+  EXPECT_EQ(tokens[33], Token(TokenType::TABLES, "TABLES", 1, 160));
+
+  EXPECT_EQ(tokens[34], Token(TokenType::END_OF_FILE, "", 1, 166));
 }
 
 TEST(LexerTest, HandlesEmptyInput) {

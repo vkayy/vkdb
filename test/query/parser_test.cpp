@@ -120,6 +120,20 @@ TEST(ParserTest, CanParseRemoveQuery) {
   EXPECT_EQ(remove_query_ptr->tag_columns.keys[1].token.lexeme(), "tag2");
 }
 
+TEST(ParserTest, CanParseTablesQuery) {
+  std::vector<Token> tokens {
+    make_token(TokenType::TABLES, "TABLES"),
+    make_token(TokenType::SEMICOLON, ";")
+  };
+
+  Parser parser{tokens};
+  auto tables_query{parser.parse()};
+  ASSERT_TRUE(tables_query.has_value());
+
+  auto tables_query_ptr{std::get_if<TablesQuery>(&tables_query.value()[0])};
+  ASSERT_NE(tables_query_ptr, nullptr);
+}
+
 TEST(ParserTest, CanParseSelectDataAllQuery) {
   std::vector<Token> tokens{
     make_token(TokenType::SELECT, "SELECT"),

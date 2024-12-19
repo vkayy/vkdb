@@ -29,6 +29,17 @@ void Interpreter::interpret(const Expr& expr, std::ostream& stream) const {
   }
 }
 
+std::string Interpreter::to_string(const OutputResult& result) const {
+  return std::visit([this](auto&& result) -> std::string {
+    using R = std::decay_t<decltype(result)>;
+    if constexpr (std::is_same_v<R, SelectResult>) {
+      return to_string(result);
+    } else if constexpr (std::is_same_v<R, TablesResult>) {
+      return to_string(result);
+    }
+  }, result);
+}
+
 std::string Interpreter::to_string(const SelectResult& result) const {
   return std::visit([this](auto&& result) -> std::string {
     using R = std::decay_t<decltype(result)>;
@@ -40,6 +51,19 @@ std::string Interpreter::to_string(const SelectResult& result) const {
       return std::to_string(result);
     }
   }, result);
+}
+
+std::string Interpreter::to_string(const TablesResult& result) const {
+  std::string tables_result{};
+  auto first{true};
+  for (const auto& table_name : result) {
+    if (!first) {
+      tables_result += " ";
+    }
+    tables_result += table_name;
+    first = false;
+  }
+  return tables_result;
 }
 
 Results Interpreter::visit(const Expr& expr) const {
@@ -78,6 +102,8 @@ Result Interpreter::visit(const Query& query) const {
       } else if constexpr (std::is_same_v<Q, RemoveQuery>) {
         visit(query);
         return std::nullopt;
+      } else if constexpr (std::is_same_v<Q, TablesQuery>) {
+        return visit(query);
       }
     }, query);
   } catch (const RuntimeError& e) {
@@ -237,17 +263,25 @@ AddResult Interpreter::visit(const AddQuery& query) const {
 }
 
 RemoveResult Interpreter::visit(const RemoveQuery& query) const {
-    try {
-      auto tag_columns_result{visit(query.tag_columns)};
-      auto table_name_result{visit(query.table_name)};
-      auto& table{database_.getTable(table_name_result)};
-      for (const auto& tag_key : tag_columns_result) {
-          table.removeTagColumn(tag_key);
-      }
-    } catch (const std::exception& e) {
-      throw RuntimeError{query.table_name.token, e.what()};
+  try {
+    auto tag_columns_result{visit(query.tag_columns)};
+    auto table_name_result{visit(query.table_name)};
+    auto& table{database_.getTable(table_name_result)};
+    for (const auto& tag_key : tag_columns_result) {
+        table.removeTagColumn(tag_key);
     }
+  } catch (const std::exception& e) {
+    throw RuntimeError{query.table_name.token, e.what()};
   }
+}
+
+TablesResult Interpreter::visit(const TablesQuery& query) const {
+  TablesResult tables_result{};
+  for (const auto& table_name : database_.tables()) {
+    tables_result.push_back(table_name);
+  }
+  return tables_result;
+}
 
 AllClauseResult Interpreter::visit(const AllClause& clause) const {
   AllClauseResult all_clause_result{};

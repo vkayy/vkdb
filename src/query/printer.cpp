@@ -25,6 +25,8 @@ void Printer::visit(const Query& query) noexcept {
       visit(query);
     } else if constexpr (std::is_same_v<Q, RemoveQuery>) {
       visit(query);
+    } else if constexpr (std::is_same_v<Q, TablesQuery>) {
+      visit(query);
     }
   }, query);
   output_ << ";";
@@ -104,6 +106,10 @@ void Printer::visit(const RemoveQuery& query) noexcept {
   visit(query.tag_columns);
   output_ << " FROM ";
   visit(query.table_name);
+}
+
+void Printer::visit(const TablesQuery& query) noexcept {
+  output_ << "TABLES";
 }
 
 void Printer::visit(const AllClause& clause) noexcept {

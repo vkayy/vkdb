@@ -43,10 +43,13 @@ TEST_F(DatabaseTest, CanGetPath) {
 TEST_F(DatabaseTest, CanGetTables) {
   database_->createTable("table1");
   database_->createTable("table2");
-  auto tables{database_->tables()};
+  std::unordered_set<std::string> tables;
+  for (const auto& table : database_->tables()) {
+    tables.insert(table);
+  }
   ASSERT_EQ(tables.size(), 2);
-  EXPECT_EQ(tables[0], "table1");
-  EXPECT_EQ(tables[1], "table2");
+  EXPECT_TRUE(tables.contains("table1"));
+  EXPECT_TRUE(tables.contains("table2"));
 }
 
 TEST_F(DatabaseTest, CanRunCreateQuery) {
@@ -75,6 +78,23 @@ TEST_F(DatabaseTest, CanRunRemoveQuery) {
   EXPECT_FALSE(
     database_->getTable("sensor_data").tagColumns().contains("temperature")
   );
+}
+
+TEST_F(DatabaseTest, CanRunTablesQuery) {
+  database_->createTable("sensors");
+  database_->createTable("devices");
+  database_->createTable("cameras");
+  std::stringstream result;
+  database_->run("TABLES;", result);
+  std::unordered_set<std::string> tables;
+  std::string table;
+  while (result >> table) {
+    tables.insert(table);
+  }
+  ASSERT_EQ(tables.size(), 3);
+  EXPECT_TRUE(tables.contains("sensors"));
+  EXPECT_TRUE(tables.contains("devices"));
+  EXPECT_TRUE(tables.contains("cameras"));
 }
 
 TEST_F(DatabaseTest, CanRunSelectDataAllQuery) {

@@ -15,6 +15,7 @@ static const std::unordered_map<Lexeme, TokenType> WORD_TO_TOKEN_TYPE{
 	{"DROP", TokenType::DROP},
 	{"ADD", TokenType::ADD},
 	{"REMOVE", TokenType::REMOVE},
+	{"TABLES", TokenType::TABLES},
 	{"DATA", TokenType::DATA},
 	{"AVG", TokenType::AVG},
 	{"SUM", TokenType::SUM},

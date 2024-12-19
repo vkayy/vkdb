@@ -55,8 +55,13 @@ using CreateResult = void;
 using DropResult = void;
 using AddResult = void;
 using RemoveResult = void;
+using TablesResult = std::vector<std::string>;
 
-using Result = std::optional<SelectResult>;
+using OutputResult = std::variant<
+  SelectResult,
+  TablesResult
+>;
+using Result = std::optional<OutputResult>;
 using Results = std::vector<Result>;
 
 static const std::string INTERPRETER_DEFAULT_DATABASE{"interpreter_default"};
@@ -82,7 +87,9 @@ public:
 
   void interpret(const Expr& expr, std::ostream& stream = std::cout) const;
 private:
+  [[nodiscard]] std::string to_string(const OutputResult& result) const;
   [[nodiscard]] std::string to_string(const SelectResult& result) const;
+  [[nodiscard]] std::string to_string(const TablesResult& result) const;
   [[nodiscard]] Results visit(const Expr& expr) const;
   [[nodiscard]] Result visit(const Query& query) const;
   
@@ -100,6 +107,7 @@ private:
   DropResult visit(const DropQuery& query) const;
   AddResult visit(const AddQuery& query) const;
   RemoveResult visit(const RemoveQuery& query) const;
+  TablesResult visit(const TablesQuery& query) const;
   [[nodiscard]] AllClauseResult visit(const AllClause& clause) const;
   [[nodiscard]] BetweenClauseResult visit(const BetweenClause& clause) const;
   [[nodiscard]] AtClauseResult visit(const AtClause& clause) const;

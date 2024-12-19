@@ -89,22 +89,24 @@ Expr Parser::parse_expression() {
 
 Query Parser::parse_query() {
   switch (peek().type()) {
-    case TokenType::SELECT:
-      return parse_select_query();
-    case TokenType::PUT:
-      return parse_put_query();
-    case TokenType::DELETE:
-      return parse_delete_query();
-    case TokenType::CREATE:
-      return parse_create_query();
-    case TokenType::DROP:
-      return parse_drop_query();
-    case TokenType::ADD:
-      return parse_add_query();
-    case TokenType::REMOVE:
-      return parse_remove_query();
-    default:
-      throw error(peek(), "Expected query base word.");
+  case TokenType::SELECT:
+    return parse_select_query();
+  case TokenType::PUT:
+    return parse_put_query();
+  case TokenType::DELETE:
+    return parse_delete_query();
+  case TokenType::CREATE:
+    return parse_create_query();
+  case TokenType::DROP:
+    return parse_drop_query();
+  case TokenType::ADD:
+    return parse_add_query();
+  case TokenType::REMOVE:
+    return parse_remove_query();
+  case TokenType::TABLES:
+    return parse_tables_query();
+  default:
+    throw error(peek(), "Expected query base word.");
   }
 }
 
@@ -204,6 +206,11 @@ RemoveQuery Parser::parse_remove_query() {
     tag_columns,
     table_name
   };
+}
+
+TablesQuery Parser::parse_tables_query() {
+  consume(TokenType::TABLES, "Expected TABLES.");
+  return {};
 }
 
 SelectType Parser::parse_select_type() {

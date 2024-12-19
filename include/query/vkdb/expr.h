@@ -144,10 +144,13 @@ struct RemoveQuery {
   TableNameExpr table_name;
 };
 
+struct TablesQuery {};
+
 using Query = std::variant<
   SelectQuery, PutQuery, DeleteQuery,
   CreateQuery, DropQuery, 
-  AddQuery, RemoveQuery
+  AddQuery, RemoveQuery,
+  TablesQuery
 >;
 
 using Expr = std::vector<Query>;

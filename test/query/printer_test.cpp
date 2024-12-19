@@ -108,6 +108,14 @@ TEST(PrinterTest, CanPrintRemoveQuery) {
   EXPECT_EQ(result, "REMOVE TAGS tag1, tag2 FROM table_name;");
 }
 
+TEST(PrinterTest, CanPrintTablesQuery) {
+  Expr tables_query{TablesQuery{}};
+
+  Printer printer;
+  auto result{printer.print(tables_query)};
+  EXPECT_EQ(result, "TABLES;");
+}
+
 TEST(PrinterTest, CanPrintMultipleQueries) {
   Expr all_queries{
   SelectQuery{
