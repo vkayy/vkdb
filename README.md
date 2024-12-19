@@ -4,7 +4,7 @@ A time-series database engine built in C++ with minimal dependencies.
 
 ## Why?
 
-Wanted to challenge myself architecturally and push my boundaries with C++ in terms of both knowledge and performance.
+I wanted to challenge myself architecturally and push my boundaries with C++ in terms of both knowledge and performance.
 
 ## How do I use it?
 
