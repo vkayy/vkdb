@@ -199,8 +199,8 @@ Again, if there are any holes in my logic, let me know. I hope you enjoy working
 
 ## Authors
 
-[Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (Me).
+[Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me).
 
 ## Credits
 
-Used [murmurhash3](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp) for the Bloom filters. Fast, uniform, and deterministic.
+Used [MurmurHash3](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp) for the Bloom filters. Fast, uniform, and deterministic.
