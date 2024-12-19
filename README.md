@@ -8,7 +8,7 @@ Wanted to challenge myself architecturally and push my boundaries with C++ in te
 
 ## How do I use it?
 
-Using CMake will make your life easier--add this to your `CMakeLists.txt` file:
+Using CMake will make your life easier—add this to your `CMakeLists.txt` file:
 
 ```cmake
 include(FetchContent)
