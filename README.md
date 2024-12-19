@@ -138,7 +138,7 @@ And, here's the EBNF grammar encapsulating vq.
 ```bnf
 <expr> ::= {<query> ";"}+
 
-<query> ::= <select_query> | <put_query> | <delete_query> | <create_query>  | <drop_query> | <add_query> | <remove_query>
+<query> ::= <select_query> | <put_query> | <delete_query> | <create_query>  | <drop_query> | <add_query> | <remove_query> | <tables_query>
 
 <select_query> ::= "SELECT" <select_type> <metric> "FROM" <table_name> <select_clause>
 
@@ -165,6 +165,8 @@ And, here's the EBNF grammar encapsulating vq.
 <add_query> ::= "ADD" "TAGS" <tag_columns> "TO" <table_name>
 
 <remove_query> ::= "REMOVE" "TAGS" <tag_columns> "FROM" <table_name>
+
+<tables_query> ::= "TABLES"
 
 <tag_list> ::= <tag> {"," <tag>}*
 
