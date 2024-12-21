@@ -107,7 +107,7 @@ private:
   DropResult visit(const DropQuery& query) const;
   AddResult visit(const AddQuery& query) const;
   RemoveResult visit(const RemoveQuery& query) const;
-  TablesResult visit(const TablesQuery& query) const;
+  [[nodiscard]] TablesResult visit(const TablesQuery& query) const;
   [[nodiscard]] AllClauseResult visit(const AllClause& clause) const;
   [[nodiscard]] BetweenClauseResult visit(const BetweenClause& clause) const;
   [[nodiscard]] AtClauseResult visit(const AtClause& clause) const;
