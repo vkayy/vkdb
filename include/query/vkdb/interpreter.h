@@ -93,12 +93,15 @@ private:
   [[nodiscard]] Results visit(const Expr& expr) const;
   [[nodiscard]] Result visit(const Query& query) const;
   
-  static auto add_optional_tag_list(
-    auto &query_builder,
+  static void add_optional_tag_list(
+    FriendlyQueryBuilder<double> &query_builder,
     const std::optional<TagListExprResult>& tag_list
   ) noexcept;
   
-  static SelectResult handle_select_type(auto &query_builder, SelectType type);
+  static SelectResult handle_select_type(
+    FriendlyQueryBuilder<double> &query_builder,
+    SelectType type
+  );
 
   [[nodiscard]] SelectResult visit(const SelectQuery& query) const;
   PutResult visit(const PutQuery& query) const;

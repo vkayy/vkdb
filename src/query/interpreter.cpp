@@ -111,8 +111,8 @@ Result Interpreter::visit(const Query& query) const {
   }
 }
 
-auto Interpreter::add_optional_tag_list(
-  auto &query_builder,
+void Interpreter::add_optional_tag_list(
+  FriendlyQueryBuilder<double> &query_builder,
   const std::optional<TagListExprResult>& tag_list
 ) noexcept {
   if (tag_list.has_value()) {
@@ -122,7 +122,10 @@ auto Interpreter::add_optional_tag_list(
   }
 }
 
-SelectResult Interpreter::handle_select_type(auto &query_builder, SelectType type) {
+SelectResult Interpreter::handle_select_type(
+  FriendlyQueryBuilder<double> &query_builder,
+  SelectType type
+) {
   return std::visit([&query_builder](auto&& type) -> SelectResult {
     using T = std::decay_t<decltype(type)>;
     try {
