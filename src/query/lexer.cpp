@@ -91,7 +91,7 @@ Token Lexer::lex_word() noexcept {
   return make_token(TokenType::IDENTIFIER, lexeme);
 }
 
-Token Lexer::lex_number() {
+Token Lexer::lex_number() noexcept {
   auto start{position_};
   if (peek() == '-') {
     advance();
@@ -104,32 +104,32 @@ Token Lexer::lex_number() {
   return make_token(TokenType::NUMBER, make_lexeme_from(start));
 }
 
-void Lexer::lex_comment() {
+void Lexer::lex_comment() noexcept {
   advance_while([this](auto ch) { return ch != '\n'; });
 }
 
-Token Lexer::lex_equal() {
+Token Lexer::lex_equal() noexcept {
   advance();
   return make_token(TokenType::EQUAL, "=");
 }
 
-Token Lexer::lex_comma() {
+Token Lexer::lex_comma() noexcept {
   advance();
   return make_token(TokenType::COMMA, ",");
 }
 
-Token Lexer::lex_semicolon() {
+Token Lexer::lex_semicolon() noexcept {
   advance();
   return make_token(TokenType::SEMICOLON, ";");
 }
 
-Token Lexer::lex_unknown() {
+Token Lexer::lex_unknown() noexcept {
   auto unknown{peek()};
   advance();
   return make_token(TokenType::UNKNOWN, {unknown});
 }
 
-Token Lexer::lex_end_of_file() {
+Token Lexer::lex_end_of_file() noexcept {
   return make_token(TokenType::END_OF_FILE, "");
 }
 
@@ -137,7 +137,7 @@ Lexeme Lexer::make_lexeme_from(size_type start) const {
   return input_.substr(start, position_ - start);
 }
 
-Token Lexer::make_token(TokenType type, const Lexeme& lexeme) {
+Token Lexer::make_token(TokenType type, const Lexeme& lexeme) noexcept {
   return Token{type, lexeme, line_, column_ - lexeme.length()};
 }
 

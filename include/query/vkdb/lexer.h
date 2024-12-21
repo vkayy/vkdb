@@ -66,16 +66,19 @@ private:
 
 	void lex_whitespace() noexcept;
 	[[nodiscard]] Token lex_word() noexcept;
-	[[nodiscard]] Token lex_number();
-	void lex_comment();
-	[[nodiscard]] Token lex_equal();
-	[[nodiscard]] Token lex_comma();
-	[[nodiscard]] Token lex_semicolon();
-	[[nodiscard]] Token lex_unknown();
-	[[nodiscard]] Token lex_end_of_file();
+	[[nodiscard]] Token lex_number() noexcept ;
+	void lex_comment() noexcept;
+	[[nodiscard]] Token lex_equal() noexcept;
+	[[nodiscard]] Token lex_comma() noexcept;
+	[[nodiscard]] Token lex_semicolon() noexcept;
+	[[nodiscard]] Token lex_unknown() noexcept;
+	[[nodiscard]] Token lex_end_of_file() noexcept;
 
 	[[nodiscard]] Lexeme make_lexeme_from(size_type start) const;
-	[[nodiscard]] Token make_token(TokenType type, const Lexeme& lexeme);
+	[[nodiscard]] Token make_token(
+    TokenType type,
+    const Lexeme& lexeme
+  ) noexcept;
 
 	std::string input_;
 	size_type position_;
