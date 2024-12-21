@@ -81,7 +81,7 @@ vkdb::VQ::runFile(
   std::filesystem::current_path() / "../examples/vq_setup.vq"
 );
 
-auto sum{table_REPLay.query()
+auto sum{table_replay.query()
   .whereTimestampBetween(0, 999)
   .whereMetricIs("metric")
   .whereTagsContain({"tag1", "value1"})
