@@ -30,6 +30,7 @@ public:
 
   TimeSeriesKey() = default;
 
+  TimeSeriesKey(std::string&& str);
   explicit TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags);
 
   TimeSeriesKey(TimeSeriesKey&&) noexcept = default;
@@ -50,9 +51,7 @@ public:
   [[nodiscard]] Timestamp timestamp() const noexcept;
   [[nodiscard]] Metric metric() const noexcept;
   [[nodiscard]] const TagTable& tags() const noexcept;
-  [[nodiscard]] std::string toString() const noexcept;
-
-  [[nodiscard]] static TimeSeriesKey fromString(const std::string& str);
+  [[nodiscard]] std::string str() const noexcept;
 
 private:
   Timestamp timestamp_;
@@ -89,7 +88,7 @@ namespace std {
 template <>
 struct hash<vkdb::TimeSeriesKey> {
   size_t operator()(const vkdb::TimeSeriesKey& key) const noexcept {
-    return hash<string>{}(key.toString());
+    return hash<string>{}(key.str());
   }
 };
 }  // namespace std

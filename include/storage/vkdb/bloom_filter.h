@@ -19,6 +19,7 @@ public:
 
   BloomFilter() = delete;
 
+  BloomFilter(std::string&& str) noexcept;
   explicit BloomFilter(uint64_t expected_no_of_elems, double false_positive_rate);
 
   ~BloomFilter() = default;
@@ -32,6 +33,8 @@ public:
   void insert(const key_type& key) noexcept;
 
   [[nodiscard]] bool mayContain(const key_type& key) const noexcept;
+
+  [[nodiscard]] std::string str() const noexcept;
 
 private:
   using HashValue = uint32_t;

@@ -20,6 +20,10 @@ protected:
     tag_columns_.insert("tag3");
   }
 
+  void TearDown() override {
+    lsm_tree_->clear();
+  }
+
   FriendlyQueryBuilder<int32_t> query() {
     return FriendlyQueryBuilder<int32_t>(*lsm_tree_, tag_columns_);
   }

@@ -1,6 +1,26 @@
 #include <vkdb/time_series_key.h>
 
 namespace vkdb {
+TimeSeriesKey::TimeSeriesKey(std::string&& str) {
+  auto timestamp_end{str.find('}')};
+  auto metric_start{str.find('{', timestamp_end) + 1};
+  auto metric_end{str.find('}', metric_start)};
+  auto tags_start{str.find('{', metric_end) + 1};
+  auto tags_end{str.find('}', tags_start)};
+
+  timestamp_ = std::stoull(str.substr(1, timestamp_end - 1));
+  metric_ = {str.substr(metric_start, metric_end - metric_start)};
+  auto tags_str{str.substr(tags_start, tags_end - tags_start)};
+
+  TagKey key;
+  TagValue value;
+  std::istringstream ss{tags_str};
+  while (std::getline(ss, key, ':')) {
+    std::getline(ss, value, ',');
+    tags_[key] = value;
+  }
+}
+
 TimeSeriesKey::TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags)
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
@@ -62,7 +82,7 @@ const TagTable& TimeSeriesKey::tags() const noexcept {
   return tags_;
 }
 
-std::string TimeSeriesKey::toString() const noexcept {
+std::string TimeSeriesKey::str() const noexcept {
   std::stringstream ss;
   ss << "{" << std::setw(TIMESTAMP_WIDTH) << std::setfill('0');
   ss << timestamp_ << "}{" << metric_ << "}{";
@@ -73,39 +93,16 @@ std::string TimeSeriesKey::toString() const noexcept {
   ss << "}";
   return ss.str();
 }
-
-TimeSeriesKey TimeSeriesKey::fromString(const std::string& str) {
-  auto timestamp_end{str.find('}')};
-  auto metric_start{str.find('{', timestamp_end) + 1};
-  auto metric_end{str.find('}', metric_start)};
-  auto tags_start{str.find('{', metric_end) + 1};
-  auto tags_end{str.find('}', tags_start)};
-
-  auto timestamp{std::stoull(str.substr(1, timestamp_end - 1))};
-  auto metric{str.substr(metric_start, metric_end - metric_start)};
-  auto tags_str{str.substr(tags_start, tags_end - tags_start)};
-
-  TagTable tags;
-  TagKey key;
-  TagValue value;
-  std::istringstream ss{tags_str};
-  while (std::getline(ss, key, ':')) {
-    std::getline(ss, value, ',');
-    tags[key] = value;
-  }
-
-  return TimeSeriesKey{timestamp, metric, tags};
-}
 }  // namespace vkdb
 
 std::ostream& operator<<(std::ostream& os, const vkdb::TimeSeriesKey& key) {
-  os << key.toString();
+  os << key.str();
   return os;
 }
 
 std::istream& operator>>(std::istream& is, vkdb::TimeSeriesKey& key) {
   std::string str;
   is >> str;
-  key = vkdb::TimeSeriesKey::fromString(str);
+  key = vkdb::TimeSeriesKey{std::move(str)};
   return is;
 }

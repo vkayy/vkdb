@@ -28,7 +28,7 @@ Token::size_type Token::column() const noexcept {
   return column_;
 }
 
-std::string Token::toString() const noexcept {
+std::string Token::str() const noexcept {
   auto type_str{TOKEN_TYPE_TO_STRING.at(type_)};
   return type_str + " "
     + lexeme_ + " "

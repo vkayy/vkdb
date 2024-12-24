@@ -79,7 +79,7 @@ public:
   [[nodiscard]] Lexeme lexeme() const noexcept;
   [[nodiscard]] size_type line() const noexcept;
   [[nodiscard]] size_type column() const noexcept;
-  [[nodiscard]] std::string toString() const noexcept;
+  [[nodiscard]] std::string str() const noexcept;
 
 private:
   TokenType type_;

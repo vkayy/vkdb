@@ -7,15 +7,18 @@ class SSTableTest : public ::testing::Test {
 protected:
   void SetUp() override {
     file_path_ = "test.sst";
+    metadata_file_path_ = "test.metadata";
     sstable_ = std::make_unique<SSTable<int>>(file_path_);
     mem_table_ = std::make_unique<MemTable<int>>();
   }
 
   void TearDown() override {
     std::remove(file_path_.c_str());
+    std::remove(metadata_file_path_.c_str());
   }
 
   FilePath file_path_;
+  FilePath metadata_file_path_;
   std::unique_ptr<SSTable<int>> sstable_;
   std::unique_ptr<MemTable<int>> mem_table_;
 };
@@ -29,7 +32,7 @@ TEST_F(SSTableTest, CanWriteMemTableToFile) {
   mem_table_->put(key2, 2);
   mem_table_->put(key3, 3);
 
-  sstable_->writeMemTableToFile(std::move(*mem_table_));
+  sstable_->writeDataToDisk(std::move(*mem_table_));
 
   std::ifstream file{file_path_};
   std::string str;
@@ -55,7 +58,7 @@ TEST_F(SSTableTest, CanCheckContains) {
   mem_table_->put(key2, 2);
   mem_table_->put(key3, 3);
 
-  sstable_->writeMemTableToFile(std::move(*mem_table_));
+  sstable_->writeDataToDisk(std::move(*mem_table_));
 
   auto value1{sstable_->contains(key1)};
   auto value2{sstable_->contains(key2)};
@@ -78,7 +81,7 @@ TEST_F(SSTableTest, CanGetFromSSTable) {
   mem_table_->put(key2, 2);
   mem_table_->put(key3, 3);
 
-  sstable_->writeMemTableToFile(std::move(*mem_table_));
+  sstable_->writeDataToDisk(std::move(*mem_table_));
 
   auto value1{sstable_->get(key1)};
   auto value2{sstable_->get(key2)};
@@ -105,7 +108,7 @@ TEST_F(SSTableTest, CanGetRangeFromSSTable) {
   mem_table_->put(key4, 4);
   mem_table_->put(key4, 3);
 
-  sstable_->writeMemTableToFile(std::move(*mem_table_));
+  sstable_->writeDataToDisk(std::move(*mem_table_));
 
   auto entries{sstable_->getRange(key2, key5)};
 

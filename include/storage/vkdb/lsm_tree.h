@@ -8,6 +8,7 @@
 #include <vkdb/wal_lsm.h>
 #include <ranges>
 #include <future>
+#include <set>
 
 namespace vkdb {
 using TimeSeriesKeyFilter = std::function<bool(const TimeSeriesKey&)>;
@@ -27,7 +28,10 @@ public:
   explicit LSMTree(FilePath path) noexcept
     : wal_{path}
     , path_{std::move(path)}
-    , sstable_id_{0} {}
+    , sstable_id_{0} {
+      std::filesystem::create_directories(path_);
+      load_sstables();
+    }
 
   LSMTree(LSMTree&&) noexcept = default;
   LSMTree& operator=(LSMTree&&) noexcept = default;  
@@ -35,11 +39,7 @@ public:
   LSMTree(const LSMTree&) = delete;
   LSMTree& operator=(const LSMTree&) = delete;
 
-  ~LSMTree() {
-    for (const auto& sstable : sstables_) {
-      std::remove(sstable.filePath().c_str());
-    }
-  };
+  ~LSMTree() = default;
 
   void put(const key_type& key, const TValue& value, bool log = true) {
     mem_table_.put(key, value);
@@ -163,11 +163,19 @@ public:
     wal_.replay(*this);
   }
 
-  [[nodiscard]] std::string toString() const noexcept {
-    std::stringstream ss;
-    ss << mem_table_.toString();
+  void clear() noexcept {
     for (const auto& sstable : sstables_) {
-      ss << sstable.toString();
+      std::filesystem::remove(sstable.path());
+      std::filesystem::remove(sstable.metadataPath());
+    }
+    std::filesystem::remove(wal_.path());
+  }
+
+  [[nodiscard]] std::string str() const noexcept {
+    std::stringstream ss;
+    ss << mem_table_.str();
+    for (const auto& sstable : sstables_) {
+      ss << sstable.str();
     }
     return ss.str();
   }
@@ -191,6 +199,18 @@ private:
     sstables_.emplace_back(sstable_file_path, std::move(mem_table_));
     mem_table_.clear();
     wal_.clear();
+  }
+
+  void load_sstables() {
+    std::set<FilePath> sstable_files;
+    for (const auto& entry : std::filesystem::directory_iterator(path_)) {
+      if (entry.is_regular_file() && entry.path().extension() == ".sst") {
+        sstable_files.insert(entry.path());
+      }
+    }
+    for (const auto& sstable_file : sstable_files) {
+      sstables_.emplace_back(sstable_file);
+    }
   }
 
   C0Layer mem_table_;

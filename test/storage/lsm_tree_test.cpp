@@ -11,7 +11,7 @@ protected:
   }
 
   void TearDown() override {
-    std::filesystem::remove(directory_ /  WAL_FILENAME);
+    lsm_tree_->clear();
   }
 
   FilePath directory_;

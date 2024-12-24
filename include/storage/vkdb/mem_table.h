@@ -77,7 +77,7 @@ public:
     return table_.empty();
   }
 
-  [[nodiscard]] std::string toString() const noexcept {
+  [[nodiscard]] std::string str() const noexcept {
     std::stringstream ss;
     ss << size();
     for (const auto& entry : table()) {
@@ -126,7 +126,7 @@ private:
 
 template <ArithmeticNoCVRefQuals TValue>
 std::ostream& operator<<(std::ostream& os, const MemTable<TValue>& table) {
-  os << table.toString();
+  os << table.str();
   return os;
 }
 

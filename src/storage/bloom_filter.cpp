@@ -1,6 +1,26 @@
 #include <vkdb/bloom_filter.h>
 
 namespace vkdb {
+BloomFilter::BloomFilter(std::string&& str) noexcept {
+  std::stringstream ss{str};
+  size_type no_of_bits;
+  ss >> no_of_bits;
+  bits_.resize(no_of_bits);
+
+  size_type no_of_hashes;
+  ss >> no_of_hashes;
+  seeds_.resize(no_of_hashes);
+  for (size_type i{0}; i < no_of_hashes; ++i) {
+    ss >> seeds_[i];
+  }
+
+  std::string bits;
+  ss >> bits;
+  for (size_type i{0}; i < bits.size(); ++i) {
+    bits_[i] = bits[i] - '0';
+  }
+}
+
 BloomFilter::BloomFilter(uint64_t expected_no_of_elems, double false_positive_rate) {
   if (expected_no_of_elems == 0) {
     throw std::invalid_argument{
@@ -44,6 +64,19 @@ bool BloomFilter::mayContain(const key_type& key) const noexcept {
   return true;
 }
 
+std::string BloomFilter::str() const noexcept {
+  std::stringstream ss;
+  ss << bits_.size() << "\n";
+  ss << seeds_.size() << "\n";
+  for (const auto& seed : seeds_) {
+    ss << seed << "\n";
+  }
+  for (const auto& bit : bits_) {
+    ss << bit;
+  }
+  return ss.str();
+}
+
 void BloomFilter::initialise_seeds(size_type no_of_hashes) {
   seeds_.resize(no_of_hashes);
   for (size_type i{0}; i < no_of_hashes; ++i) {
@@ -53,7 +86,7 @@ void BloomFilter::initialise_seeds(size_type no_of_hashes) {
 
 BloomFilter::HashValue BloomFilter::hash(const key_type& key, size_type i) const noexcept {
   HashValue hash_value{0};
-  auto std_hash_value{std::hash<std::string>{}(key.toString())};
+  auto std_hash_value{std::hash<std::string>{}(key.str())};
   MurmurHash3_x86_32(&std_hash_value, sizeof(std_hash_value), i, &hash_value);
   return hash_value % bits_.size();
 }

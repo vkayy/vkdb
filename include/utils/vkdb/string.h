@@ -15,7 +15,7 @@ TimeSeriesEntry<TValue> entryFromString(const std::string& entry) {
   auto key_str{entry.substr(0, sep)};
   auto value_str{entry.substr(sep + 1, end - sep - 1)};
 
-  auto entry_key{TimeSeriesKey::fromString(key_str)};
+  auto entry_key{TimeSeriesKey{std::move(key_str)}};
   std::optional<TValue> entry_value;
   if (value_str != "null") {
     std::stringstream value_ss{value_str};
@@ -30,7 +30,7 @@ TimeSeriesEntry<TValue> entryFromString(const std::string& entry) {
 template <ArithmeticNoCVRefQuals TValue>
 std::string entryToString(const TimeSeriesEntry<TValue>& entry) {
   std::stringstream ss;
-  ss << "[" << entry.first.toString() << "|";
+  ss << "[" << entry.first.str() << "|";
   if (entry.second.has_value()) {
     ss << entry.second.value();
   } else {

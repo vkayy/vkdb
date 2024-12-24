@@ -70,7 +70,7 @@ TEST_F(TimeSeriesKeyTest, CanObtainTags) {
 TEST_F(TimeSeriesKeyTest, CanConvertToStringRepresentationWithManyTags) {
   TimeSeriesKey key{1, "metric1", tags_};
 
-  auto str{key.toString()};
+  auto str{key.str()};
 
   auto expected_str{
     "{00000000000000000001}{metric1}{tag1:value1,tag2:value2,tag3:value3}"
@@ -84,7 +84,7 @@ TEST_F(TimeSeriesKeyTest, CanConvertFromStringRepresentationWithManyTags) {
     "{00000000000000000001}{metric1}{tag1:value1,tag2:value2,tag3:value3}"
   };
 
-  auto key{TimeSeriesKey::fromString(str)};
+  auto key{TimeSeriesKey{str}};
 
   TimeSeriesKey expected_key{1, "metric1", tags_};
 
@@ -94,7 +94,7 @@ TEST_F(TimeSeriesKeyTest, CanConvertFromStringRepresentationWithManyTags) {
 TEST_F(TimeSeriesKeyTest, CanConvertToStringRepresentationWithEmptyTags) {
   TimeSeriesKey key{1, "metric1", {}};
 
-  auto str{key.toString()};
+  auto str{key.str()};
 
   auto expected_str{
     "{00000000000000000001}{metric1}{}"
@@ -108,7 +108,7 @@ TEST_F(TimeSeriesKeyTest, CanConvertFromStringRepresentationWithEmptyTags) {
     "{00000000000000000001}{metric1}{}"
   };
 
-  auto key{TimeSeriesKey::fromString(str)};
+  auto key{TimeSeriesKey{str}};
 
   TimeSeriesKey expected_key{1, "metric1", {}};
 
@@ -118,7 +118,7 @@ TEST_F(TimeSeriesKeyTest, CanConvertFromStringRepresentationWithEmptyTags) {
 TEST_F(TimeSeriesKeyTest, CanConvertToStringRepresentationWithSingleTag) {
   TimeSeriesKey key{1, "metric1", {{"tag1", "value1"}}};
 
-  auto str{key.toString()};
+  auto str{key.str()};
 
   auto expected_str{
     "{00000000000000000001}{metric1}{tag1:value1}"
@@ -132,7 +132,7 @@ TEST_F(TimeSeriesKeyTest, CanConvertFromStringRepresentationWithSingleTag) {
     "{00000000000000000001}{metric1}{tag1:value1}"
   };
 
-  auto key{TimeSeriesKey::fromString(str)};
+  auto key{TimeSeriesKey{str}};
 
   TimeSeriesKey expected_key{1, "metric1", {{"tag1", "value1"}}};
 

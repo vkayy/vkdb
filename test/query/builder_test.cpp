@@ -20,6 +20,10 @@ protected:
     tag_columns_.insert("tag3");
   }
 
+  void TearDown() override {
+    lsm_tree_->clear();
+  }
+
   QueryBuilder<int> query() {
     return QueryBuilder<int>(*lsm_tree_, tag_columns_);
   }

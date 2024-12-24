@@ -135,7 +135,7 @@ TEST_F(MemTableTest, CanConvertToStringRepresentationWithTags) {
   table_->put(key2, 2);
   table_->put(key3, 3);
 
-  auto str{table_->toString()};
+  auto str{table_->str()};
 
   auto expected_str{
     "3"
