@@ -6,8 +6,10 @@
 
 namespace vkdb {
 template <ArithmeticNoCVRefQuals T>
-T random(T min = std::numeric_limits<T>::min(),
-         T max = std::numeric_limits<T>::max()) {
+T random(
+  T min = std::numeric_limits<T>::min(),
+  T max = std::numeric_limits<T>::max()
+) {
   std::random_device rd;
   std::mt19937 gen{rd()};
   if constexpr (std::integral<T>) {

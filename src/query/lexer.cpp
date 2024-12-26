@@ -11,7 +11,10 @@ std::vector<Token> Lexer::tokenize() {
       lex_whitespace();
     } else if (is_alpha(peek())) {
       tokens.push_back(lex_word());
-    } else if (is_digit(peek()) || peek() == '-' && is_digit(peek_next())) {
+    } else if (
+      is_digit(peek()) ||
+      peek() == '-' && is_digit(peek_next())
+    ) {
       tokens.push_back(lex_number());
     } else if (peek() == '/' && peek_next() == '/') {
       advance_while([this](auto ch) { return ch != '\n'; });

@@ -41,7 +41,10 @@ public:
   [[nodiscard]] std::vector<TableName> tables() const noexcept;
 
   Database& run(const std::string& source, std::ostream& stream = std::cout);
-  Database& runFile(const std::filesystem::path path, std::ostream& stream = std::cout);
+  Database& runFile(
+    const std::filesystem::path path,
+    std::ostream& stream = std::cout
+  );
   Database& runPrompt();
 
 private:

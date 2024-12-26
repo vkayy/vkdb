@@ -22,7 +22,9 @@ BloomFilter::BloomFilter(std::string&& str) noexcept {
   }
 }
 
-BloomFilter::BloomFilter(uint64_t expected_no_of_elems, double false_positive_rate) {
+BloomFilter::BloomFilter(
+  size_type expected_no_of_elems,
+  double false_positive_rate) {
   if (expected_no_of_elems == 0) {
     throw std::invalid_argument{
       "BloomFilter(): Expected elements must be greater than 0."
@@ -89,7 +91,10 @@ void BloomFilter::initialise_seeds(size_type no_of_hashes) {
   }
 }
 
-BloomFilter::HashValue BloomFilter::hash(const key_type& key, size_type i) const noexcept {
+BloomFilter::HashValue BloomFilter::hash(
+  const key_type& key,
+  size_type i
+) const noexcept {
   HashValue hash_value{0};
   auto std_hash_value{std::hash<std::string>{}(key.str())};
   MurmurHash3_x86_32(&std_hash_value, sizeof(std_hash_value), i, &hash_value);

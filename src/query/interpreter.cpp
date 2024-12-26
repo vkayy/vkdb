@@ -359,7 +359,9 @@ TagListExprResult Interpreter::visit(const TagListExpr& tag_list) const {
   return tag_list_result;
 }
 
-TagColumnsExprResult Interpreter::visit(const TagColumnsExpr& tag_columns) const {
+TagColumnsExprResult Interpreter::visit(
+  const TagColumnsExpr& tag_columns
+) const {
   TagColumnsExprResult tag_columns_result;
   for (const auto& tag_key : tag_columns.keys) {
     tag_columns_result.emplace(visit(tag_key));

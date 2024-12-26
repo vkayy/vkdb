@@ -11,8 +11,8 @@ template <ArithmeticNoCVRefQuals TValue>
 class WriteAheadLog;
 
 enum class WALRecordType {
-  Put,
-  Remove
+  PUT,
+  REMOVE
 };
 
 template <ArithmeticNoCVRefQuals TValue>

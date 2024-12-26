@@ -20,7 +20,10 @@ public:
   BloomFilter() = delete;
 
   BloomFilter(std::string&& str) noexcept;
-  explicit BloomFilter(uint64_t expected_no_of_elems, double false_positive_rate);
+  explicit BloomFilter(
+    uint64_t expected_no_of_elems,
+    double false_positive_rate
+  );
 
   ~BloomFilter() = default;
 
@@ -41,7 +44,10 @@ private:
 
   void initialise_seeds(size_type no_of_hashes);
 
-  [[nodiscard]] HashValue hash(const key_type& key, size_type i) const noexcept;
+  [[nodiscard]] HashValue hash(
+    const key_type& key,
+    size_type i
+  ) const noexcept;
 
   std::vector<size_type> seeds_;
   std::vector<bool> bits_;

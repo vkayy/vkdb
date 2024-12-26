@@ -20,8 +20,10 @@ public:
 
   QueryBuilder() = delete;
 
-  explicit QueryBuilder(LSMTree<TValue>& lsm_tree,
-                        const TagColumns& tag_columns)
+  explicit QueryBuilder(
+    LSMTree<TValue>& lsm_tree,
+    const TagColumns& tag_columns
+  )
     : lsm_tree_{lsm_tree}
     , tag_columns_{tag_columns}
     , query_type_{QueryType::None}
@@ -50,7 +52,10 @@ public:
     return *this;
   }
 
-  [[nodiscard]] QueryBuilder& filterByTag(const TagKey& key, const TagValue& value) {
+  [[nodiscard]] QueryBuilder& filterByTag(
+    const TagKey& key,
+    const TagValue& value
+  ) {
     validate_tags(Tag{key, value});
     add_filter([key, value](const auto& k) {
       return k.tags().contains(key) && k.tags().at(key) == value;
@@ -101,7 +106,9 @@ public:
   }
 
   template <AllConvertibleToNoCVRefQuals<Timestamp>... Timestamps>
-  [[nodiscard]] QueryBuilder& filterByAnyTimestamps(const Timestamps&... timestamps) {
+  [[nodiscard]] QueryBuilder& filterByAnyTimestamps(
+    const Timestamps&... timestamps
+  ) {
     add_filter([timestamps...](const auto& k) {
       return ((k.timestamp() == timestamps) || ...);
     });

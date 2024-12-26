@@ -41,7 +41,9 @@ std::string entryToString(const TimeSeriesEntry<TValue>& entry) {
 }
 
 template <ArithmeticNoCVRefQuals TValue>
-std::string datapointsToString(const std::vector<DataPoint<TValue>>& datapoints) {
+std::string datapointsToString(
+  const std::vector<DataPoint<TValue>>& datapoints
+) {
   std::ostringstream output;
   output << "[";
   for (const auto& datapoint : datapoints) {
@@ -55,7 +57,9 @@ std::string datapointsToString(const std::vector<DataPoint<TValue>>& datapoints)
 }
 
 template <ArithmeticNoCVRefQuals TValue>
-std::vector<DataPoint<TValue>> datapointsFromString(const std::string& datapoints) {
+std::vector<DataPoint<TValue>> datapointsFromString(
+  const std::string& datapoints
+) {
   std::vector<DataPoint<TValue>> result;
   std::string data{datapoints.substr(1, datapoints.size() - 2)};
   std::istringstream ss{data};

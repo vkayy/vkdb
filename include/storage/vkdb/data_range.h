@@ -60,8 +60,10 @@ public:
     return is_set_ && data >= range_.first && data <= range_.second;
   }
 
-  [[nodiscard]] bool overlaps_with(const data_type& start,
-                              const data_type& end) const noexcept {
+  [[nodiscard]] bool overlaps_with(
+    const data_type& start,
+    const data_type& end
+  ) const noexcept {
     return is_set_ && range_.first <= end && range_.second >= start;
   }
 
@@ -91,7 +93,8 @@ public:
     if constexpr (std::is_same_v<data_type, TimeSeriesKey>) {
       return range_.first.str() + "&" + range_.second.str();
     } else {
-      return std::to_string(range_.first) + "&" + std::to_string(range_.second);
+      return std::to_string(range_.first)
+        + "&" + std::to_string(range_.second);
     }
   }
 

@@ -63,8 +63,12 @@ public:
 
   Token() = delete;
 
-  explicit Token(TokenType type, const Lexeme& lexeme, size_type line,
-        size_type column) noexcept;
+  explicit Token(
+    TokenType type,
+    const Lexeme& lexeme,
+    size_type line,
+    size_type column
+  ) noexcept;
 
   Token(Token&&) noexcept = default;
   Token& operator=(Token&&) noexcept = default;

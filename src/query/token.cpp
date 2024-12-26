@@ -1,9 +1,16 @@
 #include <vkdb/token.h>
 
 namespace vkdb {
-Token::Token(TokenType type, const Lexeme& lexeme, Token::size_type line,
-      Token::size_type column) noexcept
-  : type_{type}, lexeme_{lexeme}, line_{line}, column_{column} {}
+Token::Token(
+  TokenType type,
+  const Lexeme& lexeme,
+  Token::size_type line,
+  Token::size_type column
+) noexcept
+  : type_{type}
+  , lexeme_{lexeme}
+  , line_{line}
+  , column_{column} {}
 
 bool Token::operator==(const Token& other) const noexcept {
   return type_ == other.type() &&

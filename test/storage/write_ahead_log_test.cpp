@@ -21,7 +21,7 @@ protected:
 
 TEST_F(WriteAheadLogTest, CanAppendRecord) {
   TimeSeriesKey key{1, "metric", {}};
-  WALRecord<int> record{WALRecordType::Put, TimeSeriesEntry<int>{key, 1}};
+  WALRecord<int> record{WALRecordType::PUT, TimeSeriesEntry<int>{key, 1}};
   
   wal_->append(record);
 
@@ -35,7 +35,7 @@ TEST_F(WriteAheadLogTest, CanAppendRecord) {
 
 TEST_F(WriteAheadLogTest, CanReplayRecord) {
   TimeSeriesKey key{1, "metric", {}};
-  WALRecord<int> record{WALRecordType::Put, TimeSeriesEntry<int>{key, 1}};
+  WALRecord<int> record{WALRecordType::PUT, TimeSeriesEntry<int>{key, 1}};
   wal_->append(record);
 
   LSMTree<int> lsm_tree{lsm_tree_path_};

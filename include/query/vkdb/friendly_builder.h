@@ -13,23 +13,30 @@ public:
 
   FriendlyQueryBuilder() = delete;
 
-  explicit FriendlyQueryBuilder(LSMTree<TValue>& lsm_tree,
-                                const TagColumns& tag_columns)
-    : query_builder_{QueryBuilder<TValue>(lsm_tree, tag_columns)} {}
+  explicit FriendlyQueryBuilder(
+    LSMTree<TValue>& lsm_tree,
+    const TagColumns& tag_columns
+  ) : query_builder_{QueryBuilder<TValue>(lsm_tree, tag_columns)} {}
 
   explicit FriendlyQueryBuilder(QueryBuilder<TValue>&& query_builder)
     : query_builder_{std::move(query_builder)} {}
 
   FriendlyQueryBuilder(FriendlyQueryBuilder&&) noexcept = default;
-  FriendlyQueryBuilder& operator=(FriendlyQueryBuilder&&) noexcept = default;
+  FriendlyQueryBuilder& operator=(
+    FriendlyQueryBuilder&&
+  ) noexcept = default;
 
   FriendlyQueryBuilder(const FriendlyQueryBuilder&) noexcept = default;
-  FriendlyQueryBuilder& operator=(const FriendlyQueryBuilder&) noexcept = default;
+  FriendlyQueryBuilder& operator=(
+    const FriendlyQueryBuilder&
+  ) noexcept = default;
 
   ~FriendlyQueryBuilder() = default;
 
-  [[nodiscard]] FriendlyQueryBuilder& get(Timestamp timestamp, Metric metric,
-                                          const TagTable& tag_table) {
+  [[nodiscard]] FriendlyQueryBuilder& get(
+    Timestamp timestamp, Metric metric,
+    const TagTable& tag_table
+  ) {
     TimeSeriesKey key{timestamp, metric, tag_table};
     std::ignore = query_builder_.point(key);
     return *this;
@@ -41,19 +48,24 @@ public:
   }
 
   template <AllConvertibleToNoCVRefQuals<Metric>... Metrics>
-  [[nodiscard]] FriendlyQueryBuilder& whereMetricIsAnyOf(const Metrics&... metrics) {
+  [[nodiscard]] FriendlyQueryBuilder& whereMetricIsAnyOf(
+    const Metrics&... metrics
+  ) {
     std::ignore = query_builder_.filterByAnyMetrics(metrics...);
     return *this;
   }
 
-  [[nodiscard]] FriendlyQueryBuilder& whereTimestampIs(const Timestamp& timestamp) {
+  [[nodiscard]] FriendlyQueryBuilder& whereTimestampIs(
+    const Timestamp& timestamp
+  ) {
     std::ignore = query_builder_.filterByTimestamp(timestamp);
     return *this;
   }
 
 
   [[nodiscard]] FriendlyQueryBuilder& whereTimestampBetween(
-    const Timestamp& start, const Timestamp& end
+    const Timestamp& start,
+    const Timestamp& end
   ) {
     TimeSeriesKey start_key{start, MIN_METRIC, {}};
     TimeSeriesKey end_key{end, MAX_METRIC, {}};
@@ -91,9 +103,15 @@ public:
     return *this;
   }
 
-  [[nodiscard]] FriendlyQueryBuilder& put(Timestamp timestamp, Metric metric,
-                                          const TagTable& tag_table, TValue value) {
-    if (metric.empty() || metric.length() >= TimeSeriesKey::MAX_METRIC_LENGTH) {
+  [[nodiscard]] FriendlyQueryBuilder& put(
+    Timestamp timestamp,
+    Metric metric,
+    const TagTable& tag_table, TValue value
+  ) {
+    if (
+      metric.empty() ||
+      metric.length() >= TimeSeriesKey::MAX_METRIC_LENGTH
+    ) {
       throw std::runtime_error{
         "FriendlyQueryBuilder::get(): Invalid metric '" + metric + "'."
       };
@@ -103,8 +121,11 @@ public:
     return *this;
   }
 
-  [[nodiscard]] FriendlyQueryBuilder& remove(Timestamp timestamp, Metric metric,
-                                             const TagTable& tag_table) {
+  [[nodiscard]] FriendlyQueryBuilder& remove(
+    Timestamp timestamp,
+    Metric metric,
+    const TagTable& tag_table
+  ) {
     TimeSeriesKey key{timestamp, metric, tag_table};
     std::ignore = query_builder_.remove(key);
     return *this;

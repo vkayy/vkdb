@@ -49,7 +49,7 @@ public:
       flush();
     }
     if (log) {
-      wal_.append({WALRecordType::Put, {key, value}});
+      wal_.append({WALRecordType::PUT, {key, value}});
     }
   }
 
@@ -59,7 +59,7 @@ public:
       flush();
     }
     if (log) {
-      wal_.append({WALRecordType::Remove, {key, std::nullopt}});
+      wal_.append({WALRecordType::REMOVE, {key, std::nullopt}});
     }
   }
 

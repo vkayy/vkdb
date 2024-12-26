@@ -30,8 +30,13 @@ public:
 
   TimeSeriesKey() = default;
 
-  TimeSeriesKey(std::string&& str);
-  explicit TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags);
+  explicit TimeSeriesKey(std::string&& str);
+
+  explicit TimeSeriesKey(
+    Timestamp timestamp,
+    Metric metric,
+    TagTable tags
+  ) noexcept;
 
   TimeSeriesKey(TimeSeriesKey&&) noexcept = default;
   TimeSeriesKey& operator=(TimeSeriesKey&&) noexcept = default;

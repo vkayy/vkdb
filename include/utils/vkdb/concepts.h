@@ -23,19 +23,20 @@ template <typename... Ts, typename U>
 concept AllSameNoCVRefQuals = (SameNoCVRefQuals<Ts, U> && ...);
 
 template <typename T, typename U>
-concept ConvertibleToNoCVRefQuals =
-  std::convertible_to<T, U> && HasNoCVRefQuals<T>;
+concept ConvertibleToNoCVRefQuals
+  = std::convertible_to<T, U> && HasNoCVRefQuals<T>;
 
 template <typename... Ts, typename U>
-concept AllConvertibleToNoCVRefQuals = (ConvertibleToNoCVRefQuals<Ts, U> && ...);
+concept AllConvertibleToNoCVRefQuals
+  = (ConvertibleToNoCVRefQuals<Ts, U> && ...);
 
 template <typename T, typename U>
-concept ConstructibleToNoCVRefQuals =
-  std::constructible_from<U, T> && HasNoCVRefQuals<T>;
+concept ConstructibleToNoCVRefQuals
+  = std::constructible_from<U, T> && HasNoCVRefQuals<T>;
 
 template <typename... Ts, typename U>
-concept AllConstructibleToNoCVRefQuals =
-  (ConstructibleToNoCVRefQuals<Ts, U> && ...);
+concept AllConstructibleToNoCVRefQuals
+  = (ConstructibleToNoCVRefQuals<Ts, U> && ...);
 
 
 #endif // UTILS_CONCEPTS_H

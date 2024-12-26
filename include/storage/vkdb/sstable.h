@@ -239,8 +239,10 @@ private:
     return index_.count(key) > 0;
   }
 
-  [[nodiscard]] bool overlaps_with(const key_type& start,
-                              const key_type& end) const noexcept {
+  [[nodiscard]] bool overlaps_with(
+    const key_type& start,
+    const key_type& end
+  ) const noexcept {
     return time_range_.overlaps_with(start.timestamp(), end.timestamp())
       || key_range_.overlaps_with(start, end);
   }

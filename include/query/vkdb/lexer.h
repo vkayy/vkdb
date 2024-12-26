@@ -66,7 +66,7 @@ private:
 
 	void lex_whitespace() noexcept;
 	[[nodiscard]] Token lex_word() noexcept;
-	[[nodiscard]] Token lex_number() noexcept ;
+	[[nodiscard]] Token lex_number() noexcept;
 	void lex_comment() noexcept;
 	[[nodiscard]] Token lex_equal() noexcept;
 	[[nodiscard]] Token lex_comma() noexcept;

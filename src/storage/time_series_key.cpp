@@ -21,7 +21,11 @@ TimeSeriesKey::TimeSeriesKey(std::string&& str) {
   }
 }
 
-TimeSeriesKey::TimeSeriesKey(Timestamp timestamp, Metric metric, TagTable tags)
+TimeSeriesKey::TimeSeriesKey(
+  Timestamp timestamp,
+  Metric metric,
+  TagTable tags
+) noexcept
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
   , tags_{std::move(tags)} {}
