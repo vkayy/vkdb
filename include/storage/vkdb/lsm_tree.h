@@ -2,7 +2,6 @@
 #define STORAGE_LSM_TREE_H
 
 #include <vkdb/concepts.h>
-#include <vkdb/thread_pool.h>
 #include <vkdb/sstable.h>
 #include <vkdb/mem_table.h>
 #include <vkdb/write_ahead_log.h>
