@@ -186,9 +186,9 @@ And, here's the EBNF grammar encapsulating vq.
 
 <value> ::= <number>
 
-<identifier> ::= <char> [<char> | <digit>]*
+<identifier> ::= <char> {<char> | <digit>}*
 
-<number> ::= ["-"] <digit> [<digit>]* ["." <digit>+]
+<number> ::= {"-"}? <digit> {<digit>}* {"." <digit>+}?
 
 <char> ::= "A" | ... | "Z" | "a" | ... | "z" | "_"
 
