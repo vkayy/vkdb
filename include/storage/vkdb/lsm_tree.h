@@ -5,6 +5,7 @@
 #include <vkdb/sstable.h>
 #include <vkdb/mem_table.h>
 #include <vkdb/write_ahead_log.h>
+#include <vkdb/lru_cache.h>
 #include <vkdb/wal_lsm.h>
 #include <ranges>
 #include <future>
@@ -26,11 +27,13 @@ public:
   using table_type = typename MemTable<TValue>::table_type;
 
   static constexpr size_type C1_LAYER_SIZE{1'000};
+  static constexpr size_type CACHE_CAPACITY{10'000};
 
   explicit LSMTree(FilePath path) noexcept
     : wal_{path}
     , path_{std::move(path)}
-    , sstable_id_{0} {
+    , sstable_id_{0}
+    , cache_{CACHE_CAPACITY} {
       std::filesystem::create_directories(path_);
       load_sstables();
     }
@@ -45,6 +48,7 @@ public:
 
   void put(const key_type& key, const TValue& value, bool log = true) {
     mem_table_.put(key, value);
+    dirty_table_[key] = true;
     if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
       flush();
     }
@@ -55,6 +59,7 @@ public:
 
   void remove(const key_type& key, bool log = true) {
     mem_table_.put(key, std::nullopt);
+    dirty_table_[key] = true;
     if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
       flush();
     }
@@ -64,12 +69,21 @@ public:
   }
 
   [[nodiscard]] mapped_type get(const key_type& key) const {
+    if (!dirty_table_[key] && cache_.contains(key)) {
+      return cache_.get(key);
+    }
     if (mem_table_.contains(key)) {
-      return mem_table_.get(key);
+      const auto value{mem_table_.get(key)};
+      cache_.put(key, value);
+      dirty_table_[key] = false;
+      return value;
     }
     for (const auto& sstable : sstables_ | std::views::reverse) {
       if (sstable.contains(key)) {
-        return sstable.get(key);
+        const auto value{sstable.get(key)};
+        cache_.put(key, value);
+        dirty_table_[key] = false;
+        return value;
       }
     }
     return std::nullopt;
@@ -193,6 +207,8 @@ public:
 private:
   using C0Layer = MemTable<TValue>;
   using C1Layer = std::vector<SSTable<TValue>>;
+  using Cache = LRUCache<key_type, TValue>;
+  using DirtyTable = std::unordered_map<key_type, bool>;
 
   void flush() {
     FilePath sstable_file_path{
@@ -226,6 +242,8 @@ private:
   WriteAheadLog<TValue> wal_;
   FilePath path_;
   size_type sstable_id_;
+  mutable Cache cache_;
+  mutable DirtyTable dirty_table_;
 };
 }  // namespace vkdb
 

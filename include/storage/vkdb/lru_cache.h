@@ -13,19 +13,17 @@ template <RegularNoCVRefQuals TKey, RegularNoCVRefQuals TValue>
 class LRUCache {
 public:
   using key_type = TKey;
-  using mapped_type = TValue;
+  using mapped_type = std::optional<TValue>;
   using value_type = std::pair<const key_type, mapped_type>;
   using size_type = uint64_t;
-  using reference = value_type&;
-  using const_reference = const value_type&;
-  using mapped_ref_wrap = std::reference_wrapper<mapped_type>;
-  using opt_mapped_ref_wrap = std::optional<mapped_ref_wrap>;
 
   LRUCache() noexcept
-    : capacity_{DEFAULT_CAPACITY} {}
+    : capacity_{DEFAULT_CAPACITY}
+    , mutex_{std::make_unique<std::mutex>()} {}
 
   explicit LRUCache(size_type capacity)
-    : capacity_{capacity} {
+    : capacity_{capacity}
+    , mutex_{std::make_unique<std::mutex>()} {
       if (capacity == 0) {
         throw std::invalid_argument{
           "LRUCache(): Capacity must be greater than 0."
@@ -41,9 +39,9 @@ public:
   
   ~LRUCache() = default;
   
-  template <SameNoCVRefQuals <key_type> K, SameNoCVRefQuals <mapped_type> V>
+  template <SameNoCVRefQuals <key_type> K, std::convertible_to<mapped_type> V>
   void put(K&& key, V&& value) {
-    std::lock_guard lock{mutex_};
+    std::lock_guard lock{*mutex_};
     const auto it{map_.find(key)};
     if (it != map_.end()) {
       it->second->second = std::forward<V>(value);
@@ -57,8 +55,8 @@ public:
   }
 
   template <SameNoCVRefQuals <key_type> K>
-  [[nodiscard]] opt_mapped_ref_wrap get(K&& key) {
-    std::lock_guard lock{mutex_};
+  [[nodiscard]] mapped_type get(K&& key) {
+    std::lock_guard lock{*mutex_};
     const auto it{map_.find(std::forward<K>(key))};
     if (it == map_.end()) {
       return std::nullopt;
@@ -69,22 +67,22 @@ public:
 
   template <SameNoCVRefQuals <key_type> K>
   [[nodiscard]] bool contains(K&& key) const noexcept {
-    std::lock_guard lock{mutex_};
+    std::lock_guard lock{*mutex_};
     return map_.find(std::forward<K>(key)) != map_.end();
   }
 
   [[nodiscard]] size_type capacity() const noexcept {
-    std::lock_guard lock{mutex_};
+    std::lock_guard lock{*mutex_};
     return capacity_;
   }
 
   [[nodiscard]] size_type size() const noexcept {
-    std::lock_guard lock{mutex_};
+    std::lock_guard lock{*mutex_};
     return list_.size();
   }
 
   void clear() noexcept {
-    std::lock_guard lock{mutex_};
+    std::lock_guard lock{*mutex_};
     list_.clear();
     map_.clear();
   }
@@ -106,7 +104,7 @@ private:
   size_type capacity_;
   CacheList list_;
   CacheListIterMap map_;
-  mutable std::mutex mutex_;
+  mutable std::unique_ptr<std::mutex> mutex_;
 };
 }  // namespace vkdb
 

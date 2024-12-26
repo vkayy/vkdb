@@ -384,3 +384,43 @@ TEST_F(LSMTreeTest, CanReplayWriteAheadLog) {
 
   EXPECT_EQ(lsm_tree_->sstableCount(), 0);
 }
+
+TEST_F(LSMTreeTest, CanPutWithFlushing) {
+  for (Timestamp i{0}; i < 100'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  EXPECT_EQ(lsm_tree_->sstableCount(), 100);
+}
+
+TEST_F(LSMTreeTest, CanPutWithFlushingAndGetDifferentKeys) {
+  for (Timestamp i{0}; i < 100'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  for (Timestamp i{0}; i < 100'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    auto value{lsm_tree_->get(key)};
+    EXPECT_EQ(value, i);
+  }
+
+  EXPECT_EQ(lsm_tree_->sstableCount(), 100);
+}
+
+TEST_F(LSMTreeTest, CanPutWithFlushingAndGetRepeatedKey) {
+  for (Timestamp i{0}; i < 100'000; ++i) {
+    TimeSeriesKey key{i, "metric", {}};
+    lsm_tree_->put(key, i);
+  }
+
+  for (auto i{0}; i < 100'000; ++i) {
+    TimeSeriesKey key{0, "metric", {}};
+    auto value{lsm_tree_->get(key)};
+    EXPECT_EQ(value, 0);
+  }
+
+  EXPECT_EQ(lsm_tree_->sstableCount(), 100);
+}
+
