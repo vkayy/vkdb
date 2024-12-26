@@ -77,7 +77,9 @@ std::string BloomFilter::str() const noexcept {
       ss << " ";
     }
     ss << seed;
+    first = false;
   }
+  ss << " ";
   for (const auto& bit : bits_) {
     ss << bit;
   }

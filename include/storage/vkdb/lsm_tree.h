@@ -2,6 +2,7 @@
 #define STORAGE_LSM_TREE_H
 
 #include <vkdb/concepts.h>
+#include <vkdb/thread_pool.h>
 #include <vkdb/sstable.h>
 #include <vkdb/mem_table.h>
 #include <vkdb/write_ahead_log.h>
@@ -226,17 +227,15 @@ private:
 
   void load_sstables() {
     sstables_.reserve(C1_LAYER_SIZE);
-    std::vector<std::future<void>> sstable_futures;
+    std::set<FilePath> sstable_files;
     for (const auto& file : std::filesystem::directory_iterator(path_)) {
       if (!file.is_regular_file() || file.path().extension() != ".sst") {
         continue;
       }
-      sstable_futures.push_back(std::async(std::launch::async, [this, &file] {
-        sstables_.emplace_back(file.path());
-      }));
+      sstable_files.insert(file.path());
     }
-    for (auto& sstable_future : sstable_futures) {
-      sstable_future.get();
+    for (const auto& sstable_file : sstable_files) {
+      sstables_.emplace_back(sstable_file);
     }
   }
 

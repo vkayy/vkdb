@@ -1,5 +1,6 @@
 #include <vkdb/database.h>
 #include <iostream>
+#include <chrono>
 
 int main() {
   auto db{std::make_unique<vkdb::Database>("wal_replay")};
@@ -16,7 +17,14 @@ int main() {
 
   db.reset();
 
+  auto start{std::chrono::high_resolution_clock::now()};
   auto db_replay{std::make_unique<vkdb::Database>("wal_replay")};
+  auto end{std::chrono::high_resolution_clock::now()};
+  auto elapsed{
+    std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+  };
+
+  std::cout << "Database reconstruction time: " << elapsed.count() << "ms\n";
 
   auto& table_replay{db_replay->getTable("sample_table")};
   
