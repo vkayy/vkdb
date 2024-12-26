@@ -1,6 +1,4 @@
 #include <vkdb/database.h>
-
-#include <vkdb/database.h>
 #include <vkdb/interpreter.h>
 #include <vkdb/lexer.h>
 #include <vkdb/parser.h>
