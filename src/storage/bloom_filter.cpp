@@ -1,4 +1,5 @@
 #include <vkdb/bloom_filter.h>
+#include <iostream>
 
 namespace vkdb {
 BloomFilter::BloomFilter(std::string&& str) noexcept {
@@ -66,10 +67,14 @@ bool BloomFilter::mayContain(const key_type& key) const noexcept {
 
 std::string BloomFilter::str() const noexcept {
   std::stringstream ss;
-  ss << bits_.size() << "\n";
-  ss << seeds_.size() << "\n";
+  ss << bits_.size() << " ";
+  ss << seeds_.size() << " ";
+  auto first{true};
   for (const auto& seed : seeds_) {
-    ss << seed << "\n";
+    if (!first) {
+      ss << " ";
+    }
+    ss << seed;
   }
   for (const auto& bit : bits_) {
     ss << bit;

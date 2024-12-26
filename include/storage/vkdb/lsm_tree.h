@@ -25,6 +25,8 @@ public:
   using size_type = uint64_t;
   using table_type = typename MemTable<TValue>::table_type;
 
+  static constexpr size_type C1_LAYER_SIZE{100};
+
   explicit LSMTree(FilePath path) noexcept
     : wal_{path}
     , path_{std::move(path)}
@@ -196,12 +198,18 @@ private:
     FilePath sstable_file_path{
       path_ / ("sstable_" + std::to_string(sstable_id_++) + ".sst")
     };
+    if (sstables_.size() == C1_LAYER_SIZE) {
+      throw std::runtime_error{
+        "LSMTree::flush(): C1 layer is full. Unable to flush memtable."
+      };
+    }
     sstables_.emplace_back(sstable_file_path, std::move(mem_table_));
     mem_table_.clear();
     wal_.clear();
   }
 
   void load_sstables() {
+    sstables_.reserve(C1_LAYER_SIZE);
     std::set<FilePath> sstable_files;
     for (const auto& entry : std::filesystem::directory_iterator(path_)) {
       if (entry.is_regular_file() && entry.path().extension() == ".sst") {

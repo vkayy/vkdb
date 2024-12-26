@@ -8,7 +8,7 @@ int main() {
   auto& table{db->getTable("sample_table")};
   table.addTagColumn("tag1");
 
-  for (vkdb::Timestamp t{0}; t < 999; ++t) {
+  for (vkdb::Timestamp t{0}; t < 10'999; ++t) {
     table.query()
       .put(t, "metric", {{"tag1", "value1"}}, 1.0)
       .execute();
@@ -21,7 +21,7 @@ int main() {
   auto& table_replay{db_replay->getTable("sample_table")};
   
   auto sum{table_replay.query()
-    .whereTimestampBetween(0, 999)
+    .whereTimestampBetween(10'000, 10'999)
     .whereMetricIs("metric")
     .whereTagsContain({"tag1", "value1"})
     .sum()

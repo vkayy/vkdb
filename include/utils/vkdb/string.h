@@ -9,7 +9,7 @@
 
 namespace vkdb {
 template <ArithmeticNoCVRefQuals TValue>
-TimeSeriesEntry<TValue> entryFromString(const std::string& entry) {
+TimeSeriesEntry<TValue> entryFromString(std::string&& entry) {
   auto sep{entry.find('|')};
   auto end{entry.find(']')};
   auto key_str{entry.substr(0, sep)};

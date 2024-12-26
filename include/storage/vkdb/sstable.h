@@ -9,6 +9,9 @@
 #include <vkdb/string.h>
 #include <string>
 #include <fstream>
+#include <sys/mman.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 namespace vkdb {
 using FilePath = std::filesystem::path;
@@ -31,10 +34,14 @@ public:
         MemTable<TValue>::MAX_ENTRIES,
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       }
+    , fd_{-1}
+    , mmap_{nullptr}
+    , mmap_size_{0}
   {
     if (!std::filesystem::exists(file_path_)) {
       return;
     }
+    map_file();
     load_metadata();
   }
   
@@ -44,6 +51,9 @@ public:
         MemTable<TValue>::MAX_ENTRIES,
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       }
+    , fd_{-1}
+    , mmap_{nullptr}
+    , mmap_size_{0}
     {
       writeDataToDisk(std::move(mem_table));
     }
@@ -54,11 +64,14 @@ public:
   SSTable(const SSTable&) = delete;
   SSTable& operator=(const SSTable&) = delete;
 
-  ~SSTable() = default;
+  ~SSTable() {
+    unmap_file();
+  }
 
   void writeDataToDisk(MemTable<TValue>&& mem_table) {
     save_memtable(std::move(mem_table));
     save_metadata();
+    map_file();
   }
 
   [[nodiscard]] bool contains(const key_type& key) const noexcept {
@@ -70,27 +83,23 @@ public:
       return std::nullopt;
     }
 
-    std::ifstream file{file_path_};
-    if (!file.is_open()) {
+    auto pos{index_.at(key)};
+    if (pos >= mmap_size_) {
       throw std::runtime_error{
-        "SSTable::get(): Unable to open file '"
-        + std::string(file_path_) + "'."
+        "SSTable::get(): Invalid position " + std::to_string(pos)
+        + " for key '" + key.str() + "'."
       };
     }
 
-    file.seekg(index_.at(key));
-    if (!file) {
+    auto entry_ptr{static_cast<const char*>(mmap_) + pos + 1};
+    auto [entry_key, entry_value]
+      = entryFromString<TValue>(std::string{entry_ptr});
+    if (entry_key != key) {
       throw std::runtime_error{
-        "SSTable::get(): Unable to seek to position "
-        + std::to_string(index_.at(key)) + " in file '"
-        + std::string(file_path_) + "'."
+        "SSTable::get(): Key mismatch. Expected '" + key.str()
+        + "' but got '" + entry_key.str() + "'."
       };
     }
-
-    std::string entry_str;
-    std::getline(file, entry_str, '[');
-    std::getline(file, entry_str, '[');
-    auto [entry_key, entry_value] = entryFromString<TValue>(entry_str);
 
     return entry_value;
   }
@@ -178,7 +187,7 @@ private:
     file << bloom_filter_.str() << "\n";
     file << index_.size() << "\n";
     for (const auto& [key, pos] : index_) {
-      file << key.str() << ":" << pos << "\n";
+      file << key.str() << "^" << pos << "\n";
     }
 
     file.close();
@@ -204,14 +213,14 @@ private:
     auto no_of_entries{std::stoull(line)};
     for (auto i{0}; i < no_of_entries; ++i) {
       std::getline(file, line);
-      auto colon_pos{line.find(':')};
-      if (colon_pos == std::string::npos) {
+      auto caret_pos{line.find('^')};
+      if (caret_pos == std::string::npos) {
         throw std::runtime_error{
           "SSTable::load_metadata(): Invalid index entry '" + line + "'."
         };
       }
-      key_type key{std::move(line.substr(0, colon_pos))};
-      auto pos{std::stoull(line.substr(colon_pos + 1))};
+      key_type key{std::move(line.substr(0, caret_pos))};
+      auto pos{std::stoull(line.substr(caret_pos + 1))};
       index_.emplace(key, pos);
     }
 
@@ -236,11 +245,57 @@ private:
       || key_range_.overlaps_with(start, end);
   }
 
+  void map_file() {
+    if (!std::filesystem::exists(file_path_)) {
+      std::ofstream file{file_path_, std::ios::app};
+      if (!file.is_open()) {
+        throw std::runtime_error{
+          "SSTable::map_file(): Unable to create file '"
+          + std::string(file_path_) + "'."
+        };
+      }
+      file.close();
+    }
+    
+    fd_ = open(file_path_.c_str(), O_RDONLY);
+    if (fd_ == -1) {
+      throw std::runtime_error{
+        "SSTable::map_file(): Unable to open file '"
+        + std::string(file_path_) + "'."
+      };
+    }
+
+    mmap_size_ = std::filesystem::file_size(file_path_);
+
+    mmap_ = mmap(nullptr, mmap_size_, PROT_READ, MAP_PRIVATE, fd_, 0);
+    if (mmap_ == MAP_FAILED) {
+      close(fd_);
+      throw std::runtime_error{
+        "SSTable::map_file(): Unable to map file '"
+        + std::string(file_path_) + "'."
+      };
+    }
+  }
+
+  void unmap_file() {
+    if (mmap_ != nullptr) {
+      munmap(mmap_, mmap_size_);
+      mmap_ = nullptr;
+    }
+    if (fd_ != -1) {
+      close(fd_);
+      fd_ = -1;
+    }
+  }
+
   BloomFilter bloom_filter_;
   TimeRange time_range_;
   KeyRange key_range_;
   Index index_;
   FilePath file_path_;
+  int fd_;
+  void *mmap_;
+  size_type mmap_size_;
 };
 }  // namespace vkdb
 

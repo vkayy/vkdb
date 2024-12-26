@@ -18,19 +18,19 @@ public:
       return;
     }
 
-    auto colon_pos{str.find(':')};
-    if (colon_pos == std::string::npos) {
+    auto ampersand_pos{str.find('&')};
+    if (ampersand_pos == std::string::npos) {
       throw std::invalid_argument{
         "DataRange::DataRange(): Invalid range string '" + str + "'."
       };
     }
 
     if constexpr (std::is_same_v<data_type, TimeSeriesKey>) {
-      range_.first = TimeSeriesKey{str.substr(0, colon_pos)};
-      range_.second = TimeSeriesKey{str.substr(colon_pos + 1)};
+      range_.first = TimeSeriesKey{str.substr(0, ampersand_pos)};
+      range_.second = TimeSeriesKey{str.substr(ampersand_pos + 1)};
     } else {
-      range_.first = std::stod(str.substr(0, colon_pos));
-      range_.second = std::stod(str.substr(colon_pos + 1));
+      range_.first = std::stod(str.substr(0, ampersand_pos));
+      range_.second = std::stod(str.substr(ampersand_pos + 1));
     }
 
     is_set_ = true;
@@ -89,9 +89,9 @@ public:
     }
 
     if constexpr (std::is_same_v<data_type, TimeSeriesKey>) {
-      return range_.first.str() + ":" + range_.second.str();
+      return range_.first.str() + "&" + range_.second.str();
     } else {
-      return std::to_string(range_.first) + ":" + std::to_string(range_.second);
+      return std::to_string(range_.first) + "&" + std::to_string(range_.second);
     }
   }
 

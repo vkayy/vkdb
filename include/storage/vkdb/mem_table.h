@@ -95,7 +95,8 @@ public:
     std::getline(ss, entry_str, '[');
     
     while (std::getline(ss, entry_str, '[')) {
-      auto [entry_key, entry_value] = entryFromString<TValue>(entry_str);
+      auto [entry_key, entry_value]
+        = entryFromString<TValue>(std::move(entry_str));
       table.put(entry_key, entry_value);
     }
   }
