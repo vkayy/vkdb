@@ -25,7 +25,7 @@ public:
   using size_type = uint64_t;
   using table_type = typename MemTable<TValue>::table_type;
 
-  static constexpr size_type C1_LAYER_SIZE{100};
+  static constexpr size_type C1_LAYER_SIZE{1'000};
 
   explicit LSMTree(FilePath path) noexcept
     : wal_{path}
