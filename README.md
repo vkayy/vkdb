@@ -175,6 +175,10 @@ int main() {
 }
 ```
 
+| ![vq-playground.png](doc/vq-playground.png) | 
+|:--:| 
+| *The vq playground REPL.* |
+
 This is generally for experimental purposes—there's not much to gain from it in practice besides having a playground.
 
 ### Mock data
@@ -219,7 +223,9 @@ DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
 
 There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-explanatory reasons.
 
-![vq errors](doc/vq-errors.png)
+| ![vq-errors.png](doc/vq-errors.png) | 
+|:--:| 
+| *A parse error and a runtime error in the REPL.* |
 
 ### EBNF
 
