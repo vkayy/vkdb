@@ -5,7 +5,7 @@
 #include <vkdb/table.h>
 
 namespace vkdb {
-static const FilePath DATABASE_DIRECTORY{""};
+static const FilePath DATABASE_DIRECTORY{"_vkdb_database_directory"};
 
 using DatabaseName = std::string;
 
