@@ -38,9 +38,10 @@
 - [Playground](#playground)
 - [Mock data](#mock-data)
 
-[Writing vq](#writing-vq)
+[Working with vq](#working-with-vq)
 - [Table management](#table-management-1)
 - [Data manipulation](#data-manipulation)
+- [Errors](#errors)
 - [EBNF](#ebnf)
 
 [License](#license)
@@ -185,7 +186,7 @@ auto random_int{vkdb::random<int>(-100'000, 100'000)};
 auto random_double{vkdb::random<double>(-10.0, 10.0)};
 ```
 
-## Writing vq
+## Working with vq
 
 ### Table management
 
@@ -213,6 +214,12 @@ PUT temperature 1234 23.5 INTO weather TAGS city=paris, unit=celsius;
 
 DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
 ```
+
+### Errors
+
+There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-explanatory reasons.
+
+![vq errors](doc/vq-errors.png)
 
 ### EBNF
 
