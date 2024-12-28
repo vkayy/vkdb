@@ -60,9 +60,65 @@ I wanted to challenge myself architecturally and push my boundaries with C++, bo
 
 vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.
 
-When you instantiate a `vkdb::Database`, all of the prior in-memory information (in-memory layer, metadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via `vkdb::Database::clear`.
+When you instantiate a `vkdb::Database`, all of the prior in-memory information (in-memory layer, LoadedMetadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via `vkdb::Database::clear`.
 
 It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` type via `vkdb::Database::getTable`, unless you just want to play around with vq (more on this later).
+
+```mermaid
+graph LR
+    classDef uiLayer fill:#404040,stroke:#fff,color:#fff
+    classDef memoryLayer fill:#404040,stroke:#fff,color:#fff
+    classDef diskLayer fill:#404040,stroke:#fff,color:#fff
+
+    subgraph userInterface[User Interface]
+        database[Database]:::uiLayer
+        table[Table]:::uiLayer
+    end
+
+    subgraph memoryLayer[Memory Layer]
+        direction LR
+        c0Layer[C0 Layer]:::memoryLayer
+        memtable[Memtable]:::memoryLayer
+        timestampRangeM[Timestamp Range]:::memoryLayer
+        keyRangeM[Key Range]:::memoryLayer
+        lruCache[LRU Cache]:::memoryLayer
+
+        subgraph metadata[Metadata]
+            direction TB
+            loadedMetadata[Loaded Metadata]:::memoryLayer
+            index[Index]:::memoryLayer
+            timestampRangeS[Timestamp Range]:::memoryLayer
+            keyRangeS[Key Range]:::memoryLayer
+            bloomFilter[Bloom Filter]:::memoryLayer
+        end
+
+        c0Layer --> memtable
+        memtable --> timestampRangeM
+        memtable --> keyRangeM
+        loadedMetadata --> index
+        loadedMetadata --> timestampRangeS
+        loadedMetadata --> keyRangeS
+        loadedMetadata --> bloomFilter
+    end
+
+    subgraph diskLayer[Disk Layer]
+        direction LR
+        ckLayers[Ck Layers]:::diskLayer
+        ssTables[SSTables]:::diskLayer
+        writeAheadLog[Write-Ahead Log]:::diskLayer
+
+        ckLayers --> ssTables
+        ssTables --> loadedMetadata
+    end
+
+    database --> table
+    table --> lsmTree[LSM Tree]
+
+    lsmTree --> lruCache
+    lsmTree --> writeAheadLog
+    lsmTree --> c0Layer
+    lsmTree --> ckLayers
+```
 
 ### Query language internals
 
@@ -71,6 +127,58 @@ Lexing is done quite typically, with enumerated token types and line/column numb
 In terms of parsing, vq has been constructed to have an LL(1) grammar—this meant I could write a straightforward recursive descent parser for the language. This directly converts queries to an abstract syntax tree (AST) with `std::variant`.
 
 Finally, the interpreter makes quick use of the AST via the visitor pattern, built into C++ with `std::variant` (mentioned earlier) and `std::visit`. This ended up making the interpreter (and pretty-printer) very satisfying to write.
+
+```mermaid
+graph LR
+    classDef inputLayer fill:#404040,stroke:#fff,color:#fff
+    classDef lexicalLayer fill:#404040,stroke:#fff,color:#fff
+    classDef syntacticLayer fill:#404040,stroke:#fff,color:#fff
+    classDef semanticLayer fill:#404040,stroke:#fff,color:#fff
+    classDef outputLayer fill:#404040,stroke:#fff,color:#fff
+
+    subgraph Input
+        sourceCode[Source Code]:::inputLayer
+    end
+
+    subgraph LexicalAnalysis[Lexical Analysis]
+        lexer[Lexer]:::lexicalLayer
+        tokens[Tokens]:::lexicalLayer
+        tokenType[Type]:::lexicalLayer
+        lineNo[Line Number]:::lexicalLayer
+        columnNo[Column Number]:::lexicalLayer
+        lexeme[Lexeme]:::lexicalLayer
+        lexer --> tokens
+        tokenType -.-> tokens
+        lineNo -.-> tokens
+        columnNo -.-> tokens
+        lexeme -.-> tokens
+    end
+
+    subgraph SyntacticAnalysis[Syntactic Analysis]
+        parser[Recursive Descent Parser]:::syntacticLayer
+        ast[Abstract Syntax Tree]:::syntacticLayer
+        variant[std::variant]:::syntacticLayer
+        parser --> ast
+        variant -.-> ast
+    end
+
+    subgraph SemanticAnalysis[Semantic Analysis]
+        interpreter[Interpreter]:::semanticLayer
+        visitor[Visitor Pattern]:::semanticLayer
+        stdVisit[std::visit]:::semanticLayer
+        visitor -.-> interpreter
+        stdVisit -.-> visitor
+    end
+
+    subgraph output[Output]
+        result[Result]:::outputLayer
+    end
+
+    sourceCode --> lexer
+    tokens --> parser
+    ast --> interpreter
+    interpreter --> result
+```
 
 ## Running locally (not needed)
 
