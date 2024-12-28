@@ -85,9 +85,9 @@ graph LR
         keyRangeM[Key Range]:::memoryLayer
         lruCache[LRU Cache]:::memoryLayer
 
-        subgraph metadata[Metadata]
+        subgraph metadata[ ]
             direction TB
-            loadedMetadata[Loaded Metadata]:::memoryLayer
+            sstableMetadata[SSTable Metadata]:::memoryLayer
             index[Index]:::memoryLayer
             timestampRangeS[Timestamp Range]:::memoryLayer
             keyRangeS[Key Range]:::memoryLayer
@@ -97,10 +97,10 @@ graph LR
         c0Layer --> memtable
         memtable --> timestampRangeM
         memtable --> keyRangeM
-        loadedMetadata --> index
-        loadedMetadata --> timestampRangeS
-        loadedMetadata --> keyRangeS
-        loadedMetadata --> bloomFilter
+        sstableMetadata --> index
+        sstableMetadata --> timestampRangeS
+        sstableMetadata --> keyRangeS
+        sstableMetadata --> bloomFilter
     end
 
     subgraph diskLayer[Disk Layer]
@@ -110,7 +110,7 @@ graph LR
         writeAheadLog[Write-Ahead Log]:::diskLayer
 
         ckLayers --> ssTables
-        ssTables --> loadedMetadata
+        ssTables --> sstableMetadata
     end
 
     database --> table
