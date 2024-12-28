@@ -1,14 +1,107 @@
-# vkdb
+<div align="center">
+  <img src="doc/vkdb-small.png" alt="logo" width="400" height="auto" />
+  <h1>vkdb</h1>
+  <p>A time series database engine built in C++ with minimal dependencies.</p>
+  <a href="https://cplusplus.com/">
+  <img src="https://img.shields.io/badge/C%2B%2B-%2300599C?logo=cplusplus&logoColor=FFFFFF" alt="c++" /></a>
+  <a href="https://github.com/vkayy/vkdb/graphs/contributors">
+  <img src="https://img.shields.io/github/contributors/vkayy/vkdb" alt="contributors" /></a>
+  <a href="">
+  <img src="https://img.shields.io/github/last-commit/vkayy/vkdb" alt="last update" /></a>
+  <a href="https://github.com/vkayy/vkdb/issues/">
+  <img src="https://img.shields.io/github/issues/vkayy/vkdb" alt="open issues" /></a>
+  <a href="https://github.com/vkayy/vkdb/blob/main/LICENSE">
+  <img src="https://img.shields.io/github/license/vkayy/vkdb.svg" alt="license" /></a>
+  <a href="https://github.com/vkayy/vkdb/stargazers">
+  <img src="https://img.shields.io/github/stars/vkayy/vkdb" alt="stars" /></a>
+  <a href="https://github.com/vkayy/vkdb/network/members">
+  <img src="https://img.shields.io/github/forks/vkayy/vkdb" alt="forks" /></a>
+</div>
 
-A time-series database engine built in C++ with minimal dependencies.
+# Table of contents
 
-## Why?
+[About the project](#about-the-project)
+- [Motivation](#motivation)
+- [Database engine internals](#database-engine-internals)
+- [Query language internals](#query-language-internals)
 
-I wanted to challenge myself architecturally and push my boundaries with C++ in terms of both knowledge and performance.
+[Running locally (not needed)](#running-locally-not-needed)
+- [Installation](#installation)
+- [Tests](#tests)
+- [Examples](#examples)
 
-## How do I use it?
+[Using the library](#using-the-library)
+- [Setup](#setup)
+- [Interface](#interface)
+- [Table management](#table-management)
+- [General queries](#general-queries)
+- [Playground](#playground)
+- [Mock data](#mock-data)
 
-Using CMake will make your life easier—add this to your `CMakeLists.txt` file:
+[Writing vq](#writing-vq)
+- [Table management](#table-management-1)
+- [Data manipulation](#data-manipulation)
+- [EBNF](#ebnf)
+
+[License](#license)
+
+[Authors](#authors)
+
+[Acknowledgements](#acknowledgements)
+
+## About the project
+
+### Motivation
+
+I wanted to challenge myself architecturally and push my boundaries with C++, both in terms of knowledge and performance.
+
+### Database engine internals
+
+vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.
+
+When you instantiate a `vkdb::Database`, all of the prior in-memory information (in-memory layer, metadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via `vkdb::Database::clear`.
+
+It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` type via `vkdb::Database::getTable`, unless you just want to play around with vq (more on this later).
+
+### Query language internals
+
+Lexing is done quite typically, with enumerated token types and line/column number stored for error messages. Initially, I directly executed queries as string streams, but that was a nightmare for robustness.
+
+In terms of parsing, vq has been constructed to have an LL(1) grammar—this meant I could write a straightforward recursive descent parser for the language. This directly converts queries to an abstract syntax tree (AST) with `std::variant`.
+
+Finally, the interpreter makes quick use of the AST via the visitor pattern, built into C++ with `std::variant` (mentioned earlier) and `std::visit`. This ended up making the interpreter (and pretty-printer) very satisfying to write.
+
+## Running locally (not needed)
+
+### Installation
+
+First, clone the project and `cd` into the directory.
+```
+git clone https://github.com/vkayy/vkdb.git && cd vkdb
+```
+Then, make the build directory and build the project with CMake.
+```
+mkdir build && cd build && cmake .. && make
+```
+
+### Tests
+
+From the build folder, you can run the tests.
+```
+./tests/vkdb_tests
+```
+
+### Examples
+
+From the build folder, you can also run any of the examples.
+```
+./examples/<filename>
+```
+
+## Using the library
+
+### Setup
+Add this to your `CMakeLists.txt` file—it lets you use vkdb by fetching the most recent version into your project's build.
 
 ```cmake
 include(FetchContent)
@@ -21,7 +114,8 @@ FetchContent_MakeAvailable(vkdb)
 target_link_libraries(${PROJECT_NAME} vkdb)
 ```
 
-Then, simply include the database header (or the vq header), and you'll have access to the interface.
+### Interface
+Simply include the database header, and you'll have access to the database API.
 
 ```cpp
 #include <vkdb/database.h>
@@ -33,7 +127,9 @@ int main()  {
 }
 ```
 
-Where you'd like to chain calls, you most likely can.
+### Table management
+
+You can manipulate tables with the database API, both with methods or queries.
 
 ```cpp
 db.createTable("sensor_data")
@@ -41,53 +137,13 @@ db.createTable("sensor_data")
   .addTagColumn("type");
 
 db.run("REMOVE TAGS type FROM sensor_data;")
-  .run("PUT temperature 10 20.0 INTO sensor_data;")
-  .runPrompt()
-  .clear();
 ```
 
-Moreover, you could play around with the vq REPL by running `vkdb::Database::runPrompt()` or `vkdb::VQ::runPrompt()`. The former operates on the database you call from, whilst the latter operates on a reserved database called `interpreter_default`.
+### General queries
 
-The default REPL is generally for experimental purposes—there's not much to gain from it in practice besides having a vq playground.
-
-```cpp
-#include <vkdb/vq.h>
-
-int main() {
-  vkdb::Database database{"test"};
-  database.runPrompt();
-  vkdb::VQ::runPrompt();
-}
-```
-
-If you would like to play around with some mock timestamps/values, feel free to use `vkdb::random<>`. Any arithmetic type (with no cv- or ref-qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
+With the database API, you can run queries via strings, files, and the REPL.
 
 ```cpp
-auto random_int{vkdb::random<int>(-100'000, 100'000)};
-auto random_double{vkdb::random<double>(-10.0, 10.0)};
-```
-
-Lastly, you can execute queries both from strings/files and via the builder interface. For instance, to take a few examples from the aptly named `examples` directory:
-
-```cpp
-vkdb::VQ::run(
-  "SELECT COUNT temperature "
-  "FROM atmospheric "
-  "BETWEEN 1702550000 AND 1702650000 "
-  "WHERE region=na;"
-);
-
-vkdb::VQ::runFile(
-  std::filesystem::current_path() / "../examples/vq_setup.vq"
-);
-
-auto sum{table_replay.query()
-  .whereTimestampBetween(0, 999)
-  .whereMetricIs("metric")
-  .whereTagsContain({"tag1", "value1"})
-  .sum()
-};
-
 test_db
   .run("CREATE TABLE temp TAGS tag1, tag2;")
   .runFile(std::filesystem::current_path() / "../examples/vq_setup.vq")
@@ -95,33 +151,45 @@ test_db
   .clear();
 ```
 
-Again, note that execution using `vkdb::VQ` (see the first two examples) only executes on a default interpreter database. However, using the `vkdb::Database::run...` methods (see last two examples) will execute on the calling database. This is recommended!
+With the table API, you can run queries via the query builder.
 
-## How does it work?
-
-vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.
-
-When you create your database (by instantiating a `vkdb::Database`), it persists on disk until you clear it via `vkdb::Database::clear`. It's best to make all interactions via this type, or perhaps the `vkdb::Table` type via `vkdb::Database::getTable`.
-
-One important thing to note is that you should not manipulate the interpreter's database (`vkdb::INTERPRETER_DEFAULT_DATABASE`) via `vkdb::Database`. This is because the interpreter-based instance can become out-of-sync (due to some operations modifying memory and not disk).
-
-In terms of typing, I've tried to make vkdb as robust as possible (as you can see with some of the verbose concepts), but there are bound to be some flaws here and there. Please bring them up!
-
-## What's the query language?
-
-I made a language called vq. Here are some example queries! I'm shamelessly using SQL highlighting here to save you from plain, white text.
-
-```sql
-SELECT DATA status FROM sensors ALL;
-
-SELECT AVG temperature FROM weather BETWEEN 1234 AND 1240 WHERE city=london, unit=celsius;
-
-PUT temperature 1234 23.5 INTO weather TAGS city=paris, unit=celsius;
-
-DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
+```cpp
+auto sum{table_replay.query()
+  .whereTimestampBetween(0, 999)
+  .whereMetricIs("metric")
+  .whereTagsContain({"tag1", "value1"})
+  .sum()
+};
 ```
 
-Moreover, here are some table management queries.
+### Playground
+
+You can also play around with vq by running `vkdb::VQ::run...()`. This operates on a reserved database called `interpreter_default` (which, consequently, you should not use as a database name).
+
+```cpp
+#include <vkdb/vq.h>
+
+int main() {
+  vkdb::VQ::runPrompt();
+}
+```
+
+This is generally for experimental purposes—there's not much to gain from it in practice besides having a playground.
+
+### Mock data
+
+Feel free to use `vkdb::random<>`. Any arithmetic type (with no cv- or ref-qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
+
+```cpp
+auto random_int{vkdb::random<int>(-100'000, 100'000)};
+auto random_double{vkdb::random<double>(-10.0, 10.0)};
+```
+
+## Writing vq
+
+### Table management
+
+Here are some table management queries.
 
 ```sql
 CREATE TABLE climate TAGS region, season;
@@ -133,7 +201,22 @@ ADD TAGS host, status TO servers;
 REMOVE TAGS host FROM servers;
 ```
 
-And, here's the EBNF grammar encapsulating vq.
+### Data manipulation
+
+Here are some data manipulation queries.
+```sql
+SELECT DATA status FROM sensors ALL;
+
+SELECT AVG temperature FROM weather BETWEEN 1234 AND 1240 WHERE city=london, unit=celsius;
+
+PUT temperature 1234 23.5 INTO weather TAGS city=paris, unit=celsius;
+
+DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
+```
+
+### EBNF
+
+Here's the EBNF grammar encapsulating vq.
 
 ```bnf
 <expr> ::= {<query> ";"}+
@@ -188,19 +271,21 @@ And, here's the EBNF grammar encapsulating vq.
 
 <identifier> ::= <char> {<char> | <digit>}*
 
-<number> ::= {"-"}? <digit> {<digit>}* {"." <digit>+}?
+<number> ::= {"-"}? <digit> {<digit>}- {"." <digit>+}?
 
 <char> ::= "A" | ... | "Z" | "a" | ... | "z" | "_"
 
 <digit> ::= "0" | "1" | ... | "9"
 ```
 
-Again, if there are any holes in my logic, let me know. I hope you enjoy working with vkdb!
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ## Authors
 
 [Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me).
 
-## Credits
+## Acknowledgements
 
 Used [MurmurHash3](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp) for the Bloom filters. Fast, uniform, and deterministic.
