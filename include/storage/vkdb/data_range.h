@@ -5,14 +5,30 @@
 #include <vkdb/time_series_key.h>
 
 namespace vkdb {
+/**
+ * @brief A range of data.
+ * 
+ * @tparam TData The data type.
+ */
 template <RegularNoCVRefQuals TData>
   requires std::totally_ordered<TData>
 class DataRange {
 public:
   using data_type = TData;
 
+  /**
+   * @brief Construct a new Data Range object.
+   * 
+   */
   DataRange() noexcept = default;
 
+  /**
+   * @brief Construct a new Data Range object from the given string.
+   * 
+   * @param str The string representation of the range.
+   * 
+   * @throws std::invalid_argument If the range string is invalid.
+   */
   DataRange(std::string&& str) {
     if (str == "null") {
       return;
@@ -36,14 +52,43 @@ public:
     is_set_ = true;
   }
 
+  /**
+   * @brief Move-construct a Data Range object.
+   * 
+   */
   DataRange(DataRange&&) noexcept = default;
+
+  /**
+   * @brief Move-assign a Data Range object.
+   * 
+   */
   DataRange& operator=(DataRange&&) noexcept = default;
 
+  /**
+   * @brief Deleted copy constructor.
+   * 
+   */
   DataRange(const DataRange&) = delete;
+
+  /**
+   * @brief Deleted copy assignment operator.
+   * 
+   */
   DataRange& operator=(const DataRange&) = delete;
 
-  ~DataRange() = default;
+  /**
+   * @brief Destroy the Data Range object.
+   * 
+   */
+  ~DataRange() noexcept = default;
 
+  /**
+   * @brief Update the range with the given data.
+   * @details If the range is not set, the range is set to the data, otherwise
+   * the range is updated to include the data.
+   * 
+   * @param data The data.
+   */
   void updateRange(const data_type& data) noexcept {
     if (!is_set_) {
       range_.first = data;
@@ -56,17 +101,39 @@ public:
     range_.second = std::max(range_.second, data);
   }
 
+  /**
+   * @brief Check if the data is in the range.
+   * 
+   * @param data The data.
+   * @return true if the data is in the range.
+   * @return false if the data is not in the range.
+   */
   [[nodiscard]] bool inRange(const data_type& data) const noexcept {
     return is_set_ && data >= range_.first && data <= range_.second;
   }
 
-  [[nodiscard]] bool overlaps_with(
+  /**
+   * @brief Check if the range overlaps with the given range.
+   * 
+   * @param start The start of the range.
+   * @param end The end of the range.
+   * @return true if the ranges overlap.
+   * @return false if the ranges do not overlap.
+   */
+  [[nodiscard]] bool overlapsWith(
     const data_type& start,
     const data_type& end
   ) const noexcept {
     return is_set_ && range_.first <= end && range_.second >= start;
   }
 
+  /**
+   * @brief Get the lower bound of the range.
+   * 
+   * @return data_type The lower bound of the range.
+   * 
+   * @throws std::logic_error If the range is not set.
+   */
   [[nodiscard]] data_type lower() const {
     if (!is_set_) {
       throw std::logic_error{"DataRange::lower(): Range is not set."};
@@ -74,6 +141,13 @@ public:
     return range_.first;
   }
 
+  /**
+   * @brief Get the upper bound of the range.
+   * 
+   * @return data_type The upper bound of the range.
+   * 
+   * @throws std::logic_error If the range is not set.
+   */
   [[nodiscard]] data_type upper() const {
     if (!is_set_) {
       throw std::logic_error{"DataRange::upper(): Range is not set."};
@@ -81,10 +155,19 @@ public:
     return range_.second;
   }
 
+  /**
+   * @brief Clear the range.
+   * 
+   */
   void clear() noexcept {
     is_set_ = false;
   }
 
+  /**
+   * @brief Convert the range to a string.
+   * 
+   * @return std::string The string representation of the range.
+   */
   [[nodiscard]] std::string str() const noexcept {
     if (!is_set_) {
       return "null";
@@ -99,7 +182,16 @@ public:
   }
 
 private:
+  /**
+   * @brief Flag to indicate if the range is set.
+   * 
+   */
   bool is_set_;
+
+  /**
+   * @brief The lower and upper bounds of the range.
+   * 
+   */
   std::pair<data_type, data_type> range_;
 };
 }  // namespace vkdb

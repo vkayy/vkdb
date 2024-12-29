@@ -54,11 +54,11 @@ TEST_F(DataRangeTest, CanCheckIfRangeOverlapsWithRange) {
   range_->updateRange(2);
   range_->updateRange(3);
 
-  auto overlaps1{range_->overlaps_with(0, 1)};
-  auto overlaps2{range_->overlaps_with(1, 2)};
-  auto overlaps3{range_->overlaps_with(2, 3)};
-  auto overlaps4{range_->overlaps_with(3, 4)};
-  auto overlaps5{range_->overlaps_with(4, 5)};
+  auto overlaps1{range_->overlapsWith(0, 1)};
+  auto overlaps2{range_->overlapsWith(1, 2)};
+  auto overlaps3{range_->overlapsWith(2, 3)};
+  auto overlaps4{range_->overlapsWith(3, 4)};
+  auto overlaps5{range_->overlapsWith(4, 5)};
 
   EXPECT_TRUE(overlaps1);
   EXPECT_TRUE(overlaps2);
@@ -68,7 +68,7 @@ TEST_F(DataRangeTest, CanCheckIfRangeOverlapsWithRange) {
 }
 
 TEST_F(DataRangeTest, CanCheckIfEmptyRangeOverlapsWithRange) {
-  auto overlaps{range_->overlaps_with(0, 1)};
+  auto overlaps{range_->overlapsWith(0, 1)};
 
   EXPECT_FALSE(overlaps);
 }

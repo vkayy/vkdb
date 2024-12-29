@@ -9,7 +9,7 @@ template <ArithmeticNoCVRefQuals T>
 T random(
   T min = std::numeric_limits<T>::min(),
   T max = std::numeric_limits<T>::max()
-) {
+) noexcept {
   std::random_device rd;
   std::mt19937 gen{rd()};
   if constexpr (std::integral<T>) {

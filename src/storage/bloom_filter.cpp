@@ -86,7 +86,7 @@ std::string BloomFilter::str() const noexcept {
   return ss.str();
 }
 
-void BloomFilter::initialise_seeds(size_type no_of_hashes) {
+void BloomFilter::initialise_seeds(size_type no_of_hashes) noexcept {
   seeds_.resize(no_of_hashes);
   for (size_type i{0}; i < no_of_hashes; ++i) {
     seeds_[i] = random<size_type>();

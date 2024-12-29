@@ -243,8 +243,8 @@ private:
     const key_type& start,
     const key_type& end
   ) const noexcept {
-    return time_range_.overlaps_with(start.timestamp(), end.timestamp())
-      || key_range_.overlaps_with(start, end);
+    return time_range_.overlapsWith(start.timestamp(), end.timestamp())
+      || key_range_.overlapsWith(start, end);
   }
 
   void map_file() {
