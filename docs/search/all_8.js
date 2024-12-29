@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['installation_0',['Installation',['../md_2__usage.html#autotoc_md6',1,'']]],
-  ['interface_1',['Interface',['../md_2__usage.html#autotoc_md11',1,'']]],
-  ['internals_2',['Internals',['../md_1__internals.html',1,'']]],
-  ['interpreter_3',['Interpreter',['../classvkdb_1_1_interpreter.html',1,'vkdb']]]
+  ['inrange_0',['inRange',['../classvkdb_1_1_data_range.html#ac6dae953689ea9dddbfd0a16232a8a9d',1,'vkdb::DataRange']]],
+  ['insert_1',['insert',['../classvkdb_1_1_bloom_filter.html#a7f2e6b56d38de660cb7bcd0450df28a8',1,'vkdb::BloomFilter']]],
+  ['installation_2',['Installation',['../md_2__usage.html#autotoc_md6',1,'']]],
+  ['interface_3',['Interface',['../md_2__usage.html#autotoc_md11',1,'']]],
+  ['internals_4',['Internals',['../md_1__internals.html',1,'']]],
+  ['interpret_5',['interpret',['../classvkdb_1_1_interpreter.html#a107216ed52be34435b356dcd5c65a5e3',1,'vkdb::Interpreter']]],
+  ['interpreter_6',['Interpreter',['../classvkdb_1_1_interpreter.html',1,'vkdb::Interpreter'],['../classvkdb_1_1_interpreter.html#a974497f5e5b2ad2c818c771c5ced1d24',1,'vkdb::Interpreter::Interpreter()']]]
 ];

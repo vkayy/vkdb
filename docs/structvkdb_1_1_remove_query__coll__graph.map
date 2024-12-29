@@ -1,14 +1,14 @@
 <map id="vkdb::RemoveQuery" name="vkdb::RemoveQuery">
-<area shape="rect" id="Node000001" title=" " alt="" coords="75,386,216,411"/>
-<area shape="rect" id="Node000002" href="$structvkdb_1_1_tag_columns_expr.html" title=" " alt="" coords="8,297,166,323"/>
+<area shape="rect" id="Node000001" title="Remove query." alt="" coords="75,386,216,411"/>
+<area shape="rect" id="Node000002" href="$structvkdb_1_1_tag_columns_expr.html" title="Tag columns expression." alt="" coords="8,297,166,323"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,336,110,360,132,383,128,387,105,363,93,339"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,193,137,234"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,249,88,296,82,297,74,250"/>
-<area shape="rect" id="Node000004" href="$structvkdb_1_1_tag_key_expr.html" title=" " alt="" coords="23,94,151,120"/>
+<area shape="rect" id="Node000004" href="$structvkdb_1_1_tag_key_expr.html" title="Tag key expression." alt="" coords="23,94,151,120"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="71,133,66,144,64,169,67,192,62,193,58,169,61,143,66,131"/>
-<area shape="rect" id="Node000005" href="$classvkdb_1_1_token.html" title=" " alt="" coords="101,5,193,31"/>
+<area shape="rect" id="Node000005" href="$classvkdb_1_1_token.html" title="Represents a token." alt="" coords="101,5,193,31"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="132,45,97,95,93,92,128,42"/>
-<area shape="rect" id="Node000006" href="$structvkdb_1_1_table_name_expr.html" title=" " alt="" coords="132,144,282,169"/>
+<area shape="rect" id="Node000006" href="$structvkdb_1_1_table_name_expr.html" title="Table name expression." alt="" coords="132,144,282,169"/>
 <area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="161,44,204,142,199,144,156,47"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="213,185,215,221,213,267,205,316,188,363,178,376,166,387,163,383,174,373,183,360,200,315,208,267,209,221,207,185"/>
 </map>

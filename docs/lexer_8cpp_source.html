@@ -107,10 +107,13 @@ $(function(){initNavTree('lexer_8cpp_source.html',''); initResizable(true); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;vkdb/lexer.h&gt;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">namespace </span>vkdb {</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>Lexer::Lexer(<span class="keyword">const</span> std::string&amp; input) noexcept</div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="}">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="classvkdb_1_1_lexer.html#a68879aad6482466e784e11c1bd1f63c9">    4</a></span><a class="code hl_function" href="classvkdb_1_1_lexer.html#ae525b42452656f802ee542521f8d3757">Lexer::Lexer</a>(<span class="keyword">const</span> std::string&amp; input) noexcept</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>  : input_{input}, position_{0}, line_{1}, column_{1} {}</div>
+</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>std::vector&lt;Token&gt; Lexer::tokenize() {</div>
+<div class="foldopen" id="foldopen00007" data-start="{" data-end="}">
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="classvkdb_1_1_lexer.html#a1450e9b5cce37c438d682986b07898c9">    7</a></span>std::vector&lt;Token&gt; <a class="code hl_function" href="classvkdb_1_1_lexer.html#a1450e9b5cce37c438d682986b07898c9">Lexer::tokenize</a>() {</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  std::vector&lt;Token&gt; tokens;</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>  <span class="keywordflow">while</span> (chars_remaining()) {</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordflow">if</span> (is_whitespace(peek())) {</div>
@@ -137,6 +140,7 @@ $(function(){initNavTree('lexer_8cpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  tokens.push_back(lex_end_of_file());</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="keywordflow">return</span> tokens;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
+</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">bool</span> Lexer::is_whitespace(<span class="keywordtype">char</span> ch) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keywordflow">return</span> std::isspace(ch);</div>
@@ -180,7 +184,7 @@ $(function(){initNavTree('lexer_8cpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>}</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="keyword">template</span> &lt;std::predicate&lt;<span class="keywordtype">char</span>&gt; Pred&gt;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keywordtype">void</span> Lexer::advance_while(<span class="keyword">const</span> Pred&amp; pred) {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keywordtype">void</span> Lexer::advance_while(<span class="keyword">const</span> Pred&amp; pred) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keywordflow">while</span> (chars_remaining() &amp;&amp; pred(peek())) {</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    advance();</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
@@ -251,6 +255,8 @@ $(function(){initNavTree('lexer_8cpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>}</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>}  <span class="comment">// namespace vkdb</span></div>
+<div class="ttc" id="aclassvkdb_1_1_lexer_html_a1450e9b5cce37c438d682986b07898c9"><div class="ttname"><a href="classvkdb_1_1_lexer.html#a1450e9b5cce37c438d682986b07898c9">vkdb::Lexer::tokenize</a></div><div class="ttdeci">std::vector&lt; Token &gt; tokenize()</div><div class="ttdoc">Tokenize the input string.</div><div class="ttdef"><b>Definition</b> <a href="#l00007">lexer.cpp:7</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_lexer_html_ae525b42452656f802ee542521f8d3757"><div class="ttname"><a href="classvkdb_1_1_lexer.html#ae525b42452656f802ee542521f8d3757">vkdb::Lexer::Lexer</a></div><div class="ttdeci">Lexer()=delete</div><div class="ttdoc">Deleted default constructor.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

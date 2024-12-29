@@ -104,14 +104,27 @@ $(function(){initNavTree('concept_convertible_to_no_c_v_ref_quals.html',''); ini
   <div class="headertitle"><div class="title">ConvertibleToNoCVRefQuals Concept Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Concept for a type that is convertible to another and has no cv- or ref-qualifiers.  
+<a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="concepts_8h_source.html">concepts.h</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concept_convertible_to_no_c_v_ref_quals.html">ConvertibleToNoCVRefQuals</a> =  std::convertible_to&lt;T, U&gt; &amp;&amp; <a class="code hl_concept" href="concept_has_no_c_v_ref_quals.html">HasNoCVRefQuals&lt;T&gt;</a></div>
-<div class="ttc" id="aconcept_convertible_to_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_convertible_to_no_c_v_ref_quals.html">ConvertibleToNoCVRefQuals</a></div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00026">concepts.h:27</a></div></div>
-<div class="ttc" id="aconcept_has_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_has_no_c_v_ref_quals.html">HasNoCVRefQuals</a></div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00011">concepts.h:11</a></div></div>
+<div class="ttc" id="aconcept_convertible_to_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_convertible_to_no_c_v_ref_quals.html">ConvertibleToNoCVRefQuals</a></div><div class="ttdoc">Concept for a type that is convertible to another and has no cv- or ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00067">concepts.h:68</a></div></div>
+<div class="ttc" id="aconcept_has_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_has_no_c_v_ref_quals.html">HasNoCVRefQuals</a></div><div class="ttdoc">Concept for types that have no cv- or ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00023">concepts.h:23</a></div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="concepts_8h_source.html#l00026">26</a> of file <a class="el" href="concepts_8h_source.html">concepts.h</a>.</p>
+<div class="textblock"><p>Concept for a type that is convertible to another and has no cv- or ref-qualifiers. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to convert. </td></tr>
+    <tr><td class="paramname">U</td><td>Type to convert to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="concepts_8h_source.html#l00067">67</a> of file <a class="el" href="concepts_8h_source.html">concepts.h</a>.</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

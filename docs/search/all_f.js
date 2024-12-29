@@ -1,14 +1,7 @@
 var searchData=
 [
-  ['samenocvrefquals_0',['SameNoCVRefQuals',['../concept_same_no_c_v_ref_quals.html',1,'']]],
-  ['selectquery_1',['SelectQuery',['../structvkdb_1_1_select_query.html',1,'vkdb']]],
-  ['selecttypeavgexpr_2',['SelectTypeAvgExpr',['../structvkdb_1_1_select_type_avg_expr.html',1,'vkdb']]],
-  ['selecttypecountexpr_3',['SelectTypeCountExpr',['../structvkdb_1_1_select_type_count_expr.html',1,'vkdb']]],
-  ['selecttypedataexpr_4',['SelectTypeDataExpr',['../structvkdb_1_1_select_type_data_expr.html',1,'vkdb']]],
-  ['selecttypemaxexpr_5',['SelectTypeMaxExpr',['../structvkdb_1_1_select_type_max_expr.html',1,'vkdb']]],
-  ['selecttypeminexpr_6',['SelectTypeMinExpr',['../structvkdb_1_1_select_type_min_expr.html',1,'vkdb']]],
-  ['selecttypesumexpr_7',['SelectTypeSumExpr',['../structvkdb_1_1_select_type_sum_expr.html',1,'vkdb']]],
-  ['setup_8',['Setup',['../md_2__usage.html#autotoc_md10',1,'']]],
-  ['sstable_9',['SSTable',['../classvkdb_1_1_s_s_table.html',1,'vkdb']]],
-  ['std_10',['std',['../namespacestd.html',1,'']]]
+  ['queries_0',['General queries',['../md_2__usage.html#autotoc_md13',1,'']]],
+  ['query_1',['query',['../classvkdb_1_1_table.html#a9f0f8a018e792adfb707f01dabadb134',1,'vkdb::Table']]],
+  ['query_20processing_2',['Query processing',['../md_1__internals.html#autotoc_md3',1,'']]],
+  ['querybuilder_3',['QueryBuilder',['../classvkdb_1_1_query_builder.html',1,'vkdb::QueryBuilder&lt; TValue &gt;'],['../classvkdb_1_1_query_builder.html#aeb2b04770c683182feba75857649c787',1,'vkdb::QueryBuilder::QueryBuilder()=delete'],['../classvkdb_1_1_query_builder.html#af30c289ecad701a250f538f20601519a',1,'vkdb::QueryBuilder::QueryBuilder(LSMTree&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns) noexcept'],['../classvkdb_1_1_query_builder.html#ae1fe0f75ca012ed0f0abc1b6a2ea3222',1,'vkdb::QueryBuilder::QueryBuilder(QueryBuilder &amp;&amp;) noexcept=default'],['../classvkdb_1_1_query_builder.html#acab4dda69538bddcfe4594a255656df1',1,'vkdb::QueryBuilder::QueryBuilder(const QueryBuilder &amp;) noexcept=default']]]
 ];

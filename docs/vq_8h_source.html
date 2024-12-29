@@ -116,48 +116,65 @@ $(function(){initNavTree('vq_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">class </span>Interpreter;</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">class </span>RuntimeError;</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">using </span>size_type = uint64_t;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>(<a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;&amp;) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp; operator=(<a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;&amp;) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">~VQ</a>() = <span class="keywordflow">default</span>;</div>
+<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html">   17</a></span><span class="keyword">class </span><a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a> {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="keyword">using </span>size_type = uint64_t;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html#acdc71f6faf7eb4c2bcf0d153639bdd65">   25</a></span>  <a class="code hl_function" href="classvkdb_1_1_v_q.html#acdc71f6faf7eb4c2bcf0d153639bdd65">VQ</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> runFile(<span class="keyword">const</span> std::filesystem::path path);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> runPrompt();</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> run(<span class="keyword">const</span> std::string&amp; source);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> error(<a class="code hl_class" href="classvkdb_1_1_token.html">Token</a> token, <span class="keyword">const</span> std::string&amp; message);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> runtimeError(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1_runtime_error.html">RuntimeError</a>&amp; error);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html#a42d1612a5fa6b1f789f785de664ea820">   31</a></span>  <a class="code hl_function" href="classvkdb_1_1_v_q.html#a42d1612a5fa6b1f789f785de664ea820">VQ</a>(<a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;&amp;) noexcept = default;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keyword">static</span> <span class="keywordtype">void</span> report(</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    size_type line,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">const</span> std::string&amp; where,</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">const</span> std::string&amp; message</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  );</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> had_error_;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> had_runtime_error_;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">static</span> <a class="code hl_class" href="classvkdb_1_1_database.html">Database</a> database_;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1_interpreter.html">Interpreter</a> interpreter_;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>};</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html#a63bb370a575940289fba2d44012c9e91">   37</a></span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp; operator=(<a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;&amp;) noexcept = default;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html#a8f6d14be9004cbd325bd79241d7c7d08">   43</a></span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>(const <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;) noexcept = default;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html#aaeeeb8204b88193cf441f9b8475b61e0">   49</a></span>  <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp; operator=(const <a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>&amp;) noexcept = default;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classvkdb_1_1_v_q.html#ade8d897599ffafecf25715a98e10f17d">   55</a></span>  ~<a class="code hl_class" href="classvkdb_1_1_v_q.html">VQ</a>() noexcept = default;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  static <span class="keywordtype">void</span> <a class="code hl_function" href="classvkdb_1_1_v_q.html#a6daf5be571e62d8d32b891da60a9743d">runFile</a>(const <a class="code hl_namespace" href="namespacestd.html">std</a>::filesystem::path path) noexcept;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  static <span class="keywordtype">void</span> <a class="code hl_function" href="classvkdb_1_1_v_q.html#aa8ef53cff1c2cd927e487d5e2b197809">runPrompt</a>() noexcept;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  static <span class="keywordtype">void</span> <a class="code hl_function" href="classvkdb_1_1_v_q.html#a2fcdb83836971bdac39fcb98ebc86ba5">run</a>(const <a class="code hl_namespace" href="namespacestd.html">std</a>::<span class="keywordtype">string</span>&amp; source) noexcept;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  static <span class="keywordtype">void</span> <a class="code hl_function" href="classvkdb_1_1_v_q.html#a2fcbb27fee9512c87231c637dd136a2c">error</a>(<a class="code hl_class" href="classvkdb_1_1_token.html">Token</a> token, const <a class="code hl_namespace" href="namespacestd.html">std</a>::<span class="keywordtype">string</span>&amp; message) noexcept;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  static <span class="keywordtype">void</span> <a class="code hl_function" href="classvkdb_1_1_v_q.html#addd820cd9ec68735efc614dfc0340b27">runtimeError</a>(const <a class="code hl_class" href="classvkdb_1_1_runtime_error.html">RuntimeError</a>&amp; <a class="code hl_function" href="classvkdb_1_1_v_q.html#a2fcbb27fee9512c87231c637dd136a2c">error</a>) noexcept;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>private:</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  static <span class="keywordtype">void</span> report(</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    size_type line,</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    const <a class="code hl_namespace" href="namespacestd.html">std</a>::<span class="keywordtype">string</span>&amp; where,</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    const <a class="code hl_namespace" href="namespacestd.html">std</a>::<span class="keywordtype">string</span>&amp; message</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  ) noexcept;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  static <span class="keywordtype">bool</span> had_error_;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  static <span class="keywordtype">bool</span> had_runtime_error_;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  static <a class="code hl_class" href="classvkdb_1_1_database.html">Database</a> database_;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  static const <a class="code hl_class" href="classvkdb_1_1_interpreter.html">Interpreter</a> interpreter_;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>};</div>
 </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}  <span class="comment">// namespace vkdb</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#endif </span><span class="comment">// QUERY_VQ_H</span></div>
-<div class="ttc" id="aclassvkdb_1_1_database_html"><div class="ttname"><a href="classvkdb_1_1_database.html">vkdb::Database</a></div><div class="ttdef"><b>Definition</b> <a href="database_8h_source.html#l00012">database.h:12</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1_interpreter_html"><div class="ttname"><a href="classvkdb_1_1_interpreter.html">vkdb::Interpreter</a></div><div class="ttdef"><b>Definition</b> <a href="interpreter_8h_source.html#l00078">interpreter.h:78</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1_runtime_error_html"><div class="ttname"><a href="classvkdb_1_1_runtime_error.html">vkdb::RuntimeError</a></div><div class="ttdef"><b>Definition</b> <a href="interpreter_8h_source.html#l00066">interpreter.h:66</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1_token_html"><div class="ttname"><a href="classvkdb_1_1_token.html">vkdb::Token</a></div><div class="ttdef"><b>Definition</b> <a href="token_8h_source.html#l00060">token.h:60</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1_v_q_html"><div class="ttname"><a href="classvkdb_1_1_v_q.html">vkdb::VQ</a></div><div class="ttdef"><b>Definition</b> <a href="#l00013">vq.h:13</a></div></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>}  <span class="comment">// namespace vkdb</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">#endif </span><span class="comment">// QUERY_VQ_H</span></div>
+<div class="ttc" id="aclassvkdb_1_1_database_html"><div class="ttname"><a href="classvkdb_1_1_database.html">vkdb::Database</a></div><div class="ttdoc">Represents a database in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="database_8h_source.html#l00018">database.h:18</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_interpreter_html"><div class="ttname"><a href="classvkdb_1_1_interpreter.html">vkdb::Interpreter</a></div><div class="ttdoc">Interpreter for vq.</div><div class="ttdef"><b>Definition</b> <a href="interpreter_8h_source.html#l00261">interpreter.h:261</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_runtime_error_html"><div class="ttname"><a href="classvkdb_1_1_runtime_error.html">vkdb::RuntimeError</a></div><div class="ttdoc">Runtime error.</div><div class="ttdef"><b>Definition</b> <a href="interpreter_8h_source.html#l00219">interpreter.h:219</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_token_html"><div class="ttname"><a href="classvkdb_1_1_token.html">vkdb::Token</a></div><div class="ttdoc">Represents a token.</div><div class="ttdef"><b>Definition</b> <a href="token_8h_source.html#l00080">token.h:80</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html"><div class="ttname"><a href="classvkdb_1_1_v_q.html">vkdb::VQ</a></div><div class="ttdoc">Standalone vq interpreter.</div><div class="ttdef"><b>Definition</b> <a href="#l00017">vq.h:17</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html_a2fcbb27fee9512c87231c637dd136a2c"><div class="ttname"><a href="classvkdb_1_1_v_q.html#a2fcbb27fee9512c87231c637dd136a2c">vkdb::VQ::error</a></div><div class="ttdeci">static void error(Token token, const std::string &amp;message) noexcept</div><div class="ttdoc">Handle an error.</div><div class="ttdef"><b>Definition</b> <a href="vq_8cpp_source.html#l00058">vq.cpp:58</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html_a2fcdb83836971bdac39fcb98ebc86ba5"><div class="ttname"><a href="classvkdb_1_1_v_q.html#a2fcdb83836971bdac39fcb98ebc86ba5">vkdb::VQ::run</a></div><div class="ttdeci">static void run(const std::string &amp;source) noexcept</div><div class="ttdoc">Run a source string.</div><div class="ttdef"><b>Definition</b> <a href="vq_8cpp_source.html#l00044">vq.cpp:44</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html_a42d1612a5fa6b1f789f785de664ea820"><div class="ttname"><a href="classvkdb_1_1_v_q.html#a42d1612a5fa6b1f789f785de664ea820">vkdb::VQ::VQ</a></div><div class="ttdeci">VQ(VQ &amp;&amp;) noexcept=default</div><div class="ttdoc">Move-construct a VQ object.</div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html_a6daf5be571e62d8d32b891da60a9743d"><div class="ttname"><a href="classvkdb_1_1_v_q.html#a6daf5be571e62d8d32b891da60a9743d">vkdb::VQ::runFile</a></div><div class="ttdeci">static void runFile(const std::filesystem::path path) noexcept</div><div class="ttdoc">Run a file.</div><div class="ttdef"><b>Definition</b> <a href="vq_8cpp_source.html#l00013">vq.cpp:13</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html_aa8ef53cff1c2cd927e487d5e2b197809"><div class="ttname"><a href="classvkdb_1_1_v_q.html#aa8ef53cff1c2cd927e487d5e2b197809">vkdb::VQ::runPrompt</a></div><div class="ttdeci">static void runPrompt() noexcept</div><div class="ttdoc">Run the prompt.</div><div class="ttdef"><b>Definition</b> <a href="vq_8cpp_source.html#l00030">vq.cpp:30</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html_acdc71f6faf7eb4c2bcf0d153639bdd65"><div class="ttname"><a href="classvkdb_1_1_v_q.html#acdc71f6faf7eb4c2bcf0d153639bdd65">vkdb::VQ::VQ</a></div><div class="ttdeci">VQ()=default</div><div class="ttdoc">Deleted default constructor.</div></div>
+<div class="ttc" id="aclassvkdb_1_1_v_q_html_addd820cd9ec68735efc614dfc0340b27"><div class="ttname"><a href="classvkdb_1_1_v_q.html#addd820cd9ec68735efc614dfc0340b27">vkdb::VQ::runtimeError</a></div><div class="ttdeci">static void runtimeError(const RuntimeError &amp;error) noexcept</div><div class="ttdoc">Handle a runtime error.</div><div class="ttdef"><b>Definition</b> <a href="vq_8cpp_source.html#l00066">vq.cpp:66</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">STL namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

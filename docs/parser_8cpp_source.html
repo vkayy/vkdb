@@ -108,23 +108,27 @@ $(function(){initNavTree('parser_8cpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;vkdb/token.h&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span>vkdb {</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>Parser::Parser(</div>
+<div class="foldopen" id="foldopen00005" data-start="{" data-end="}">
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="classvkdb_1_1_parser.html#af034abb67da533dd93dbb2b58a127ca6">    5</a></span><a class="code hl_function" href="classvkdb_1_1_parser.html#a89e661fca61427da401c082ce7ae608b">Parser::Parser</a>(</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>  <span class="keyword">const</span> std::vector&lt;Token&gt;&amp; tokens,</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>  error_callback callback</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>) noexcept</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>  : tokens_{tokens}, callback_{callback}, position_{0} {}</div>
+</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>std::optional&lt;Expr&gt; Parser::parse() {</div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="}">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classvkdb_1_1_parser.html#a94c873f35f75394487fa402037c4fee3">   11</a></span>std::optional&lt;Expr&gt; <a class="code hl_function" href="classvkdb_1_1_parser.html#a94c873f35f75394487fa402037c4fee3">Parser::parse</a>() noexcept {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keywordflow">try</span> {</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordflow">return</span> parse_expression();</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  } <span class="keywordflow">catch</span> (<span class="keyword">const</span> ParseError&amp;) {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  } <span class="keywordflow">catch</span> (<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1_parse_error.html">ParseError</a>&amp;) {</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">return</span> std::nullopt;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  }</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
+</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>ParseError Parser::error(Token token, <span class="keyword">const</span> std::string&amp; message) {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><a class="code hl_class" href="classvkdb_1_1_parse_error.html">ParseError</a> Parser::error(<a class="code hl_class" href="classvkdb_1_1_token.html">Token</a> token, <span class="keyword">const</span> std::string&amp; message) {</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  callback_(token, message);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keywordflow">return</span> ParseError{};</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keywordflow">return</span> <a class="code hl_class" href="classvkdb_1_1_parse_error.html">ParseError</a>{};</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keywordtype">void</span> Parser::synchronise() {</div>
@@ -315,8 +319,8 @@ $(function(){initNavTree('parser_8cpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>}</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>TablesQuery Parser::parse_tables_query() {</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  consume(TokenType::TABLES, <span class="stringliteral">&quot;Expected TABLES.&quot;</span>);</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>  <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  <span class="keyword">auto</span> tables{consume(TokenType::TABLES, <span class="stringliteral">&quot;Expected TABLES.&quot;</span>)};</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>  <span class="keywordflow">return</span> {tables};</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>}</div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>SelectType Parser::parse_select_type() {</div>
@@ -460,6 +464,10 @@ $(function(){initNavTree('parser_8cpp_source.html',''); initResizable(true); });
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>  <span class="keywordflow">return</span> {value};</div>
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>}</div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>} <span class="comment">// namespace vkdb</span></div>
+<div class="ttc" id="aclassvkdb_1_1_parse_error_html"><div class="ttname"><a href="classvkdb_1_1_parse_error.html">vkdb::ParseError</a></div><div class="ttdoc">Exception class for parse errors.</div><div class="ttdef"><b>Definition</b> <a href="parser_8h_source.html#l00017">parser.h:17</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_parser_html_a89e661fca61427da401c082ce7ae608b"><div class="ttname"><a href="classvkdb_1_1_parser.html#a89e661fca61427da401c082ce7ae608b">vkdb::Parser::Parser</a></div><div class="ttdeci">Parser()=delete</div><div class="ttdoc">Deleted default constructor.</div></div>
+<div class="ttc" id="aclassvkdb_1_1_parser_html_a94c873f35f75394487fa402037c4fee3"><div class="ttname"><a href="classvkdb_1_1_parser.html#a94c873f35f75394487fa402037c4fee3">vkdb::Parser::parse</a></div><div class="ttdeci">std::optional&lt; Expr &gt; parse() noexcept</div><div class="ttdoc">Parses the tokens into an expression.</div><div class="ttdef"><b>Definition</b> <a href="#l00011">parser.cpp:11</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1_token_html"><div class="ttname"><a href="classvkdb_1_1_token.html">vkdb::Token</a></div><div class="ttdoc">Represents a token.</div><div class="ttdef"><b>Definition</b> <a href="token_8h_source.html#l00080">token.h:80</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

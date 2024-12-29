@@ -107,19 +107,28 @@ $(function(){initNavTree('classvkdb_1_1_runtime_error.html',''); initResizable(t
   <div class="headertitle"><div class="title">vkdb::RuntimeError Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Runtime error.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="interpreter_8h_source.html">interpreter.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa1ead7c959c2f2b607de74246e49b682" id="r_aa1ead7c959c2f2b607de74246e49b682"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1ead7c959c2f2b607de74246e49b682">RuntimeError</a> (<a class="el" href="classvkdb_1_1_token.html">Token</a> token, const std::string &amp;message) noexcept</td></tr>
+<tr class="memitem:aa1ead7c959c2f2b607de74246e49b682" id="r_aa1ead7c959c2f2b607de74246e49b682"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1ead7c959c2f2b607de74246e49b682">RuntimeError</a> (<a class="el" href="classvkdb_1_1_token.html">Token</a> <a class="el" href="#a3602b77fa7c3ef859f5fd3afacc0874a">token</a>, const std::string &amp;<a class="el" href="#a8c1ae97ca6309f31ddcd669a8884ec34">message</a>) noexcept</td></tr>
+<tr class="memdesc:aa1ead7c959c2f2b607de74246e49b682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Runtime Error object.  <br /></td></tr>
 <tr class="separator:aa1ead7c959c2f2b607de74246e49b682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adef68975c1c0f5b2027c123a7cac1b75" id="r_adef68975c1c0f5b2027c123a7cac1b75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_token.html">Token</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adef68975c1c0f5b2027c123a7cac1b75">token</a> () const</td></tr>
-<tr class="separator:adef68975c1c0f5b2027c123a7cac1b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4781db72d79c3ad9692f8733d4ed0c6d" id="r_a4781db72d79c3ad9692f8733d4ed0c6d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4781db72d79c3ad9692f8733d4ed0c6d">message</a> () const</td></tr>
-<tr class="separator:a4781db72d79c3ad9692f8733d4ed0c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3602b77fa7c3ef859f5fd3afacc0874a" id="r_a3602b77fa7c3ef859f5fd3afacc0874a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_token.html">Token</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3602b77fa7c3ef859f5fd3afacc0874a">token</a> () const noexcept</td></tr>
+<tr class="memdesc:a3602b77fa7c3ef859f5fd3afacc0874a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the token.  <br /></td></tr>
+<tr class="separator:a3602b77fa7c3ef859f5fd3afacc0874a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c1ae97ca6309f31ddcd669a8884ec34" id="r_a8c1ae97ca6309f31ddcd669a8884ec34"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c1ae97ca6309f31ddcd669a8884ec34">message</a> () const noexcept</td></tr>
+<tr class="memdesc:a8c1ae97ca6309f31ddcd669a8884ec34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the message.  <br /></td></tr>
+<tr class="separator:a8c1ae97ca6309f31ddcd669a8884ec34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00066">66</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<div class="textblock"><p>Runtime error. </p>
+
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00219">219</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa1ead7c959c2f2b607de74246e49b682" name="aa1ead7c959c2f2b607de74246e49b682"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa1ead7c959c2f2b607de74246e49b682">&#9670;&#160;</a></span>RuntimeError()</h2>
@@ -148,13 +157,22 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new Runtime Error object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td><a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a>. </td></tr>
+    <tr><td class="paramname">message</td><td>Message. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00005">5</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4781db72d79c3ad9692f8733d4ed0c6d" name="a4781db72d79c3ad9692f8733d4ed0c6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4781db72d79c3ad9692f8733d4ed0c6d">&#9670;&#160;</a></span>message()</h2>
+<a id="a8c1ae97ca6309f31ddcd669a8884ec34" name="a8c1ae97ca6309f31ddcd669a8884ec34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c1ae97ca6309f31ddcd669a8884ec34">&#9670;&#160;</a></span>message()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -171,17 +189,20 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the message. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string Message. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00012">12</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
 
 </div>
 </div>
-<a id="adef68975c1c0f5b2027c123a7cac1b75" name="adef68975c1c0f5b2027c123a7cac1b75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adef68975c1c0f5b2027c123a7cac1b75">&#9670;&#160;</a></span>token()</h2>
+<a id="a3602b77fa7c3ef859f5fd3afacc0874a" name="a3602b77fa7c3ef859f5fd3afacc0874a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3602b77fa7c3ef859f5fd3afacc0874a">&#9670;&#160;</a></span>token()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,10 +219,13 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the token. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a>. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00008">8</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
 

@@ -109,6 +109,11 @@ $(function(){initNavTree('classvkdb_1_1_l_s_m_tree.html',''); initResizable(true
   <div class="headertitle"><div class="title">vkdb::LSMTree&lt; TValue &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>LSM tree on <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -126,50 +131,78 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a80bd31a6d9a1583e444bb3367ce032a1" id="r_a80bd31a6d9a1583e444bb3367ce032a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80bd31a6d9a1583e444bb3367ce032a1">LSMTree</a> (FilePath path) noexcept</td></tr>
+<tr class="memdesc:a80bd31a6d9a1583e444bb3367ce032a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a> object.  <br /></td></tr>
 <tr class="separator:a80bd31a6d9a1583e444bb3367ce032a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59ccb3fc5748c6bd1758c07890e7730b" id="r_a59ccb3fc5748c6bd1758c07890e7730b"><td class="memItemLeft" align="right" valign="top"><a id="a59ccb3fc5748c6bd1758c07890e7730b" name="a59ccb3fc5748c6bd1758c07890e7730b"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>LSMTree</b> (<a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a59ccb3fc5748c6bd1758c07890e7730b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-construct a <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a> object. <br /></td></tr>
 <tr class="separator:a59ccb3fc5748c6bd1758c07890e7730b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03c022f717fd215aeedee6cf923bb6a2" id="r_a03c022f717fd215aeedee6cf923bb6a2"><td class="memItemLeft" align="right" valign="top"><a id="a03c022f717fd215aeedee6cf923bb6a2" name="a03c022f717fd215aeedee6cf923bb6a2"></a>
 <a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a03c022f717fd215aeedee6cf923bb6a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assign a <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a> object. <br /></td></tr>
 <tr class="separator:a03c022f717fd215aeedee6cf923bb6a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52201e05ad04b23c025d215ff8f1665f" id="r_a52201e05ad04b23c025d215ff8f1665f"><td class="memItemLeft" align="right" valign="top"><a id="a52201e05ad04b23c025d215ff8f1665f" name="a52201e05ad04b23c025d215ff8f1665f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>LSMTree</b> (const <a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a52201e05ad04b23c025d215ff8f1665f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleted copy constructor. <br /></td></tr>
 <tr class="separator:a52201e05ad04b23c025d215ff8f1665f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96e43e93bc015b56ce1df8bc0f7913ac" id="r_a96e43e93bc015b56ce1df8bc0f7913ac"><td class="memItemLeft" align="right" valign="top"><a id="a96e43e93bc015b56ce1df8bc0f7913ac" name="a96e43e93bc015b56ce1df8bc0f7913ac"></a>
 <a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a96e43e93bc015b56ce1df8bc0f7913ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleted copy assignment operator. <br /></td></tr>
 <tr class="separator:a96e43e93bc015b56ce1df8bc0f7913ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2823a8265694226851ccd478fb67f51c" id="r_a2823a8265694226851ccd478fb67f51c"><td class="memItemLeft" align="right" valign="top"><a id="a2823a8265694226851ccd478fb67f51c" name="a2823a8265694226851ccd478fb67f51c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~LSMTree</b> () noexcept=default</td></tr>
+<tr class="memdesc:a2823a8265694226851ccd478fb67f51c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a> object. <br /></td></tr>
+<tr class="separator:a2823a8265694226851ccd478fb67f51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0aaac568fa102b70c97f28767e107b0b" id="r_a0aaac568fa102b70c97f28767e107b0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0aaac568fa102b70c97f28767e107b0b">put</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">key_type</a> &amp;key, const TValue &amp;value, bool log=true)</td></tr>
+<tr class="memdesc:a0aaac568fa102b70c97f28767e107b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a key-value pair into the LSM tree.  <br /></td></tr>
 <tr class="separator:a0aaac568fa102b70c97f28767e107b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53fe6a825f8c1c43beef5db16a69575d" id="r_a53fe6a825f8c1c43beef5db16a69575d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53fe6a825f8c1c43beef5db16a69575d">remove</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">key_type</a> &amp;key, bool log=true)</td></tr>
+<tr class="memdesc:a53fe6a825f8c1c43beef5db16a69575d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a key pair from the LSM tree.  <br /></td></tr>
 <tr class="separator:a53fe6a825f8c1c43beef5db16a69575d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e7ff599260ff80eb4f4c8da2c92f59c" id="r_a6e7ff599260ff80eb4f4c8da2c92f59c"><td class="memItemLeft" align="right" valign="top">mapped_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e7ff599260ff80eb4f4c8da2c92f59c">get</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">key_type</a> &amp;key) const</td></tr>
+<tr class="memdesc:a6e7ff599260ff80eb4f4c8da2c92f59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a value from the LSM tree.  <br /></td></tr>
 <tr class="separator:a6e7ff599260ff80eb4f4c8da2c92f59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0188065df6a04726f9dcb4c81bcb01f6" id="r_a0188065df6a04726f9dcb4c81bcb01f6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; value_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0188065df6a04726f9dcb4c81bcb01f6">getRange</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">key_type</a> &amp;start, const <a class="el" href="classvkdb_1_1_time_series_key.html">key_type</a> &amp;end, TimeSeriesKeyFilter &amp;&amp;filter) const</td></tr>
+<tr class="memdesc:a0188065df6a04726f9dcb4c81bcb01f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a filtered set of entries in a timestamp range.  <br /></td></tr>
 <tr class="separator:a0188065df6a04726f9dcb4c81bcb01f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44ad33f19acde0ae9bbefa8a1f7f206f" id="r_a44ad33f19acde0ae9bbefa8a1f7f206f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; value_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44ad33f19acde0ae9bbefa8a1f7f206f">getRangeParallel</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">key_type</a> &amp;start, const <a class="el" href="classvkdb_1_1_time_series_key.html">key_type</a> &amp;end, TimeSeriesKeyFilter filter) const</td></tr>
+<tr class="memdesc:a44ad33f19acde0ae9bbefa8a1f7f206f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a filtered set of entries in a timestamp range in parallel.  <br /></td></tr>
 <tr class="separator:a44ad33f19acde0ae9bbefa8a1f7f206f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd350466f8593cc88a1f1e943841ae38" id="r_abd350466f8593cc88a1f1e943841ae38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd350466f8593cc88a1f1e943841ae38">replayWAL</a> ()</td></tr>
+<tr class="memdesc:abd350466f8593cc88a1f1e943841ae38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replay the write-ahead log.  <br /></td></tr>
 <tr class="separator:abd350466f8593cc88a1f1e943841ae38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cc2a8a9d4be80d6dd8743ceaa38adc1" id="r_a5cc2a8a9d4be80d6dd8743ceaa38adc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5cc2a8a9d4be80d6dd8743ceaa38adc1">clear</a> () noexcept</td></tr>
+<tr class="memdesc:a5cc2a8a9d4be80d6dd8743ceaa38adc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the LSM tree.  <br /></td></tr>
 <tr class="separator:a5cc2a8a9d4be80d6dd8743ceaa38adc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2901b58e18f624e2c60f98184d81edc" id="r_ad2901b58e18f624e2c60f98184d81edc"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2901b58e18f624e2c60f98184d81edc">str</a> () const noexcept</td></tr>
+<tr class="memdesc:ad2901b58e18f624e2c60f98184d81edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the LSM tree to a string.  <br /></td></tr>
 <tr class="separator:ad2901b58e18f624e2c60f98184d81edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c16a2ad1c365961b7499caab6b8769d" id="r_a2c16a2ad1c365961b7499caab6b8769d"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c16a2ad1c365961b7499caab6b8769d">sstableCount</a> () const noexcept</td></tr>
+<tr class="memdesc:a2c16a2ad1c365961b7499caab6b8769d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of SSTables in the LSM tree.  <br /></td></tr>
 <tr class="separator:a2c16a2ad1c365961b7499caab6b8769d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8d7053fcf5fe5d7d216a7b6bc4315a2" id="r_ae8d7053fcf5fe5d7d216a7b6bc4315a2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8d7053fcf5fe5d7d216a7b6bc4315a2">empty</a> () const noexcept</td></tr>
+<tr class="memdesc:ae8d7053fcf5fe5d7d216a7b6bc4315a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the LSM tree is empty.  <br /></td></tr>
 <tr class="separator:ae8d7053fcf5fe5d7d216a7b6bc4315a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:ad7f154184bc497fa701e1373fff1d12f" id="r_ad7f154184bc497fa701e1373fff1d12f"><td class="memItemLeft" align="right" valign="top">static constexpr size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7f154184bc497fa701e1373fff1d12f">C1_LAYER_SIZE</a> {1'000}</td></tr>
+<tr class="memdesc:ad7f154184bc497fa701e1373fff1d12f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of SSTables in the C1 layer.  <br /></td></tr>
 <tr class="separator:ad7f154184bc497fa701e1373fff1d12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadd43d84f267b41840505fd7e2ba1dfa" id="r_aadd43d84f267b41840505fd7e2ba1dfa"><td class="memItemLeft" align="right" valign="top">static constexpr size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aadd43d84f267b41840505fd7e2ba1dfa">CACHE_CAPACITY</a> {10'000}</td></tr>
+<tr class="memdesc:aadd43d84f267b41840505fd7e2ba1dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max number of entries in the cache.  <br /></td></tr>
 <tr class="separator:aadd43d84f267b41840505fd7e2ba1dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">ArithmeticNoCVRefQuals</a> TValue&gt;<br />
-class vkdb::LSMTree&lt; TValue &gt;</div>
+class vkdb::LSMTree&lt; TValue &gt;</div><p>LSM tree on <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TValue</td><td>Value type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="wal__lsm_8h_source.html#l00008">8</a> of file <a class="el" href="wal__lsm_8h_source.html">wal_lsm.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a23dff0883c83659b383d29dc0dd3fa91" name="a23dff0883c83659b383d29dc0dd3fa91"></a>
@@ -186,7 +219,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00023">23</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00036">36</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -204,7 +237,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00024">24</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00037">37</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -222,7 +255,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00026">26</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00039">39</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +273,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00027">27</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00040">40</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -258,7 +291,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00025">25</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00038">38</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -288,7 +321,16 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00032">32</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Construct a new <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a> object. </p>
+<p>Loads SSTables from disk.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>Path of the LSM tree. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00060">60</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -318,7 +360,10 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00182">182</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Clear the LSM tree. </p>
+<p>Remove all <a class="el" href="classvkdb_1_1_s_s_table.html" title="Sorted string table for storing key-value pairs.">SSTable</a> files and the WAL file. </p>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00288">288</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -347,7 +392,12 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00203">203</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Check if the LSM tree is empty. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if the LSM tree is empty. </dd>
+<dd>
+false if the LSM tree is not empty. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00325">325</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -376,7 +426,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00071">71</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Get a value from the LSM tree. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>mapped_type The value if it exists, std::nullopt otherwise.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>If getting the value fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00148">148</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -414,7 +479,24 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00092">92</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Get a filtered set of entries in a timestamp range. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>Start timestamp. </td></tr>
+    <tr><td class="paramname">end</td><td>End timestamp. </td></tr>
+    <tr><td class="paramname">filter</td><td>Filter. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;value_type&gt; Entries.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>If getting the entries fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00179">179</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -452,7 +534,24 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00123">123</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Get a filtered set of entries in a timestamp range in parallel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>Start timestamp. </td></tr>
+    <tr><td class="paramname">end</td><td>End timestamp. </td></tr>
+    <tr><td class="paramname">filter</td><td>Filter. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;value_type&gt; Entries.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>If getting the entries fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00220">220</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -490,7 +589,23 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00049">49</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Put a key-value pair into the LSM tree. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key. </td></tr>
+    <tr><td class="paramname">value</td><td>Value. </td></tr>
+    <tr><td class="paramname">log</td><td>Whether to log the operation in the WAL.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the memtable is flushed when the C1 layer is full. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00109">109</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -523,7 +638,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00060">60</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Remove a key pair from the LSM tree. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key. </td></tr>
+    <tr><td class="paramname">log</td><td>Whether to log the operation in the WAL.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the memtable is flushed when the C1 layer is full. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00129">129</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -552,7 +682,9 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00178">178</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Replay the write-ahead log. </p>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00279">279</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -581,7 +713,10 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00199">199</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Get the number of SSTables in the LSM tree. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_type The number of SSTables. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00315">315</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -610,7 +745,10 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00190">190</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Convert the LSM tree to a string. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string The string representation of the LSM tree. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00301">301</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -637,7 +775,9 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00029">29</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Number of SSTables in the C1 layer. </p>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00046">46</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -663,7 +803,9 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00030">30</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p>Max number of entries in the cache. </p>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00052">52</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>

@@ -104,14 +104,27 @@ $(function(){initNavTree('concept_all_same_no_c_v_ref_quals.html',''); initResiz
   <div class="headertitle"><div class="title">AllSameNoCVRefQuals Concept Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Concept for types that are all the same as another after removing cv- and ref-qualifiers.  
+<a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="concepts_8h_source.html">concepts.h</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts, <span class="keyword">typename</span> U&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concept_all_same_no_c_v_ref_quals.html">AllSameNoCVRefQuals</a> =  (<a class="code hl_concept" href="concept_same_no_c_v_ref_quals.html">SameNoCVRefQuals&lt;Ts, U&gt;</a> &amp;&amp; ...)</div>
-<div class="ttc" id="aconcept_all_same_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_all_same_no_c_v_ref_quals.html">AllSameNoCVRefQuals</a></div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00023">concepts.h:23</a></div></div>
-<div class="ttc" id="aconcept_same_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_same_no_c_v_ref_quals.html">SameNoCVRefQuals</a></div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00007">concepts.h:7</a></div></div>
+<div class="ttc" id="aconcept_all_same_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_all_same_no_c_v_ref_quals.html">AllSameNoCVRefQuals</a></div><div class="ttdoc">Concept for types that are all the same as another after removing cv- and ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00057">concepts.h:57</a></div></div>
+<div class="ttc" id="aconcept_same_no_c_v_ref_quals_html"><div class="ttname"><a href="concept_same_no_c_v_ref_quals.html">SameNoCVRefQuals</a></div><div class="ttdoc">Concept for types that are the same after removing cv- and ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00014">concepts.h:14</a></div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="concepts_8h_source.html#l00023">23</a> of file <a class="el" href="concepts_8h_source.html">concepts.h</a>.</p>
+<div class="textblock"><p>Concept for types that are all the same as another after removing cv- and ref-qualifiers. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Ts</td><td>Types to compare. </td></tr>
+    <tr><td class="paramname">U</td><td>Type to compare against. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="concepts_8h_source.html#l00057">57</a> of file <a class="el" href="concepts_8h_source.html">concepts.h</a>.</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

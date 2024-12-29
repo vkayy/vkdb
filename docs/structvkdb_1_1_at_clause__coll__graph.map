@@ -1,7 +1,7 @@
 <map id="vkdb::AtClause" name="vkdb::AtClause">
-<area shape="rect" id="Node000001" title=" " alt="" coords="24,183,136,208"/>
-<area shape="rect" id="Node000002" href="$structvkdb_1_1_timestamp_expr.html" title=" " alt="" coords="5,94,155,120"/>
+<area shape="rect" id="Node000001" title="At clause." alt="" coords="24,183,136,208"/>
+<area shape="rect" id="Node000002" href="$structvkdb_1_1_timestamp_expr.html" title="Timestamp expression." alt="" coords="5,94,155,120"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,135,83,182,77,182,77,135"/>
-<area shape="rect" id="Node000003" href="$classvkdb_1_1_token.html" title=" " alt="" coords="34,5,126,31"/>
+<area shape="rect" id="Node000003" href="$classvkdb_1_1_token.html" title="Represents a token." alt="" coords="34,5,126,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,47,83,94,77,94,77,47"/>
 </map>

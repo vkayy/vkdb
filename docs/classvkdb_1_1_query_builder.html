@@ -108,6 +108,11 @@ $(function(){initNavTree('classvkdb_1_1_query_builder.html',''); initResizable(t
   <div class="headertitle"><div class="title">vkdb::QueryBuilder&lt; TValue &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Query builder for querying a <a class="el" href="classvkdb_1_1_table.html" title="Represents a table in vkdb.">Table</a>.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="builder_8h_source.html">builder.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -124,63 +129,100 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6e4df1689ec77d0f8a47583dd25f7a20" id="r_a6e4df1689ec77d0f8a47583dd25f7a20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e4df1689ec77d0f8a47583dd25f7a20">QueryBuilder</a> (<a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a>&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns)</td></tr>
-<tr class="separator:a6e4df1689ec77d0f8a47583dd25f7a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb2b04770c683182feba75857649c787" id="r_aeb2b04770c683182feba75857649c787"><td class="memItemLeft" align="right" valign="top"><a id="aeb2b04770c683182feba75857649c787" name="aeb2b04770c683182feba75857649c787"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>QueryBuilder</b> ()=delete</td></tr>
+<tr class="memdesc:aeb2b04770c683182feba75857649c787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleted default constructor. <br /></td></tr>
+<tr class="separator:aeb2b04770c683182feba75857649c787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af30c289ecad701a250f538f20601519a" id="r_af30c289ecad701a250f538f20601519a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af30c289ecad701a250f538f20601519a">QueryBuilder</a> (<a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a>&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns) noexcept</td></tr>
+<tr class="memdesc:af30c289ecad701a250f538f20601519a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.  <br /></td></tr>
+<tr class="separator:af30c289ecad701a250f538f20601519a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1fe0f75ca012ed0f0abc1b6a2ea3222" id="r_ae1fe0f75ca012ed0f0abc1b6a2ea3222"><td class="memItemLeft" align="right" valign="top"><a id="ae1fe0f75ca012ed0f0abc1b6a2ea3222" name="ae1fe0f75ca012ed0f0abc1b6a2ea3222"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>QueryBuilder</b> (<a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:ae1fe0f75ca012ed0f0abc1b6a2ea3222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-construct a <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:ae1fe0f75ca012ed0f0abc1b6a2ea3222"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99d1d1caf9858d12837023cff8413df0" id="r_a99d1d1caf9858d12837023cff8413df0"><td class="memItemLeft" align="right" valign="top"><a id="a99d1d1caf9858d12837023cff8413df0" name="a99d1d1caf9858d12837023cff8413df0"></a>
 <a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a99d1d1caf9858d12837023cff8413df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assign a <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:a99d1d1caf9858d12837023cff8413df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acab4dda69538bddcfe4594a255656df1" id="r_acab4dda69538bddcfe4594a255656df1"><td class="memItemLeft" align="right" valign="top"><a id="acab4dda69538bddcfe4594a255656df1" name="acab4dda69538bddcfe4594a255656df1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>QueryBuilder</b> (const <a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:acab4dda69538bddcfe4594a255656df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-construct a <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:acab4dda69538bddcfe4594a255656df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ea95753afa72c275e5922a9ddcdcef6" id="r_a6ea95753afa72c275e5922a9ddcdcef6"><td class="memItemLeft" align="right" valign="top"><a id="a6ea95753afa72c275e5922a9ddcdcef6" name="a6ea95753afa72c275e5922a9ddcdcef6"></a>
 <a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a6ea95753afa72c275e5922a9ddcdcef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-assign a <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:a6ea95753afa72c275e5922a9ddcdcef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4800a264819c63a0101502c33057c19c" id="r_a4800a264819c63a0101502c33057c19c"><td class="memItemLeft" align="right" valign="top"><a id="a4800a264819c63a0101502c33057c19c" name="a4800a264819c63a0101502c33057c19c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~QueryBuilder</b> () noexcept=default</td></tr>
+<tr class="memdesc:a4800a264819c63a0101502c33057c19c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Query Builder object. <br /></td></tr>
+<tr class="separator:a4800a264819c63a0101502c33057c19c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d1dc75f4de08940cf22b4484077b767" id="r_a5d1dc75f4de08940cf22b4484077b767"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d1dc75f4de08940cf22b4484077b767">point</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">keytype</a> &amp;key)</td></tr>
+<tr class="memdesc:a5d1dc75f4de08940cf22b4484077b767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for point query.  <br /></td></tr>
 <tr class="separator:a5d1dc75f4de08940cf22b4484077b767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a329e37b7f7cb693a5ad0b83a81dc16ef" id="r_a329e37b7f7cb693a5ad0b83a81dc16ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">keytype</a> &amp;start, const <a class="el" href="classvkdb_1_1_time_series_key.html">keytype</a> &amp;end)</td></tr>
+<tr class="memdesc:a329e37b7f7cb693a5ad0b83a81dc16ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for range query.  <br /></td></tr>
 <tr class="separator:a329e37b7f7cb693a5ad0b83a81dc16ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf0079988613acf608dc3d754dcfcceb" id="r_aaf0079988613acf608dc3d754dcfcceb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf0079988613acf608dc3d754dcfcceb">filterByTag</a> (const TagKey &amp;key, const TagValue &amp;value)</td></tr>
+<tr class="memdesc:aaf0079988613acf608dc3d754dcfcceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by a tag.  <br /></td></tr>
 <tr class="separator:aaf0079988613acf608dc3d754dcfcceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee1c6c5a227a656775644e74f6a95090" id="r_aee1c6c5a227a656775644e74f6a95090"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
 <tr class="memitem:aee1c6c5a227a656775644e74f6a95090"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aee1c6c5a227a656775644e74f6a95090">filterByAnyTags</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:aee1c6c5a227a656775644e74f6a95090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple tags.  <br /></td></tr>
 <tr class="separator:aee1c6c5a227a656775644e74f6a95090"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c93b78a85ee16e3d7ecbc4b0f567190" id="r_a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
 <tr class="memitem:a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3c93b78a85ee16e3d7ecbc4b0f567190">filterByAllTags</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple tags.  <br /></td></tr>
 <tr class="separator:a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49086e8774802b9c2669f9fc5436d029" id="r_a49086e8774802b9c2669f9fc5436d029"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49086e8774802b9c2669f9fc5436d029">filterByMetric</a> (const Metric &amp;metric)</td></tr>
+<tr class="memdesc:a49086e8774802b9c2669f9fc5436d029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by a metric.  <br /></td></tr>
 <tr class="separator:a49086e8774802b9c2669f9fc5436d029"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c37c198ed3d0094160481f7195f1fcb" id="r_a6c37c198ed3d0094160481f7195f1fcb"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Metric &gt;... Metrics&gt; </td></tr>
 <tr class="memitem:a6c37c198ed3d0094160481f7195f1fcb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6c37c198ed3d0094160481f7195f1fcb">filterByAnyMetrics</a> (const Metrics &amp;... metrics)</td></tr>
+<tr class="memdesc:a6c37c198ed3d0094160481f7195f1fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple metrics.  <br /></td></tr>
 <tr class="separator:a6c37c198ed3d0094160481f7195f1fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f5f2c9ca2f48576faeb30da18aceb8" id="r_af2f5f2c9ca2f48576faeb30da18aceb8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2f5f2c9ca2f48576faeb30da18aceb8">filterByTimestamp</a> (const Timestamp &amp;timestamp)</td></tr>
+<tr class="memdesc:af2f5f2c9ca2f48576faeb30da18aceb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by a timestamp.  <br /></td></tr>
 <tr class="separator:af2f5f2c9ca2f48576faeb30da18aceb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af01b4f93a25c11217daefbde633ad33a" id="r_af01b4f93a25c11217daefbde633ad33a"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Timestamp &gt;... Timestamps&gt; </td></tr>
 <tr class="memitem:af01b4f93a25c11217daefbde633ad33a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af01b4f93a25c11217daefbde633ad33a">filterByAnyTimestamps</a> (const Timestamps &amp;... timestamps)</td></tr>
+<tr class="memdesc:af01b4f93a25c11217daefbde633ad33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple timestamps.  <br /></td></tr>
 <tr class="separator:af01b4f93a25c11217daefbde633ad33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c3a1e308b9e60cf200ae47cf3c166bf" id="r_a0c3a1e308b9e60cf200ae47cf3c166bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c3a1e308b9e60cf200ae47cf3c166bf">put</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">keytype</a> &amp;key, const TValue &amp;value)</td></tr>
+<tr class="memdesc:a0c3a1e308b9e60cf200ae47cf3c166bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a key-value pair into the <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a>.  <br /></td></tr>
 <tr class="separator:a0c3a1e308b9e60cf200ae47cf3c166bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8fc4d2191a63ed203caca3a78d209cb" id="r_ac8fc4d2191a63ed203caca3a78d209cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8fc4d2191a63ed203caca3a78d209cb">remove</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">keytype</a> &amp;key)</td></tr>
+<tr class="memdesc:ac8fc4d2191a63ed203caca3a78d209cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a key from the <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a>.  <br /></td></tr>
 <tr class="separator:ac8fc4d2191a63ed203caca3a78d209cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a3200ba4a8d2768fa77c65486585c44" id="r_a7a3200ba4a8d2768fa77c65486585c44"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a3200ba4a8d2768fa77c65486585c44">count</a> ()</td></tr>
+<tr class="memdesc:a7a3200ba4a8d2768fa77c65486585c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count the number of entries in the range.  <br /></td></tr>
 <tr class="separator:a7a3200ba4a8d2768fa77c65486585c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad63a544764ecb7cd31b3ed5d10ac58d3" id="r_ad63a544764ecb7cd31b3ed5d10ac58d3"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad63a544764ecb7cd31b3ed5d10ac58d3">sum</a> ()</td></tr>
+<tr class="memdesc:ad63a544764ecb7cd31b3ed5d10ac58d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum the values in the range.  <br /></td></tr>
 <tr class="separator:ad63a544764ecb7cd31b3ed5d10ac58d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a907d98d7c3bbc73a95feff5d2409a978" id="r_a907d98d7c3bbc73a95feff5d2409a978"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a907d98d7c3bbc73a95feff5d2409a978">avg</a> ()</td></tr>
+<tr class="memdesc:a907d98d7c3bbc73a95feff5d2409a978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the average of the values in the range.  <br /></td></tr>
 <tr class="separator:a907d98d7c3bbc73a95feff5d2409a978"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a352758f4e96e1514c7ebe74a93e95192" id="r_a352758f4e96e1514c7ebe74a93e95192"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a352758f4e96e1514c7ebe74a93e95192">min</a> ()</td></tr>
+<tr class="memdesc:a352758f4e96e1514c7ebe74a93e95192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the minimum value in the range.  <br /></td></tr>
 <tr class="separator:a352758f4e96e1514c7ebe74a93e95192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acee4b8420946fb3233dc79057d6f967b" id="r_acee4b8420946fb3233dc79057d6f967b"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acee4b8420946fb3233dc79057d6f967b">max</a> ()</td></tr>
+<tr class="memdesc:acee4b8420946fb3233dc79057d6f967b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the maximum value in the range.  <br /></td></tr>
 <tr class="separator:acee4b8420946fb3233dc79057d6f967b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a951eda98ebdb2dfcd6cc9fca5a944ae8" id="r_a951eda98ebdb2dfcd6cc9fca5a944ae8"><td class="memItemLeft" align="right" valign="top">result_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a951eda98ebdb2dfcd6cc9fca5a944ae8">execute</a> ()</td></tr>
+<tr class="memdesc:a951eda98ebdb2dfcd6cc9fca5a944ae8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the query.  <br /></td></tr>
 <tr class="separator:a951eda98ebdb2dfcd6cc9fca5a944ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">ArithmeticNoCVRefQuals</a> TValue&gt;<br />
-class vkdb::QueryBuilder&lt; TValue &gt;</div>
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00013">13</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+class vkdb::QueryBuilder&lt; TValue &gt;</div><p>Query builder for querying a <a class="el" href="classvkdb_1_1_table.html" title="Represents a table in vkdb.">Table</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TValue</td><td>Type of the value of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00022">22</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a065e9abcf7327fbbd9d3df73bc91e199" name="a065e9abcf7327fbbd9d3df73bc91e199"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a065e9abcf7327fbbd9d3df73bc91e199">&#9670;&#160;</a></span>keytype</h2>
@@ -196,7 +238,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00015">15</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00024">24</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -214,7 +256,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00016">16</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00025">25</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -232,7 +274,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00019">19</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00028">28</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -250,7 +292,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00018">18</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00027">27</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -268,13 +310,13 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00017">17</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00026">26</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6e4df1689ec77d0f8a47583dd25f7a20" name="a6e4df1689ec77d0f8a47583dd25f7a20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e4df1689ec77d0f8a47583dd25f7a20">&#9670;&#160;</a></span>QueryBuilder()</h2>
+<a id="af30c289ecad701a250f538f20601519a" name="af30c289ecad701a250f538f20601519a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af30c289ecad701a250f538f20601519a">&#9670;&#160;</a></span>QueryBuilder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,12 +339,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00023">23</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Construct a new <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object. </p>
+<p>Query type is set to NONE and filters are initialised with a filter that always returns true.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lsm_tree</td><td>Reference to the <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a> to query. </td></tr>
+    <tr><td class="paramname">tag_columns</td><td>Reference to the tag columns of the <a class="el" href="classvkdb_1_1_table.html" title="Represents a table in vkdb.">Table</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00044">44</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -332,7 +384,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00146">146</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Calculate the average of the values in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the average of the values in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>double Average of the values in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the aggregate setup fails or the range is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00334">334</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -361,7 +423,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00132">132</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Count the number of entries in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the number of entries in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>size_type Number of entries in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the aggregate setup fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00300">300</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -385,12 +457,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00172">172</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Execute the query. </p>
+<p>Executes the query based on the query type and query parameters.</p>
+<dl class="section return"><dt>Returns</dt><dd>result_type Result of the query.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the query type is not set and there are no filters or if executing the query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00390">390</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -421,7 +503,29 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00077">77</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Filter the TimeSeriesKeys by multiple tags. </p>
+<p>Adds a filter that checks if the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> has all of the specified tags.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Tags</td><td>Variadic template parameter for tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tags</td><td>Tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If a tag key is not in the tag columns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00175">175</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -452,7 +556,29 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00094">94</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Filter the TimeSeriesKeys by multiple metrics. </p>
+<p>Adds a filter that checks if the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> has any of the specified metrics.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Metrics</td><td>Variadic template parameter for metrics to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>Metrics to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00213">213</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -483,7 +609,29 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00067">67</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Filter the TimeSeriesKeys by multiple tags. </p>
+<p>Adds a filter that checks if the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> has any of the specified tags.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Tags</td><td>Variadic template parameter for tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tags</td><td>Tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If a tag key is not in the tag columns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00154">154</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -514,7 +662,29 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00109">109</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Filter the TimeSeriesKeys by multiple timestamps. </p>
+<p>Adds a filter that checks if the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> has any of the specified timestamps.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Timestamps</td><td>Variadic template parameter for timestamps to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamps</td><td>Timestamps to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00249">249</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -543,7 +713,23 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00086">86</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Filter the TimeSeriesKeys by a metric. </p>
+<p>Adds a filter that checks if the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> has the specified metric.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metric</td><td>Metric to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00194">194</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -576,7 +762,24 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00055">55</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Filter the TimeSeriesKeys by a tag. </p>
+<p>Adds a filter that checks if the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> has the specified tag.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Tag key to filter by. </td></tr>
+    <tr><td class="paramname">value</td><td>Tag value to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the tag key is not in the tag columns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00131">131</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -605,7 +808,23 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00101">101</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Filter the TimeSeriesKeys by a timestamp. </p>
+<p>Adds a filter that checks if the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> has the specified timestamp.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>Timestamp to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00230">230</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -634,7 +853,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00164">164</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Calculate the maximum value in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the maximum value in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>TValue Maximum value in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the aggregate setup fails or the range is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00372">372</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -663,7 +892,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00156">156</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Calculate the minimum value in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the minimum value in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>TValue Minimum value in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the aggregate setup fails or the range is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00354">354</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -692,7 +931,23 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00040">40</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Configure builder for point query. </p>
+<p>Query type is set to POINT and query parameters are set to the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> to query.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td><a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> to query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If a tag in the key is not in the tag columns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00093">93</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -725,7 +980,23 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00118">118</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Put a key-value pair into the <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key to put. </td></tr>
+    <tr><td class="paramname">value</td><td>Value to put. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If any of the key's tags are not in the tag columns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00268">268</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -758,7 +1029,24 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00047">47</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Configure builder for range query. </p>
+<p>Query type is set to RANGE and query parameters are set to the start and end TimeSeriesKeys of the range.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>Start <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> of the range. </td></tr>
+    <tr><td class="paramname">end</td><td>End <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> of the range. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If a tag in the start or end key is not in the tag columns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00112">112</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -787,7 +1075,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00125">125</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Remove a key from the <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If any of the key's tags are not in the tag columns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00284">284</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -816,7 +1119,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00137">137</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p>Sum the values in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the sum of the values in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>TValue Sum of the values in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the aggregate setup fails or the range is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00315">315</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>

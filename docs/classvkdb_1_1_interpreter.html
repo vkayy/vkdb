@@ -108,6 +108,11 @@ $(function(){initNavTree('classvkdb_1_1_interpreter.html',''); initResizable(tru
   <div class="headertitle"><div class="title">vkdb::Interpreter Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="classvkdb_1_1_interpreter.html" title="Interpreter for vq.">Interpreter</a> for vq.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="interpreter_8h_source.html">interpreter.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -117,13 +122,16 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a974497f5e5b2ad2c818c771c5ced1d24" id="r_a974497f5e5b2ad2c818c771c5ced1d24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a974497f5e5b2ad2c818c771c5ced1d24">Interpreter</a> (<a class="el" href="classvkdb_1_1_database.html">Database</a> &amp;database, error_callback callback=[](const <a class="el" href="classvkdb_1_1_runtime_error.html">RuntimeError</a> &amp;) {}) noexcept</td></tr>
+<tr class="memdesc:a974497f5e5b2ad2c818c771c5ced1d24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1_interpreter.html" title="Interpreter for vq.">Interpreter</a> object.  <br /></td></tr>
 <tr class="separator:a974497f5e5b2ad2c818c771c5ced1d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3576116aec2824e519e199952c60c904" id="r_a3576116aec2824e519e199952c60c904"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3576116aec2824e519e199952c60c904">interpret</a> (const Expr &amp;expr, std::ostream &amp;stream=std::cout) const</td></tr>
-<tr class="separator:a3576116aec2824e519e199952c60c904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a107216ed52be34435b356dcd5c65a5e3" id="r_a107216ed52be34435b356dcd5c65a5e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a107216ed52be34435b356dcd5c65a5e3">interpret</a> (const Expr &amp;expr, std::ostream &amp;stream=std::cout) const noexcept</td></tr>
+<tr class="memdesc:a107216ed52be34435b356dcd5c65a5e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret the expression.  <br /></td></tr>
+<tr class="separator:a107216ed52be34435b356dcd5c65a5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00078">78</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<div class="textblock"><p><a class="el" href="classvkdb_1_1_interpreter.html" title="Interpreter for vq.">Interpreter</a> for vq. </p>
+
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00261">261</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a3274578c96d58cf94afb50ade5560a9e" name="a3274578c96d58cf94afb50ade5560a9e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3274578c96d58cf94afb50ade5560a9e">&#9670;&#160;</a></span>error_callback</h2>
@@ -137,7 +145,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00080">80</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00263">263</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -169,16 +177,29 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new <a class="el" href="classvkdb_1_1_interpreter.html" title="Interpreter for vq.">Interpreter</a> object. </p>
+<p>Defaults the callback to an empty lambda.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">database</td><td><a class="el" href="classvkdb_1_1_database.html" title="Represents a database in vkdb.">Database</a>. </td></tr>
+    <tr><td class="paramname">callback</td><td>Error callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00016">16</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3576116aec2824e519e199952c60c904" name="a3576116aec2824e519e199952c60c904"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3576116aec2824e519e199952c60c904">&#9670;&#160;</a></span>interpret()</h2>
+<a id="a107216ed52be34435b356dcd5c65a5e3" name="a107216ed52be34435b356dcd5c65a5e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a107216ed52be34435b356dcd5c65a5e3">&#9670;&#160;</a></span>interpret()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void vkdb::Interpreter::interpret </td>
@@ -191,7 +212,22 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype">std::ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>stream</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::cout</span>&#160;) const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p>Interpret the expression. </p>
+<p>Defaults the output stream to std::cout.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">expr</td><td>Expression. </td></tr>
+    <tr><td class="paramname">stream</td><td>Stream. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="interpreter_8cpp_source.html#l00019">19</a> of file <a class="el" href="interpreter_8cpp_source.html">interpreter.cpp</a>.</p>
 

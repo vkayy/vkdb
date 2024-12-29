@@ -108,6 +108,11 @@ $(function(){initNavTree('classvkdb_1_1_friendly_query_builder.html',''); initRe
   <div class="headertitle"><div class="title">vkdb::FriendlyQueryBuilder&lt; TValue &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Friendly query builder for querying a <a class="el" href="classvkdb_1_1_table.html" title="Represents a table in vkdb.">Table</a>.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -120,65 +125,103 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a961ee7724f3e1df423fd03668c10e527" id="r_a961ee7724f3e1df423fd03668c10e527"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a961ee7724f3e1df423fd03668c10e527">FriendlyQueryBuilder</a> (<a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a>&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns)</td></tr>
-<tr class="separator:a961ee7724f3e1df423fd03668c10e527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a829d286f4c12b3ad30e11753cd20b549" id="r_a829d286f4c12b3ad30e11753cd20b549"><td class="memItemLeft" align="right" valign="top"><a id="a829d286f4c12b3ad30e11753cd20b549" name="a829d286f4c12b3ad30e11753cd20b549"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>FriendlyQueryBuilder</b> ()=delete</td></tr>
+<tr class="memdesc:a829d286f4c12b3ad30e11753cd20b549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleted default constructor. <br /></td></tr>
+<tr class="separator:a829d286f4c12b3ad30e11753cd20b549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19d3e45977065e08132679a4da387449" id="r_a19d3e45977065e08132679a4da387449"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19d3e45977065e08132679a4da387449">FriendlyQueryBuilder</a> (<a class="el" href="classvkdb_1_1_l_s_m_tree.html">LSMTree</a>&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns) noexcept</td></tr>
+<tr class="memdesc:a19d3e45977065e08132679a4da387449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.  <br /></td></tr>
+<tr class="separator:a19d3e45977065e08132679a4da387449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c7efc3ee7120ebec7ba5fbf58f61899" id="r_a5c7efc3ee7120ebec7ba5fbf58f61899"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c7efc3ee7120ebec7ba5fbf58f61899">FriendlyQueryBuilder</a> (<a class="el" href="classvkdb_1_1_query_builder.html">QueryBuilder</a>&lt; TValue &gt; &amp;&amp;query_builder)</td></tr>
+<tr class="memdesc:a5c7efc3ee7120ebec7ba5fbf58f61899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.  <br /></td></tr>
 <tr class="separator:a5c7efc3ee7120ebec7ba5fbf58f61899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aded1817486021cd7a9a1b8badcebaf" id="r_a4aded1817486021cd7a9a1b8badcebaf"><td class="memItemLeft" align="right" valign="top"><a id="a4aded1817486021cd7a9a1b8badcebaf" name="a4aded1817486021cd7a9a1b8badcebaf"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FriendlyQueryBuilder</b> (<a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a4aded1817486021cd7a9a1b8badcebaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-construct a <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:a4aded1817486021cd7a9a1b8badcebaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa45c4602eb3592934469eb305aed3695" id="r_aa45c4602eb3592934469eb305aed3695"><td class="memItemLeft" align="right" valign="top"><a id="aa45c4602eb3592934469eb305aed3695" name="aa45c4602eb3592934469eb305aed3695"></a>
 <a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:aa45c4602eb3592934469eb305aed3695"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assign a <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:aa45c4602eb3592934469eb305aed3695"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54697da7e4e0b522d6cbaaf56bfc2225" id="r_a54697da7e4e0b522d6cbaaf56bfc2225"><td class="memItemLeft" align="right" valign="top"><a id="a54697da7e4e0b522d6cbaaf56bfc2225" name="a54697da7e4e0b522d6cbaaf56bfc2225"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FriendlyQueryBuilder</b> (const <a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a54697da7e4e0b522d6cbaaf56bfc2225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-construct a <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:a54697da7e4e0b522d6cbaaf56bfc2225"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05c1f754cb532f258c375b7e50eb83ce" id="r_a05c1f754cb532f258c375b7e50eb83ce"><td class="memItemLeft" align="right" valign="top"><a id="a05c1f754cb532f258c375b7e50eb83ce" name="a05c1f754cb532f258c375b7e50eb83ce"></a>
 <a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a05c1f754cb532f258c375b7e50eb83ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-assign a <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. <br /></td></tr>
 <tr class="separator:a05c1f754cb532f258c375b7e50eb83ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefac3e8d28a74a3ab7dd619192520299" id="r_aefac3e8d28a74a3ab7dd619192520299"><td class="memItemLeft" align="right" valign="top"><a id="aefac3e8d28a74a3ab7dd619192520299" name="aefac3e8d28a74a3ab7dd619192520299"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~FriendlyQueryBuilder</b> () noexcept=default</td></tr>
+<tr class="memdesc:aefac3e8d28a74a3ab7dd619192520299"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. <br /></td></tr>
+<tr class="separator:aefac3e8d28a74a3ab7dd619192520299"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad8dd90ffd72a63e2e94d7dd2c8eeaa7" id="r_aad8dd90ffd72a63e2e94d7dd2c8eeaa7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad8dd90ffd72a63e2e94d7dd2c8eeaa7">get</a> (Timestamp timestamp, Metric metric, const TagTable &amp;tag_table)</td></tr>
+<tr class="memdesc:aad8dd90ffd72a63e2e94d7dd2c8eeaa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for get query.  <br /></td></tr>
 <tr class="separator:aad8dd90ffd72a63e2e94d7dd2c8eeaa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed6c603688a811b165e37bc2eaed077d" id="r_aed6c603688a811b165e37bc2eaed077d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed6c603688a811b165e37bc2eaed077d">whereMetricIs</a> (const Metric &amp;metric)</td></tr>
+<tr class="memdesc:aed6c603688a811b165e37bc2eaed077d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where metric is clause.  <br /></td></tr>
 <tr class="separator:aed6c603688a811b165e37bc2eaed077d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86950f05d27d96f826f63ac08294bed8" id="r_a86950f05d27d96f826f63ac08294bed8"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Metric &gt;... Metrics&gt; </td></tr>
 <tr class="memitem:a86950f05d27d96f826f63ac08294bed8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a86950f05d27d96f826f63ac08294bed8">whereMetricIsAnyOf</a> (const Metrics &amp;... metrics)</td></tr>
+<tr class="memdesc:a86950f05d27d96f826f63ac08294bed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where metric is any of clause.  <br /></td></tr>
 <tr class="separator:a86950f05d27d96f826f63ac08294bed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a899e3ba26e9da0380b2423b40a41418b" id="r_a899e3ba26e9da0380b2423b40a41418b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a899e3ba26e9da0380b2423b40a41418b">whereTimestampIs</a> (const Timestamp &amp;timestamp)</td></tr>
+<tr class="memdesc:a899e3ba26e9da0380b2423b40a41418b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where timestamp is clause.  <br /></td></tr>
 <tr class="separator:a899e3ba26e9da0380b2423b40a41418b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85831c38c48c4303739bc7f581b1c650" id="r_a85831c38c48c4303739bc7f581b1c650"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85831c38c48c4303739bc7f581b1c650">whereTimestampBetween</a> (const Timestamp &amp;start, const Timestamp &amp;end)</td></tr>
+<tr class="memdesc:a85831c38c48c4303739bc7f581b1c650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where timestamp is between clause.  <br /></td></tr>
 <tr class="separator:a85831c38c48c4303739bc7f581b1c650"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab58e31bf7e8064ebb84eb7b60e50444" id="r_aab58e31bf7e8064ebb84eb7b60e50444"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Timestamp &gt;... Timestamps&gt; </td></tr>
 <tr class="memitem:aab58e31bf7e8064ebb84eb7b60e50444"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aab58e31bf7e8064ebb84eb7b60e50444">whereTimestampIsAnyOf</a> (const Timestamps &amp;... timestamps)</td></tr>
+<tr class="memdesc:aab58e31bf7e8064ebb84eb7b60e50444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where timestamp is any of clause.  <br /></td></tr>
 <tr class="separator:aab58e31bf7e8064ebb84eb7b60e50444"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55081a375dd13ef5b55dd3a810bfa7e9" id="r_a55081a375dd13ef5b55dd3a810bfa7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55081a375dd13ef5b55dd3a810bfa7e9">whereTagsContain</a> (const Tag &amp;tag)</td></tr>
+<tr class="memdesc:a55081a375dd13ef5b55dd3a810bfa7e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain clause.  <br /></td></tr>
 <tr class="separator:a55081a375dd13ef5b55dd3a810bfa7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11e5a78eb979b7aba45bde1944ce559e" id="r_a11e5a78eb979b7aba45bde1944ce559e"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
 <tr class="memitem:a11e5a78eb979b7aba45bde1944ce559e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a11e5a78eb979b7aba45bde1944ce559e">whereTagsContainAnyOf</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:a11e5a78eb979b7aba45bde1944ce559e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain any of clause.  <br /></td></tr>
 <tr class="separator:a11e5a78eb979b7aba45bde1944ce559e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc0534c8779075569b1d90993edb86cd" id="r_afc0534c8779075569b1d90993edb86cd"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
 <tr class="memitem:afc0534c8779075569b1d90993edb86cd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afc0534c8779075569b1d90993edb86cd">whereTagsContainAllOf</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:afc0534c8779075569b1d90993edb86cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain all of clause.  <br /></td></tr>
 <tr class="separator:afc0534c8779075569b1d90993edb86cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90d7060f2718ed895e8a6f129a047130" id="r_a90d7060f2718ed895e8a6f129a047130"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90d7060f2718ed895e8a6f129a047130">put</a> (Timestamp timestamp, Metric metric, const TagTable &amp;tag_table, TValue value)</td></tr>
+<tr class="memdesc:a90d7060f2718ed895e8a6f129a047130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for put query.  <br /></td></tr>
 <tr class="separator:a90d7060f2718ed895e8a6f129a047130"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f290bb22fbd25441a80ef247bd5b508" id="r_a6f290bb22fbd25441a80ef247bd5b508"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1_friendly_query_builder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f290bb22fbd25441a80ef247bd5b508">remove</a> (Timestamp timestamp, Metric metric, const TagTable &amp;tag_table)</td></tr>
+<tr class="memdesc:a6f290bb22fbd25441a80ef247bd5b508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for remove query.  <br /></td></tr>
 <tr class="separator:a6f290bb22fbd25441a80ef247bd5b508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fb0d118f237943c28efb0484597cbea" id="r_a5fb0d118f237943c28efb0484597cbea"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fb0d118f237943c28efb0484597cbea">count</a> ()</td></tr>
+<tr class="memdesc:a5fb0d118f237943c28efb0484597cbea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count the number of entries in the range.  <br /></td></tr>
 <tr class="separator:a5fb0d118f237943c28efb0484597cbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8f550715ed9ef1caa06831fa58370a3" id="r_ad8f550715ed9ef1caa06831fa58370a3"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8f550715ed9ef1caa06831fa58370a3">sum</a> ()</td></tr>
+<tr class="memdesc:ad8f550715ed9ef1caa06831fa58370a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum the values in the range.  <br /></td></tr>
 <tr class="separator:ad8f550715ed9ef1caa06831fa58370a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4902a24b861c0a2f68735b190e9ed88a" id="r_a4902a24b861c0a2f68735b190e9ed88a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4902a24b861c0a2f68735b190e9ed88a">avg</a> ()</td></tr>
+<tr class="memdesc:a4902a24b861c0a2f68735b190e9ed88a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the average of the values in the range.  <br /></td></tr>
 <tr class="separator:a4902a24b861c0a2f68735b190e9ed88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4225978d5aedffc540da88daa846c9e" id="r_aa4225978d5aedffc540da88daa846c9e"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4225978d5aedffc540da88daa846c9e">min</a> ()</td></tr>
+<tr class="memdesc:aa4225978d5aedffc540da88daa846c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the minimum value in the range.  <br /></td></tr>
 <tr class="separator:aa4225978d5aedffc540da88daa846c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b595c91a409bac8541e1f111b9c3f4f" id="r_a8b595c91a409bac8541e1f111b9c3f4f"><td class="memItemLeft" align="right" valign="top">TValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b595c91a409bac8541e1f111b9c3f4f">max</a> ()</td></tr>
+<tr class="memdesc:a8b595c91a409bac8541e1f111b9c3f4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the maximum value in the range.  <br /></td></tr>
 <tr class="separator:a8b595c91a409bac8541e1f111b9c3f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63ba9d8368d2f52981f4ff7e34003578" id="r_a63ba9d8368d2f52981f4ff7e34003578"><td class="memItemLeft" align="right" valign="top">result_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63ba9d8368d2f52981f4ff7e34003578">execute</a> ()</td></tr>
+<tr class="memdesc:a63ba9d8368d2f52981f4ff7e34003578"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the query.  <br /></td></tr>
 <tr class="separator:a63ba9d8368d2f52981f4ff7e34003578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">ArithmeticNoCVRefQuals</a> TValue&gt;<br />
-class vkdb::FriendlyQueryBuilder&lt; TValue &gt;</div>
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00008">8</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+class vkdb::FriendlyQueryBuilder&lt; TValue &gt;</div><p>Friendly query builder for querying a <a class="el" href="classvkdb_1_1_table.html" title="Represents a table in vkdb.">Table</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TValue</td><td>Type of the value of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00013">13</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a10a1a7dc8192daf9b1041074f02a57ab" name="a10a1a7dc8192daf9b1041074f02a57ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10a1a7dc8192daf9b1041074f02a57ab">&#9670;&#160;</a></span>result_type</h2>
@@ -194,7 +237,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00012">12</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00017">17</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -212,7 +255,7 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00010">10</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00015">15</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -230,13 +273,13 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00011">11</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00016">16</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a961ee7724f3e1df423fd03668c10e527" name="a961ee7724f3e1df423fd03668c10e527"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a961ee7724f3e1df423fd03668c10e527">&#9670;&#160;</a></span>FriendlyQueryBuilder() <span class="overload">[1/2]</span></h2>
+<a id="a19d3e45977065e08132679a4da387449" name="a19d3e45977065e08132679a4da387449"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19d3e45977065e08132679a4da387449">&#9670;&#160;</a></span>FriendlyQueryBuilder() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,12 +302,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00016">16</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Construct a new <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. </p>
+<p>Initialises the query builder with a <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lsm_tree</td><td>Reference to the <a class="el" href="classvkdb_1_1_l_s_m_tree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a> to query. </td></tr>
+    <tr><td class="paramname">tag_columns</td><td>Reference to the tag columns of the <a class="el" href="classvkdb_1_1_table.html" title="Represents a table in vkdb.">Table</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00032">32</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -293,7 +346,15 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00021">21</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Construct a new <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">query_builder</td><td><a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00043">43</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -323,7 +384,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00142">142</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Calculate the average of the values in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the average of the values in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>double Average of the values in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the average query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00325">325</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -352,7 +423,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00134">134</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Count the number of entries in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the number of entries in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>size_type Number of entries in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the count query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00299">299</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -381,7 +462,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00154">154</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Execute the query. </p>
+<p>Executes the query and returns the result.</p>
+<dl class="section return"><dt>Returns</dt><dd>result_type Result of the query.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If executing the query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00363">363</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -419,7 +510,25 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00036">36</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for get query. </p>
+<p>Adds a point query to the query builder.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>Timestamp of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+    <tr><td class="paramname">metric</td><td>Metric of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+    <tr><td class="paramname">tag_table</td><td>TagTable of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the point query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00092">92</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -448,7 +557,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00150">150</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Calculate the maximum value in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the maximum value in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>TValue Maximum value in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the maximum query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00351">351</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -477,7 +596,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00146">146</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Calculate the minimum value in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the minimum value in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>TValue Minimum value in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the minimum query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00338">338</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -520,7 +649,26 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00106">106</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for put query. </p>
+<p>Adds a put query to the query builder.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>Timestamp of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+    <tr><td class="paramname">metric</td><td>Metric of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+    <tr><td class="paramname">tag_table</td><td>TagTable of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+    <tr><td class="paramname">value</td><td>Value of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the metric is invalid or the put query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00250">250</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -558,7 +706,25 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00124">124</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for remove query. </p>
+<p>Adds a remove query to the query builder.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>Timestamp of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+    <tr><td class="paramname">metric</td><td>Metric of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+    <tr><td class="paramname">tag_table</td><td>TagTable of the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the remove query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00280">280</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -587,7 +753,17 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00138">138</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Sum the values in the range. </p>
+<p>Sets up the <a class="el" href="classvkdb_1_1_query_builder.html" title="Query builder for querying a Table.">QueryBuilder</a> for aggregation and returns the sum of the values in the range.</p>
+<dl class="section return"><dt>Returns</dt><dd>TValue Sum of the values in the range.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the sum query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00312">312</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -616,7 +792,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00045">45</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where metric is clause. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metric</td><td>Metric to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00110">110</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -647,7 +838,28 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00051">51</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where metric is any of clause. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Metrics</td><td>Variadic template parameter for metrics to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>Metrics to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding any of the filters fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00126">126</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -676,7 +888,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00085">85</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where tags contain clause. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>Tag to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00196">196</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -707,7 +934,28 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00099">99</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where tags contain all of clause. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Tags</td><td>Variadic template parameter for tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tags</td><td>Tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding all of the filters fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00230">230</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -738,7 +986,28 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00091">91</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where tags contain any of clause. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Tags</td><td>Variadic template parameter for tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tags</td><td>Tags to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding any of the filters fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00212">212</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -771,7 +1040,23 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00066">66</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where timestamp is between clause. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>Start timestamp. </td></tr>
+    <tr><td class="paramname">end</td><td>End timestamp. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the range query fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00159">159</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -800,7 +1085,22 @@ template&lt;<a class="el" href="concept_arithmetic_no_c_v_ref_quals.html">Arithm
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00058">58</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where timestamp is clause. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>Timestamp to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00142">142</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -831,7 +1131,28 @@ template&lt;<a class="el" href="concept_all_convertible_to_no_c_v_ref_quals.html
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00078">78</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p>Configure builder for where timestamp is any of clause. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Timestamps</td><td>Variadic template parameter for timestamps to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamps</td><td>Timestamps to filter by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a>&amp; Reference to this <a class="el" href="classvkdb_1_1_friendly_query_builder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If adding the filter fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00180">180</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>

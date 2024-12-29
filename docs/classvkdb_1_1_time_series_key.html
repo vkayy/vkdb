@@ -108,56 +108,88 @@ $(function(){initNavTree('classvkdb_1_1_time_series_key.html',''); initResizable
   <div class="headertitle"><div class="title">vkdb::TimeSeriesKey Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents a key in vkdb.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="time__series__key_8h_source.html">time_series_key.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aedc9da9915f57177d7da860d3bc98fab" id="r_aedc9da9915f57177d7da860d3bc98fab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedc9da9915f57177d7da860d3bc98fab">TimeSeriesKey</a> (std::string &amp;&amp;str)</td></tr>
+<tr class="memitem:a25712e88c605bf003253cf955fbfd949" id="r_a25712e88c605bf003253cf955fbfd949"><td class="memItemLeft" align="right" valign="top"><a id="a25712e88c605bf003253cf955fbfd949" name="a25712e88c605bf003253cf955fbfd949"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TimeSeriesKey</b> () noexcept=default</td></tr>
+<tr class="memdesc:a25712e88c605bf003253cf955fbfd949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object. <br /></td></tr>
+<tr class="separator:a25712e88c605bf003253cf955fbfd949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedc9da9915f57177d7da860d3bc98fab" id="r_aedc9da9915f57177d7da860d3bc98fab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedc9da9915f57177d7da860d3bc98fab">TimeSeriesKey</a> (std::string &amp;&amp;<a class="el" href="#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">str</a>)</td></tr>
+<tr class="memdesc:aedc9da9915f57177d7da860d3bc98fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object from the given string.  <br /></td></tr>
 <tr class="separator:aedc9da9915f57177d7da860d3bc98fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29d70782a659f3bcca45c9a0f57d01b7" id="r_a29d70782a659f3bcca45c9a0f57d01b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29d70782a659f3bcca45c9a0f57d01b7">TimeSeriesKey</a> (Timestamp timestamp, Metric metric, TagTable tags) noexcept</td></tr>
+<tr class="memitem:a29d70782a659f3bcca45c9a0f57d01b7" id="r_a29d70782a659f3bcca45c9a0f57d01b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29d70782a659f3bcca45c9a0f57d01b7">TimeSeriesKey</a> (Timestamp <a class="el" href="#acc42352474d8c0c268133efa2b36f104">timestamp</a>, Metric <a class="el" href="#a28ce5be65b4df6a9009569c84cf1cebf">metric</a>, TagTable <a class="el" href="#a11432ca0811e6d1e98fe5562ede166d9">tags</a>) noexcept</td></tr>
+<tr class="memdesc:a29d70782a659f3bcca45c9a0f57d01b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Time Series Key objec from the given timestamp, metric, and tags.  <br /></td></tr>
 <tr class="separator:a29d70782a659f3bcca45c9a0f57d01b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab934a7ba22819c01cf0a646cd88ef626" id="r_ab934a7ba22819c01cf0a646cd88ef626"><td class="memItemLeft" align="right" valign="top"><a id="ab934a7ba22819c01cf0a646cd88ef626" name="ab934a7ba22819c01cf0a646cd88ef626"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TimeSeriesKey</b> (<a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:ab934a7ba22819c01cf0a646cd88ef626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-construct a new <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object. <br /></td></tr>
 <tr class="separator:ab934a7ba22819c01cf0a646cd88ef626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ba71cbbde08d12b4efeffd9386627b7" id="r_a1ba71cbbde08d12b4efeffd9386627b7"><td class="memItemLeft" align="right" valign="top"><a id="a1ba71cbbde08d12b4efeffd9386627b7" name="a1ba71cbbde08d12b4efeffd9386627b7"></a>
 <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a1ba71cbbde08d12b4efeffd9386627b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assign a new <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object. <br /></td></tr>
 <tr class="separator:a1ba71cbbde08d12b4efeffd9386627b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ab65f2267b0253225a192744b0b631e" id="r_a2ab65f2267b0253225a192744b0b631e"><td class="memItemLeft" align="right" valign="top"><a id="a2ab65f2267b0253225a192744b0b631e" name="a2ab65f2267b0253225a192744b0b631e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TimeSeriesKey</b> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a2ab65f2267b0253225a192744b0b631e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-construct a new <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object. <br /></td></tr>
 <tr class="separator:a2ab65f2267b0253225a192744b0b631e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc02a3d61322cdc4fd6d1415d861a159" id="r_acc02a3d61322cdc4fd6d1415d861a159"><td class="memItemLeft" align="right" valign="top"><a id="acc02a3d61322cdc4fd6d1415d861a159" name="acc02a3d61322cdc4fd6d1415d861a159"></a>
 <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:acc02a3d61322cdc4fd6d1415d861a159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-assign a new <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object. <br /></td></tr>
 <tr class="separator:acc02a3d61322cdc4fd6d1415d861a159"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad31caff4365bcb2864b4a3b605441d3c" id="r_ad31caff4365bcb2864b4a3b605441d3c"><td class="memItemLeft" align="right" valign="top"><a id="ad31caff4365bcb2864b4a3b605441d3c" name="ad31caff4365bcb2864b4a3b605441d3c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~TimeSeriesKey</b> () noexcept=default</td></tr>
+<tr class="memdesc:ad31caff4365bcb2864b4a3b605441d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object. <br /></td></tr>
+<tr class="separator:ad31caff4365bcb2864b4a3b605441d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bb97d4ac8a651caa184f9d8136edcc8" id="r_a2bb97d4ac8a651caa184f9d8136edcc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2bb97d4ac8a651caa184f9d8136edcc8">operator==</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a2bb97d4ac8a651caa184f9d8136edcc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator.  <br /></td></tr>
 <tr class="separator:a2bb97d4ac8a651caa184f9d8136edcc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af84f615d81c03911a3979bb493b90483" id="r_af84f615d81c03911a3979bb493b90483"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af84f615d81c03911a3979bb493b90483">operator!=</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:af84f615d81c03911a3979bb493b90483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inequality operator.  <br /></td></tr>
 <tr class="separator:af84f615d81c03911a3979bb493b90483"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a737d450d96eecd437c6e83217c12e222" id="r_a737d450d96eecd437c6e83217c12e222"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a737d450d96eecd437c6e83217c12e222">operator&lt;</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a737d450d96eecd437c6e83217c12e222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less-than operator.  <br /></td></tr>
 <tr class="separator:a737d450d96eecd437c6e83217c12e222"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68d05bee9d6dc3c1ccaaa2929fc8ccba" id="r_a68d05bee9d6dc3c1ccaaa2929fc8ccba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a68d05bee9d6dc3c1ccaaa2929fc8ccba">operator&gt;</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a68d05bee9d6dc3c1ccaaa2929fc8ccba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Greater-than operator.  <br /></td></tr>
 <tr class="separator:a68d05bee9d6dc3c1ccaaa2929fc8ccba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45a9104e8f8750e0796f8fb0ceb24904" id="r_a45a9104e8f8750e0796f8fb0ceb24904"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45a9104e8f8750e0796f8fb0ceb24904">operator&lt;=</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a45a9104e8f8750e0796f8fb0ceb24904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less-than-or-equal-to operator.  <br /></td></tr>
 <tr class="separator:a45a9104e8f8750e0796f8fb0ceb24904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a5ba3ff81560e62ccff169b97afb6ce" id="r_a2a5ba3ff81560e62ccff169b97afb6ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a5ba3ff81560e62ccff169b97afb6ce">operator&gt;=</a> (const <a class="el" href="classvkdb_1_1_time_series_key.html">TimeSeriesKey</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a2a5ba3ff81560e62ccff169b97afb6ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Greater-than-or-equal-to operator.  <br /></td></tr>
 <tr class="separator:a2a5ba3ff81560e62ccff169b97afb6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc42352474d8c0c268133efa2b36f104" id="r_acc42352474d8c0c268133efa2b36f104"><td class="memItemLeft" align="right" valign="top">Timestamp&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc42352474d8c0c268133efa2b36f104">timestamp</a> () const noexcept</td></tr>
+<tr class="memdesc:acc42352474d8c0c268133efa2b36f104"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the timestamp.  <br /></td></tr>
 <tr class="separator:acc42352474d8c0c268133efa2b36f104"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28ce5be65b4df6a9009569c84cf1cebf" id="r_a28ce5be65b4df6a9009569c84cf1cebf"><td class="memItemLeft" align="right" valign="top">Metric&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28ce5be65b4df6a9009569c84cf1cebf">metric</a> () const noexcept</td></tr>
+<tr class="memdesc:a28ce5be65b4df6a9009569c84cf1cebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the metric.  <br /></td></tr>
 <tr class="separator:a28ce5be65b4df6a9009569c84cf1cebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11432ca0811e6d1e98fe5562ede166d9" id="r_a11432ca0811e6d1e98fe5562ede166d9"><td class="memItemLeft" align="right" valign="top">const TagTable &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11432ca0811e6d1e98fe5562ede166d9">tags</a> () const noexcept</td></tr>
+<tr class="memdesc:a11432ca0811e6d1e98fe5562ede166d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the tags.  <br /></td></tr>
 <tr class="separator:a11432ca0811e6d1e98fe5562ede166d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a710a9cc5fe6ddc11d8bd5c8d8329c2c0" id="r_a710a9cc5fe6ddc11d8bd5c8d8329c2c0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">str</a> () const noexcept</td></tr>
+<tr class="memdesc:a710a9cc5fe6ddc11d8bd5c8d8329c2c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the string representation of the key.  <br /></td></tr>
 <tr class="separator:a710a9cc5fe6ddc11d8bd5c8d8329c2c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a050955835db93a10580c983930c0c5ac" id="r_a050955835db93a10580c983930c0c5ac"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a050955835db93a10580c983930c0c5ac">TIMESTAMP_WIDTH</a> {20}</td></tr>
+<tr class="memdesc:a050955835db93a10580c983930c0c5ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timestamp width.  <br /></td></tr>
 <tr class="separator:a050955835db93a10580c983930c0c5ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84d31620be4c1768301cb923103537a0" id="r_a84d31620be4c1768301cb923103537a0"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84d31620be4c1768301cb923103537a0">MAX_METRIC_LENGTH</a> {64}</td></tr>
+<tr class="memdesc:a84d31620be4c1768301cb923103537a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric width.  <br /></td></tr>
 <tr class="separator:a84d31620be4c1768301cb923103537a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="time__series__key_8h_source.html#l00026">26</a> of file <a class="el" href="time__series__key_8h_source.html">time_series_key.h</a>.</p>
+<div class="textblock"><p>Represents a key in vkdb. </p>
+
+<p class="definition">Definition at line <a class="el" href="time__series__key_8h_source.html#l00083">83</a> of file <a class="el" href="time__series__key_8h_source.html">time_series_key.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aedc9da9915f57177d7da860d3bc98fab" name="aedc9da9915f57177d7da860d3bc98fab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aedc9da9915f57177d7da860d3bc98fab">&#9670;&#160;</a></span>TimeSeriesKey() <span class="overload">[1/2]</span></h2>
@@ -181,6 +213,20 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="classvkdb_1_1_time_series_key.html" title="Represents a key in vkdb.">TimeSeriesKey</a> object from the given string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The string representation of the key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>If the string is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00004">4</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
@@ -218,6 +264,16 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new Time Series Key objec from the given timestamp, metric, and tags. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timestamp</td><td>Timestamp. </td></tr>
+    <tr><td class="paramname">metric</td><td>Metric. </td></tr>
+    <tr><td class="paramname">tags</td><td>Tags. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00024">24</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
 </div>
@@ -246,6 +302,9 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the metric. </p>
+<dl class="section return"><dt>Returns</dt><dd>Metric The metric. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00081">81</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
 </div>
@@ -272,6 +331,17 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Inequality operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If the keys are not equal. </dd>
+<dd>
+false If the keys are equal. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00039">39</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
@@ -300,6 +370,22 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Less-than operator. </p>
+<p>First, the keys are checked to see if they are the minimum or maximum keys. If they aren't, the comparison is done based on the key's properties. The comparison is done in the following order: The comparison is done in the following order:</p><ol type="1">
+<li>Timestamp.</li>
+<li>Metric.</li>
+<li>Tags.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If this key is less than the other key. </dd>
+<dd>
+false If this key is not less than the other key. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00043">43</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
 </div>
@@ -326,6 +412,17 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Less-than-or-equal-to operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If this key is less than or equal to the other key. </dd>
+<dd>
+false If this key is not less than or equal to the other key. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00069">69</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
@@ -354,6 +451,17 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Equality operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If the keys are equal. </dd>
+<dd>
+false If the keys are not equal. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00033">33</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
 </div>
@@ -380,6 +488,17 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Greater-than operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If this key is greater than the other key. </dd>
+<dd>
+false If this key is not greater than the other key. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00065">65</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
@@ -408,6 +527,17 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Greater-than-or-equal-to operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If this key is greater than or equal to the other key. </dd>
+<dd>
+false If this key is not greater than or equal to the other key. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00073">73</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
 </div>
@@ -434,6 +564,9 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the string representation of the key. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string The string representation of the key. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00089">89</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
@@ -462,6 +595,9 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the tags. </p>
+<dl class="section return"><dt>Returns</dt><dd>const TagTable&amp; The tags. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00085">85</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
 </div>
@@ -489,6 +625,9 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the timestamp. </p>
+<dl class="section return"><dt>Returns</dt><dd>Timestamp The timestamp. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="time__series__key_8cpp_source.html#l00077">77</a> of file <a class="el" href="time__series__key_8cpp_source.html">time_series_key.cpp</a>.</p>
 
 </div>
@@ -514,7 +653,9 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="time__series__key_8h_source.html#l00029">29</a> of file <a class="el" href="time__series__key_8h_source.html">time_series_key.h</a>.</p>
+<p>Metric width. </p>
+
+<p class="definition">Definition at line <a class="el" href="time__series__key_8h_source.html#l00095">95</a> of file <a class="el" href="time__series__key_8h_source.html">time_series_key.h</a>.</p>
 
 </div>
 </div>
@@ -538,7 +679,9 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="time__series__key_8h_source.html#l00028">28</a> of file <a class="el" href="time__series__key_8h_source.html">time_series_key.h</a>.</p>
+<p>Timestamp width. </p>
+
+<p class="definition">Definition at line <a class="el" href="time__series__key_8h_source.html#l00089">89</a> of file <a class="el" href="time__series__key_8h_source.html">time_series_key.h</a>.</p>
 
 </div>
 </div>

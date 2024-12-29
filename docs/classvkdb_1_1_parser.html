@@ -108,6 +108,11 @@ $(function(){initNavTree('classvkdb_1_1_parser.html',''); initResizable(true); }
   <div class="headertitle"><div class="title">vkdb::Parser Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="classvkdb_1_1_parser.html" title="Parser for vq.">Parser</a> for vq.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="parser_8h_source.html">parser.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -118,14 +123,21 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a89e661fca61427da401c082ce7ae608b" id="r_a89e661fca61427da401c082ce7ae608b"><td class="memItemLeft" align="right" valign="top"><a id="a89e661fca61427da401c082ce7ae608b" name="a89e661fca61427da401c082ce7ae608b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Parser</b> ()=delete</td></tr>
+<tr class="memdesc:a89e661fca61427da401c082ce7ae608b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleted default constructor. <br /></td></tr>
+<tr class="separator:a89e661fca61427da401c082ce7ae608b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af034abb67da533dd93dbb2b58a127ca6" id="r_af034abb67da533dd93dbb2b58a127ca6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af034abb67da533dd93dbb2b58a127ca6">Parser</a> (const std::vector&lt; <a class="el" href="classvkdb_1_1_token.html">Token</a> &gt; &amp;tokens, error_callback callback=[](const <a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;, const std::string &amp;) {}) noexcept</td></tr>
+<tr class="memdesc:af034abb67da533dd93dbb2b58a127ca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classvkdb_1_1_parser.html" title="Parser for vq.">Parser</a> with a list of tokens and an optional error callback.  <br /></td></tr>
 <tr class="separator:af034abb67da533dd93dbb2b58a127ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f6a17b9e705d4d3f99a82dfffa744dc" id="r_a6f6a17b9e705d4d3f99a82dfffa744dc"><td class="memItemLeft" align="right" valign="top">std::optional&lt; Expr &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f6a17b9e705d4d3f99a82dfffa744dc">parse</a> ()</td></tr>
-<tr class="separator:a6f6a17b9e705d4d3f99a82dfffa744dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94c873f35f75394487fa402037c4fee3" id="r_a94c873f35f75394487fa402037c4fee3"><td class="memItemLeft" align="right" valign="top">std::optional&lt; Expr &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94c873f35f75394487fa402037c4fee3">parse</a> () noexcept</td></tr>
+<tr class="memdesc:a94c873f35f75394487fa402037c4fee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses the tokens into an expression.  <br /></td></tr>
+<tr class="separator:a94c873f35f75394487fa402037c4fee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="parser_8h_source.html#l00016">16</a> of file <a class="el" href="parser_8h_source.html">parser.h</a>.</p>
+<div class="textblock"><p><a class="el" href="classvkdb_1_1_parser.html" title="Parser for vq.">Parser</a> for vq. </p>
+
+<p class="definition">Definition at line <a class="el" href="parser_8h_source.html#l00022">22</a> of file <a class="el" href="parser_8h_source.html">parser.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a2c65e3484442307faac68912d25118d4" name="a2c65e3484442307faac68912d25118d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2c65e3484442307faac68912d25118d4">&#9670;&#160;</a></span>error_callback</h2>
@@ -139,7 +151,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="parser_8h_source.html#l00019">19</a> of file <a class="el" href="parser_8h_source.html">parser.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="parser_8h_source.html#l00025">25</a> of file <a class="el" href="parser_8h_source.html">parser.h</a>.</p>
 
 </div>
 </div>
@@ -155,7 +167,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="parser_8h_source.html#l00018">18</a> of file <a class="el" href="parser_8h_source.html">parser.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="parser_8h_source.html#l00024">24</a> of file <a class="el" href="parser_8h_source.html">parser.h</a>.</p>
 
 </div>
 </div>
@@ -187,13 +199,23 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a <a class="el" href="classvkdb_1_1_parser.html" title="Parser for vq.">Parser</a> with a list of tokens and an optional error callback. </p>
+<p>Defaults the error callback to an empty lambda.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tokens</td><td>The list of tokens to parse. </td></tr>
+    <tr><td class="paramname">callback</td><td>The error callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="parser_8cpp_source.html#l00005">5</a> of file <a class="el" href="parser_8cpp_source.html">parser.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6f6a17b9e705d4d3f99a82dfffa744dc" name="a6f6a17b9e705d4d3f99a82dfffa744dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f6a17b9e705d4d3f99a82dfffa744dc">&#9670;&#160;</a></span>parse()</h2>
+<a id="a94c873f35f75394487fa402037c4fee3" name="a94c873f35f75394487fa402037c4fee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94c873f35f75394487fa402037c4fee3">&#9670;&#160;</a></span>parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,10 +232,13 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Parses the tokens into an expression. </p>
+<dl class="section return"><dt>Returns</dt><dd>An optional expression if parsing is successful. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="parser_8cpp_source.html#l00011">11</a> of file <a class="el" href="parser_8cpp_source.html">parser.cpp</a>.</p>
 

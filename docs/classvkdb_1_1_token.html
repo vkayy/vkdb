@@ -108,6 +108,11 @@ $(function(){initNavTree('classvkdb_1_1_token.html',''); initResizable(true); })
   <div class="headertitle"><div class="title">vkdb::Token Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents a token.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="token_8h_source.html">token.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -116,36 +121,56 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa7233ddff4f6cbcd40f9856280eec8b2" id="r_aa7233ddff4f6cbcd40f9856280eec8b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7233ddff4f6cbcd40f9856280eec8b2">Token</a> (TokenType type, const Lexeme &amp;lexeme, size_type line, size_type column) noexcept</td></tr>
+<tr class="memitem:a1ad0f6e6f7e42c2c09584685860e890a" id="r_a1ad0f6e6f7e42c2c09584685860e890a"><td class="memItemLeft" align="right" valign="top"><a id="a1ad0f6e6f7e42c2c09584685860e890a" name="a1ad0f6e6f7e42c2c09584685860e890a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Token</b> ()=delete</td></tr>
+<tr class="memdesc:a1ad0f6e6f7e42c2c09584685860e890a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleted default constructor. <br /></td></tr>
+<tr class="separator:a1ad0f6e6f7e42c2c09584685860e890a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7233ddff4f6cbcd40f9856280eec8b2" id="r_aa7233ddff4f6cbcd40f9856280eec8b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7233ddff4f6cbcd40f9856280eec8b2">Token</a> (TokenType <a class="el" href="#a95fdc7985570534ca232f32addf860b6">type</a>, const Lexeme &amp;<a class="el" href="#a24a78c8bdc6a6a91f69957e4dd65d163">lexeme</a>, size_type <a class="el" href="#a74417505b6df495dd5c5adb613b4b183">line</a>, size_type <a class="el" href="#a00a007ccb9a5f4989a5a965929249a1e">column</a>) noexcept</td></tr>
+<tr class="memdesc:aa7233ddff4f6cbcd40f9856280eec8b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object from the given type, lexeme, line, and column.  <br /></td></tr>
 <tr class="separator:aa7233ddff4f6cbcd40f9856280eec8b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa538b09a07a09f5a24f15c23b5202f76" id="r_aa538b09a07a09f5a24f15c23b5202f76"><td class="memItemLeft" align="right" valign="top"><a id="aa538b09a07a09f5a24f15c23b5202f76" name="aa538b09a07a09f5a24f15c23b5202f76"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Token</b> (<a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:aa538b09a07a09f5a24f15c23b5202f76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-construct a <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object. <br /></td></tr>
 <tr class="separator:aa538b09a07a09f5a24f15c23b5202f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a799050cada991806a867e847efd30c0c" id="r_a799050cada991806a867e847efd30c0c"><td class="memItemLeft" align="right" valign="top"><a id="a799050cada991806a867e847efd30c0c" name="a799050cada991806a867e847efd30c0c"></a>
 <a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a799050cada991806a867e847efd30c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assign a <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object. <br /></td></tr>
 <tr class="separator:a799050cada991806a867e847efd30c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36b1befa190182ce9173649dbf8fd1f5" id="r_a36b1befa190182ce9173649dbf8fd1f5"><td class="memItemLeft" align="right" valign="top"><a id="a36b1befa190182ce9173649dbf8fd1f5" name="a36b1befa190182ce9173649dbf8fd1f5"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Token</b> (const <a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a36b1befa190182ce9173649dbf8fd1f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-construct a <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object. <br /></td></tr>
 <tr class="separator:a36b1befa190182ce9173649dbf8fd1f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16a219546a6f41d5104fc0d9e38da09b" id="r_a16a219546a6f41d5104fc0d9e38da09b"><td class="memItemLeft" align="right" valign="top"><a id="a16a219546a6f41d5104fc0d9e38da09b" name="a16a219546a6f41d5104fc0d9e38da09b"></a>
 <a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a16a219546a6f41d5104fc0d9e38da09b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-assign a <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object. <br /></td></tr>
 <tr class="separator:a16a219546a6f41d5104fc0d9e38da09b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a459e1aca3f23692276d085ce4063c738" id="r_a459e1aca3f23692276d085ce4063c738"><td class="memItemLeft" align="right" valign="top"><a id="a459e1aca3f23692276d085ce4063c738" name="a459e1aca3f23692276d085ce4063c738"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~Token</b> () noexcept=default</td></tr>
+<tr class="memdesc:a459e1aca3f23692276d085ce4063c738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object. <br /></td></tr>
+<tr class="separator:a459e1aca3f23692276d085ce4063c738"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c8bb95368b1a0ee4f86304c3f196693" id="r_a0c8bb95368b1a0ee4f86304c3f196693"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c8bb95368b1a0ee4f86304c3f196693">operator==</a> (const <a class="el" href="classvkdb_1_1_token.html">Token</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a0c8bb95368b1a0ee4f86304c3f196693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator for <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> objects.  <br /></td></tr>
 <tr class="separator:a0c8bb95368b1a0ee4f86304c3f196693"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95fdc7985570534ca232f32addf860b6" id="r_a95fdc7985570534ca232f32addf860b6"><td class="memItemLeft" align="right" valign="top">TokenType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95fdc7985570534ca232f32addf860b6">type</a> () const noexcept</td></tr>
+<tr class="memdesc:a95fdc7985570534ca232f32addf860b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the token.  <br /></td></tr>
 <tr class="separator:a95fdc7985570534ca232f32addf860b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24a78c8bdc6a6a91f69957e4dd65d163" id="r_a24a78c8bdc6a6a91f69957e4dd65d163"><td class="memItemLeft" align="right" valign="top">Lexeme&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24a78c8bdc6a6a91f69957e4dd65d163">lexeme</a> () const noexcept</td></tr>
+<tr class="memdesc:a24a78c8bdc6a6a91f69957e4dd65d163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the lexeme of the token.  <br /></td></tr>
 <tr class="separator:a24a78c8bdc6a6a91f69957e4dd65d163"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74417505b6df495dd5c5adb613b4b183" id="r_a74417505b6df495dd5c5adb613b4b183"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a74417505b6df495dd5c5adb613b4b183">line</a> () const noexcept</td></tr>
+<tr class="memdesc:a74417505b6df495dd5c5adb613b4b183"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the line number of the token.  <br /></td></tr>
 <tr class="separator:a74417505b6df495dd5c5adb613b4b183"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00a007ccb9a5f4989a5a965929249a1e" id="r_a00a007ccb9a5f4989a5a965929249a1e"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00a007ccb9a5f4989a5a965929249a1e">column</a> () const noexcept</td></tr>
+<tr class="memdesc:a00a007ccb9a5f4989a5a965929249a1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the column number of the token.  <br /></td></tr>
 <tr class="separator:a00a007ccb9a5f4989a5a965929249a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab868ba3e5c6f967d03858674c787fa40" id="r_ab868ba3e5c6f967d03858674c787fa40"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab868ba3e5c6f967d03858674c787fa40">str</a> () const noexcept</td></tr>
+<tr class="memdesc:ab868ba3e5c6f967d03858674c787fa40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the string representation of the token.  <br /></td></tr>
 <tr class="separator:ab868ba3e5c6f967d03858674c787fa40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="token_8h_source.html#l00060">60</a> of file <a class="el" href="token_8h_source.html">token.h</a>.</p>
+<div class="textblock"><p>Represents a token. </p>
+
+<p class="definition">Definition at line <a class="el" href="token_8h_source.html#l00080">80</a> of file <a class="el" href="token_8h_source.html">token.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a032e1e0e1cf1f34dcb910fbb49e98573" name="a032e1e0e1cf1f34dcb910fbb49e98573"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a032e1e0e1cf1f34dcb910fbb49e98573">&#9670;&#160;</a></span>size_type</h2>
@@ -159,7 +184,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="token_8h_source.html#l00062">62</a> of file <a class="el" href="token_8h_source.html">token.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="token_8h_source.html#l00082">82</a> of file <a class="el" href="token_8h_source.html">token.h</a>.</p>
 
 </div>
 </div>
@@ -201,6 +226,17 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object from the given type, lexeme, line, and column. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The type of the token. </td></tr>
+    <tr><td class="paramname">lexeme</td><td>The lexeme of the token. </td></tr>
+    <tr><td class="paramname">line</td><td>The line number of the token. </td></tr>
+    <tr><td class="paramname">column</td><td>The column number of the token. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 <p class="definition">Definition at line <a class="el" href="token_8cpp_source.html#l00004">4</a> of file <a class="el" href="token_8cpp_source.html">token.cpp</a>.</p>
 
 </div>
@@ -229,6 +265,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the column number of the token. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_type The column number of the token. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="token_8cpp_source.html#l00034">34</a> of file <a class="el" href="token_8cpp_source.html">token.cpp</a>.</p>
 
 </div>
@@ -255,6 +294,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the lexeme of the token. </p>
+<dl class="section return"><dt>Returns</dt><dd>Lexeme The lexeme of the token. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="token_8cpp_source.html#l00026">26</a> of file <a class="el" href="token_8cpp_source.html">token.cpp</a>.</p>
 
@@ -283,6 +325,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the line number of the token. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_type The line number of the token. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="token_8cpp_source.html#l00030">30</a> of file <a class="el" href="token_8cpp_source.html">token.cpp</a>.</p>
 
 </div>
@@ -309,6 +354,17 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Equality operator for <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> objects. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The other <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> objects are equal. </dd>
+<dd>
+false if the <a class="el" href="classvkdb_1_1_token.html" title="Represents a token.">Token</a> objects are not equal. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="token_8cpp_source.html#l00015">15</a> of file <a class="el" href="token_8cpp_source.html">token.cpp</a>.</p>
 
@@ -337,6 +393,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Get the string representation of the token. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string The string representation of the token. </dd></dl>
+
 <p class="definition">Definition at line <a class="el" href="token_8cpp_source.html#l00038">38</a> of file <a class="el" href="token_8cpp_source.html">token.cpp</a>.</p>
 
 </div>
@@ -363,6 +422,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the type of the token. </p>
+<dl class="section return"><dt>Returns</dt><dd>TokenType The type of the token. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="token_8cpp_source.html#l00022">22</a> of file <a class="el" href="token_8cpp_source.html">token.cpp</a>.</p>
 

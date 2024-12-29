@@ -107,12 +107,14 @@ $(function(){initNavTree('printer_8cpp_source.html',''); initResizable(true); })
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;vkdb/printer.h&gt;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">namespace </span>vkdb {</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>std::string Printer::print(<span class="keyword">const</span> Expr&amp; expr) <span class="keyword">noexcept</span> {</div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="}">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="classvkdb_1_1_printer.html#ab7969fb2376921e260f30fdd55ca4133">    4</a></span>std::string <a class="code hl_function" href="classvkdb_1_1_printer.html#ab7969fb2376921e260f30fdd55ca4133">Printer::print</a>(<span class="keyword">const</span> Expr&amp; expr) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; query : expr) {</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    visit(query);</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>  }</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  <span class="keywordflow">return</span> output_.str();</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>}</div>
+</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keywordtype">void</span> Printer::visit(<span class="keyword">const</span> Query&amp; query) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  std::visit([<span class="keyword">this</span>](<span class="keyword">auto</span>&amp;&amp; query) {</div>
@@ -322,6 +324,7 @@ $(function(){initNavTree('printer_8cpp_source.html',''); initResizable(true); })
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>  output_ &lt;&lt; value.token.lexeme();</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>}</div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>}  <span class="comment">// namespace vkdb</span></div>
+<div class="ttc" id="aclassvkdb_1_1_printer_html_ab7969fb2376921e260f30fdd55ca4133"><div class="ttname"><a href="classvkdb_1_1_printer.html#ab7969fb2376921e260f30fdd55ca4133">vkdb::Printer::print</a></div><div class="ttdeci">std::string print(const Expr &amp;expr) noexcept</div><div class="ttdoc">Prints the given expression.</div><div class="ttdef"><b>Definition</b> <a href="#l00004">printer.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
