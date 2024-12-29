@@ -439,9 +439,11 @@ Here's the EBNF grammar encapsulating vq.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-## Authors
+### Links
 
-[Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me).
+Author: [Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me)
+
+Documentation: [vkdb](https://vkayy.github.io/vkdb)
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
