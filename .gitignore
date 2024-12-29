@@ -3,3 +3,4 @@ build/*
 .vscode/*
 output/
 docs/latex/
+docs/html/
