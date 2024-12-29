@@ -1,7 +1,7 @@
 <a id="readme-top"></a>
 
 <div align="center">
-  <img src="docs/images/vkdb-light.svg" alt="logo" width="500" height="auto" />
+  <img src="docs/images/vkdb-light-cropped.svg" alt="logo" width="500" height="250" />
   <p>A time series database engine built in C++ with minimal dependencies.</p>
   <a href="https://cplusplus.com/">
   <img src="https://img.shields.io/badge/C%2B%2B-%2300599C?logo=cplusplus&logoColor=FFFFFF" alt="c++" /></a>
@@ -23,8 +23,8 @@
 
 [About the project](#about-the-project)
 - [Motivation](#motivation)
-- [Database engine internals](#database-engine-internals)
-- [Query language internals](#query-language-internals)
+- [Database engine](#database-engine)
+- [Query processing](#query-processing)
 
 [Running locally (not needed)](#running-locally-not-needed)
 - [Installation](#installation)
