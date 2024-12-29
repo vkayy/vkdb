@@ -74,7 +74,7 @@ char Lexer::advance() {
 }
 
 template <std::predicate<char> Pred>
-void Lexer::advance_while(const Pred& pred) {
+void Lexer::advance_while(const Pred& pred) noexcept {
   while (chars_remaining() && pred(peek())) {
     advance();
   }
