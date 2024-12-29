@@ -1,0 +1,114 @@
+\doxysection{table.\+cpp}
+\hypertarget{table_8cpp_source}{}\label{table_8cpp_source}\index{/Users/vkay/Dev/vkdb/src/database/table.cpp@{/Users/vkay/Dev/vkdb/src/database/table.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <vkdb/table.h>}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00005}00005\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00006}00006\ Table::Table(\textcolor{keyword}{const}\ FilePath\&\ db\_path,\ \textcolor{keyword}{const}\ TableName\&\ name)}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00007}00007\ \ \ :\ name\_\{name\}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00008}00008\ \ \ ,\ db\_path\_\{db\_path\}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00009}00009\ \ \ ,\ storage\_engine\_\{path()\}\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00010}00010\ \ \ std::filesystem::create\_directories(path());}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00011}00011\ \ \ load\_tag\_columns();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00012}00012\ \ \ storage\_engine\_.replayWAL();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00015}00015\ Table\&\ Table::setTagColumns(\textcolor{keyword}{const}\ TagColumns\&\ tag\_columns)\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00016}00016\ \ \ tag\_columns\_\ =\ tag\_columns;}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00017}00017\ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00020}00020\ Table\&\ Table::addTagColumn(\textcolor{keyword}{const}\ TagKey\&\ tag\_column)\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00021}00021\ \ \ \textcolor{keyword}{auto}\ inserted\{tag\_columns\_.insert(tag\_column).second\};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00022}00022\ \ \ \textcolor{keywordflow}{if}\ (!inserted)\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error\{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00024}00024\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Table::addTagColumn():\ Tag\ column\ '"{}}\ +\ tag\_column}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00025}00025\ \ \ \ \ \ \ +\ \textcolor{stringliteral}{"{}'\ already\ exists\ in\ '"{}}\ +\ name\_\ +\ \textcolor{stringliteral}{"{}'."{}}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00026}00026\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00027}00027\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00028}00028\ \ \ save\_tag\_columns();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00029}00029\ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00032}00032\ Table\&\ Table::removeTagColumn(\textcolor{keyword}{const}\ TagKey\&\ tag\_column)\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00033}00033\ \ \ \textcolor{keyword}{auto}\ removed\{tag\_columns\_.erase(tag\_column)\ >\ 0\};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00034}00034\ \ \ \textcolor{keywordflow}{if}\ (!removed)\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error\{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00036}00036\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Table::removeTagColumn():\ Tag\ column\ '"{}}\ +\ tag\_column}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00037}00037\ \ \ \ \ \ \ +\ \textcolor{stringliteral}{"{}'\ does\ not\ exist\ in\ '"{}}\ +\ name\_\ +\ \textcolor{stringliteral}{"{}'."{}}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00038}00038\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00039}00039\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00040}00040\ \ \ save\_tag\_columns();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00041}00041\ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00044}00044\ \textcolor{keywordtype}{void}\ Table::clear()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00045}00045\ \ \ std::filesystem::remove\_all(path());}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00046}00046\ \ \ std::filesystem::create\_directories(path());}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00049}00049\ FriendlyQueryBuilder<double>\ Table::query()\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00050}00050\ \ \ \textcolor{keywordflow}{return}\ FriendlyQueryBuilder<double>(storage\_engine\_,\ tag\_columns\_);}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00051}00051\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00053}00053\ TableName\ Table::name()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00054}00054\ \ \ \textcolor{keywordflow}{return}\ name\_;}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00055}00055\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00057}00057\ TagColumns\ Table::tagColumns()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00058}00058\ \ \ \textcolor{keywordflow}{return}\ tag\_columns\_;}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00059}00059\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00061}00061\ FilePath\ Table::path()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00062}00062\ \ \ \textcolor{keywordflow}{return}\ db\_path\_\ /\ FilePath\{name\_\};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00063}00063\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00065}00065\ \textcolor{keywordtype}{bool}\ Table::beenPopulated()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00066}00066\ \ \ \textcolor{keywordflow}{return}\ !storage\_engine\_.empty();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00067}00067\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00069}00069\ \textcolor{keywordtype}{void}\ Table::save\_tag\_columns()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00070}00070\ \ \ std::ofstream\ file\{tag\_columns\_path()\};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00071}00071\ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error\{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00073}00073\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Table::save\_tag\_columns():\ Unable\ to\ open\ file\ "{}}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00074}00074\ \ \ \ \ \ \ +\ std::string(tag\_columns\_path())\ +\ \textcolor{stringliteral}{"{}."{}}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00075}00075\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00076}00076\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00077}00077\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ column\ :\ tag\_columns\_)\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00078}00078\ \ \ \ \ file\ <<\ column\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00079}00079\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00080}00080\ \ \ file.close();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00081}00081\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00083}00083\ \textcolor{keywordtype}{void}\ Table::load\_tag\_columns()\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00084}00084\ \ \ tag\_columns\_.clear();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00085}00085\ \ \ \textcolor{keywordflow}{if}\ (!std::filesystem::exists(tag\_columns\_path()))\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00087}00087\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00088}00088\ \ \ std::ifstream\ file\{tag\_columns\_path()\};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00089}00089\ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00090}00090\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error\{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00091}00091\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Table::load\_tag\_columns():\ Unable\ to\ open\ file\ "{}}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00092}00092\ \ \ \ \ \ \ +\ std::string(tag\_columns\_path())\ +\ \textcolor{stringliteral}{"{}."{}}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00093}00093\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00094}00094\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00095}00095\ \ \ std::string\ column;}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00096}00096\ \ \ \textcolor{keywordflow}{while}\ (std::getline(file,\ column))\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{if}\ (!column.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00098}00098\ \ \ \ \ \ \ tag\_columns\_.insert(column);}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00099}00099\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00100}00100\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00101}00101\ \ \ file.close();}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00104}00104\ FilePath\ Table::tag\_columns\_path()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00105}00105\ \ \ \textcolor{keywordflow}{return}\ path()\ /\ TAG\_COLUMNS\_FILENAME;}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00106}00106\ \}}
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{table_8cpp_source_l00108}00108\ \}\ \textcolor{comment}{//\ namespace\ vkdb}}
+
+\end{DoxyCode}

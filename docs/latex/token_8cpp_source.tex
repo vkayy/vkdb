@@ -1,0 +1,51 @@
+\doxysection{token.\+cpp}
+\hypertarget{token_8cpp_source}{}\label{token_8cpp_source}\index{/Users/vkay/Dev/vkdb/src/query/token.cpp@{/Users/vkay/Dev/vkdb/src/query/token.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <vkdb/token.h>}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00003}00003\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00004}00004\ Token::Token(}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00005}00005\ \ \ TokenType\ type,}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00006}00006\ \ \ \textcolor{keyword}{const}\ Lexeme\&\ lexeme,}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00007}00007\ \ \ Token::size\_type\ line,}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00008}00008\ \ \ Token::size\_type\ column}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00009}00009\ )\ noexcept}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00010}00010\ \ \ :\ type\_\{type\}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00011}00011\ \ \ ,\ lexeme\_\{lexeme\}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00012}00012\ \ \ ,\ line\_\{line\}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00013}00013\ \ \ ,\ column\_\{column\}\ \{\}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00015}00015\ \textcolor{keywordtype}{bool}\ Token::operator==(\textcolor{keyword}{const}\ Token\&\ other)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00016}00016\ \ \ \textcolor{keywordflow}{return}\ type\_\ ==\ other.type()\ \&\&}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00017}00017\ \ \ \ \ lexeme\_\ ==\ other.lexeme()\ \&\&}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00018}00018\ \ \ \ \ line\_\ ==\ other.line()\ \&\&}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00019}00019\ \ \ \ \ column\_\ ==\ other.column();}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00020}00020\ \}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00022}00022\ TokenType\ Token::type()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00023}00023\ \ \ \textcolor{keywordflow}{return}\ type\_;}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00026}00026\ Lexeme\ Token::lexeme()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00027}00027\ \ \ \textcolor{keywordflow}{return}\ lexeme\_;}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00030}00030\ Token::size\_type\ Token::line()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00031}00031\ \ \ \textcolor{keywordflow}{return}\ line\_;}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00034}00034\ Token::size\_type\ Token::column()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00035}00035\ \ \ \textcolor{keywordflow}{return}\ column\_;}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00038}00038\ std::string\ Token::str()\ const\ noexcept\ \{}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00039}00039\ \ \ \textcolor{keyword}{auto}\ type\_str\{TOKEN\_TYPE\_TO\_STRING.at(type\_)\};}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00040}00040\ \ \ \textcolor{keywordflow}{return}\ type\_str\ +\ \textcolor{stringliteral}{"{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00041}00041\ \ \ \ \ +\ lexeme\_\ +\ \textcolor{stringliteral}{"{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00042}00042\ \ \ \ \ +\ std::to\_string(line\_)\ +\ \textcolor{stringliteral}{"{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00043}00043\ \ \ \ \ +\ std::to\_string(column\_);}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00044}00044\ \}}
+\DoxyCodeLine{\Hypertarget{token_8cpp_source_l00045}00045\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+
+\end{DoxyCode}

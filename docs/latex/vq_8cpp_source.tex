@@ -1,0 +1,87 @@
+\doxysection{vq.\+cpp}
+\hypertarget{vq_8cpp_source}{}\label{vq_8cpp_source}\index{/Users/vkay/Dev/vkdb/src/query/vq.cpp@{/Users/vkay/Dev/vkdb/src/query/vq.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <vkdb/vq.h>}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <vkdb/database.h>}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <vkdb/lexer.h>}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vkdb/parser.h>}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vkdb/interpreter.h>}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00007}00007\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00008}00008\ \textcolor{keywordtype}{bool}\ VQ::had\_error\_\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00009}00009\ \textcolor{keywordtype}{bool}\ VQ::had\_runtime\_error\_\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00010}00010\ Database\ VQ::database\_\{INTERPRETER\_DEFAULT\_DATABASE\};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00011}00011\ \textcolor{keyword}{const}\ Interpreter\ VQ::interpreter\_\{database\_,\ VQ::runtimeError\};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00013}00013\ \textcolor{keywordtype}{void}\ VQ::runFile(\textcolor{keyword}{const}\ std::filesystem::path\ path)\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00014}00014\ \ \ \textcolor{keywordflow}{if}\ (path.extension()\ !=\ \textcolor{stringliteral}{"{}.vq"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00015}00015\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;32mVQ::runFile():\ File\ extension\ cannot\ be\ "{}}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00016}00016\ \ \ \ \ <<\ path.extension()\ <<\ \textcolor{stringliteral}{"{},\ must\ be\ .vq.\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00018}00018\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00019}00019\ \ \ std::ifstream\ file\{path\};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00020}00020\ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00021}00021\ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;32mVQ::runFile():\ Unable\ to\ open\ file\ "{}}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00022}00022\ \ \ \ \ <<\ path\ <<\ \textcolor{stringliteral}{"{}.\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00024}00024\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00025}00025\ \ \ std::stringstream\ buffer;}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00026}00026\ \ \ buffer\ <<\ file.rdbuf();}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00027}00027\ \ \ run(buffer.str());}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00030}00030\ \textcolor{keywordtype}{void}\ VQ::runPrompt()\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00031}00031\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;31mwelcome\ to\ the\ vq\ repl!\ :)\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00032}00032\ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;31m(on\ default\ interpreter\ database)\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00033}00033\ \ \ std::string\ line;}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00034}00034\ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00035}00035\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;34m(vq)\ >>\ \(\backslash\)033[0m"{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{if}\ (!std::getline(std::cin,\ line)\ ||\ line.empty())\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00037}00037\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00038}00038\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00039}00039\ \ \ \ \ run(line);}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00040}00040\ \ \ \ \ had\_error\_\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00041}00041\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00044}00044\ \textcolor{keywordtype}{void}\ VQ::run(\textcolor{keyword}{const}\ std::string\&\ source)\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00045}00045\ \ \ Lexer\ lexer\{source\};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00046}00046\ \ \ \textcolor{keyword}{auto}\ tokens\{lexer.tokenize()\};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00048}00048\ \ \ Parser\ parser\{tokens,\ error\};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00049}00049\ \ \ \textcolor{keyword}{auto}\ expr\{parser.parse()\};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00051}00051\ \ \ \textcolor{keywordflow}{if}\ (had\_error\_)\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00053}00053\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00055}00055\ \ \ interpreter\_.interpret(expr.value());}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00056}00056\ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00058}00058\ \textcolor{keywordtype}{void}\ VQ::error(Token\ token,\ \textcolor{keyword}{const}\ std::string\&\ message)\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00059}00059\ \ \ \textcolor{keywordflow}{if}\ (token.type()\ ==\ TokenType::END\_OF\_FILE)\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00060}00060\ \ \ \ \ report(token.line(),\ \textcolor{stringliteral}{"{}at\ end"{}},\ message);}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00061}00061\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00062}00062\ \ \ \ \ report(token.line(),\ \textcolor{stringliteral}{"{}at\ '"{}}\ +\ token.lexeme()\ +\ \textcolor{stringliteral}{"{}'"{}},\ message);}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00063}00063\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00064}00064\ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00066}00066\ \textcolor{keywordtype}{void}\ VQ::runtimeError(\textcolor{keyword}{const}\ RuntimeError\&\ error)\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00067}00067\ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;32m[line\ "{}}\ <<\ error.token().line();}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00068}00068\ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}]\ Runtime\ error:\ "{}}\ <<\ error.message()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00069}00069\ \ \ had\_runtime\_error\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00072}00072\ \textcolor{keywordtype}{void}\ VQ::report(}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00073}00073\ \ \ size\_type\ line,}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00074}00074\ \ \ \textcolor{keyword}{const}\ std::string\&\ where,}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00075}00075\ \ \ \textcolor{keyword}{const}\ std::string\&\ message}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00076}00076\ )\ \{}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00077}00077\ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;32m[line\ "{}}\ <<\ line\ <<\ \textcolor{stringliteral}{"{}]\ Parse\ error\ "{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00078}00078\ \ \ std::cerr\ <<\ where\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ message\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00079}00079\ \ \ had\_error\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00080}00080\ \}}
+\DoxyCodeLine{\Hypertarget{vq_8cpp_source_l00081}00081\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+
+\end{DoxyCode}

@@ -1,0 +1,156 @@
+\doxysection{vkdb\+::Bloom\+Filter Class Reference}
+\hypertarget{classvkdb_1_1_bloom_filter}{}\label{classvkdb_1_1_bloom_filter}\index{vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_bloom_filter_a8d88a86d221ea3a7af569e36f03d4d75}{key\+\_\+type}} = \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_bloom_filter_ae58c1ab536f76bf93e9ec8167a661b0b}{size\+\_\+type}} = uint64\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvkdb_1_1_bloom_filter_a86fac209b9c129687db3fe2647b3aae0}{Bloom\+Filter}} (std\+::string \&\&str) noexcept
+\item 
+\mbox{\hyperlink{classvkdb_1_1_bloom_filter_afc1bcf056a6a2754555e4d634ab4fcb7}{Bloom\+Filter}} (uint64\+\_\+t expected\+\_\+no\+\_\+of\+\_\+elems, double false\+\_\+positive\+\_\+rate)
+\item 
+\Hypertarget{classvkdb_1_1_bloom_filter_a06ccd14264ba06e786bb6349cde57d24}\label{classvkdb_1_1_bloom_filter_a06ccd14264ba06e786bb6349cde57d24} 
+{\bfseries Bloom\+Filter} (\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{Bloom\+Filter}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_bloom_filter_a060321d8f07e8a4bcbde567ce3999e62}\label{classvkdb_1_1_bloom_filter_a060321d8f07e8a4bcbde567ce3999e62} 
+\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{Bloom\+Filter}} \& {\bfseries operator=} (\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{Bloom\+Filter}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_bloom_filter_af16038f3bd87a3dd278ec05381b5403c}\label{classvkdb_1_1_bloom_filter_af16038f3bd87a3dd278ec05381b5403c} 
+{\bfseries Bloom\+Filter} (const \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{Bloom\+Filter}} \&)=delete
+\item 
+\Hypertarget{classvkdb_1_1_bloom_filter_acd9b06bd2c21dfabe8c1c32b06c516af}\label{classvkdb_1_1_bloom_filter_acd9b06bd2c21dfabe8c1c32b06c516af} 
+\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{Bloom\+Filter}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{Bloom\+Filter}} \&)=delete
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_bloom_filter_a7f2e6b56d38de660cb7bcd0450df28a8}{insert}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&key) noexcept
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_bloom_filter_a7a0bfa4503e82f547fc10ed1f1737e9a}{may\+Contain}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&key) const noexcept
+\item 
+std\+::string \mbox{\hyperlink{classvkdb_1_1_bloom_filter_a5ef19a9741ef83a50bae5728f3458523}{str}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \mbox{\hyperlink{classvkdb_1_1_bloom_filter_ad55a02a68a7d6ffa1614acf04248d733}{MIN\+\_\+\+FALSE\+\_\+\+POSITIVE\+\_\+\+RATE}} \{0.\+0\}
+\item 
+static constexpr double \mbox{\hyperlink{classvkdb_1_1_bloom_filter_ae1eb4d84b67b4eea1deb57667d5ef8b7}{MAX\+\_\+\+FALSE\+\_\+\+POSITIVE\+\_\+\+RATE}} \{1.\+0\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8h_source_l00012}{12}} of file \mbox{\hyperlink{bloom__filter_8h_source}{bloom\+\_\+filter.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classvkdb_1_1_bloom_filter_a8d88a86d221ea3a7af569e36f03d4d75}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!key\_type@{key\_type}}
+\index{key\_type@{key\_type}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{key\_type}{key\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_a8d88a86d221ea3a7af569e36f03d4d75} 
+using \mbox{\hyperlink{classvkdb_1_1_time_series_key}{vkdb\+::\+Bloom\+Filter\+::key\+\_\+type}} = \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8h_source_l00014}{14}} of file \mbox{\hyperlink{bloom__filter_8h_source}{bloom\+\_\+filter.\+h}}.
+
+\Hypertarget{classvkdb_1_1_bloom_filter_ae58c1ab536f76bf93e9ec8167a661b0b}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!size\_type@{size\_type}}
+\index{size\_type@{size\_type}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{size\_type}{size\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_ae58c1ab536f76bf93e9ec8167a661b0b} 
+using vkdb\+::\+Bloom\+Filter\+::size\+\_\+type = uint64\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8h_source_l00015}{15}} of file \mbox{\hyperlink{bloom__filter_8h_source}{bloom\+\_\+filter.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvkdb_1_1_bloom_filter_a86fac209b9c129687db3fe2647b3aae0}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!BloomFilter@{BloomFilter}}
+\index{BloomFilter@{BloomFilter}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{BloomFilter()}{BloomFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_a86fac209b9c129687db3fe2647b3aae0} 
+vkdb\+::\+Bloom\+Filter\+::\+Bloom\+Filter (\begin{DoxyParamCaption}\item[{std\+::string \&\&}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{bloom__filter_8cpp_source}{bloom\+\_\+filter.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_bloom_filter_afc1bcf056a6a2754555e4d634ab4fcb7}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!BloomFilter@{BloomFilter}}
+\index{BloomFilter@{BloomFilter}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{BloomFilter()}{BloomFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_afc1bcf056a6a2754555e4d634ab4fcb7} 
+vkdb\+::\+Bloom\+Filter\+::\+Bloom\+Filter (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{expected\+\_\+no\+\_\+of\+\_\+elems}{, }\item[{double}]{false\+\_\+positive\+\_\+rate}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{bloom__filter_8cpp_source}{bloom\+\_\+filter.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvkdb_1_1_bloom_filter_a7f2e6b56d38de660cb7bcd0450df28a8}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!insert@{insert}}
+\index{insert@{insert}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_a7f2e6b56d38de660cb7bcd0450df28a8} 
+void vkdb\+::\+Bloom\+Filter\+::insert (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8cpp_source_l00055}{55}} of file \mbox{\hyperlink{bloom__filter_8cpp_source}{bloom\+\_\+filter.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_bloom_filter_a7a0bfa4503e82f547fc10ed1f1737e9a}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!mayContain@{mayContain}}
+\index{mayContain@{mayContain}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{mayContain()}{mayContain()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_a7a0bfa4503e82f547fc10ed1f1737e9a} 
+bool vkdb\+::\+Bloom\+Filter\+::may\+Contain (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8cpp_source_l00061}{61}} of file \mbox{\hyperlink{bloom__filter_8cpp_source}{bloom\+\_\+filter.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_bloom_filter_a5ef19a9741ef83a50bae5728f3458523}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!str@{str}}
+\index{str@{str}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{str()}{str()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_a5ef19a9741ef83a50bae5728f3458523} 
+std\+::string vkdb\+::\+Bloom\+Filter\+::str (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8cpp_source_l00070}{70}} of file \mbox{\hyperlink{bloom__filter_8cpp_source}{bloom\+\_\+filter.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvkdb_1_1_bloom_filter_ae1eb4d84b67b4eea1deb57667d5ef8b7}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!MAX\_FALSE\_POSITIVE\_RATE@{MAX\_FALSE\_POSITIVE\_RATE}}
+\index{MAX\_FALSE\_POSITIVE\_RATE@{MAX\_FALSE\_POSITIVE\_RATE}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{MAX\_FALSE\_POSITIVE\_RATE}{MAX\_FALSE\_POSITIVE\_RATE}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_ae1eb4d84b67b4eea1deb57667d5ef8b7} 
+double vkdb\+::\+Bloom\+Filter\+::\+MAX\+\_\+\+FALSE\+\_\+\+POSITIVE\+\_\+\+RATE \{1.\+0\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8h_source_l00018}{18}} of file \mbox{\hyperlink{bloom__filter_8h_source}{bloom\+\_\+filter.\+h}}.
+
+\Hypertarget{classvkdb_1_1_bloom_filter_ad55a02a68a7d6ffa1614acf04248d733}\index{vkdb::BloomFilter@{vkdb::BloomFilter}!MIN\_FALSE\_POSITIVE\_RATE@{MIN\_FALSE\_POSITIVE\_RATE}}
+\index{MIN\_FALSE\_POSITIVE\_RATE@{MIN\_FALSE\_POSITIVE\_RATE}!vkdb::BloomFilter@{vkdb::BloomFilter}}
+\doxysubsubsection{\texorpdfstring{MIN\_FALSE\_POSITIVE\_RATE}{MIN\_FALSE\_POSITIVE\_RATE}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_bloom_filter_ad55a02a68a7d6ffa1614acf04248d733} 
+double vkdb\+::\+Bloom\+Filter\+::\+MIN\+\_\+\+FALSE\+\_\+\+POSITIVE\+\_\+\+RATE \{0.\+0\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{bloom__filter_8h_source_l00017}{17}} of file \mbox{\hyperlink{bloom__filter_8h_source}{bloom\+\_\+filter.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/vkay/\+Dev/vkdb/include/storage/vkdb/bloom\+\_\+filter.\+h\item 
+/\+Users/vkay/\+Dev/vkdb/src/storage/bloom\+\_\+filter.\+cpp\end{DoxyCompactItemize}

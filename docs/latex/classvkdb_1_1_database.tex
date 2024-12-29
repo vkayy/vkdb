@@ -1,0 +1,210 @@
+\doxysection{vkdb\+::Database Class Reference}
+\hypertarget{classvkdb_1_1_database}{}\label{classvkdb_1_1_database}\index{vkdb::Database@{vkdb::Database}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_database_a34bc820417057b92dc519e2b77636352}{size\+\_\+type}} = uint64\+\_\+t
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_database_a967977d89c30b6b267e4451a7127669c}{error\+\_\+callback}} = std\+::function$<$void(\mbox{\hyperlink{classvkdb_1_1_token}{Token}}, const std\+::string\&)$>$
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_database_ac8cf2324d4bb1eae185cf1c66ae2cdd5}{runtime\+\_\+error\+\_\+callback}} = std\+::function$<$void(const \mbox{\hyperlink{classvkdb_1_1_runtime_error}{Runtime\+Error}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvkdb_1_1_database_a8f27f7c06f7a31c31c1a6f6effc8ce70}{Database}} (Database\+Name name, error\+\_\+callback error=VQ\+::error, runtime\+\_\+error\+\_\+callback runtime\+\_\+error=VQ\+::runtime\+Error)
+\item 
+\Hypertarget{classvkdb_1_1_database_a92d5cff0ad0b1a2510b8ce5f1139ce8e}\label{classvkdb_1_1_database_a92d5cff0ad0b1a2510b8ce5f1139ce8e} 
+{\bfseries Database} (\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_database_a7fef9ae7e9b7654cdb72b0fc41002e6d}\label{classvkdb_1_1_database_a7fef9ae7e9b7654cdb72b0fc41002e6d} 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& {\bfseries operator=} (\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_database_a19af8514e08667b6fe3ff0e313109dbc}\label{classvkdb_1_1_database_a19af8514e08667b6fe3ff0e313109dbc} 
+{\bfseries Database} (const \mbox{\hyperlink{classvkdb_1_1_database}{Database}} \&)=delete
+\item 
+\Hypertarget{classvkdb_1_1_database_ad0b42783965efe030b81cf2f3965eda6}\label{classvkdb_1_1_database_ad0b42783965efe030b81cf2f3965eda6} 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvkdb_1_1_database}{Database}} \&)=delete
+\item 
+\mbox{\hyperlink{classvkdb_1_1_table}{Table}} \& \mbox{\hyperlink{classvkdb_1_1_database_af2b2d70995e50959ddb4254d8a5592b5}{create\+Table}} (const Table\+Name \&table\+\_\+name)
+\item 
+\mbox{\hyperlink{classvkdb_1_1_table}{Table}} \& \mbox{\hyperlink{classvkdb_1_1_database_a0b8827461ebd9a815952b5199d2971e4}{get\+Table}} (const Table\+Name \&table\+\_\+name)
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_database_a9d68ed46a5c38377d6189850de6b4f59}{drop\+Table}} (const Table\+Name \&table\+\_\+name)
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_database_a8565e12cd94951ce0ae47dae0657657a}{clear}} ()
+\item 
+Database\+Name \mbox{\hyperlink{classvkdb_1_1_database_abdd2902d3051d3781a3c27a9bf920e31}{name}} () const noexcept
+\item 
+File\+Path \mbox{\hyperlink{classvkdb_1_1_database_a337238f33027e4c1f278d4784bd5494e}{path}} () const noexcept
+\item 
+std\+::vector$<$ Table\+Name $>$ \mbox{\hyperlink{classvkdb_1_1_database_a3b9c7858da77717e14c4b6ff8172b471}{tables}} () const noexcept
+\item 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& \mbox{\hyperlink{classvkdb_1_1_database_a2674d1963600048b94f94208965f9202}{run}} (const std\+::string \&source, std\+::ostream \&stream=std\+::cout)
+\item 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& \mbox{\hyperlink{classvkdb_1_1_database_a64d2797f1154f3c8ee46d2d9993b049d}{run\+File}} (const std\+::filesystem\+::path path, std\+::ostream \&stream=std\+::cout)
+\item 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& \mbox{\hyperlink{classvkdb_1_1_database_a411606e5bc6edfc20d577a1a4c1b3714}{run\+Prompt}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{database_8h_source_l00012}{12}} of file \mbox{\hyperlink{database_8h_source}{database.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classvkdb_1_1_database_a967977d89c30b6b267e4451a7127669c}\index{vkdb::Database@{vkdb::Database}!error\_callback@{error\_callback}}
+\index{error\_callback@{error\_callback}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{error\_callback}{error\_callback}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a967977d89c30b6b267e4451a7127669c} 
+using vkdb\+::\+Database\+::error\+\_\+callback = std\+::function$<$void(\mbox{\hyperlink{classvkdb_1_1_token}{Token}}, const std\+::string\&)$>$}
+
+
+
+Definition at line \mbox{\hyperlink{database_8h_source_l00015}{15}} of file \mbox{\hyperlink{database_8h_source}{database.\+h}}.
+
+\Hypertarget{classvkdb_1_1_database_ac8cf2324d4bb1eae185cf1c66ae2cdd5}\index{vkdb::Database@{vkdb::Database}!runtime\_error\_callback@{runtime\_error\_callback}}
+\index{runtime\_error\_callback@{runtime\_error\_callback}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{runtime\_error\_callback}{runtime\_error\_callback}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_ac8cf2324d4bb1eae185cf1c66ae2cdd5} 
+using vkdb\+::\+Database\+::runtime\+\_\+error\+\_\+callback = std\+::function$<$void(const \mbox{\hyperlink{classvkdb_1_1_runtime_error}{Runtime\+Error}}\&)$>$}
+
+
+
+Definition at line \mbox{\hyperlink{database_8h_source_l00016}{16}} of file \mbox{\hyperlink{database_8h_source}{database.\+h}}.
+
+\Hypertarget{classvkdb_1_1_database_a34bc820417057b92dc519e2b77636352}\index{vkdb::Database@{vkdb::Database}!size\_type@{size\_type}}
+\index{size\_type@{size\_type}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{size\_type}{size\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a34bc820417057b92dc519e2b77636352} 
+using vkdb\+::\+Database\+::size\+\_\+type = uint64\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{database_8h_source_l00014}{14}} of file \mbox{\hyperlink{database_8h_source}{database.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvkdb_1_1_database_a8f27f7c06f7a31c31c1a6f6effc8ce70}\index{vkdb::Database@{vkdb::Database}!Database@{Database}}
+\index{Database@{Database}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{Database()}{Database()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a8f27f7c06f7a31c31c1a6f6effc8ce70} 
+vkdb\+::\+Database\+::\+Database (\begin{DoxyParamCaption}\item[{Database\+Name}]{name}{, }\item[{error\+\_\+callback}]{error}{ = {\ttfamily VQ\+:\+:error}, }\item[{runtime\+\_\+error\+\_\+callback}]{runtime\+\_\+error}{ = {\ttfamily VQ\+:\+:runtimeError}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvkdb_1_1_database_a8565e12cd94951ce0ae47dae0657657a}\index{vkdb::Database@{vkdb::Database}!clear@{clear}}
+\index{clear@{clear}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a8565e12cd94951ce0ae47dae0657657a} 
+void vkdb\+::\+Database\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_af2b2d70995e50959ddb4254d8a5592b5}\index{vkdb::Database@{vkdb::Database}!createTable@{createTable}}
+\index{createTable@{createTable}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{createTable()}{createTable()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_af2b2d70995e50959ddb4254d8a5592b5} 
+\mbox{\hyperlink{classvkdb_1_1_table}{Table}} \& vkdb\+::\+Database\+::create\+Table (\begin{DoxyParamCaption}\item[{const Table\+Name \&}]{table\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_a9d68ed46a5c38377d6189850de6b4f59}\index{vkdb::Database@{vkdb::Database}!dropTable@{dropTable}}
+\index{dropTable@{dropTable}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{dropTable()}{dropTable()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a9d68ed46a5c38377d6189850de6b4f59} 
+void vkdb\+::\+Database\+::drop\+Table (\begin{DoxyParamCaption}\item[{const Table\+Name \&}]{table\+\_\+name}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_a0b8827461ebd9a815952b5199d2971e4}\index{vkdb::Database@{vkdb::Database}!getTable@{getTable}}
+\index{getTable@{getTable}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{getTable()}{getTable()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a0b8827461ebd9a815952b5199d2971e4} 
+\mbox{\hyperlink{classvkdb_1_1_table}{Table}} \& vkdb\+::\+Database\+::get\+Table (\begin{DoxyParamCaption}\item[{const Table\+Name \&}]{table\+\_\+name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00032}{32}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_abdd2902d3051d3781a3c27a9bf920e31}\index{vkdb::Database@{vkdb::Database}!name@{name}}
+\index{name@{name}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{name()}{name()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_abdd2902d3051d3781a3c27a9bf920e31} 
+Database\+Name vkdb\+::\+Database\+::name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00055}{55}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_a337238f33027e4c1f278d4784bd5494e}\index{vkdb::Database@{vkdb::Database}!path@{path}}
+\index{path@{path}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{path()}{path()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a337238f33027e4c1f278d4784bd5494e} 
+File\+Path vkdb\+::\+Database\+::path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_a2674d1963600048b94f94208965f9202}\index{vkdb::Database@{vkdb::Database}!run@{run}}
+\index{run@{run}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a2674d1963600048b94f94208965f9202} 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& vkdb\+::\+Database\+::run (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{source}{, }\item[{std\+::ostream \&}]{stream}{ = {\ttfamily std\+:\+:cout}}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00068}{68}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_a64d2797f1154f3c8ee46d2d9993b049d}\index{vkdb::Database@{vkdb::Database}!runFile@{runFile}}
+\index{runFile@{runFile}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{runFile()}{runFile()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a64d2797f1154f3c8ee46d2d9993b049d} 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& vkdb\+::\+Database\+::run\+File (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path}]{path}{, }\item[{std\+::ostream \&}]{stream}{ = {\ttfamily std\+:\+:cout}}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00092}{92}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_a411606e5bc6edfc20d577a1a4c1b3714}\index{vkdb::Database@{vkdb::Database}!runPrompt@{runPrompt}}
+\index{runPrompt@{runPrompt}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{runPrompt()}{runPrompt()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a411606e5bc6edfc20d577a1a4c1b3714} 
+\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \& vkdb\+::\+Database\+::run\+Prompt (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00122}{122}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_database_a3b9c7858da77717e14c4b6ff8172b471}\index{vkdb::Database@{vkdb::Database}!tables@{tables}}
+\index{tables@{tables}!vkdb::Database@{vkdb::Database}}
+\doxysubsubsection{\texorpdfstring{tables()}{tables()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_database_a3b9c7858da77717e14c4b6ff8172b471} 
+std\+::vector$<$ Table\+Name $>$ vkdb\+::\+Database\+::tables (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{database_8cpp_source_l00063}{63}} of file \mbox{\hyperlink{database_8cpp_source}{database.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/vkay/\+Dev/vkdb/include/database/vkdb/database.\+h\item 
+/\+Users/vkay/\+Dev/vkdb/src/database/database.\+cpp\end{DoxyCompactItemize}

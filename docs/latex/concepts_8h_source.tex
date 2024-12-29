@@ -1,0 +1,48 @@
+\doxysection{concepts.\+h}
+\hypertarget{concepts_8h_source}{}\label{concepts_8h_source}\index{/Users/vkay/Dev/vkdb/include/utils/vkdb/concepts.h@{/Users/vkay/Dev/vkdb/include/utils/vkdb/concepts.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ UTILS\_CONCEPTS\_H}}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ UTILS\_CONCEPTS\_H}}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00006}00006\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00007}\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{00007}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{SameNoCVRefQuals}}\ =}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00008}00008\ \ \ std::is\_same\_v<std::remove\_cvref\_t<T>,\ std::remove\_cvref\_t<U>>;}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00010}00010\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00011}\mbox{\hyperlink{concept_has_no_c_v_ref_quals}{00011}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_has_no_c_v_ref_quals}{HasNoCVRefQuals}}\ =\ std::is\_same\_v<T,\ std::remove\_cvref\_t<T>>;}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00013}00013\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00014}\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{00014}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{RegularNoCVRefQuals}}\ =\ std::regular<T>\ \&\&\ \mbox{\hyperlink{concept_has_no_c_v_ref_quals}{HasNoCVRefQuals<T>}};}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00016}00016\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00017}\mbox{\hyperlink{concept_arithmetic}{00017}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_arithmetic}{Arithmetic}}\ =\ std::is\_arithmetic\_v<T>;}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00019}00019\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00020}\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{00020}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{ArithmeticNoCVRefQuals}}\ =\ \mbox{\hyperlink{concept_arithmetic}{Arithmetic<T>}}\ \&\&\ \mbox{\hyperlink{concept_has_no_c_v_ref_quals}{HasNoCVRefQuals<T>}};}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00022}00022\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Ts,\ \textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00023}\mbox{\hyperlink{concept_all_same_no_c_v_ref_quals}{00023}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_all_same_no_c_v_ref_quals}{AllSameNoCVRefQuals}}\ =\ (\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{SameNoCVRefQuals<Ts,\ U>}}\ \&\&\ ...);}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00025}00025\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00026}\mbox{\hyperlink{concept_convertible_to_no_c_v_ref_quals}{00026}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_convertible_to_no_c_v_ref_quals}{ConvertibleToNoCVRefQuals}}}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00027}00027\ \ \ =\ std::convertible\_to<T,\ U>\ \&\&\ \mbox{\hyperlink{concept_has_no_c_v_ref_quals}{HasNoCVRefQuals<T>}};}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00029}00029\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Ts,\ \textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00030}\mbox{\hyperlink{concept_all_convertible_to_no_c_v_ref_quals}{00030}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_all_convertible_to_no_c_v_ref_quals}{AllConvertibleToNoCVRefQuals}}}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00031}00031\ \ \ =\ (\mbox{\hyperlink{concept_convertible_to_no_c_v_ref_quals}{ConvertibleToNoCVRefQuals<Ts,\ U>}}\ \&\&\ ...);}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00033}00033\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00034}\mbox{\hyperlink{concept_constructible_to_no_c_v_ref_quals}{00034}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_constructible_to_no_c_v_ref_quals}{ConstructibleToNoCVRefQuals}}}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00035}00035\ \ \ =\ std::constructible\_from<U,\ T>\ \&\&\ \mbox{\hyperlink{concept_has_no_c_v_ref_quals}{HasNoCVRefQuals<T>}};}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00037}00037\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Ts,\ \textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00038}\mbox{\hyperlink{concept_all_constructible_to_no_c_v_ref_quals}{00038}}\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_all_constructible_to_no_c_v_ref_quals}{AllConstructibleToNoCVRefQuals}}}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00039}00039\ \ \ =\ (\mbox{\hyperlink{concept_constructible_to_no_c_v_ref_quals}{ConstructibleToNoCVRefQuals<Ts,\ U>}}\ \&\&\ ...);}
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{concepts_8h_source_l00042}00042\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_CONCEPTS\_H}}
+
+\end{DoxyCode}

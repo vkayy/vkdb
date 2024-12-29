@@ -1,7 +1,7 @@
 <a id="readme-top"></a>
 
 <div align="center">
-  <img src="doc/images/vkdb-rectangle.png" alt="logo" width="400" height="auto" />
+  <img src="docs/images/vkdb-rectangle.png" alt="logo" width="400" height="auto" />
   <h1>vkdb</h1>
   <p>A time series database engine built in C++ with minimal dependencies.</p>
   <a href="https://cplusplus.com/">
@@ -311,7 +311,7 @@ int main() {
 }
 ```
 
-| ![vq-playground.png](doc/images/vq-playground.png) | 
+| ![vq-playground.png](docs/images/vq-playground.png) | 
 |:--:| 
 | *The vq playground REPL.* |
 
@@ -367,7 +367,7 @@ DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
 
 There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-explanatory reasons.
 
-| ![vq-errors.png](doc/images/vq-errors.png) | 
+| ![vq-errors.png](docs/images/vq-errors.png) | 
 |:--:| 
 | *A parse error and a runtime error in the REPL.* |
 

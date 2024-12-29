@@ -1,0 +1,148 @@
+\doxysection{interpreter.\+h}
+\hypertarget{interpreter_8h_source}{}\label{interpreter_8h_source}\index{/Users/vkay/Dev/vkdb/include/query/vkdb/interpreter.h@{/Users/vkay/Dev/vkdb/include/query/vkdb/interpreter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ QUERY\_INTERPRETER\_H}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ QUERY\_INTERPRETER\_H}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vkdb/friendly\_builder.h>}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vkdb/expr.h>}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00011}00011\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00012}00012\ \textcolor{keyword}{class\ }Database;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00014}00014\ \textcolor{keyword}{using\ }MetricExprResult\ =\ Metric;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00015}00015\ \textcolor{keyword}{using\ }TableNameExprResult\ =\ std::string;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00016}00016\ \textcolor{keyword}{using\ }TimestampExprResult\ =\ Timestamp;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00017}00017\ \textcolor{keyword}{using\ }ValueExprResult\ =\ double;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00018}00018\ \textcolor{keyword}{using\ }TagKeyExprResult\ =\ TagKey;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00019}00019\ \textcolor{keyword}{using\ }TagValueExprResult\ =\ TagValue;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00020}00020\ \textcolor{keyword}{using\ }TagExprResult\ =\ Tag;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00021}00021\ \textcolor{keyword}{using\ }TagListExprResult\ =\ TagTable;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00022}00022\ \textcolor{keyword}{using\ }TagColumnsExprResult\ =\ TagColumns;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00024}00024\ \textcolor{keyword}{using\ }SelectDataResult\ =\ std::vector<DataPoint<double>>;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00025}00025\ \textcolor{keyword}{using\ }SelectDoubleResult\ =\ double;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00026}00026\ \textcolor{keyword}{using\ }SelectCountResult\ =\ uint64\_t;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00028}00028\ \textcolor{keyword}{using\ }SelectResult\ =\ std::variant<}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00029}00029\ \ \ SelectDataResult,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00030}00030\ \ \ SelectDoubleResult,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00031}00031\ \ \ SelectCountResult}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00032}00032\ >;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00034}00034\ \textcolor{keyword}{using\ }SelectTypeResult\ =\ SelectType;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00035}00035\ \textcolor{keyword}{using\ }WhereClauseResult\ =\ TagListExprResult;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00036}00036\ \textcolor{keyword}{using\ }AllClauseResult\ =\ std::optional<WhereClauseResult>;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00037}00037\ \textcolor{keyword}{using\ }BetweenClauseResult\ =\ std::tuple<}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00038}00038\ \ \ TimestampExprResult,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00039}00039\ \ \ TimestampExprResult,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00040}00040\ \ \ std::optional<WhereClauseResult>}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00041}00041\ >;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00042}00042\ \textcolor{keyword}{using\ }AtClauseResult\ =\ std::pair<}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00043}00043\ \ \ TimestampExprResult,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00044}00044\ \ \ std::optional<WhereClauseResult>}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00045}00045\ >;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00046}00046\ \textcolor{keyword}{using\ }SelectClauseResult\ =\ std::variant<}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00047}00047\ \ \ AllClauseResult,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00048}00048\ \ \ BetweenClauseResult,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00049}00049\ \ \ AtClauseResult}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00050}00050\ >;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00052}00052\ \textcolor{keyword}{using\ }PutResult\ =\ void;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00053}00053\ \textcolor{keyword}{using\ }DeleteResult\ =\ void;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00054}00054\ \textcolor{keyword}{using\ }CreateResult\ =\ void;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00055}00055\ \textcolor{keyword}{using\ }DropResult\ =\ void;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00056}00056\ \textcolor{keyword}{using\ }AddResult\ =\ void;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00057}00057\ \textcolor{keyword}{using\ }RemoveResult\ =\ void;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00058}00058\ \textcolor{keyword}{using\ }TablesResult\ =\ std::vector<std::string>;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00060}00060\ \textcolor{keyword}{using\ }OutputResult\ =\ std::variant<SelectResult,\ TablesResult>;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00061}00061\ \textcolor{keyword}{using\ }Result\ =\ std::optional<OutputResult>;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00062}00062\ \textcolor{keyword}{using\ }Results\ =\ std::vector<Result>;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00064}00064\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ INTERPRETER\_DEFAULT\_DATABASE\{\textcolor{stringliteral}{"{}interpreter\_default"{}}\};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00066}\mbox{\hyperlink{classvkdb_1_1_runtime_error}{00066}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_runtime_error}{RuntimeError}}\ \{}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00067}00067\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00068}00068\ \ \ \mbox{\hyperlink{classvkdb_1_1_runtime_error}{RuntimeError}}(\mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token,\ \textcolor{keyword}{const}\ std::string\&\ message)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00070}00070\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00071}00071\ \ \ [[nodiscard]]\ std::string\ message()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00073}00073\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00074}00074\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token\_;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00075}00075\ \ \ std::string\ message\_;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00076}00076\ \};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00078}\mbox{\hyperlink{classvkdb_1_1_interpreter}{00078}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_interpreter}{Interpreter}}\ \{}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00079}00079\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00080}00080\ \ \ \textcolor{keyword}{using\ }error\_callback\ =\ std::function<void(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_runtime_error}{RuntimeError}}\&)>;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00081}00081\ \ \ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00082}00082\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classvkdb_1_1_interpreter}{Interpreter}}(}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_database}{Database}}\&\ database,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00084}00084\ \ \ \ \ error\_callback\ callback\ =\ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_runtime_error}{RuntimeError}}\&)\ \{\}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00085}00085\ \ \ )\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00087}00087\ \ \ \textcolor{keywordtype}{void}\ interpret(\textcolor{keyword}{const}\ Expr\&\ expr,\ std::ostream\&\ stream\ =\ std::cout)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00089}00089\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00090}00090\ \ \ [[nodiscard]]\ std::string\ to\_string(\textcolor{keyword}{const}\ OutputResult\&\ result)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00091}00091\ \ \ [[nodiscard]]\ std::string\ to\_string(\textcolor{keyword}{const}\ SelectResult\&\ result)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00092}00092\ \ \ [[nodiscard]]\ std::string\ to\_string(\textcolor{keyword}{const}\ TablesResult\&\ result)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00094}00094\ \ \ [[nodiscard]]\ Results\ visit(\textcolor{keyword}{const}\ Expr\&\ expr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00095}00095\ \ \ [[nodiscard]]\ Result\ visit(\textcolor{keyword}{const}\ Query\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00096}00096\ \ \ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00097}00097\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ add\_optional\_tag\_list(}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00098}00098\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder<double>}}\ \&query\_builder,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00099}00099\ \ \ \ \ \textcolor{keyword}{const}\ std::optional<TagListExprResult>\&\ tag\_list}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00100}00100\ \ \ )\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00101}00101\ \ \ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00102}00102\ \ \ \textcolor{keyword}{static}\ SelectResult\ handle\_select\_type(}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00103}00103\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder<double>}}\ \&query\_builder,}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00104}00104\ \ \ \ \ SelectType\ type}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00105}00105\ \ \ );}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00107}00107\ \ \ [[nodiscard]]\ SelectResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_select_query}{SelectQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00108}00108\ \ \ PutResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_put_query}{PutQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00109}00109\ \ \ DeleteResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_delete_query}{DeleteQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00110}00110\ \ \ CreateResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_create_query}{CreateQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00111}00111\ \ \ DropResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_drop_query}{DropQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00112}00112\ \ \ AddResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_add_query}{AddQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00113}00113\ \ \ RemoveResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_remove_query}{RemoveQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00114}00114\ \ \ [[nodiscard]]\ TablesResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_tables_query}{TablesQuery}}\&\ query)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00115}00115\ \ \ [[nodiscard]]\ AllClauseResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_all_clause}{AllClause}}\&\ clause)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00116}00116\ \ \ [[nodiscard]]\ BetweenClauseResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_between_clause}{BetweenClause}}\&\ clause)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00117}00117\ \ \ [[nodiscard]]\ AtClauseResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_at_clause}{AtClause}}\&\ clause)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00118}00118\ \ \ [[nodiscard]]\ WhereClauseResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_where_clause}{WhereClause}}\&\ clause)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00119}00119\ \ \ [[nodiscard]]\ SelectTypeResult\ visit(\textcolor{keyword}{const}\ SelectType\&\ type)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00120}00120\ \ \ [[nodiscard]]\ MetricExprResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_metric_expr}{MetricExpr}}\&\ metric)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00121}00121\ \ \ [[nodiscard]]\ TableNameExprResult\ visit(}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00122}00122\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\&\ table\_name}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00123}00123\ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00124}00124\ \ \ [[nodiscard]]\ TagKeyExprResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_tag_key_expr}{TagKeyExpr}}\&\ tag\_key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00125}00125\ \ \ [[nodiscard]]\ TagValueExprResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_tag_value_expr}{TagValueExpr}}\&\ tag\_value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00126}00126\ \ \ [[nodiscard]]\ TagExprResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_tag_expr}{TagExpr}}\&\ tag)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00127}00127\ \ \ [[nodiscard]]\ TagListExprResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_tag_list_expr}{TagListExpr}}\&\ tag\_list)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00128}00128\ \ \ [[nodiscard]]\ TagColumnsExprResult\ visit(}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00129}00129\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_tag_columns_expr}{TagColumnsExpr}}\&\ tag\_columns}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00130}00130\ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00131}00131\ \ \ [[nodiscard]]\ TimestampExprResult\ visit(}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00132}00132\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\&\ timestamp}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00133}00133\ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00134}00134\ \ \ [[nodiscard]]\ ValueExprResult\ visit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvkdb_1_1_value_expr}{ValueExpr}}\&\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00136}00136\ \ \ error\_callback\ callback\_;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00137}00137\ \ \ \mbox{\hyperlink{classvkdb_1_1_database}{Database}}\&\ database\_;}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00138}00138\ \};}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00140}00140\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{interpreter_8h_source_l00142}00142\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QUERY\_INTERPRETER\_H}}
+
+\end{DoxyCode}

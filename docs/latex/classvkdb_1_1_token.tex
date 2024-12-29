@@ -1,0 +1,138 @@
+\doxysection{vkdb\+::Token Class Reference}
+\hypertarget{classvkdb_1_1_token}{}\label{classvkdb_1_1_token}\index{vkdb::Token@{vkdb::Token}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_token_a032e1e0e1cf1f34dcb910fbb49e98573}{size\+\_\+type}} = uint64\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvkdb_1_1_token_aa7233ddff4f6cbcd40f9856280eec8b2}{Token}} (Token\+Type type, const Lexeme \&lexeme, size\+\_\+type line, size\+\_\+type column) noexcept
+\item 
+\Hypertarget{classvkdb_1_1_token_aa538b09a07a09f5a24f15c23b5202f76}\label{classvkdb_1_1_token_aa538b09a07a09f5a24f15c23b5202f76} 
+{\bfseries Token} (\mbox{\hyperlink{classvkdb_1_1_token}{Token}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_token_a799050cada991806a867e847efd30c0c}\label{classvkdb_1_1_token_a799050cada991806a867e847efd30c0c} 
+\mbox{\hyperlink{classvkdb_1_1_token}{Token}} \& {\bfseries operator=} (\mbox{\hyperlink{classvkdb_1_1_token}{Token}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_token_a36b1befa190182ce9173649dbf8fd1f5}\label{classvkdb_1_1_token_a36b1befa190182ce9173649dbf8fd1f5} 
+{\bfseries Token} (const \mbox{\hyperlink{classvkdb_1_1_token}{Token}} \&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_token_a16a219546a6f41d5104fc0d9e38da09b}\label{classvkdb_1_1_token_a16a219546a6f41d5104fc0d9e38da09b} 
+\mbox{\hyperlink{classvkdb_1_1_token}{Token}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvkdb_1_1_token}{Token}} \&) noexcept=default
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_token_a0c8bb95368b1a0ee4f86304c3f196693}{operator==}} (const \mbox{\hyperlink{classvkdb_1_1_token}{Token}} \&other) const noexcept
+\item 
+Token\+Type \mbox{\hyperlink{classvkdb_1_1_token_a95fdc7985570534ca232f32addf860b6}{type}} () const noexcept
+\item 
+Lexeme \mbox{\hyperlink{classvkdb_1_1_token_a24a78c8bdc6a6a91f69957e4dd65d163}{lexeme}} () const noexcept
+\item 
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_token_a74417505b6df495dd5c5adb613b4b183}{line}} () const noexcept
+\item 
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_token_a00a007ccb9a5f4989a5a965929249a1e}{column}} () const noexcept
+\item 
+std\+::string \mbox{\hyperlink{classvkdb_1_1_token_ab868ba3e5c6f967d03858674c787fa40}{str}} () const noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{token_8h_source_l00060}{60}} of file \mbox{\hyperlink{token_8h_source}{token.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classvkdb_1_1_token_a032e1e0e1cf1f34dcb910fbb49e98573}\index{vkdb::Token@{vkdb::Token}!size\_type@{size\_type}}
+\index{size\_type@{size\_type}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{size\_type}{size\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_a032e1e0e1cf1f34dcb910fbb49e98573} 
+using vkdb\+::\+Token\+::size\+\_\+type = uint64\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{token_8h_source_l00062}{62}} of file \mbox{\hyperlink{token_8h_source}{token.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvkdb_1_1_token_aa7233ddff4f6cbcd40f9856280eec8b2}\index{vkdb::Token@{vkdb::Token}!Token@{Token}}
+\index{Token@{Token}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{Token()}{Token()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_aa7233ddff4f6cbcd40f9856280eec8b2} 
+vkdb\+::\+Token\+::\+Token (\begin{DoxyParamCaption}\item[{Token\+Type}]{type}{, }\item[{const Lexeme \&}]{lexeme}{, }\item[{Token\+::size\+\_\+type}]{line}{, }\item[{Token\+::size\+\_\+type}]{column}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{token_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{token_8cpp_source}{token.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvkdb_1_1_token_a00a007ccb9a5f4989a5a965929249a1e}\index{vkdb::Token@{vkdb::Token}!column@{column}}
+\index{column@{column}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{column()}{column()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_a00a007ccb9a5f4989a5a965929249a1e} 
+Token\+::size\+\_\+type vkdb\+::\+Token\+::column (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{token_8cpp_source_l00034}{34}} of file \mbox{\hyperlink{token_8cpp_source}{token.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_token_a24a78c8bdc6a6a91f69957e4dd65d163}\index{vkdb::Token@{vkdb::Token}!lexeme@{lexeme}}
+\index{lexeme@{lexeme}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{lexeme()}{lexeme()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_a24a78c8bdc6a6a91f69957e4dd65d163} 
+Lexeme vkdb\+::\+Token\+::lexeme (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{token_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{token_8cpp_source}{token.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_token_a74417505b6df495dd5c5adb613b4b183}\index{vkdb::Token@{vkdb::Token}!line@{line}}
+\index{line@{line}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{line()}{line()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_a74417505b6df495dd5c5adb613b4b183} 
+Token\+::size\+\_\+type vkdb\+::\+Token\+::line (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{token_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{token_8cpp_source}{token.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_token_a0c8bb95368b1a0ee4f86304c3f196693}\index{vkdb::Token@{vkdb::Token}!operator==@{operator==}}
+\index{operator==@{operator==}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_a0c8bb95368b1a0ee4f86304c3f196693} 
+bool vkdb\+::\+Token\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_token}{Token}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{token_8cpp_source_l00015}{15}} of file \mbox{\hyperlink{token_8cpp_source}{token.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_token_ab868ba3e5c6f967d03858674c787fa40}\index{vkdb::Token@{vkdb::Token}!str@{str}}
+\index{str@{str}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{str()}{str()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_ab868ba3e5c6f967d03858674c787fa40} 
+std\+::string vkdb\+::\+Token\+::str (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{token_8cpp_source_l00038}{38}} of file \mbox{\hyperlink{token_8cpp_source}{token.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_token_a95fdc7985570534ca232f32addf860b6}\index{vkdb::Token@{vkdb::Token}!type@{type}}
+\index{type@{type}!vkdb::Token@{vkdb::Token}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_token_a95fdc7985570534ca232f32addf860b6} 
+Token\+Type vkdb\+::\+Token\+::type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{token_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{token_8cpp_source}{token.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/vkay/\+Dev/vkdb/include/query/vkdb/token.\+h\item 
+/\+Users/vkay/\+Dev/vkdb/src/query/token.\+cpp\end{DoxyCompactItemize}

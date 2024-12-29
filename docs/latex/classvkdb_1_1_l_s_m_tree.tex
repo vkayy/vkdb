@@ -1,0 +1,284 @@
+\doxysection{vkdb\+::LSMTree\texorpdfstring{$<$}{<} TValue \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classvkdb_1_1_l_s_m_tree}{}\label{classvkdb_1_1_l_s_m_tree}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a23dff0883c83659b383d29dc0dd3fa91}{key\+\_\+type}} = \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a88ec48fb0b75ed00d6e15e6852096b0f}{mapped\+\_\+type}} = std\+::optional$<$TValue$>$
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a73fff293ae331360171d4390d3c5dc80}{value\+\_\+type}} = std\+::pair$<$const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}}, mapped\+\_\+type$>$
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_aec16d819e021cf98d3a07717552852fd}{size\+\_\+type}} = uint64\+\_\+t
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a1420565fc947dd9bc5455f792fdf7418}{table\+\_\+type}} = typename \mbox{\hyperlink{classvkdb_1_1_mem_table}{Mem\+Table}}$<$TValue$>$\+::table\+\_\+type
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a80bd31a6d9a1583e444bb3367ce032a1}{LSMTree}} (File\+Path path) noexcept
+\item 
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a59ccb3fc5748c6bd1758c07890e7730b}\label{classvkdb_1_1_l_s_m_tree_a59ccb3fc5748c6bd1758c07890e7730b} 
+{\bfseries LSMTree} (\mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{LSMTree}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a03c022f717fd215aeedee6cf923bb6a2}\label{classvkdb_1_1_l_s_m_tree_a03c022f717fd215aeedee6cf923bb6a2} 
+\mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{LSMTree}} \& {\bfseries operator=} (\mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{LSMTree}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a52201e05ad04b23c025d215ff8f1665f}\label{classvkdb_1_1_l_s_m_tree_a52201e05ad04b23c025d215ff8f1665f} 
+{\bfseries LSMTree} (const \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{LSMTree}} \&)=delete
+\item 
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a96e43e93bc015b56ce1df8bc0f7913ac}\label{classvkdb_1_1_l_s_m_tree_a96e43e93bc015b56ce1df8bc0f7913ac} 
+\mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{LSMTree}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{LSMTree}} \&)=delete
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a0aaac568fa102b70c97f28767e107b0b}{put}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&key, const TValue \&value, bool log=true)
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a53fe6a825f8c1c43beef5db16a69575d}{remove}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&key, bool log=true)
+\item 
+mapped\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a6e7ff599260ff80eb4f4c8da2c92f59c}{get}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&key) const
+\item 
+std\+::vector$<$ value\+\_\+type $>$ \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a0188065df6a04726f9dcb4c81bcb01f6}{get\+Range}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&start, const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&end, Time\+Series\+Key\+Filter \&\&filter) const
+\item 
+std\+::vector$<$ value\+\_\+type $>$ \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a44ad33f19acde0ae9bbefa8a1f7f206f}{get\+Range\+Parallel}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&start, const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&end, Time\+Series\+Key\+Filter filter) const
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_abd350466f8593cc88a1f1e943841ae38}{replay\+WAL}} ()
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a5cc2a8a9d4be80d6dd8743ceaa38adc1}{clear}} () noexcept
+\item 
+std\+::string \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_ad2901b58e18f624e2c60f98184d81edc}{str}} () const noexcept
+\item 
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_a2c16a2ad1c365961b7499caab6b8769d}{sstable\+Count}} () const noexcept
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_ae8d7053fcf5fe5d7d216a7b6bc4315a2}{empty}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_ad7f154184bc497fa701e1373fff1d12f}{C1\+\_\+\+LAYER\+\_\+\+SIZE}} \{1\textquotesingle{}000\}
+\item 
+static constexpr size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree_aadd43d84f267b41840505fd7e2ba1dfa}{CACHE\+\_\+\+CAPACITY}} \{10\textquotesingle{}000\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$\newline
+class vkdb\+::\+LSMTree$<$ TValue $>$}
+
+
+Definition at line \mbox{\hyperlink{wal__lsm_8h_source_l00008}{8}} of file \mbox{\hyperlink{wal__lsm_8h_source}{wal\+\_\+lsm.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a23dff0883c83659b383d29dc0dd3fa91}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!key\_type@{key\_type}}
+\index{key\_type@{key\_type}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{key\_type}{key\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a23dff0883c83659b383d29dc0dd3fa91} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::key\+\_\+type = \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00023}{23}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a88ec48fb0b75ed00d6e15e6852096b0f}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!mapped\_type@{mapped\_type}}
+\index{mapped\_type@{mapped\_type}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{mapped\_type}{mapped\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a88ec48fb0b75ed00d6e15e6852096b0f} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::mapped\+\_\+type = std\+::optional$<$TValue$>$}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00024}{24}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_aec16d819e021cf98d3a07717552852fd}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!size\_type@{size\_type}}
+\index{size\_type@{size\_type}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{size\_type}{size\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_aec16d819e021cf98d3a07717552852fd} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::size\+\_\+type = uint64\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00026}{26}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a1420565fc947dd9bc5455f792fdf7418}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!table\_type@{table\_type}}
+\index{table\_type@{table\_type}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{table\_type}{table\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a1420565fc947dd9bc5455f792fdf7418} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::table\+\_\+type = typename \mbox{\hyperlink{classvkdb_1_1_mem_table}{Mem\+Table}}$<$TValue$>$\+::table\+\_\+type}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00027}{27}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a73fff293ae331360171d4390d3c5dc80}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!value\_type@{value\_type}}
+\index{value\_type@{value\_type}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{value\_type}{value\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a73fff293ae331360171d4390d3c5dc80} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::value\+\_\+type = std\+::pair$<$const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}}, mapped\+\_\+type$>$}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00025}{25}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a80bd31a6d9a1583e444bb3367ce032a1}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!LSMTree@{LSMTree}}
+\index{LSMTree@{LSMTree}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{LSMTree()}{LSMTree()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a80bd31a6d9a1583e444bb3367ce032a1} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+\mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::\+LSMTree (\begin{DoxyParamCaption}\item[{File\+Path}]{path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00032}{32}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a5cc2a8a9d4be80d6dd8743ceaa38adc1}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!clear@{clear}}
+\index{clear@{clear}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a5cc2a8a9d4be80d6dd8743ceaa38adc1} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00182}{182}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_ae8d7053fcf5fe5d7d216a7b6bc4315a2}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!empty@{empty}}
+\index{empty@{empty}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_ae8d7053fcf5fe5d7d216a7b6bc4315a2} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+bool \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::empty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00203}{203}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a6e7ff599260ff80eb4f4c8da2c92f59c}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!get@{get}}
+\index{get@{get}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a6e7ff599260ff80eb4f4c8da2c92f59c} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+mapped\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::get (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00071}{71}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a0188065df6a04726f9dcb4c81bcb01f6}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!getRange@{getRange}}
+\index{getRange@{getRange}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{getRange()}{getRange()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a0188065df6a04726f9dcb4c81bcb01f6} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+std\+::vector$<$ value\+\_\+type $>$ \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::get\+Range (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{start}{, }\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{end}{, }\item[{Time\+Series\+Key\+Filter \&\&}]{filter}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00092}{92}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a44ad33f19acde0ae9bbefa8a1f7f206f}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!getRangeParallel@{getRangeParallel}}
+\index{getRangeParallel@{getRangeParallel}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{getRangeParallel()}{getRangeParallel()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a44ad33f19acde0ae9bbefa8a1f7f206f} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+std\+::vector$<$ value\+\_\+type $>$ \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::get\+Range\+Parallel (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{start}{, }\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{end}{, }\item[{Time\+Series\+Key\+Filter}]{filter}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00123}{123}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a0aaac568fa102b70c97f28767e107b0b}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!put@{put}}
+\index{put@{put}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a0aaac568fa102b70c97f28767e107b0b} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::put (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{key}{, }\item[{const TValue \&}]{value}{, }\item[{bool}]{log}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00049}{49}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a53fe6a825f8c1c43beef5db16a69575d}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!remove@{remove}}
+\index{remove@{remove}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a53fe6a825f8c1c43beef5db16a69575d} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::remove (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\+\_\+type}} \&}]{key}{, }\item[{bool}]{log}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00060}{60}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_abd350466f8593cc88a1f1e943841ae38}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!replayWAL@{replayWAL}}
+\index{replayWAL@{replayWAL}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{replayWAL()}{replayWAL()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_abd350466f8593cc88a1f1e943841ae38} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+void \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::replay\+WAL (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00178}{178}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_a2c16a2ad1c365961b7499caab6b8769d}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!sstableCount@{sstableCount}}
+\index{sstableCount@{sstableCount}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{sstableCount()}{sstableCount()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_a2c16a2ad1c365961b7499caab6b8769d} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::sstable\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00199}{199}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_ad2901b58e18f624e2c60f98184d81edc}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!str@{str}}
+\index{str@{str}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{str()}{str()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_ad2901b58e18f624e2c60f98184d81edc} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+std\+::string \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::str (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00190}{190}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvkdb_1_1_l_s_m_tree_ad7f154184bc497fa701e1373fff1d12f}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!C1\_LAYER\_SIZE@{C1\_LAYER\_SIZE}}
+\index{C1\_LAYER\_SIZE@{C1\_LAYER\_SIZE}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{C1\_LAYER\_SIZE}{C1\_LAYER\_SIZE}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_ad7f154184bc497fa701e1373fff1d12f} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::\+C1\+\_\+\+LAYER\+\_\+\+SIZE \{1\textquotesingle{}000\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00029}{29}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_s_m_tree_aadd43d84f267b41840505fd7e2ba1dfa}\index{vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}!CACHE\_CAPACITY@{CACHE\_CAPACITY}}
+\index{CACHE\_CAPACITY@{CACHE\_CAPACITY}!vkdb::LSMTree$<$ TValue $>$@{vkdb::LSMTree$<$ TValue $>$}}
+\doxysubsubsection{\texorpdfstring{CACHE\_CAPACITY}{CACHE\_CAPACITY}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_s_m_tree_aadd43d84f267b41840505fd7e2ba1dfa} 
+template$<$\mbox{\hyperlink{concept_arithmetic_no_c_v_ref_quals}{Arithmetic\+No\+CVRef\+Quals}} TValue$>$ \\
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{vkdb\+::\+LSMTree}}$<$ TValue $>$\+::\+CACHE\+\_\+\+CAPACITY \{10\textquotesingle{}000\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{lsm__tree_8h_source_l00030}{30}} of file \mbox{\hyperlink{lsm__tree_8h_source}{lsm\+\_\+tree.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/vkay/\+Dev/vkdb/include/storage/vkdb/lsm\+\_\+tree.\+h\item 
+/\+Users/vkay/\+Dev/vkdb/include/storage/vkdb/wal\+\_\+lsm.\+h\end{DoxyCompactItemize}

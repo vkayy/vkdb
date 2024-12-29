@@ -1,0 +1,210 @@
+\doxysection{vkdb\+::Time\+Series\+Key Class Reference}
+\hypertarget{classvkdb_1_1_time_series_key}{}\label{classvkdb_1_1_time_series_key}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvkdb_1_1_time_series_key_aedc9da9915f57177d7da860d3bc98fab}{Time\+Series\+Key}} (std\+::string \&\&str)
+\item 
+\mbox{\hyperlink{classvkdb_1_1_time_series_key_a29d70782a659f3bcca45c9a0f57d01b7}{Time\+Series\+Key}} (Timestamp timestamp, Metric metric, Tag\+Table tags) noexcept
+\item 
+\Hypertarget{classvkdb_1_1_time_series_key_ab934a7ba22819c01cf0a646cd88ef626}\label{classvkdb_1_1_time_series_key_ab934a7ba22819c01cf0a646cd88ef626} 
+{\bfseries Time\+Series\+Key} (\mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_time_series_key_a1ba71cbbde08d12b4efeffd9386627b7}\label{classvkdb_1_1_time_series_key_a1ba71cbbde08d12b4efeffd9386627b7} 
+\mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \& {\bfseries operator=} (\mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_time_series_key_a2ab65f2267b0253225a192744b0b631e}\label{classvkdb_1_1_time_series_key_a2ab65f2267b0253225a192744b0b631e} 
+{\bfseries Time\+Series\+Key} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_time_series_key_acc02a3d61322cdc4fd6d1415d861a159}\label{classvkdb_1_1_time_series_key_acc02a3d61322cdc4fd6d1415d861a159} 
+\mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&) noexcept=default
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_time_series_key_a2bb97d4ac8a651caa184f9d8136edcc8}{operator==}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&other) const noexcept
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_time_series_key_af84f615d81c03911a3979bb493b90483}{operator!=}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&other) const noexcept
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_time_series_key_a737d450d96eecd437c6e83217c12e222}{operator$<$}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&other) const noexcept
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_time_series_key_a68d05bee9d6dc3c1ccaaa2929fc8ccba}{operator$>$}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&other) const noexcept
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_time_series_key_a45a9104e8f8750e0796f8fb0ceb24904}{operator$<$=}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&other) const noexcept
+\item 
+bool \mbox{\hyperlink{classvkdb_1_1_time_series_key_a2a5ba3ff81560e62ccff169b97afb6ce}{operator$>$=}} (const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&other) const noexcept
+\item 
+Timestamp \mbox{\hyperlink{classvkdb_1_1_time_series_key_acc42352474d8c0c268133efa2b36f104}{timestamp}} () const noexcept
+\item 
+Metric \mbox{\hyperlink{classvkdb_1_1_time_series_key_a28ce5be65b4df6a9009569c84cf1cebf}{metric}} () const noexcept
+\item 
+const Tag\+Table \& \mbox{\hyperlink{classvkdb_1_1_time_series_key_a11432ca0811e6d1e98fe5562ede166d9}{tags}} () const noexcept
+\item 
+std\+::string \mbox{\hyperlink{classvkdb_1_1_time_series_key_a710a9cc5fe6ddc11d8bd5c8d8329c2c0}{str}} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr auto \mbox{\hyperlink{classvkdb_1_1_time_series_key_a050955835db93a10580c983930c0c5ac}{TIMESTAMP\+\_\+\+WIDTH}} \{20\}
+\item 
+static constexpr auto \mbox{\hyperlink{classvkdb_1_1_time_series_key_a84d31620be4c1768301cb923103537a0}{MAX\+\_\+\+METRIC\+\_\+\+LENGTH}} \{64\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8h_source_l00026}{26}} of file \mbox{\hyperlink{time__series__key_8h_source}{time\+\_\+series\+\_\+key.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvkdb_1_1_time_series_key_aedc9da9915f57177d7da860d3bc98fab}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!TimeSeriesKey@{TimeSeriesKey}}
+\index{TimeSeriesKey@{TimeSeriesKey}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{TimeSeriesKey()}{TimeSeriesKey()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_aedc9da9915f57177d7da860d3bc98fab} 
+vkdb\+::\+Time\+Series\+Key\+::\+Time\+Series\+Key (\begin{DoxyParamCaption}\item[{std\+::string \&\&}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a29d70782a659f3bcca45c9a0f57d01b7}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!TimeSeriesKey@{TimeSeriesKey}}
+\index{TimeSeriesKey@{TimeSeriesKey}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{TimeSeriesKey()}{TimeSeriesKey()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a29d70782a659f3bcca45c9a0f57d01b7} 
+vkdb\+::\+Time\+Series\+Key\+::\+Time\+Series\+Key (\begin{DoxyParamCaption}\item[{Timestamp}]{timestamp}{, }\item[{Metric}]{metric}{, }\item[{Tag\+Table}]{tags}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvkdb_1_1_time_series_key_a28ce5be65b4df6a9009569c84cf1cebf}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!metric@{metric}}
+\index{metric@{metric}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{metric()}{metric()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a28ce5be65b4df6a9009569c84cf1cebf} 
+Metric vkdb\+::\+Time\+Series\+Key\+::metric (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00081}{81}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_af84f615d81c03911a3979bb493b90483}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_af84f615d81c03911a3979bb493b90483} 
+bool vkdb\+::\+Time\+Series\+Key\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a737d450d96eecd437c6e83217c12e222}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a737d450d96eecd437c6e83217c12e222} 
+bool vkdb\+::\+Time\+Series\+Key\+::operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00043}{43}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a45a9104e8f8750e0796f8fb0ceb24904}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{operator$<$=()}{operator<=()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a45a9104e8f8750e0796f8fb0ceb24904} 
+bool vkdb\+::\+Time\+Series\+Key\+::operator$<$= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00069}{69}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a2bb97d4ac8a651caa184f9d8136edcc8}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!operator==@{operator==}}
+\index{operator==@{operator==}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a2bb97d4ac8a651caa184f9d8136edcc8} 
+bool vkdb\+::\+Time\+Series\+Key\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00033}{33}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a68d05bee9d6dc3c1ccaaa2929fc8ccba}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{operator$>$()}{operator>()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a68d05bee9d6dc3c1ccaaa2929fc8ccba} 
+bool vkdb\+::\+Time\+Series\+Key\+::operator$>$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00065}{65}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a2a5ba3ff81560e62ccff169b97afb6ce}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{operator$>$=()}{operator>=()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a2a5ba3ff81560e62ccff169b97afb6ce} 
+bool vkdb\+::\+Time\+Series\+Key\+::operator$>$= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvkdb_1_1_time_series_key}{Time\+Series\+Key}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a710a9cc5fe6ddc11d8bd5c8d8329c2c0}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!str@{str}}
+\index{str@{str}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{str()}{str()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a710a9cc5fe6ddc11d8bd5c8d8329c2c0} 
+std\+::string vkdb\+::\+Time\+Series\+Key\+::str (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00089}{89}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a11432ca0811e6d1e98fe5562ede166d9}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!tags@{tags}}
+\index{tags@{tags}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{tags()}{tags()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a11432ca0811e6d1e98fe5562ede166d9} 
+const Tag\+Table \& vkdb\+::\+Time\+Series\+Key\+::tags (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00085}{85}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_acc42352474d8c0c268133efa2b36f104}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{timestamp()}{timestamp()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_acc42352474d8c0c268133efa2b36f104} 
+Timestamp vkdb\+::\+Time\+Series\+Key\+::timestamp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8cpp_source_l00077}{77}} of file \mbox{\hyperlink{time__series__key_8cpp_source}{time\+\_\+series\+\_\+key.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classvkdb_1_1_time_series_key_a84d31620be4c1768301cb923103537a0}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!MAX\_METRIC\_LENGTH@{MAX\_METRIC\_LENGTH}}
+\index{MAX\_METRIC\_LENGTH@{MAX\_METRIC\_LENGTH}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{MAX\_METRIC\_LENGTH}{MAX\_METRIC\_LENGTH}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a84d31620be4c1768301cb923103537a0} 
+auto vkdb\+::\+Time\+Series\+Key\+::\+MAX\+\_\+\+METRIC\+\_\+\+LENGTH \{64\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8h_source_l00029}{29}} of file \mbox{\hyperlink{time__series__key_8h_source}{time\+\_\+series\+\_\+key.\+h}}.
+
+\Hypertarget{classvkdb_1_1_time_series_key_a050955835db93a10580c983930c0c5ac}\index{vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}!TIMESTAMP\_WIDTH@{TIMESTAMP\_WIDTH}}
+\index{TIMESTAMP\_WIDTH@{TIMESTAMP\_WIDTH}!vkdb::TimeSeriesKey@{vkdb::TimeSeriesKey}}
+\doxysubsubsection{\texorpdfstring{TIMESTAMP\_WIDTH}{TIMESTAMP\_WIDTH}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_time_series_key_a050955835db93a10580c983930c0c5ac} 
+auto vkdb\+::\+Time\+Series\+Key\+::\+TIMESTAMP\+\_\+\+WIDTH \{20\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{time__series__key_8h_source_l00028}{28}} of file \mbox{\hyperlink{time__series__key_8h_source}{time\+\_\+series\+\_\+key.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/vkay/\+Dev/vkdb/include/storage/vkdb/time\+\_\+series\+\_\+key.\+h\item 
+/\+Users/vkay/\+Dev/vkdb/src/storage/time\+\_\+series\+\_\+key.\+cpp\end{DoxyCompactItemize}

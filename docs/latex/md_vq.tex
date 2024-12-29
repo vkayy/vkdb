@@ -1,0 +1,122 @@
+\chapter{Working with vq}
+\hypertarget{md_vq}{}\label{md_vq}\index{Working with vq@{Working with vq}}
+\label{md_vq_autotoc_md21}%
+\Hypertarget{md_vq_autotoc_md21}%
+\hypertarget{md_vq_autotoc_md22}{}\doxysection{\texorpdfstring{Table management}{Table management}}\label{md_vq_autotoc_md22}
+Here are some table management queries.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{CREATE}\ \textcolor{keyword}{TABLE}\ climate\ TAGS\ region,\ season;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{DROP}\ \textcolor{keyword}{TABLE}\ devices;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{ADD}\ TAGS\ host,\ status\ \textcolor{keyword}{TO}\ servers;}
+\DoxyCodeLine{}
+\DoxyCodeLine{REMOVE\ TAGS\ host\ \textcolor{keyword}{FROM}\ servers;}
+
+\end{DoxyCode}
+\hypertarget{md_vq_autotoc_md23}{}\doxysection{\texorpdfstring{Data manipulation}{Data manipulation}}\label{md_vq_autotoc_md23}
+Here are some data manipulation queries. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{SELECT}\ DATA\ status\ \textcolor{keyword}{FROM}\ sensors\ \textcolor{keyword}{ALL};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{SELECT}\ AVG\ temperature\ \textcolor{keyword}{FROM}\ weather\ \textcolor{keyword}{BETWEEN}\ \textcolor{stringliteral}{1234}\ \textcolor{keyword}{AND}\ \textcolor{stringliteral}{1240}\ \textcolor{keyword}{WHERE}\ city=london,\ unit=celsius;}
+\DoxyCodeLine{}
+\DoxyCodeLine{PUT\ temperature\ \textcolor{stringliteral}{1234}\ \textcolor{stringliteral}{23}.\textcolor{stringliteral}{5}\ \textcolor{keyword}{INTO}\ weather\ TAGS\ city=paris,\ unit=celsius;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{DELETE}\ rainfall\ \textcolor{stringliteral}{1234}\ \textcolor{keyword}{FROM}\ weather\ TAGS\ city=tokyo,\ unit=millimetres;}
+
+\end{DoxyCode}
+\hypertarget{md_vq_autotoc_md24}{}\doxysection{\texorpdfstring{Errors}{Errors}}\label{md_vq_autotoc_md24}
+There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-\/explanatory reasons.
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{1}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{  
+\begin{DoxyInlineImage}
+\includegraphics[height=\baselineskip,keepaspectratio=true]{vq-errors.png}%vq-\/errors.png
+\end{DoxyInlineImage}
+   
+
+}\\\cline{1-1}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{  
+\begin{DoxyInlineImage}
+\includegraphics[height=\baselineskip,keepaspectratio=true]{vq-errors.png}%vq-\/errors.png
+\end{DoxyInlineImage}
+   
+
+}\\\cline{1-1}
+\endhead
+\PBS\centering {\itshape A parse error and a runtime error in the REPL.}   \\\cline{1-1}
+\end{longtabu}
+\hypertarget{md_vq_autotoc_md25}{}\doxysection{\texorpdfstring{EBNF}{EBNF}}\label{md_vq_autotoc_md25}
+Here\textquotesingle{}s the EBNF grammar encapsulating vq.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<expr>\ ::=\ \{<query>\ "{};"{}\}+}
+\DoxyCodeLine{}
+\DoxyCodeLine{<query>\ ::=\ <select\_query>\ |\ <put\_query>\ |\ <delete\_query>\ |\ <create\_query>\ \ |\ <drop\_query>\ |\ <add\_query>\ |\ <remove\_query>\ |\ <tables\_query>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<select\_query>\ ::=\ "{}SELECT"{}\ <select\_type>\ <metric>\ "{}FROM"{}\ <table\_name>\ <select\_clause>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<select\_type>\ ::=\ "{}DATA"{}\ |\ "{}AVG"{}\ |\ "{}SUM"{}\ |\ "{}COUNT"{}\ |\ "{}MIN"{}\ |\ "{}MAX"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{<select\_clause>\ ::=\ <all\_clause>\ |\ <between\_clause>\ |\ <at\_clause>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<all\_clause>\ ::=\ "{}ALL"{}\ \{<where\_clause>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<between\_clause>\ ::=\ "{}BETWEEN"{}\ <timestamp>\ "{}AND"{}\ <timestamp>\ \{<where\_clause>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<at\_clause>\ ::=\ "{}AT"{}\ <timestamp>\ \{<where\_clause>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<where\_clause>\ ::=\ "{}WHERE"{}\ <tag\_list>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<put\_query>\ ::=\ "{}PUT"{}\ <metric>\ <timestamp>\ <value>\ "{}INTO"{}\ <table\_name>\ \{"{}TAGS"{}\ <tag\_list>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<delete\_query>\ ::=\ "{}DELETE"{}\ <metric>\ <timestamp>\ "{}FROM"{}\ <table\_name>\ \{"{}TAGS"{}\ <tag\_list>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<create\_query>\ ::=\ "{}CREATE"{}\ "{}TABLE"{}\ <table\_name>\ \{"{}TAGS"{}\ <tag\_list>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<drop\_query>\ ::=\ "{}DROP"{}\ "{}TABLE"{}\ <table\_name>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<add\_query>\ ::=\ "{}ADD"{}\ "{}TAGS"{}\ <tag\_columns>\ "{}TO"{}\ <table\_name>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<remove\_query>\ ::=\ "{}REMOVE"{}\ "{}TAGS"{}\ <tag\_columns>\ "{}FROM"{}\ <table\_name>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tables\_query>\ ::=\ "{}TABLES"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_list>\ ::=\ <tag>\ \{"{},"{}\ <tag>\}*}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag>\ ::=\ <tag\_key>\ "{}="{}\ <tag\_value>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_columns>\ ::=\ <tag\_key>\ \{"{},"{}\ <tag\_key>\}*}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_key>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_value>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<metric>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<table\_name>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<timestamp>\ ::=\ <number>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<value>\ ::=\ <number>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<identifier>\ ::=\ <char>\ \{<char>\ |\ <digit>\}*}
+\DoxyCodeLine{}
+\DoxyCodeLine{<number>\ ::=\ \{"{}-\/"{}\}?\ <digit>\ \{<digit>\}-\/\ \{"{}."{}\ <digit>+\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<char>\ ::=\ "{}A"{}\ |\ ...\ |\ "{}Z"{}\ |\ "{}a"{}\ |\ ...\ |\ "{}z"{}\ |\ "{}\_"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{<digit>\ ::=\ "{}0"{}\ |\ "{}1"{}\ |\ ...\ |\ "{}9"{}}
+
+\end{DoxyCode}
+ 

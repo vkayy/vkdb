@@ -1,0 +1,457 @@
+\chapter{README}
+\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e}{}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e}\index{README@{README}}
+\label{_readme-top}%
+
+
+  \doxysection*{vkdb}
+
+ 
+
+A time series database engine built in C++ with minimal dependencies.
+
+ \href{https://cplusplus.com/}{\texttt{ }} \href{https://github.com/vkayy/vkdb/graphs/contributors}{\texttt{ }} \href{}{\texttt{ }} \href{https://github.com/vkayy/vkdb/issues/}{\texttt{ }} \href{https://github.com/vkayy/vkdb/blob/main/LICENSE}{\texttt{ }} \href{https://github.com/vkayy/vkdb/stargazers}{\texttt{ }} \href{https://github.com/vkayy/vkdb/network/members}{\texttt{ }} \hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md0}{}\doxysection{\texorpdfstring{Table of contents}{Table of contents}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md0}
+About the project
+\begin{DoxyItemize}
+\item Motivation
+\item Database engine internals
+\item Query language internals
+\end{DoxyItemize}
+
+Running locally (not needed)
+\begin{DoxyItemize}
+\item Installation
+\item Tests
+\item Examples
+\end{DoxyItemize}
+
+Using the library
+\begin{DoxyItemize}
+\item Setup
+\item Interface
+\item Table management
+\item General queries
+\item Playground
+\item Mock data
+\end{DoxyItemize}
+
+Working with vq
+\begin{DoxyItemize}
+\item Table management
+\item Data manipulation
+\item Errors
+\item EBNF
+\end{DoxyItemize}
+
+License
+
+Authors
+
+Acknowledgements
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{\texorpdfstring{About the project}{About the project}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md1}
+\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md2}{}\doxysubsubsection{\texorpdfstring{Motivation}{Motivation}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md2}
+I wanted to challenge myself architecturally and push my boundaries with C++, both in terms of knowledge and performance.
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md3}{}\doxysubsubsection{\texorpdfstring{Database engine internals}{Database engine internals}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md3}
+vkdb is built on log-\/structured merge (LSM) trees. In their simplest form, these have an in-\/memory layer and a disk layer, paired with a write-\/ahead log (WAL) for persistence of in-\/memory changes.
+
+When you instantiate a {\ttfamily \doxylink{classvkdb_1_1_database}{vkdb\+::\+Database}}, all of the prior in-\/memory information (in-\/memory layer, metadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via {\ttfamily vkdb\+::\+Database\+::clear}.
+
+It\textquotesingle{}s best to make all interactions via {\ttfamily \doxylink{classvkdb_1_1_database}{vkdb\+::\+Database}}, or the {\ttfamily \doxylink{classvkdb_1_1_table}{vkdb\+::\+Table}} type via {\ttfamily vkdb\+::\+Database\+::get\+Table}, unless you just want to play around with vq (more on this later).
+
+Also, one important thing to note is that all database files will be stored in {\ttfamily vkdb\+::\+DATABASE\+\_\+\+DIRECTORY}; you shouldn\textquotesingle{}t tamper with this directory nor the files in it.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{graph\ LR}
+\DoxyCodeLine{\ \ \ \ classDef\ uiLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{\ \ \ \ classDef\ memoryLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{\ \ \ \ classDef\ diskLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ userInterface[User\ Interface]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ database[Database]:::uiLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ table[Table]:::uiLayer}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ memoryLayer[Memory\ Layer]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ direction\ LR}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ c0Layer[C0\ Layer]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ memtable[Memtable]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ timestampRangeM[Timestamp\ Range]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ keyRangeM[Key\ Range]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ lruCache[LRU\ Cache]:::memoryLayer}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ subgraph\ metadata[\ ]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ direction\ TB}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ sstableMetadata[SSTable\ Metadata]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ index[Index]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ timestampRangeS[Timestamp\ Range]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ keyRangeS[Key\ Range]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ bloomFilter[Bloom\ Filter]:::memoryLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ c0Layer\ -\/-\/>\ memtable}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ memtable\ -\/-\/>\ timestampRangeM}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ memtable\ -\/-\/>\ keyRangeM}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sstableMetadata\ -\/-\/>\ index}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sstableMetadata\ -\/-\/>\ timestampRangeS}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sstableMetadata\ -\/-\/>\ keyRangeS}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sstableMetadata\ -\/-\/>\ bloomFilter}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ diskLayer[Disk\ Layer]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ direction\ LR}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ckLayers[Ck\ Layers]:::diskLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssTables[SSTables]:::diskLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ writeAheadLog[Write-\/Ahead\ Log]:::diskLayer}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ckLayers\ -\/-\/>\ ssTables}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ssTables\ -\/-\/>\ sstableMetadata}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ database\ -\/-\/>\ table}
+\DoxyCodeLine{\ \ \ \ table\ -\/-\/>\ lsmTree[LSM\ Tree]}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ lsmTree\ -\/-\/>\ lruCache}
+\DoxyCodeLine{\ \ \ \ lsmTree\ -\/-\/>\ writeAheadLog}
+\DoxyCodeLine{\ \ \ \ lsmTree\ -\/-\/>\ c0Layer}
+\DoxyCodeLine{\ \ \ \ lsmTree\ -\/-\/>\ ckLayers}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{Query language internals}{Query language internals}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md4}
+Lexing is done quite typically, with enumerated token types and line/column number stored for error messages. Initially, I directly executed queries as string streams, but that was a nightmare for robustness.
+
+In terms of parsing, vq has been constructed to have an LL(1) grammar—this meant I could write a straightforward recursive descent parser for the language. This directly converts queries to an abstract syntax tree (AST) with {\ttfamily std\+::variant}.
+
+Finally, the interpreter makes quick use of the AST via the visitor pattern, built into C++ with {\ttfamily std\+::variant} (mentioned earlier) and {\ttfamily std\+::visit}. This ended up making the interpreter (and pretty-\/printer) very satisfying to write.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{graph\ LR}
+\DoxyCodeLine{\ \ \ \ classDef\ inputLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{\ \ \ \ classDef\ lexicalLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{\ \ \ \ classDef\ syntacticLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{\ \ \ \ classDef\ semanticLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{\ \ \ \ classDef\ outputLayer\ fill:\#404040,stroke:\#fff,color:\#fff}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ Input}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sourceCode[Source\ Code]:::inputLayer}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ LexicalAnalysis[Lexical\ Analysis]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ lexer[Lexer]:::lexicalLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ tokens[Tokens]:::lexicalLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ tokenType[Type]:::lexicalLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ lineNo[Line\ Number]:::lexicalLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ columnNo[Column\ Number]:::lexicalLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ lexeme[Lexeme]:::lexicalLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ lexer\ -\/-\/>\ tokens}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ tokenType\ -\/.-\/>\ tokens}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ lineNo\ -\/.-\/>\ tokens}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ columnNo\ -\/.-\/>\ tokens}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ lexeme\ -\/.-\/>\ tokens}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ SyntacticAnalysis[Syntactic\ Analysis]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ parser[Recursive\ Descent\ Parser]:::syntacticLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ast[Abstract\ Syntax\ Tree]:::syntacticLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ variant[std::variant]:::syntacticLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ parser\ -\/-\/>\ ast}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ variant\ -\/.-\/>\ ast}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ SemanticAnalysis[Semantic\ Analysis]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ interpreter[Interpreter]:::semanticLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ visitor[Visitor\ Pattern]:::semanticLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ stdVisit[std::visit]:::semanticLayer}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ visitor\ -\/.-\/>\ interpreter}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ stdVisit\ -\/.-\/>\ visitor}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ subgraph\ output[Output]}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ result[Result]:::outputLayer}
+\DoxyCodeLine{\ \ \ \ end}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ sourceCode\ -\/-\/>\ lexer}
+\DoxyCodeLine{\ \ \ \ tokens\ -\/-\/>\ parser}
+\DoxyCodeLine{\ \ \ \ ast\ -\/-\/>\ interpreter}
+\DoxyCodeLine{\ \ \ \ interpreter\ -\/-\/>\ result}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{\texorpdfstring{Running locally (not needed)}{Running locally (not needed)}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md5}
+\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md6}{}\doxysubsubsection{\texorpdfstring{Installation}{Installation}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md6}
+First, clone the project and {\ttfamily cd} into the directory. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ https://github.com/vkayy/vkdb.git\ \&\&\ cd\ vkdb}
+
+\end{DoxyCode}
+ Then, make the build directory and build the project with CMake. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{mkdir\ build\ \&\&\ cd\ build\ \&\&\ cmake\ ..\ \&\&\ make}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{Tests}{Tests}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md7}
+From the build folder, you can run the tests. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./tests/vkdb\_tests}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md8}{}\doxysubsubsection{\texorpdfstring{Examples}{Examples}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md8}
+From the build folder, you can also run any of the examples. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./examples/<filename>}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{\texorpdfstring{Using the library}{Using the library}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md9}
+\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md10}{}\doxysubsubsection{\texorpdfstring{Setup}{Setup}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md10}
+Add this to your {\ttfamily CMake\+Lists.\+txt} file—it lets you use vkdb by fetching the most recent version into your project\textquotesingle{}s build.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{include(FetchContent)}
+\DoxyCodeLine{FetchContent\_Declare(}
+\DoxyCodeLine{\ \ \ \ vkdb}
+\DoxyCodeLine{\ \ \ \ GIT\_REPOSITORY\ https://github.com/vkayy/vkdb.git}
+\DoxyCodeLine{\ \ \ \ GIT\_TAG\ \ \ \ \ \ \ \ main}
+\DoxyCodeLine{)}
+\DoxyCodeLine{FetchContent\_MakeAvailable(vkdb)}
+\DoxyCodeLine{target\_link\_libraries(\$\{PROJECT\_NAME\}\ vkdb)}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md11}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md11}
+Simply include the database header, and you\textquotesingle{}ll have access to the database API.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <vkdb/database.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \ \{}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classvkdb_1_1_database}{vkdb::Database}}\ db\{\textcolor{stringliteral}{"{}example-\/db"{}}\};}
+\DoxyCodeLine{\ \ db.createTable(\textcolor{stringliteral}{"{}example-\/table"{}});}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ ...}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md12}{}\doxysubsubsection{\texorpdfstring{Table management}{Table management}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md12}
+You can manipulate tables with the database API, both with methods or queries.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{db.createTable(\textcolor{stringliteral}{"{}sensor\_data"{}})}
+\DoxyCodeLine{\ \ .addTagColumn(\textcolor{stringliteral}{"{}location"{}})}
+\DoxyCodeLine{\ \ .addTagColumn(\textcolor{stringliteral}{"{}type"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{db.run(\textcolor{stringliteral}{"{}REMOVE\ TAGS\ type\ FROM\ sensor\_data;"{}})}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md13}{}\doxysubsubsection{\texorpdfstring{General queries}{General queries}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md13}
+With the database API, you can run queries via strings, files, and the REPL.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{test\_db}
+\DoxyCodeLine{\ \ .run(\textcolor{stringliteral}{"{}CREATE\ TABLE\ temp\ TAGS\ tag1,\ tag2;"{}})}
+\DoxyCodeLine{\ \ .runFile(std::filesystem::current\_path()\ /\ \textcolor{stringliteral}{"{}../examples/vq\_setup.vq"{}})}
+\DoxyCodeLine{\ \ .runPrompt()}
+\DoxyCodeLine{\ \ .clear();}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}
+
+With the table API, you can run queries via the query builder.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ sum\{table\_replay.query()}
+\DoxyCodeLine{\ \ .whereTimestampBetween(0,\ 999)}
+\DoxyCodeLine{\ \ .whereMetricIs(\textcolor{stringliteral}{"{}metric"{}})}
+\DoxyCodeLine{\ \ .whereTagsContain(\{\textcolor{stringliteral}{"{}tag1"{}},\ \textcolor{stringliteral}{"{}value1"{}}\})}
+\DoxyCodeLine{\ \ .sum()}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md14}{}\doxysubsubsection{\texorpdfstring{Playground}{Playground}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md14}
+You can also play around with vq by running {\ttfamily vkdb\+::\+VQ\+::run...()}. This operates on a reserved database called {\ttfamily interpreter\+\_\+default} (which, consequently, you should not use as a database name).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <vkdb/vq.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
+\DoxyCodeLine{\ \ vkdb::VQ::runPrompt();}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{1}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{     }\\\cline{1-1}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{     }\\\cline{1-1}
+\endhead
+\PBS\centering {\itshape The vq playground REPL.}   \\\cline{1-1}
+\end{longtabu}
+
+
+This is generally for experimental purposes—there\textquotesingle{}s not much to gain from it in practice besides having a playground.
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md15}{}\doxysubsubsection{\texorpdfstring{Mock data}{Mock data}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md15}
+Feel free to use {\ttfamily vkdb\+::random\texorpdfstring{$<$}{<}\texorpdfstring{$>$}{>}}. Any arithmetic type (with no cv-\/ or ref-\/qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ random\_int\{vkdb::random<int>(-\/100'000,\ 100'000)\};}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ random\_double\{vkdb::random<double>(-\/10.0,\ 10.0)\};}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md16}{}\doxysubsection{\texorpdfstring{Working with vq}{Working with vq}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md16}
+\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md17}{}\doxysubsubsection{\texorpdfstring{Table management}{Table management}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md17}
+Here are some table management queries.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{CREATE}\ \textcolor{keyword}{TABLE}\ climate\ TAGS\ region,\ season;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{DROP}\ \textcolor{keyword}{TABLE}\ devices;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{ADD}\ TAGS\ host,\ status\ \textcolor{keyword}{TO}\ servers;}
+\DoxyCodeLine{}
+\DoxyCodeLine{REMOVE\ TAGS\ host\ \textcolor{keyword}{FROM}\ servers;}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md18}{}\doxysubsubsection{\texorpdfstring{Data manipulation}{Data manipulation}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md18}
+Here are some data manipulation queries. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{SELECT}\ DATA\ status\ \textcolor{keyword}{FROM}\ sensors\ \textcolor{keyword}{ALL};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{SELECT}\ AVG\ temperature\ \textcolor{keyword}{FROM}\ weather\ \textcolor{keyword}{BETWEEN}\ \textcolor{stringliteral}{1234}\ \textcolor{keyword}{AND}\ \textcolor{stringliteral}{1240}\ \textcolor{keyword}{WHERE}\ city=london,\ unit=celsius;}
+\DoxyCodeLine{}
+\DoxyCodeLine{PUT\ temperature\ \textcolor{stringliteral}{1234}\ \textcolor{stringliteral}{23}.\textcolor{stringliteral}{5}\ \textcolor{keyword}{INTO}\ weather\ TAGS\ city=paris,\ unit=celsius;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{DELETE}\ rainfall\ \textcolor{stringliteral}{1234}\ \textcolor{keyword}{FROM}\ weather\ TAGS\ city=tokyo,\ unit=millimetres;}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md19}{}\doxysubsubsection{\texorpdfstring{Errors}{Errors}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md19}
+There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-\/explanatory reasons.
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{1}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{     }\\\cline{1-1}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{     }\\\cline{1-1}
+\endhead
+\PBS\centering {\itshape A parse error and a runtime error in the REPL.}   \\\cline{1-1}
+\end{longtabu}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md20}{}\doxysubsubsection{\texorpdfstring{EBNF}{EBNF}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md20}
+Here\textquotesingle{}s the EBNF grammar encapsulating vq.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<expr>\ ::=\ \{<query>\ "{};"{}\}+}
+\DoxyCodeLine{}
+\DoxyCodeLine{<query>\ ::=\ <select\_query>\ |\ <put\_query>\ |\ <delete\_query>\ |\ <create\_query>\ \ |\ <drop\_query>\ |\ <add\_query>\ |\ <remove\_query>\ |\ <tables\_query>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<select\_query>\ ::=\ "{}SELECT"{}\ <select\_type>\ <metric>\ "{}FROM"{}\ <table\_name>\ <select\_clause>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<select\_type>\ ::=\ "{}DATA"{}\ |\ "{}AVG"{}\ |\ "{}SUM"{}\ |\ "{}COUNT"{}\ |\ "{}MIN"{}\ |\ "{}MAX"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{<select\_clause>\ ::=\ <all\_clause>\ |\ <between\_clause>\ |\ <at\_clause>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<all\_clause>\ ::=\ "{}ALL"{}\ \{<where\_clause>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<between\_clause>\ ::=\ "{}BETWEEN"{}\ <timestamp>\ "{}AND"{}\ <timestamp>\ \{<where\_clause>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<at\_clause>\ ::=\ "{}AT"{}\ <timestamp>\ \{<where\_clause>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<where\_clause>\ ::=\ "{}WHERE"{}\ <tag\_list>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<put\_query>\ ::=\ "{}PUT"{}\ <metric>\ <timestamp>\ <value>\ "{}INTO"{}\ <table\_name>\ \{"{}TAGS"{}\ <tag\_list>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<delete\_query>\ ::=\ "{}DELETE"{}\ <metric>\ <timestamp>\ "{}FROM"{}\ <table\_name>\ \{"{}TAGS"{}\ <tag\_list>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<create\_query>\ ::=\ "{}CREATE"{}\ "{}TABLE"{}\ <table\_name>\ \{"{}TAGS"{}\ <tag\_list>\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<drop\_query>\ ::=\ "{}DROP"{}\ "{}TABLE"{}\ <table\_name>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<add\_query>\ ::=\ "{}ADD"{}\ "{}TAGS"{}\ <tag\_columns>\ "{}TO"{}\ <table\_name>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<remove\_query>\ ::=\ "{}REMOVE"{}\ "{}TAGS"{}\ <tag\_columns>\ "{}FROM"{}\ <table\_name>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tables\_query>\ ::=\ "{}TABLES"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_list>\ ::=\ <tag>\ \{"{},"{}\ <tag>\}*}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag>\ ::=\ <tag\_key>\ "{}="{}\ <tag\_value>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_columns>\ ::=\ <tag\_key>\ \{"{},"{}\ <tag\_key>\}*}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_key>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<tag\_value>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<metric>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<table\_name>\ ::=\ <identifier>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<timestamp>\ ::=\ <number>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<value>\ ::=\ <number>}
+\DoxyCodeLine{}
+\DoxyCodeLine{<identifier>\ ::=\ <char>\ \{<char>\ |\ <digit>\}*}
+\DoxyCodeLine{}
+\DoxyCodeLine{<number>\ ::=\ \{"{}-\/"{}\}?\ <digit>\ \{<digit>\}-\/\ \{"{}."{}\ <digit>+\}?}
+\DoxyCodeLine{}
+\DoxyCodeLine{<char>\ ::=\ "{}A"{}\ |\ ...\ |\ "{}Z"{}\ |\ "{}a"{}\ |\ ...\ |\ "{}z"{}\ |\ "{}\_"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{<digit>\ ::=\ "{}0"{}\ |\ "{}1"{}\ |\ ...\ |\ "{}9"{}}
+
+\end{DoxyCode}
+
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md21}{}\doxysubsection{\texorpdfstring{License}{License}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md21}
+Distributed under the MIT License. See \mbox{[}LICENSE\mbox{]}(LICENSE) for more information.
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md22}{}\doxysubsection{\texorpdfstring{Authors}{Authors}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md22}
+\href{https://linkedin.com/in/vinzkakilala}{\texttt{ Vinz Kakilala}} (me).
+
+\href{\#readme-top}{\texttt{ back to top}}\hypertarget{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md23}{}\doxysubsection{\texorpdfstring{Acknowledgements}{Acknowledgements}}\label{md__2_users_2vkay_2_dev_2vkdb_2_r_e_a_d_m_e_autotoc_md23}
+Used \href{https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp}{\texttt{ Murmur\+Hash3}} for the Bloom filters. Fast, uniform, and deterministic.
+
+\href{\#readme-top}{\texttt{ back to top}}
