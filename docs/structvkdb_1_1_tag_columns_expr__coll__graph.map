@@ -1,0 +1,9 @@
+<map id="vkdb::TagColumnsExpr" name="vkdb::TagColumnsExpr">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,286,163,312"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="18,183,150,223"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,239,87,286,81,286,81,239"/>
+<area shape="rect" id="Node000003" href="$structvkdb_1_1_tag_key_expr.html" title=" " alt="" coords="20,94,148,120"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,135,87,182,81,182,81,135"/>
+<area shape="rect" id="Node000004" href="$classvkdb_1_1_token.html" title=" " alt="" coords="38,5,130,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="87,47,87,94,81,94,81,47"/>
+</map>

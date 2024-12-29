@@ -1,5 +1,12 @@
 <map id="vkdb::DataPoint&lt; TValue &gt;" name="vkdb::DataPoint&lt; TValue &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,94,185,120"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="64,5,126,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,47,98,94,92,94,92,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="121,288,300,313"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="28,95,108,121"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,136,51,180,53,202,61,223,79,245,102,262,154,285,152,290,100,267,76,249,56,226,48,204,46,179,55,135"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="111,199,310,225"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="99,128,195,196,192,201,96,132"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,131,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="71,61,71,95,65,95,65,61"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="213,240,213,287,208,287,208,240"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="335,199,396,225"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="332,235,234,289,231,285,329,230"/>
 </map>

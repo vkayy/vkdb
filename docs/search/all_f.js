@@ -8,6 +8,7 @@ var searchData=
   ['selecttypemaxexpr_5',['SelectTypeMaxExpr',['../structvkdb_1_1_select_type_max_expr.html',1,'vkdb']]],
   ['selecttypeminexpr_6',['SelectTypeMinExpr',['../structvkdb_1_1_select_type_min_expr.html',1,'vkdb']]],
   ['selecttypesumexpr_7',['SelectTypeSumExpr',['../structvkdb_1_1_select_type_sum_expr.html',1,'vkdb']]],
-  ['setup_8',['Setup',['../md_2__usage.html#autotoc_md14',1,'']]],
-  ['sstable_9',['SSTable',['../classvkdb_1_1_s_s_table.html',1,'vkdb']]]
+  ['setup_8',['Setup',['../md_2__usage.html#autotoc_md10',1,'']]],
+  ['sstable_9',['SSTable',['../classvkdb_1_1_s_s_table.html',1,'vkdb']]],
+  ['std_10',['std',['../namespacestd.html',1,'']]]
 ];

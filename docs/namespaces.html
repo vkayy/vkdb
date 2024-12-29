@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>vkdb: Internals</title>
+<title>vkdb: Namespace List</title>
 <link rel="icon" href="vkdb-square.png" type="image/x-icon" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -75,7 +75,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('md_1__internals.html',''); initResizable(true); });
+$(function(){initNavTree('namespaces.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -100,29 +100,16 @@ $(function(){initNavTree('md_1__internals.html',''); initResizable(true); });
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Internals</div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">Namespace List</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1"></a></p>
-<h1><a class="anchor" id="autotoc_md2"></a>
-Database engine</h1>
-<p>vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.</p>
-<p>When you instantiate a <code><a class="el" href="classvkdb_1_1_database.html">vkdb::Database</a></code>, all of the prior in-memory information (in-memory layer, metadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via <code>vkdb::Database::clear</code>.</p>
-<p>It's best to make all interactions via <code><a class="el" href="classvkdb_1_1_database.html">vkdb::Database</a></code>, or the <code><a class="el" href="classvkdb_1_1_table.html">vkdb::Table</a></code> type via <code>vkdb::Database::getTable</code>, unless you just want to play around with vq (more on this later).</p>
-<p>Also, one important thing to note is that all database files will be stored in <code>vkdb::DATABASE_DIRECTORY</code>; you shouldn't tamper with this directory nor the files in it. </p><div class="dotgraph">
-<img src="dot_inline_dotgraph_1.png" alt="dot_inline_dotgraph_1.png" border="0" usemap="#dot_inline_dotgraph_1.map"/>
-</div>
-<h1><a class="anchor" id="autotoc_md3"></a>
-Query processing</h1>
-<p>Lexing is done quite typically, with enumerated token types and line/column number stored for error messages. Initially, I directly executed queries as string streams, but that was a nightmare for robustness.</p>
-<p>In terms of parsing, vq has been constructed to have an LL(1) grammar—this meant I could write a straightforward recursive descent parser for the language. This directly converts queries to an abstract syntax tree (AST) with <code>std::variant</code>.</p>
-<p>Finally, the interpreter makes quick use of the AST via the visitor pattern, built into C++ with <code>std::variant</code> (mentioned earlier) and <code>std::visit</code>. This ended up making the interpreter (and pretty-printer) very satisfying to write.</p>
-<div class="dotgraph">
-<img src="dot_inline_dotgraph_2.png" alt="dot_inline_dotgraph_2.png" border="0" usemap="#dot_inline_dotgraph_2.map"/>
-</div>
- </div></div><!-- contents -->
-</div><!-- PageDoc -->
+<div class="textblock">Here is a list of all documented namespaces with brief descriptions:</div><div class="directory">
+<table class="directory">
+<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">N</span></span><a class="el" href="namespacestd.html" target="_self">std</a></td><td class="desc">STL namespace </td></tr>
+</table>
+</div><!-- directory -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
