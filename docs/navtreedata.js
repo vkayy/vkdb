@@ -25,11 +25,11 @@
 var NAVTREE =
 [
   [ "vkdb", "index.html", [
-    [ "Motivation", "index.html#autotoc_md1", null ],
-    [ "Links", "index.html#autotoc_md2", null ],
-    [ "License", "index.html#autotoc_md3", null ],
-    [ "Credits", "index.html#autotoc_md4", null ],
     [ "Internals", "md_1__internals.html", [
+      [ "Motivation", "index.html#autotoc_md1", null ],
+      [ "Links", "index.html#autotoc_md2", null ],
+      [ "License", "index.html#autotoc_md3", null ],
+      [ "Credits", "index.html#autotoc_md4", null ],
       [ "Database engine", "md_1__internals.html#autotoc_md6", null ],
       [ "Query processing", "md_1__internals.html#autotoc_md7", null ]
     ] ],
