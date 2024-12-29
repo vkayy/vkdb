@@ -171,7 +171,7 @@ public:
 
 private:
   /**
-   * @brief Type alias for a table map.
+   * @brief Type alias for a map from table names to Table objects.
    * 
    */
   using TableMap = std::unordered_map<TableName, Table>;

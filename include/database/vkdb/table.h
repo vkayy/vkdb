@@ -14,13 +14,13 @@ namespace vkdb {
 static const FilePath TAG_COLUMNS_FILENAME{"tag_columns.metadata"};
 
 /**
- * @brief Type alias for the name of a database.
+ * @brief Type alias for a string.
  * 
  */
 using DatabaseName = std::string;
 
 /**
- * @brief Type alias for the name of a table.
+ * @brief Type alias for a string.
  * 
  */
 using TableName = std::string;

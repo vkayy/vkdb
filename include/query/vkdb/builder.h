@@ -8,7 +8,7 @@
 
 namespace vkdb {
 /**
- * @brief Type alias for tag columns of a Table.
+ * @brief Type alias for a set of tag keys.
  * 
  */
 using TagColumns = std::unordered_set<TagKey>;
@@ -477,7 +477,7 @@ private:
 
   /**
    * @brief Query parameters.
-   * @details Either PointParams, RangeParams, PutParams, or RemoveParams.
+   * @details Variant of point, range, put, and remove parameters.
    * 
    */
   using QueryParams = std::variant<
