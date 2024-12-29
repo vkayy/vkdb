@@ -439,7 +439,7 @@ Here's the EBNF grammar encapsulating vq.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-### Links
+## Links
 
 Author: [Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me)
 
