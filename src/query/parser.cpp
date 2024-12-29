@@ -209,8 +209,8 @@ RemoveQuery Parser::parse_remove_query() {
 }
 
 TablesQuery Parser::parse_tables_query() {
-  consume(TokenType::TABLES, "Expected TABLES.");
-  return {};
+  auto tables{consume(TokenType::TABLES, "Expected TABLES.")};
+  return {tables};
 }
 
 SelectType Parser::parse_select_type() {

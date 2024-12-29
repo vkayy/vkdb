@@ -5,11 +5,11 @@ namespace vkdb {
 RuntimeError::RuntimeError(Token token, const std::string& message) noexcept
   : token_{token}, message_{message} {}
 
-Token RuntimeError::token() const {
+Token RuntimeError::token() const noexcept {
   return token_;
 }
 
-std::string RuntimeError::message() const {
+std::string RuntimeError::message() const noexcept {
   return message_;
 }
 
@@ -282,11 +282,15 @@ RemoveResult Interpreter::visit(const RemoveQuery& query) const {
 }
 
 TablesResult Interpreter::visit(const TablesQuery& query) const {
-  TablesResult tables_result{};
-  for (const auto& table_name : database_.tables()) {
-    tables_result.push_back(table_name);
+  try {
+    TablesResult tables_result{};
+    for (const auto& table_name : database_.tables()) {
+      tables_result.push_back(table_name);
+    }
+    return tables_result;
+  } catch (const std::exception& e) {
+    throw RuntimeError{query.token, e.what()};
   }
-  return tables_result;
 }
 
 AllClauseResult Interpreter::visit(const AllClause& clause) const {
@@ -328,27 +332,31 @@ WhereClauseResult Interpreter::visit(const WhereClause& clause) const {
   return visit(clause.tag_list);
 }
 
-SelectTypeResult Interpreter::visit(const SelectType& type) const {
+SelectTypeResult Interpreter::visit(const SelectType& type) const noexcept {
   return type;
 }
 
-MetricExprResult Interpreter::visit(const MetricExpr& metric) const {
+MetricExprResult Interpreter::visit(const MetricExpr& metric) const noexcept {
   return metric.token.lexeme();
 }
 
-TableNameExprResult Interpreter::visit(const TableNameExpr& table_name) const {
+TableNameExprResult Interpreter::visit(
+  const TableNameExpr& table_name
+) const noexcept {
   return table_name.token.lexeme();
 }
 
-TagKeyExprResult Interpreter::visit(const TagKeyExpr& tag_key) const {
+TagKeyExprResult Interpreter::visit(const TagKeyExpr& tag_key) const noexcept {
   return tag_key.token.lexeme();
 }
 
-TagValueExprResult Interpreter::visit(const TagValueExpr& tag_value) const {
+TagValueExprResult Interpreter::visit(
+  const TagValueExpr& tag_value
+) const noexcept {
   return tag_value.token.lexeme();
 }
 
-TagExprResult Interpreter::visit(const TagExpr& tag) const {
+TagExprResult Interpreter::visit(const TagExpr& tag) const noexcept {
   auto tag_key_result{visit(tag.key)};
   auto tag_value_result{visit(tag.value)};
   return {tag_key_result, tag_value_result};

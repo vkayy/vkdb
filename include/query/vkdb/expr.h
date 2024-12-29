@@ -453,7 +453,13 @@ struct RemoveQuery {
  * @brief Tables query.
  * 
  */
-struct TablesQuery {};
+struct TablesQuery {
+  /**
+   * @brief Token for the tables query.
+   * 
+   */
+  Token token;
+};
 
 /**
  * @brief Query expression.

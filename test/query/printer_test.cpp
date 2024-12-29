@@ -109,7 +109,7 @@ TEST(PrinterTest, CanPrintRemoveQuery) {
 }
 
 TEST(PrinterTest, CanPrintTablesQuery) {
-  Expr tables_query{TablesQuery{}};
+  Expr tables_query{TablesQuery{make_token(TokenType::TABLES, "TABLES")}};
 
   Printer printer;
   auto result{printer.print(tables_query)};
