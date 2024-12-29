@@ -16,7 +16,8 @@ public:
   explicit FriendlyQueryBuilder(
     LSMTree<TValue>& lsm_tree,
     const TagColumns& tag_columns
-  ) : query_builder_{QueryBuilder<TValue>(lsm_tree, tag_columns)} {}
+  ) noexcept
+   : query_builder_{QueryBuilder<TValue>(lsm_tree, tag_columns)} {}
 
   explicit FriendlyQueryBuilder(QueryBuilder<TValue>&& query_builder)
     : query_builder_{std::move(query_builder)} {}

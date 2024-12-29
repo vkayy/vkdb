@@ -23,7 +23,7 @@ public:
   explicit QueryBuilder(
     LSMTree<TValue>& lsm_tree,
     const TagColumns& tag_columns
-  )
+  ) noexcept
     : lsm_tree_{lsm_tree}
     , tag_columns_{tag_columns}
     , query_type_{QueryType::None}

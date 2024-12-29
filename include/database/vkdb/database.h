@@ -12,12 +12,6 @@ namespace vkdb {
 static const FilePath DATABASE_DIRECTORY{"_vkdb_database_directory"};
 
 /**
- * @brief Type alias for a database name.
- * 
- */
-using DatabaseName = std::string;
-
-/**
  * @brief Represents a database in vkdb.
  * 
  */

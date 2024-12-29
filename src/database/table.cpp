@@ -7,12 +7,10 @@ Table::Table(const FilePath& db_path, const TableName& name)
   : name_{name}
   , db_path_{db_path}
   , storage_engine_{path()} {
-  std::filesystem::create_directories(path());
-  load_tag_columns();
-  storage_engine_.replayWAL();
+  load();
 }
 
-Table& Table::setTagColumns(const TagColumns& tag_columns) {
+Table& Table::setTagColumns(const TagColumns& tag_columns) noexcept {
   tag_columns_ = tag_columns;
   return *this;
 }
@@ -46,7 +44,7 @@ void Table::clear() const noexcept {
   std::filesystem::create_directories(path());
 }
 
-FriendlyQueryBuilder<double> Table::query() {
+FriendlyQueryBuilder<double> Table::query() noexcept {
   return FriendlyQueryBuilder<double>(storage_engine_, tag_columns_);
 }
 
@@ -103,6 +101,12 @@ void Table::load_tag_columns() {
 
 FilePath Table::tag_columns_path() const noexcept {
   return path() / TAG_COLUMNS_FILENAME;
+}
+
+void Table::load() {
+  std::filesystem::create_directories(path());
+  load_tag_columns();
+  storage_engine_.replayWAL();
 }
 
 } // namespace vkdb
