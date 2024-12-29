@@ -141,7 +141,7 @@ public:
    * 
    * @param source Source string.
    * @param stream Output stream.
-   * @return Database& Reference to the database.
+   * @return Database& Reference to this Database object.
    */
   Database& run(
     const std::string& source,
@@ -154,7 +154,7 @@ public:
    * 
    * @param path Path to the file.
    * @param stream Output stream.
-   * @return Database& Reference to the database.
+   * @return Database& Reference to this Database object.
    */
   Database& runFile(
     const std::filesystem::path path,
@@ -165,7 +165,7 @@ public:
    * @brief Run the prompt.
    * @details The user can enter queries and commands interactively.
    * 
-   * @return Database& Reference to the database.
+   * @return Database& Reference to this Database object.
    */
   Database& runPrompt() noexcept;
 
