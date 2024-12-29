@@ -38,6 +38,10 @@ static const std::unordered_map<Lexeme, TokenType> WORD_TO_TOKEN_TYPE{
 	{"TO", TokenType::TO}
 };
 
+/**
+ * @brief Lexer for vq.
+ * 
+ */
 class Lexer {
 public:
 	using size_type = uint64_t;
