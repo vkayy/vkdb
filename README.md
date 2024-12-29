@@ -1,3 +1,5 @@
+<a id="readme-top"></a>
+
 <div align="center">
   <img src="doc/vkdb-small.png" alt="logo" width="400" height="auto" />
   <h1>vkdb</h1>
@@ -50,11 +52,15 @@
 
 [Acknowledgements](#acknowledgements)
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ## About the project
 
 ### Motivation
 
 I wanted to challenge myself architecturally and push my boundaries with C++, both in terms of knowledge and performance.
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ### Database engine internals
 
@@ -122,6 +128,8 @@ graph LR
     lsmTree --> ckLayers
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Query language internals
 
 Lexing is done quite typically, with enumerated token types and line/column number stored for error messages. Initially, I directly executed queries as string streams, but that was a nightmare for robustness.
@@ -182,6 +190,8 @@ graph LR
     interpreter --> result
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ## Running locally (not needed)
 
 ### Installation
@@ -195,6 +205,8 @@ Then, make the build directory and build the project with CMake.
 mkdir build && cd build && cmake .. && make
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Tests
 
 From the build folder, you can run the tests.
@@ -202,12 +214,16 @@ From the build folder, you can run the tests.
 ./tests/vkdb_tests
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Examples
 
 From the build folder, you can also run any of the examples.
 ```
 ./examples/<filename>
 ```
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ## Using the library
 
@@ -225,6 +241,8 @@ FetchContent_MakeAvailable(vkdb)
 target_link_libraries(${PROJECT_NAME} vkdb)
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Interface
 Simply include the database header, and you'll have access to the database API.
 
@@ -238,6 +256,8 @@ int main()  {
 }
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Table management
 
 You can manipulate tables with the database API, both with methods or queries.
@@ -249,6 +269,8 @@ db.createTable("sensor_data")
 
 db.run("REMOVE TAGS type FROM sensor_data;")
 ```
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ### General queries
 
@@ -262,6 +284,8 @@ test_db
   .clear();
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 With the table API, you can run queries via the query builder.
 
 ```cpp
@@ -272,6 +296,8 @@ auto sum{table_replay.query()
   .sum()
 };
 ```
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ### Playground
 
@@ -291,6 +317,8 @@ int main() {
 
 This is generally for experimental purposes—there's not much to gain from it in practice besides having a playground.
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Mock data
 
 Feel free to use `vkdb::random<>`. Any arithmetic type (with no cv- or ref-qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).
@@ -299,6 +327,8 @@ Feel free to use `vkdb::random<>`. Any arithmetic type (with no cv- or ref-quali
 auto random_int{vkdb::random<int>(-100'000, 100'000)};
 auto random_double{vkdb::random<double>(-10.0, 10.0)};
 ```
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ## Working with vq
 
@@ -316,6 +346,8 @@ ADD TAGS host, status TO servers;
 REMOVE TAGS host FROM servers;
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Data manipulation
 
 Here are some data manipulation queries.
@@ -329,6 +361,8 @@ PUT temperature 1234 23.5 INTO weather TAGS city=paris, unit=celsius;
 DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ### Errors
 
 There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-explanatory reasons.
@@ -336,6 +370,8 @@ There are two kinds of errors you can get—parse errors and runtime errors, occ
 | ![vq-errors.png](doc/vq-errors.png) | 
 |:--:| 
 | *A parse error and a runtime error in the REPL.* |
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ### EBNF
 
@@ -401,14 +437,22 @@ Here's the EBNF grammar encapsulating vq.
 <digit> ::= "0" | "1" | ... | "9"
 ```
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ## Authors
 
 [Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me).
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ## Acknowledgements
 
 Used [MurmurHash3](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp) for the Bloom filters. Fast, uniform, and deterministic.
+
+<p align="right"><a href="#readme-top">back to top</a></p>
