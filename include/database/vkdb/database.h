@@ -228,13 +228,13 @@ private:
   DatabaseName name_;
 
   /**
-   * @brief Whether an error occurred.
+   * @brief Flag for errors.
    * 
    */
   bool had_error_;
 
   /**
-   * @brief Whether a runtime error occurred.
+   * @brief Flag for runtime errors.
    * 
    */
   bool had_runtime_error_;

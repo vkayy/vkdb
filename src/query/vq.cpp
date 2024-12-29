@@ -10,7 +10,7 @@ bool VQ::had_runtime_error_ = false;
 Database VQ::database_{INTERPRETER_DEFAULT_DATABASE};
 const Interpreter VQ::interpreter_{database_, VQ::runtimeError};
 
-void VQ::runFile(const std::filesystem::path path) {
+void VQ::runFile(const std::filesystem::path path) noexcept {
   if (path.extension() != ".vq") {
     std::cerr << "\033[1;32mVQ::runFile(): File extension cannot be "
     << path.extension() << ", must be .vq.\033[0m\n";
@@ -27,7 +27,7 @@ void VQ::runFile(const std::filesystem::path path) {
   run(buffer.str());
 }
 
-void VQ::runPrompt() {
+void VQ::runPrompt() noexcept {
   std::cout << "\033[1;31mwelcome to the vq repl! :)\033[0m\n";
   std::cout << "\033[1;31m(on default interpreter database)\033[0m\n";
   std::string line;
@@ -41,7 +41,7 @@ void VQ::runPrompt() {
   }
 }
 
-void VQ::run(const std::string& source) {
+void VQ::run(const std::string& source) noexcept {
   Lexer lexer{source};
   auto tokens{lexer.tokenize()};
 
@@ -55,7 +55,7 @@ void VQ::run(const std::string& source) {
   interpreter_.interpret(expr.value());
 }
 
-void VQ::error(Token token, const std::string& message) {
+void VQ::error(Token token, const std::string& message) noexcept {
   if (token.type() == TokenType::END_OF_FILE) {
     report(token.line(), "at end", message);
   } else {
@@ -63,7 +63,7 @@ void VQ::error(Token token, const std::string& message) {
   }
 }
 
-void VQ::runtimeError(const RuntimeError& error) {
+void VQ::runtimeError(const RuntimeError& error) noexcept {
   std::cerr << "\033[1;32m[line " << error.token().line();
   std::cerr << "] Runtime error: " << error.message() << "\033[0m\n";
   had_runtime_error_ = true;
@@ -73,7 +73,7 @@ void VQ::report(
   size_type line,
   const std::string& where,
   const std::string& message
-) {
+) noexcept {
   std::cerr << "\033[1;32m[line " << line << "] Parse error ";
   std::cerr << where << ": " << message << "\033[0m\n";
   had_error_ = true;

@@ -30,7 +30,7 @@ public:
   Parser() = delete;
 
   /**
-   * @brief Constructs a Parser with a list of tokens and an optional error callback.
+   * @brief Construct a Parser with a list of tokens and an optional error callback.
    * @details Defaults the error callback to an empty lambda.
    * 
    * @param tokens The list of tokens to parse.
