@@ -1,0 +1,13 @@
+<map id="vkdb::DeleteQuery" name="vkdb::DeleteQuery">
+<area shape="rect" id="Node000001" title=" " alt="" coords="159,183,289,208"/>
+<area shape="rect" id="Node000002" href="$structvkdb_1_1_metric_expr.html" title=" " alt="" coords="5,94,126,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,125,203,180,201,184,100,130"/>
+<area shape="rect" id="Node000003" href="$classvkdb_1_1_token.html" title=" " alt="" coords="178,5,270,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,41,89,96,87,91,187,36"/>
+<area shape="rect" id="Node000004" href="$structvkdb_1_1_timestamp_expr.html" title=" " alt="" coords="150,94,299,120"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="227,47,227,94,222,94,222,47"/>
+<area shape="rect" id="Node000005" href="$structvkdb_1_1_table_name_expr.html" title=" " alt="" coords="322,94,473,120"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="263,36,374,91,372,96,261,41"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="227,135,227,182,222,182,222,135"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="361,129,250,184,247,180,358,125"/>
+</map>

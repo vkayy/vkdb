@@ -1,0 +1,16 @@
+<map id="vkdb::PutQuery" name="vkdb::PutQuery">
+<area shape="rect" id="Node000001" title=" " alt="" coords="245,183,358,208"/>
+<area shape="rect" id="Node000002" href="$structvkdb_1_1_metric_expr.html" title=" " alt="" coords="5,94,126,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,123,269,180,267,185,112,128"/>
+<area shape="rect" id="Node000003" href="$classvkdb_1_1_token.html" title=" " alt="" coords="234,5,326,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="237,40,97,96,95,91,235,35"/>
+<area shape="rect" id="Node000004" href="$structvkdb_1_1_timestamp_expr.html" title=" " alt="" coords="150,94,299,120"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="266,46,234,95,230,92,262,43"/>
+<area shape="rect" id="Node000005" href="$structvkdb_1_1_value_expr.html" title=" " alt="" coords="323,94,440,120"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="307,39,369,92,366,96,304,43"/>
+<area shape="rect" id="Node000006" href="$structvkdb_1_1_table_name_expr.html" title=" " alt="" coords="464,94,614,120"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="332,34,503,91,502,96,330,39"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="247,130,293,181,289,184,243,133"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="363,133,338,160,315,184,311,181,334,157,360,129"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="492,128,336,185,334,180,490,123"/>
+</map>
