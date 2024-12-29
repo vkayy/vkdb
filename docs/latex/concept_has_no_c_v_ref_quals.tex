@@ -1,0 +1,16 @@
+\doxysection{Has\+No\+CVRef\+Quals Concept Reference}
+\hypertarget{concept_has_no_c_v_ref_quals}{}\label{concept_has_no_c_v_ref_quals}\index{HasNoCVRefQuals@{HasNoCVRefQuals}}
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{concept_has_no_c_v_ref_quals}{HasNoCVRefQuals}}\ =\ \ std::is\_same\_v<T,\ std::remove\_cvref\_t<T>>}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{concepts_8h_source_l00011}{11}} of file \mbox{\hyperlink{concepts_8h_source}{concepts.\+h}}.
+

@@ -1,0 +1,165 @@
+\doxysection{expr.\+h}
+\hypertarget{expr_8h_source}{}\label{expr_8h_source}\index{/Users/vkay/Dev/vkdb/include/query/vkdb/expr.h@{/Users/vkay/Dev/vkdb/include/query/vkdb/expr.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ QUERY\_EXPR\_H}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ QUERY\_EXPR\_H}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vkdb/token.h>}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00010}00010\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00011}\mbox{\hyperlink{structvkdb_1_1_metric_expr}{00011}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_metric_expr}{MetricExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00012}00012\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00013}00013\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00015}\mbox{\hyperlink{structvkdb_1_1_table_name_expr}{00015}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00016}00016\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00017}00017\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00019}\mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{00019}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00020}00020\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00021}00021\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00023}\mbox{\hyperlink{structvkdb_1_1_value_expr}{00023}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_value_expr}{ValueExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00024}00024\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00025}00025\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00027}\mbox{\hyperlink{structvkdb_1_1_tag_key_expr}{00027}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_tag_key_expr}{TagKeyExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00028}00028\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00029}00029\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00031}\mbox{\hyperlink{structvkdb_1_1_tag_columns_expr}{00031}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_tag_columns_expr}{TagColumnsExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00032}00032\ \ \ std::vector<TagKeyExpr>\ keys;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00033}00033\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00035}\mbox{\hyperlink{structvkdb_1_1_tag_value_expr}{00035}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_tag_value_expr}{TagValueExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00036}00036\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00037}00037\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00039}\mbox{\hyperlink{structvkdb_1_1_tag_expr}{00039}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_tag_expr}{TagExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00040}00040\ \ \ \mbox{\hyperlink{structvkdb_1_1_tag_key_expr}{TagKeyExpr}}\ key;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00041}00041\ \ \ \mbox{\hyperlink{structvkdb_1_1_tag_value_expr}{TagValueExpr}}\ value;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00042}00042\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00044}\mbox{\hyperlink{structvkdb_1_1_tag_list_expr}{00044}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_tag_list_expr}{TagListExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00045}00045\ \ \ std::vector<TagExpr>\ tags;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00046}00046\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00048}\mbox{\hyperlink{structvkdb_1_1_where_clause}{00048}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_where_clause}{WhereClause}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00049}00049\ \ \ \mbox{\hyperlink{structvkdb_1_1_tag_list_expr}{TagListExpr}}\ tag\_list;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00050}00050\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00052}\mbox{\hyperlink{structvkdb_1_1_all_clause}{00052}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_all_clause}{AllClause}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00053}00053\ \ \ std::optional<WhereClause>\ where\_clause;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00054}00054\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00056}\mbox{\hyperlink{structvkdb_1_1_between_clause}{00056}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_between_clause}{BetweenClause}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00057}00057\ \ \ \mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\ start;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00058}00058\ \ \ \mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\ end;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00059}00059\ \ \ std::optional<WhereClause>\ where\_clause;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00060}00060\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00062}\mbox{\hyperlink{structvkdb_1_1_at_clause}{00062}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_at_clause}{AtClause}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00063}00063\ \ \ \mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\ timestamp;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00064}00064\ \ \ std::optional<WhereClause>\ where\_clause;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00065}00065\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00067}\mbox{\hyperlink{structvkdb_1_1_select_type_data_expr}{00067}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_select_type_data_expr}{SelectTypeDataExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00068}00068\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00069}00069\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00071}\mbox{\hyperlink{structvkdb_1_1_select_type_count_expr}{00071}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_select_type_count_expr}{SelectTypeCountExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00072}00072\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00073}00073\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00075}\mbox{\hyperlink{structvkdb_1_1_select_type_avg_expr}{00075}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_select_type_avg_expr}{SelectTypeAvgExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00076}00076\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00077}00077\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00079}\mbox{\hyperlink{structvkdb_1_1_select_type_sum_expr}{00079}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_select_type_sum_expr}{SelectTypeSumExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00080}00080\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00081}00081\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00083}\mbox{\hyperlink{structvkdb_1_1_select_type_min_expr}{00083}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_select_type_min_expr}{SelectTypeMinExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00084}00084\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00085}00085\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00087}\mbox{\hyperlink{structvkdb_1_1_select_type_max_expr}{00087}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_select_type_max_expr}{SelectTypeMaxExpr}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00088}00088\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00089}00089\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00091}00091\ \textcolor{keyword}{using\ }SelectType\ =\ std::variant<}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00092}00092\ \ \ \mbox{\hyperlink{structvkdb_1_1_select_type_data_expr}{SelectTypeDataExpr}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00093}00093\ \ \ \mbox{\hyperlink{structvkdb_1_1_select_type_count_expr}{SelectTypeCountExpr}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00094}00094\ \ \ \mbox{\hyperlink{structvkdb_1_1_select_type_avg_expr}{SelectTypeAvgExpr}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00095}00095\ \ \ \mbox{\hyperlink{structvkdb_1_1_select_type_sum_expr}{SelectTypeSumExpr}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00096}00096\ \ \ \mbox{\hyperlink{structvkdb_1_1_select_type_min_expr}{SelectTypeMinExpr}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00097}00097\ \ \ \mbox{\hyperlink{structvkdb_1_1_select_type_max_expr}{SelectTypeMaxExpr}}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00098}00098\ >;\ \ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00100}00100\ \textcolor{keyword}{using\ }SelectClause\ =\ std::variant<}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00101}00101\ \ \ \mbox{\hyperlink{structvkdb_1_1_all_clause}{AllClause}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00102}00102\ \ \ \mbox{\hyperlink{structvkdb_1_1_between_clause}{BetweenClause}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00103}00103\ \ \ \mbox{\hyperlink{structvkdb_1_1_at_clause}{AtClause}}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00104}00104\ >;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00106}\mbox{\hyperlink{structvkdb_1_1_select_query}{00106}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_select_query}{SelectQuery}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00107}00107\ \ \ SelectType\ type;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00108}00108\ \ \ \mbox{\hyperlink{structvkdb_1_1_metric_expr}{MetricExpr}}\ metric;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00109}00109\ \ \ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ table\_name;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00110}00110\ \ \ SelectClause\ clause;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00111}00111\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00113}\mbox{\hyperlink{structvkdb_1_1_put_query}{00113}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_put_query}{PutQuery}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00114}00114\ \ \ \mbox{\hyperlink{structvkdb_1_1_metric_expr}{MetricExpr}}\ metric;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00115}00115\ \ \ \mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\ timestamp;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00116}00116\ \ \ \mbox{\hyperlink{structvkdb_1_1_value_expr}{ValueExpr}}\ value;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00117}00117\ \ \ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ table\_name;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00118}00118\ \ \ std::optional<TagListExpr>\ tag\_list;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00119}00119\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00121}\mbox{\hyperlink{structvkdb_1_1_delete_query}{00121}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_delete_query}{DeleteQuery}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00122}00122\ \ \ \mbox{\hyperlink{structvkdb_1_1_metric_expr}{MetricExpr}}\ metric;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00123}00123\ \ \ \mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\ timestamp;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00124}00124\ \ \ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ table\_name;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00125}00125\ \ \ std::optional<TagListExpr>\ tag\_list;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00126}00126\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00128}\mbox{\hyperlink{structvkdb_1_1_create_query}{00128}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_create_query}{CreateQuery}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00129}00129\ \ \ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ table\_name;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00130}00130\ \ \ std::optional<TagColumnsExpr>\ tag\_columns;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00131}00131\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00133}\mbox{\hyperlink{structvkdb_1_1_drop_query}{00133}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_drop_query}{DropQuery}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00134}00134\ \ \ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ table\_name;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00135}00135\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00137}\mbox{\hyperlink{structvkdb_1_1_add_query}{00137}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_add_query}{AddQuery}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00138}00138\ \ \ \mbox{\hyperlink{structvkdb_1_1_tag_columns_expr}{TagColumnsExpr}}\ tag\_columns;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00139}00139\ \ \ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ table\_name;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00140}00140\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00142}\mbox{\hyperlink{structvkdb_1_1_remove_query}{00142}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_remove_query}{RemoveQuery}}\ \{}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00143}00143\ \ \ \mbox{\hyperlink{structvkdb_1_1_tag_columns_expr}{TagColumnsExpr}}\ tag\_columns;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00144}00144\ \ \ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ table\_name;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00145}00145\ \};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00147}\mbox{\hyperlink{structvkdb_1_1_tables_query}{00147}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvkdb_1_1_tables_query}{TablesQuery}}\ \{\};}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00149}00149\ \textcolor{keyword}{using\ }Query\ =\ std::variant<}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00150}00150\ \ \ \mbox{\hyperlink{structvkdb_1_1_select_query}{SelectQuery}},\ \mbox{\hyperlink{structvkdb_1_1_put_query}{PutQuery}},\ \mbox{\hyperlink{structvkdb_1_1_delete_query}{DeleteQuery}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00151}00151\ \ \ \mbox{\hyperlink{structvkdb_1_1_create_query}{CreateQuery}},\ \mbox{\hyperlink{structvkdb_1_1_drop_query}{DropQuery}},\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00152}00152\ \ \ \mbox{\hyperlink{structvkdb_1_1_add_query}{AddQuery}},\ \mbox{\hyperlink{structvkdb_1_1_remove_query}{RemoveQuery}},}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00153}00153\ \ \ \mbox{\hyperlink{structvkdb_1_1_tables_query}{TablesQuery}}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00154}00154\ >;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00156}00156\ \textcolor{keyword}{using\ }Expr\ =\ std::vector<Query>;}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00157}00157\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{expr_8h_source_l00159}00159\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QUERY\_EXPR\_H}}
+
+\end{DoxyCode}

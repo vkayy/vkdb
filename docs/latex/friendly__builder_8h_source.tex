@@ -1,0 +1,178 @@
+\doxysection{friendly\+\_\+builder.\+h}
+\hypertarget{friendly__builder_8h_source}{}\label{friendly__builder_8h_source}\index{/Users/vkay/Dev/vkdb/include/query/vkdb/friendly\_builder.h@{/Users/vkay/Dev/vkdb/include/query/vkdb/friendly\_builder.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ QUERY\_FRIENDLY\_BUILDER\_H}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ QUERY\_FRIENDLY\_BUILDER\_H}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vkdb/builder.h>}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00006}00006\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00007}00007\ \textcolor{keyword}{template}\ <ArithmeticNoCVRefQuals\ TValue>}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00008}\mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{00008}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00009}00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00010}00010\ \ \ \textcolor{keyword}{using\ }size\_type\ =\ \textcolor{keyword}{typename}\ QueryBuilder<TValue>::size\_type;}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00011}00011\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structvkdb_1_1_data_point}{value\_type}}\ =\ \mbox{\hyperlink{structvkdb_1_1_data_point}{DataPoint<TValue>}};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00012}00012\ \ \ \textcolor{keyword}{using\ }result\_type\ =\ std::vector<value\_type>;}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00014}00014\ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00016}00016\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_l_s_m_tree}{LSMTree<TValue>}}\&\ lsm\_tree,}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{const}\ TagColumns\&\ tag\_columns}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00019}00019\ \ \ )\ :\ query\_builder\_\{\mbox{\hyperlink{classvkdb_1_1_query_builder}{QueryBuilder<TValue>}}(lsm\_tree,\ tag\_columns)\}\ \{\}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00021}00021\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}(\mbox{\hyperlink{classvkdb_1_1_query_builder}{QueryBuilder<TValue>}}\&\&\ query\_builder)}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00022}00022\ \ \ \ \ :\ query\_builder\_\{std::move(query\_builder)\}\ \{\}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00024}00024\ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}(\mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00025}00025\ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ operator=(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\&}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00027}00027\ \ \ )\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00029}00029\ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00030}00030\ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ operator=(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00031}00031\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00032}00032\ \ \ )\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00034}00034\ \ \ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{\string~FriendlyQueryBuilder}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00036}00036\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ get(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00037}00037\ \ \ \ \ Timestamp\ timestamp,\ Metric\ metric,}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{const}\ TagTable\&\ tag\_table}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00039}00039\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{TimeSeriesKey}}\ key\{timestamp,\ metric,\ tag\_table\};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00041}00041\ \ \ \ \ std::ignore\ =\ query\_builder\_.point(key);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00043}00043\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00045}00045\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereMetricIs(\textcolor{keyword}{const}\ Metric\&\ metric)\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00046}00046\ \ \ \ \ std::ignore\ =\ query\_builder\_.filterByMetric(metric);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00048}00048\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00050}00050\ \ \ \textcolor{keyword}{template}\ <AllConvertibleToNoCVRefQuals<Metric>...\ Metrics>}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00051}00051\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereMetricIsAnyOf(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00052}00052\ \ \ \ \ \textcolor{keyword}{const}\ Metrics\&...\ metrics}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00053}00053\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00054}00054\ \ \ \ \ std::ignore\ =\ query\_builder\_.filterByAnyMetrics(metrics...);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00056}00056\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00058}00058\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereTimestampIs(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{const}\ Timestamp\&\ timestamp}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00060}00060\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00061}00061\ \ \ \ \ std::ignore\ =\ query\_builder\_.filterByTimestamp(timestamp);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00063}00063\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00066}00066\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereTimestampBetween(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00067}00067\ \ \ \ \ \textcolor{keyword}{const}\ Timestamp\&\ start,}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00068}00068\ \ \ \ \ \textcolor{keyword}{const}\ Timestamp\&\ end}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00069}00069\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{TimeSeriesKey}}\ start\_key\{start,\ MIN\_METRIC,\ \{\}\};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00071}00071\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{TimeSeriesKey}}\ end\_key\{end,\ MAX\_METRIC,\ \{\}\};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00072}00072\ \ \ \ \ std::ignore\ =\ query\_builder\_.range(start\_key,\ end\_key);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00074}00074\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00077}00077\ \ \ \textcolor{keyword}{template}\ <AllConvertibleToNoCVRefQuals<Timestamp>...\ Timestamps>}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00078}00078\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereTimestampIsAnyOf(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00079}00079\ \ \ \ \ \textcolor{keyword}{const}\ Timestamps\&...\ timestamps}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00080}00080\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00081}00081\ \ \ \ \ std::ignore\ =\ query\_builder\_.filterByAnyTimestamps(timestamps...);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00083}00083\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00085}00085\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereTagsContain(\textcolor{keyword}{const}\ Tag\&\ tag)\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00086}00086\ \ \ \ \ std::ignore\ =\ query\_builder\_.filterByTag(tag.first,\ tag.second);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00088}00088\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00090}00090\ \ \ \textcolor{keyword}{template}\ <AllConvertibleToNoCVRefQuals<Tag>...\ Tags>}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00091}00091\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereTagsContainAnyOf(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00092}00092\ \ \ \ \ \textcolor{keyword}{const}\ Tags\&...\ tags}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00093}00093\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00094}00094\ \ \ \ \ std::ignore\ =\ query\_builder\_.filterByAnyTags(tags...);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00095}00095\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00096}00096\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00098}00098\ \ \ \textcolor{keyword}{template}\ <AllConvertibleToNoCVRefQuals<Tag>...\ Tags>}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00099}00099\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ whereTagsContainAllOf(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00100}00100\ \ \ \ \ \textcolor{keyword}{const}\ Tags\&...\ tags}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00101}00101\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00102}00102\ \ \ \ \ std::ignore\ =\ query\_builder\_.filterByAllTags(tags...);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00103}00103\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00104}00104\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00106}00106\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ put(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00107}00107\ \ \ \ \ Timestamp\ timestamp,}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00108}00108\ \ \ \ \ Metric\ metric,}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00109}00109\ \ \ \ \ \textcolor{keyword}{const}\ TagTable\&\ tag\_table,\ TValue\ value}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00110}00110\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00111}00111\ \ \ \ \ \textcolor{keywordflow}{if}\ (}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00112}00112\ \ \ \ \ \ \ metric.empty()\ ||}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00113}00113\ \ \ \ \ \ \ metric.length()\ >=\ TimeSeriesKey::MAX\_METRIC\_LENGTH}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00114}00114\ \ \ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00115}00115\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error\{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}FriendlyQueryBuilder::get():\ Invalid\ metric\ '"{}}\ +\ metric\ +\ \textcolor{stringliteral}{"{}'."{}}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00117}00117\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00118}00118\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00119}00119\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{TimeSeriesKey}}\ key\{timestamp,\ metric,\ tag\_table\};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00120}00120\ \ \ \ \ std::ignore\ =\ query\_builder\_.put(key,\ value);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00121}00121\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00122}00122\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00124}00124\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_friendly_query_builder}{FriendlyQueryBuilder}}\&\ remove(}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00125}00125\ \ \ \ \ Timestamp\ timestamp,}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00126}00126\ \ \ \ \ Metric\ metric,}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00127}00127\ \ \ \ \ \textcolor{keyword}{const}\ TagTable\&\ tag\_table}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00128}00128\ \ \ )\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00129}00129\ \ \ \ \ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{TimeSeriesKey}}\ key\{timestamp,\ metric,\ tag\_table\};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00130}00130\ \ \ \ \ std::ignore\ =\ query\_builder\_.remove(key);}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00131}00131\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00132}00132\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00134}00134\ \ \ [[nodiscard]]\ size\_type\ count()\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00135}00135\ \ \ \ \ \textcolor{keywordflow}{return}\ query\_builder\_.count();}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00136}00136\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00138}00138\ \ \ [[nodiscard]]\ TValue\ sum()\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00139}00139\ \ \ \ \ \textcolor{keywordflow}{return}\ query\_builder\_.sum();}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00140}00140\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00142}00142\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{double}\ avg()\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00143}00143\ \ \ \ \ \textcolor{keywordflow}{return}\ query\_builder\_.avg();}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00144}00144\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00146}00146\ \ \ [[nodiscard]]\ TValue\ min()\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00147}00147\ \ \ \ \ \textcolor{keywordflow}{return}\ query\_builder\_.min();}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00148}00148\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00150}00150\ \ \ [[nodiscard]]\ TValue\ max()\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00151}00151\ \ \ \ \ \textcolor{keywordflow}{return}\ query\_builder\_.max();}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00152}00152\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00154}00154\ \ \ result\_type\ execute()\{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00155}00155\ \ \ \ \ \textcolor{keyword}{auto}\ result\{query\_builder\_.execute()\ |}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00156}00156\ \ \ \ \ std::views::transform([](\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ entry)\ \{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00157}00157\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structvkdb_1_1_data_point}{DataPoint<TValue>}}\{}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ entry.first.timestamp(),}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ entry.first.metric(),}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00160}00160\ \ \ \ \ \ \ \ \ entry.first.tags(),}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00161}00161\ \ \ \ \ \ \ \ \ entry.second.value()}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00162}00162\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00163}00163\ \ \ \ \ \})\};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00164}00164\ \ \ \ \ \textcolor{keywordflow}{return}\ \{result.begin(),\ result.end()\};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00165}00165\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00167}00167\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00168}00168\ \ \ \mbox{\hyperlink{classvkdb_1_1_query_builder}{QueryBuilder<TValue>}}\ query\_builder\_;}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00169}00169\ \};}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00170}00170\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{friendly__builder_8h_source_l00172}00172\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QUERY\_FRIENDLY\_BUILDER\_H}}
+
+\end{DoxyCode}

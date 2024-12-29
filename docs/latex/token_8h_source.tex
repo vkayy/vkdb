@@ -1,0 +1,102 @@
+\doxysection{token.\+h}
+\hypertarget{token_8h_source}{}\label{token_8h_source}\index{/Users/vkay/Dev/vkdb/include/query/vkdb/token.h@{/Users/vkay/Dev/vkdb/include/query/vkdb/token.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ QUERY\_TOKEN\_H}}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ QUERY\_TOKEN\_H}}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00008}00008\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00009}00009\ \textcolor{keyword}{using\ }Lexeme\ =\ std::string;}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00011}00011\ \textcolor{keyword}{enum\ class}\ TokenType\ \{}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00012}00012\ \ \ SELECT,\ PUT,\ DELETE,\ CREATE,\ DROP,\ ADD,\ REMOVE,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00013}00013\ \ \ DATA,\ AVG,\ SUM,\ COUNT,\ MIN,\ MAX,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00014}00014\ \ \ TABLE,\ TABLES,\ TAGS,\ ALL,\ BETWEEN,\ AND,\ AT,\ WHERE,\ FROM,\ INTO,\ TO,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00015}00015\ \ \ EQUAL,\ COMMA,\ SEMICOLON,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00016}00016\ \ \ IDENTIFIER,\ NUMBER,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00017}00017\ \ \ END\_OF\_FILE,\ UNKNOWN}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00018}00018\ \};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00020}00020\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::unordered\_set<TokenType>\ QUERY\_BASE\_WORDS\{}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00021}00021\ \ \ TokenType::SELECT,\ TokenType::PUT,\ TokenType::DELETE,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00022}00022\ \ \ TokenType::CREATE,\ TokenType::DROP,\ TokenType::ADD,\ TokenType::REMOVE,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00023}00023\ \ \ TokenType::TABLES}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00024}00024\ \};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00026}00026\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::unordered\_map<TokenType,\ std::string>\ TOKEN\_TYPE\_TO\_STRING\{}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00027}00027\ \ \ \{TokenType::SELECT,\ \textcolor{stringliteral}{"{}SELECT"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00028}00028\ \ \ \{TokenType::PUT,\ \textcolor{stringliteral}{"{}PUT"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00029}00029\ \ \ \{TokenType::DELETE,\ \textcolor{stringliteral}{"{}DELETE"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00030}00030\ \ \ \{TokenType::CREATE,\ \textcolor{stringliteral}{"{}CREATE"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00031}00031\ \ \ \{TokenType::DROP,\ \textcolor{stringliteral}{"{}DROP"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00032}00032\ \ \ \{TokenType::ADD,\ \textcolor{stringliteral}{"{}ADD"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00033}00033\ \ \ \{TokenType::REMOVE,\ \textcolor{stringliteral}{"{}REMOVE"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00034}00034\ \ \ \{TokenType::TABLES,\ \textcolor{stringliteral}{"{}TABLES"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00035}00035\ \ \ \{TokenType::DATA,\ \textcolor{stringliteral}{"{}DATA"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00036}00036\ \ \ \{TokenType::AVG,\ \textcolor{stringliteral}{"{}AVG"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00037}00037\ \ \ \{TokenType::SUM,\ \textcolor{stringliteral}{"{}SUM"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00038}00038\ \ \ \{TokenType::COUNT,\ \textcolor{stringliteral}{"{}COUNT"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00039}00039\ \ \ \{TokenType::MIN,\ \textcolor{stringliteral}{"{}MIN"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00040}00040\ \ \ \{TokenType::MAX,\ \textcolor{stringliteral}{"{}MAX"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00041}00041\ \ \ \{TokenType::TABLE,\ \textcolor{stringliteral}{"{}TABLE"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00042}00042\ \ \ \{TokenType::TAGS,\ \textcolor{stringliteral}{"{}TAGS"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00043}00043\ \ \ \{TokenType::ALL,\ \textcolor{stringliteral}{"{}ALL"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00044}00044\ \ \ \{TokenType::BETWEEN,\ \textcolor{stringliteral}{"{}BETWEEN"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00045}00045\ \ \ \{TokenType::AND,\ \textcolor{stringliteral}{"{}AND"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00046}00046\ \ \ \{TokenType::AT,\ \textcolor{stringliteral}{"{}AT"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00047}00047\ \ \ \{TokenType::WHERE,\ \textcolor{stringliteral}{"{}WHERE"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00048}00048\ \ \ \{TokenType::FROM,\ \textcolor{stringliteral}{"{}FROM"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00049}00049\ \ \ \{TokenType::INTO,\ \textcolor{stringliteral}{"{}INTO"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00050}00050\ \ \ \{TokenType::TO,\ \textcolor{stringliteral}{"{}TO"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00051}00051\ \ \ \{TokenType::EQUAL,\ \textcolor{stringliteral}{"{}EQUAL"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00052}00052\ \ \ \{TokenType::COMMA,\ \textcolor{stringliteral}{"{}COMMA"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00053}00053\ \ \ \{TokenType::SEMICOLON,\ \textcolor{stringliteral}{"{}SEMICOLON"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00054}00054\ \ \ \{TokenType::IDENTIFIER,\ \textcolor{stringliteral}{"{}IDENTIFIER"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00055}00055\ \ \ \{TokenType::NUMBER,\ \textcolor{stringliteral}{"{}NUMBER"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00056}00056\ \ \ \{TokenType::END\_OF\_FILE,\ \textcolor{stringliteral}{"{}END\_OF\_FILE"{}}\},}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00057}00057\ \ \ \{TokenType::UNKNOWN,\ \textcolor{stringliteral}{"{}UNKNOWN"{}}\}}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00058}00058\ \};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00060}\mbox{\hyperlink{classvkdb_1_1_token}{00060}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ \{}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00061}00061\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00062}00062\ \ \ \textcolor{keyword}{using\ }size\_type\ =\ uint64\_t;}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00064}00064\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00066}00066\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}(}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00067}00067\ \ \ \ \ TokenType\ type,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00068}00068\ \ \ \ \ \textcolor{keyword}{const}\ Lexeme\&\ lexeme,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00069}00069\ \ \ \ \ size\_type\ line,}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00070}00070\ \ \ \ \ size\_type\ column}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00071}00071\ \ \ )\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00073}00073\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}(\mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00074}00074\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&\ operator=(\mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00076}00076\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00077}00077\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00079}00079\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{\string~Token}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00081}00081\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&\ other)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00082}00082\ \ \ [[nodiscard]]\ TokenType\ type()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00083}00083\ \ \ [[nodiscard]]\ Lexeme\ lexeme()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00084}00084\ \ \ [[nodiscard]]\ size\_type\ line()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00085}00085\ \ \ [[nodiscard]]\ size\_type\ column()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00086}00086\ \ \ [[nodiscard]]\ std::string\ str()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00088}00088\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00089}00089\ \ \ TokenType\ type\_;}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00090}00090\ \ \ Lexeme\ lexeme\_;}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00091}00091\ \ \ size\_type\ line\_;}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00092}00092\ \ \ size\_type\ column\_;}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00093}00093\ \};}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00094}00094\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{token_8h_source_l00096}00096\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QUERY\_TOKEN\_H}}
+
+\end{DoxyCode}

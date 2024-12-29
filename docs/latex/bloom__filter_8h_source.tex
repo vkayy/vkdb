@@ -1,0 +1,63 @@
+\doxysection{bloom\+\_\+filter.\+h}
+\hypertarget{bloom__filter_8h_source}{}\label{bloom__filter_8h_source}\index{/Users/vkay/Dev/vkdb/include/storage/vkdb/bloom\_filter.h@{/Users/vkay/Dev/vkdb/include/storage/vkdb/bloom\_filter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ STORAGE\_BLOOM\_FILTER\_H}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ STORAGE\_BLOOM\_FILTER\_H}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vkdb/murmur\_hash\_3.h>}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vkdb/time\_series\_key.h>}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <vkdb/random.h>}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00011}00011\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00012}\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{00012}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}\ \{}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00013}00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00014}00014\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\ =\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{TimeSeriesKey}};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00015}00015\ \ \ \textcolor{keyword}{using\ }size\_type\ =\ uint64\_t;}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00017}00017\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ MIN\_FALSE\_POSITIVE\_RATE\{0.0\};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00018}00018\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{double}\ MAX\_FALSE\_POSITIVE\_RATE\{1.0\};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00020}00020\ \ \ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00022}00022\ \ \ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}(std::string\&\&\ str)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00023}00023\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}(}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00024}00024\ \ \ \ \ uint64\_t\ expected\_no\_of\_elems,}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00025}00025\ \ \ \ \ \textcolor{keywordtype}{double}\ false\_positive\_rate}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00026}00026\ \ \ );}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00028}00028\ \ \ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{\string~BloomFilter}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00030}00030\ \ \ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}(\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00031}00031\ \ \ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}\&\ operator=(\mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00033}00033\ \ \ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00034}00034\ \ \ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_bloom_filter}{BloomFilter}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00036}00036\ \ \ \textcolor{keywordtype}{void}\ insert(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00038}00038\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ mayContain(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00040}00040\ \ \ [[nodiscard]]\ std::string\ str()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00042}00042\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00043}00043\ \ \ \textcolor{keyword}{using\ }HashValue\ =\ uint32\_t;}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00045}00045\ \ \ \textcolor{keywordtype}{void}\ initialise\_seeds(size\_type\ no\_of\_hashes);}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00047}00047\ \ \ [[nodiscard]]\ HashValue\ hash(}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00048}00048\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key,}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00049}00049\ \ \ \ \ size\_type\ i}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00050}00050\ \ \ )\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00052}00052\ \ \ std::vector<size\_type>\ seeds\_;}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00053}00053\ \ \ std::vector<bool>\ bits\_;}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00054}00054\ \};}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00055}00055\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{bloom__filter_8h_source_l00057}00057\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ STORAGE\_BLOOM\_FILTER\_H}}
+
+\end{DoxyCode}

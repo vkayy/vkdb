@@ -1,7 +1,7 @@
 <a id="readme-top"></a>
 
 <div align="center">
-  <img src="doc/vkdb-small.png" alt="logo" width="400" height="auto" />
+  <img src="docs/images/vkdb-rectangle.png" alt="logo" width="400" height="auto" />
   <h1>vkdb</h1>
   <p>A time series database engine built in C++ with minimal dependencies.</p>
   <a href="https://cplusplus.com/">
@@ -62,7 +62,7 @@ I wanted to challenge myself architecturally and push my boundaries with C++, bo
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-### Database engine internals
+### Database engine
 
 vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.
 
@@ -130,7 +130,7 @@ graph LR
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-### Query language internals
+### Query processing
 
 Lexing is done quite typically, with enumerated token types and line/column number stored for error messages. Initially, I directly executed queries as string streams, but that was a nightmare for robustness.
 
@@ -311,7 +311,7 @@ int main() {
 }
 ```
 
-| ![vq-playground.png](doc/vq-playground.png) | 
+| ![vq-playground.png](docs/images/vq-playground.png) | 
 |:--:| 
 | *The vq playground REPL.* |
 
@@ -367,7 +367,7 @@ DELETE rainfall 1234 FROM weather TAGS city=tokyo, unit=millimetres;
 
 There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-explanatory reasons.
 
-| ![vq-errors.png](doc/vq-errors.png) | 
+| ![vq-errors.png](docs/images/vq-errors.png) | 
 |:--:| 
 | *A parse error and a runtime error in the REPL.* |
 
@@ -439,15 +439,15 @@ Here's the EBNF grammar encapsulating vq.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-## License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
-
-<p align="right"><a href="#readme-top">back to top</a></p>
-
 ## Authors
 
 [Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me).
+
+<p align="right"><a href="#readme-top">back to top</a></p>
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 

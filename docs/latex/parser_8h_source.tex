@@ -1,0 +1,84 @@
+\doxysection{parser.\+h}
+\hypertarget{parser_8h_source}{}\label{parser_8h_source}\index{/Users/vkay/Dev/vkdb/include/query/vkdb/parser.h@{/Users/vkay/Dev/vkdb/include/query/vkdb/parser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ QUERY\_PARSER\_H}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ QUERY\_PARSER\_H}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vkdb/expr.h>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vkdb/token.h>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <vkdb/concepts.h>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00013}00013\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00014}\mbox{\hyperlink{classvkdb_1_1_parse_error}{00014}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_parse_error}{ParseError}}\ \{\};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00016}\mbox{\hyperlink{classvkdb_1_1_parser}{00016}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_parser}{Parser}}\ \{}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00017}00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00018}00018\ \ \ \textcolor{keyword}{using\ }size\_type\ =\ uint64\_t;}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00019}00019\ \ \ \textcolor{keyword}{using\ }error\_callback\ =\ std::function<void(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&,\ \textcolor{keyword}{const}\ std::string\&)>;}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00021}00021\ \ \ \mbox{\hyperlink{classvkdb_1_1_parser}{Parser}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00023}00023\ \ \ \mbox{\hyperlink{classvkdb_1_1_parser}{Parser}}(}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Token>\&\ tokens,}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00025}00025\ \ \ \ \ error\_callback\ callback\ =\ [](\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\&,\ \textcolor{keyword}{const}\ std::string\&)\ \{\}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00026}00026\ \ \ )\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00028}00028\ \ \ [[nodiscard]]\ std::optional<Expr>\ parse();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00030}00030\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00031}00031\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_parse_error}{ParseError}}\ error(\mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ token,\ \textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00032}00032\ \ \ \textcolor{keywordtype}{void}\ synchronise();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00034}00034\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ tokens\_remaining()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00035}00035\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ peek\_back()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00036}00036\ \ \ [[nodiscard]]\ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ peek()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00037}00037\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ advance()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00039}00039\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ check(TokenType\ type)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00041}00041\ \ \ \textcolor{keyword}{template}\ <AllSameNoCVRefQuals<TokenType>...\ TokenTypes>}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00042}00042\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ match(TokenTypes...\ types)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00044}00044\ \ \ \mbox{\hyperlink{classvkdb_1_1_token}{Token}}\ consume(TokenType\ type,\ \textcolor{keyword}{const}\ std::string\&\ message);}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00046}00046\ \ \ [[nodiscard]]\ Expr\ parse\_expression();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00047}00047\ \ \ [[nodiscard]]\ Query\ parse\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00048}00048\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_select_query}{SelectQuery}}\ parse\_select\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00049}00049\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_put_query}{PutQuery}}\ parse\_put\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00050}00050\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_delete_query}{DeleteQuery}}\ parse\_delete\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00051}00051\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_create_query}{CreateQuery}}\ parse\_create\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00052}00052\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_drop_query}{DropQuery}}\ parse\_drop\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00053}00053\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_add_query}{AddQuery}}\ parse\_add\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00054}00054\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_remove_query}{RemoveQuery}}\ parse\_remove\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00055}00055\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_tables_query}{TablesQuery}}\ parse\_tables\_query();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00056}00056\ \ \ [[nodiscard]]\ SelectType\ parse\_select\_type();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00057}00057\ \ \ [[nodiscard]]\ SelectClause\ parse\_select\_clause();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00058}00058\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_all_clause}{AllClause}}\ parse\_all\_clause();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00059}00059\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_between_clause}{BetweenClause}}\ parse\_between\_clause();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00060}00060\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_at_clause}{AtClause}}\ parse\_at\_clause();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00061}00061\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_where_clause}{WhereClause}}\ parse\_where\_clause();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00062}00062\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_tag_list_expr}{TagListExpr}}\ parse\_tag\_list();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00063}00063\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_tag_expr}{TagExpr}}\ parse\_tag();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00064}00064\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_tag_columns_expr}{TagColumnsExpr}}\ parse\_tag\_columns();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00065}00065\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_tag_key_expr}{TagKeyExpr}}\ parse\_tag\_key();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00066}00066\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_tag_value_expr}{TagValueExpr}}\ parse\_tag\_value();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00067}00067\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_metric_expr}{MetricExpr}}\ parse\_metric();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00068}00068\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_table_name_expr}{TableNameExpr}}\ parse\_table\_name();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00069}00069\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_timestamp_expr}{TimestampExpr}}\ parse\_timestamp();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00070}00070\ \ \ [[nodiscard]]\ \mbox{\hyperlink{structvkdb_1_1_value_expr}{ValueExpr}}\ parse\_value();}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00072}00072\ \ \ \textcolor{keyword}{const}\ std::vector<Token>\ tokens\_;}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00073}00073\ \ \ error\_callback\ callback\_;}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00074}00074\ \ \ size\_type\ position\_;}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00075}00075\ \};}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00076}00076\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{parser_8h_source_l00078}00078\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QUERY\_PARSER\_H}}
+
+\end{DoxyCode}

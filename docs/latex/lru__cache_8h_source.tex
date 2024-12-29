@@ -1,0 +1,117 @@
+\doxysection{lru\+\_\+cache.\+h}
+\hypertarget{lru__cache_8h_source}{}\label{lru__cache_8h_source}\index{/Users/vkay/Dev/vkdb/include/storage/vkdb/lru\_cache.h@{/Users/vkay/Dev/vkdb/include/storage/vkdb/lru\_cache.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ STORAGE\_LRU\_CACHE\_H}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ STORAGE\_LRU\_CACHE\_H}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vkdb/concepts.h>}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00011}00011\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00012}00012\ \textcolor{keyword}{template}\ <RegularNoCVRefQuals\ TKey,\ RegularNoCVRefQuals\ TValue>}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00013}\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{00013}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00014}00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00015}00015\ \ \ \textcolor{keyword}{using\ }key\_type\ =\ TKey;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00016}00016\ \ \ \textcolor{keyword}{using\ }mapped\_type\ =\ std::optional<TValue>;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00017}00017\ \ \ \textcolor{keyword}{using\ }value\_type\ =\ std::pair<const\ key\_type,\ mapped\_type>;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00018}00018\ \ \ \textcolor{keyword}{using\ }size\_type\ =\ uint64\_t;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00020}00020\ \ \ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}()\ noexcept}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00021}00021\ \ \ \ \ :\ capacity\_\{DEFAULT\_CAPACITY\}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00022}00022\ \ \ \ \ ,\ mutex\_\{std::make\_unique<std::mutex>()\}\ \{\}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00024}00024\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}(size\_type\ capacity)}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00025}00025\ \ \ \ \ :\ capacity\_\{capacity\}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00026}00026\ \ \ \ \ ,\ mutex\_\{std::make\_unique<std::mutex>()\}\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00027}00027\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (capacity\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument\{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}LRUCache():\ Capacity\ must\ be\ greater\ than\ 0."{}}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00031}00031\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00032}00032\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00033}00033\ \ \ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00034}00034\ \ \ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}(\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00035}00035\ \ \ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}\&\ operator=(\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00037}00037\ \ \ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00038}00038\ \ \ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00039}00039\ \ \ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00040}00040\ \ \ \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{\string~LRUCache}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00041}00041\ \ \ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00042}00042\ \ \ \textcolor{keyword}{template}\ <SameNoCVRefQuals\ <key\_type>\ K,\ std::convertible\_to<mapped\_type>\ V>}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00043}00043\ \ \ \textcolor{keywordtype}{void}\ put(K\&\&\ key,\ V\&\&\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00044}00044\ \ \ \ \ std::lock\_guard\ lock\{*mutex\_\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00045}00045\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ it\{map\_.find(key)\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ map\_.end())\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00047}00047\ \ \ \ \ \ \ it-\/>second-\/>second\ =\ std::forward<V>(value);}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00048}00048\ \ \ \ \ \ \ list\_.splice(list\_.begin(),\ list\_,\ it-\/>second);}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00049}00049\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00052}00052\ \ \ \ \ evict\_if\_needed();}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00053}00053\ \ \ \ \ list\_.emplace\_front(std::forward<K>(key),\ std::forward<V>(value));}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00054}00054\ \ \ \ \ map\_.try\_emplace(list\_.front().first,\ list\_.begin());}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00055}00055\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00057}00057\ \ \ \textcolor{keyword}{template}\ <SameNoCVRefQuals\ <key\_type>\ K>}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00058}00058\ \ \ [[nodiscard]]\ mapped\_type\ get(K\&\&\ key)\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00059}00059\ \ \ \ \ std::lock\_guard\ lock\{*mutex\_\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00060}00060\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ it\{map\_.find(std::forward<K>(key))\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00061}00061\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ map\_.end())\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00062}00062\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00063}00063\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00064}00064\ \ \ \ \ list\_.splice(list\_.begin(),\ list\_,\ it-\/>second);}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{return}\ it-\/>second-\/>second;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00066}00066\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00068}00068\ \ \ \textcolor{keyword}{template}\ <SameNoCVRefQuals\ <key\_type>\ K>}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00069}00069\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ contains(K\&\&\ key)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00070}00070\ \ \ \ \ std::lock\_guard\ lock\{*mutex\_\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00071}00071\ \ \ \ \ \textcolor{keywordflow}{return}\ map\_.find(std::forward<K>(key))\ !=\ map\_.end();}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00072}00072\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00074}00074\ \ \ [[nodiscard]]\ size\_type\ capacity()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00075}00075\ \ \ \ \ std::lock\_guard\ lock\{*mutex\_\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00076}00076\ \ \ \ \ \textcolor{keywordflow}{return}\ capacity\_;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00077}00077\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00079}00079\ \ \ [[nodiscard]]\ size\_type\ size()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00080}00080\ \ \ \ \ std::lock\_guard\ lock\{*mutex\_\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00081}00081\ \ \ \ \ \textcolor{keywordflow}{return}\ list\_.size();}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00082}00082\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00084}00084\ \ \ \textcolor{keywordtype}{void}\ clear()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00085}00085\ \ \ \ \ std::lock\_guard\ lock\{*mutex\_\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00086}00086\ \ \ \ \ list\_.clear();}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00087}00087\ \ \ \ \ map\_.clear();}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00088}00088\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00090}00090\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00091}00091\ \ \ \textcolor{keyword}{using\ }CacheList\ =\ std::list<value\_type>;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00092}00092\ \ \ \textcolor{keyword}{using\ }CacheListIter\ =\ \textcolor{keyword}{typename}\ CacheList::iterator;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00093}00093\ \ \ \textcolor{keyword}{using\ }CacheListIterMap\ =\ std::unordered\_map<key\_type,\ CacheListIter>;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00095}00095\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ size\_type\ DEFAULT\_CAPACITY\{1'000\};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00097}00097\ \ \ \textcolor{keywordtype}{void}\ evict\_if\_needed()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00098}00098\ \ \ \ \ \textcolor{keywordflow}{if}\ (list\_.size()\ ==\ capacity\_)\ \{}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00099}00099\ \ \ \ \ \ \ map\_.erase(list\_.back().first);}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00100}00100\ \ \ \ \ \ \ list\_.pop\_back();}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00101}00101\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00102}00102\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00104}00104\ \ \ size\_type\ capacity\_;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00105}00105\ \ \ CacheList\ list\_;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00106}00106\ \ \ CacheListIterMap\ map\_;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00107}00107\ \ \ \textcolor{keyword}{mutable}\ std::unique\_ptr<std::mutex>\ mutex\_;}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00108}00108\ \};}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00109}00109\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{lru__cache_8h_source_l00111}00111\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ STORAGE\_LRU\_CACHE\_H}}
+
+\end{DoxyCode}

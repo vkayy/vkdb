@@ -1,0 +1,30 @@
+\doxysection{random.\+h}
+\hypertarget{random_8h_source}{}\label{random_8h_source}\index{/Users/vkay/Dev/vkdb/include/utils/vkdb/random.h@{/Users/vkay/Dev/vkdb/include/utils/vkdb/random.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ UTILS\_RANDOM\_H}}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ UTILS\_RANDOM\_H}}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vkdb/concepts.h>}}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00007}00007\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00008}00008\ \textcolor{keyword}{template}\ <ArithmeticNoCVRefQuals\ T>}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00009}00009\ T\ random(}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00010}00010\ \ \ T\ min\ =\ std::numeric\_limits<T>::min(),}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00011}00011\ \ \ T\ max\ =\ std::numeric\_limits<T>::max()}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00012}00012\ )\ \{}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00013}00013\ \ \ std::random\_device\ rd;}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00014}00014\ \ \ std::mt19937\ gen\{rd()\};}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00015}00015\ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::integral<T>)\ \{}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00016}00016\ \ \ \ \ std::uniform\_int\_distribution<T>\ dist\{min,\ max\};}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{return}\ dist(gen);}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00018}00018\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00019}00019\ \ \ std::uniform\_real\_distribution<T>\ dist\{min,\ max\};}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00020}00020\ \ \ \textcolor{keywordflow}{return}\ dist(gen);}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00021}00021\ \}}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00022}00022\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{random_8h_source_l00024}00024\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_RANDOM\_H}}
+
+\end{DoxyCode}

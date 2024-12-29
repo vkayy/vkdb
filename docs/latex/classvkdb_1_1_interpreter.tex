@@ -1,0 +1,66 @@
+\doxysection{vkdb\+::Interpreter Class Reference}
+\hypertarget{classvkdb_1_1_interpreter}{}\label{classvkdb_1_1_interpreter}\index{vkdb::Interpreter@{vkdb::Interpreter}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_interpreter_a3274578c96d58cf94afb50ade5560a9e}{error\+\_\+callback}} = std\+::function$<$void(const \mbox{\hyperlink{classvkdb_1_1_runtime_error}{Runtime\+Error}}\&)$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvkdb_1_1_interpreter_a974497f5e5b2ad2c818c771c5ced1d24}{Interpreter}} (\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \&database, error\+\_\+callback callback=\mbox{[}$\,$\mbox{]}(const \mbox{\hyperlink{classvkdb_1_1_runtime_error}{Runtime\+Error}} \&) \{\}) noexcept
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_interpreter_a3576116aec2824e519e199952c60c904}{interpret}} (const Expr \&expr, std\+::ostream \&stream=std\+::cout) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{interpreter_8h_source_l00078}{78}} of file \mbox{\hyperlink{interpreter_8h_source}{interpreter.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classvkdb_1_1_interpreter_a3274578c96d58cf94afb50ade5560a9e}\index{vkdb::Interpreter@{vkdb::Interpreter}!error\_callback@{error\_callback}}
+\index{error\_callback@{error\_callback}!vkdb::Interpreter@{vkdb::Interpreter}}
+\doxysubsubsection{\texorpdfstring{error\_callback}{error\_callback}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_interpreter_a3274578c96d58cf94afb50ade5560a9e} 
+using vkdb\+::\+Interpreter\+::error\+\_\+callback = std\+::function$<$void(const \mbox{\hyperlink{classvkdb_1_1_runtime_error}{Runtime\+Error}}\&)$>$}
+
+
+
+Definition at line \mbox{\hyperlink{interpreter_8h_source_l00080}{80}} of file \mbox{\hyperlink{interpreter_8h_source}{interpreter.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvkdb_1_1_interpreter_a974497f5e5b2ad2c818c771c5ced1d24}\index{vkdb::Interpreter@{vkdb::Interpreter}!Interpreter@{Interpreter}}
+\index{Interpreter@{Interpreter}!vkdb::Interpreter@{vkdb::Interpreter}}
+\doxysubsubsection{\texorpdfstring{Interpreter()}{Interpreter()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_interpreter_a974497f5e5b2ad2c818c771c5ced1d24} 
+vkdb\+::\+Interpreter\+::\+Interpreter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvkdb_1_1_database}{Database}} \&}]{database}{, }\item[{error\+\_\+callback}]{callback}{ = {\ttfamily \mbox{[}\mbox{]}(const~\mbox{\hyperlink{classvkdb_1_1_runtime_error}{Runtime\+Error}}\&)~\{\}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{interpreter_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{interpreter_8cpp_source}{interpreter.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvkdb_1_1_interpreter_a3576116aec2824e519e199952c60c904}\index{vkdb::Interpreter@{vkdb::Interpreter}!interpret@{interpret}}
+\index{interpret@{interpret}!vkdb::Interpreter@{vkdb::Interpreter}}
+\doxysubsubsection{\texorpdfstring{interpret()}{interpret()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_interpreter_a3576116aec2824e519e199952c60c904} 
+void vkdb\+::\+Interpreter\+::interpret (\begin{DoxyParamCaption}\item[{const Expr \&}]{expr}{, }\item[{std\+::ostream \&}]{stream}{ = {\ttfamily std\+:\+:cout}}\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{interpreter_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{interpreter_8cpp_source}{interpreter.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/vkay/\+Dev/vkdb/include/query/vkdb/interpreter.\+h\item 
+/\+Users/vkay/\+Dev/vkdb/src/query/interpreter.\+cpp\end{DoxyCompactItemize}

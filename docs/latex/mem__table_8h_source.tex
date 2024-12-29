@@ -1,0 +1,150 @@
+\doxysection{mem\+\_\+table.\+h}
+\hypertarget{mem__table_8h_source}{}\label{mem__table_8h_source}\index{/Users/vkay/Dev/vkdb/include/storage/vkdb/mem\_table.h@{/Users/vkay/Dev/vkdb/include/storage/vkdb/mem\_table.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ STORAGE\_MEM\_TABLE\_H}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ STORAGE\_MEM\_TABLE\_H}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vkdb/concepts.h>}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <vkdb/string.h>}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <vkdb/time\_series\_key.h>}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <vkdb/data\_range.h>}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00009}00009\ \textcolor{keyword}{namespace\ }vkdb\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00010}00010\ \textcolor{keyword}{template}\ <ArithmeticNoCVRefQuals\ TValue>}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00011}\mbox{\hyperlink{classvkdb_1_1_mem_table}{00011}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00012}00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00013}00013\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\ =\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{TimeSeriesKey}};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00014}00014\ \ \ \textcolor{keyword}{using\ }mapped\_type\ =\ std::optional<TValue>;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00015}00015\ \ \ \textcolor{keyword}{using\ }value\_type\ =\ std::pair<const\ key\_type,\ mapped\_type>;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00016}00016\ \ \ \textcolor{keyword}{using\ }size\_type\ =\ uint64\_t;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00017}00017\ \ \ \textcolor{keyword}{using\ }table\_type\ =\ std::map<const\ key\_type,\ mapped\_type>;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00019}00019\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ size\_type\ MAX\_ENTRIES\{1'000\};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00021}00021\ \ \ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}()\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00022}00022\ \ \ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00023}00023\ \ \ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}(\mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00024}00024\ \ \ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\&\ operator=(\mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\&\&)\ \textcolor{keyword}{noexcept}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00025}00025\ \ \ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00026}00026\ \ \ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00027}00027\ \ \ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00029}00029\ \ \ \mbox{\hyperlink{classvkdb_1_1_mem_table}{\string~MemTable}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00031}00031\ \ \ \textcolor{keywordtype}{void}\ put(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key,\ \textcolor{keyword}{const}\ mapped\_type\&\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00032}00032\ \ \ \ \ table\_.insert\_or\_assign(key,\ value);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00033}00033\ \ \ \ \ update\_ranges(key);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00034}00034\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00036}00036\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ contains(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00037}00037\ \ \ \ \ \textcolor{keywordflow}{return}\ in\_range(key)\ \&\&\ table\_.contains(key);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00038}00038\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00040}00040\ \ \ [[nodiscard]]\ mapped\_type\ get(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{if}\ (!contains(key))\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00042}00042\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00043}00043\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{return}\ table\_.at(key);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00045}00045\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00047}00047\ \ \ [[nodiscard]]\ std::vector<value\_type>\ getRange(}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00048}00048\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ start,}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00049}00049\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ end}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00050}00050\ \ \ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{if}\ (!overlaps\_with(start,\ end))\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00052}00052\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00053}00053\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00054}00054\ \ \ \ \ std::vector<value\_type>\ entries;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ it\{table\_.lower\_bound(start)\};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ it\ !=\ table\_.end()\ \&\&\ it-\/>first\ <\ end;\ ++it)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00057}00057\ \ \ \ \ \ \ entries.push\_back(*it);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00058}00058\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{return}\ entries;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00060}00060\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00062}00062\ \ \ \textcolor{keywordtype}{void}\ clear()\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00063}00063\ \ \ \ \ table\_.clear();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00064}00064\ \ \ \ \ time\_range\_.clear();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00065}00065\ \ \ \ \ key\_range\_.clear();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00066}00066\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00068}00068\ \ \ [[nodiscard]]\ table\_type\ table()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{return}\ table\_;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00070}00070\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00072}00072\ \ \ [[nodiscard]]\ size\_type\ size()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{return}\ table\_.size();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00074}00074\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00076}00076\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ empty()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{return}\ table\_.empty();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00078}00078\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00080}00080\ \ \ [[nodiscard]]\ std::string\ str()\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00081}00081\ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00082}00082\ \ \ \ \ ss\ <<\ size();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ entry\ :\ table())\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00084}00084\ \ \ \ \ \ \ ss\ <<\ entryToString<TValue>(entry);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00085}00085\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{return}\ ss.str();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00087}00087\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00089}00089\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ fromString(\textcolor{keyword}{const}\ std::string\&\ str,\ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable}}\&\ table)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00090}00090\ \ \ \ \ std::stringstream\ ss(str);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00091}00091\ \ \ \ \ size\_type\ size;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00092}00092\ \ \ \ \ ss\ >>\ size;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00094}00094\ \ \ \ \ std::string\ entry\_str;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00095}00095\ \ \ \ \ std::getline(ss,\ entry\_str,\ \textcolor{charliteral}{'['});}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00096}00096\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(ss,\ entry\_str,\ \textcolor{charliteral}{'['}))\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00098}00098\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ [entry\_key,\ entry\_value]}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ =\ entryFromString<TValue>(std::move(entry\_str));}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00100}00100\ \ \ \ \ \ \ table.put(entry\_key,\ entry\_value);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00101}00101\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00102}00102\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00104}00104\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00105}00105\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classvkdb_1_1_data_range}{TimeRange}}\ =\ \mbox{\hyperlink{classvkdb_1_1_data_range}{DataRange<Timestamp>}};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00106}00106\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classvkdb_1_1_data_range}{KeyRange}}\ =\ \mbox{\hyperlink{classvkdb_1_1_data_range}{DataRange<key\_type>}};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00108}00108\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ in\_range(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{return}\ time\_range\_.inRange(key.timestamp())\ \&\&\ key\_range\_.inRange(key);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00110}00110\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00112}00112\ \ \ \textcolor{keywordtype}{void}\ update\_ranges(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ key)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00113}00113\ \ \ \ \ time\_range\_.updateRange(key.timestamp());}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00114}00114\ \ \ \ \ key\_range\_.updateRange(key);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00115}00115\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00117}00117\ \ \ [[nodiscard]]\ \textcolor{keywordtype}{bool}\ overlaps\_with(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ start,}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_time_series_key}{key\_type}}\&\ end)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00119}00119\ \ \ \ \ \textcolor{keywordflow}{return}\ time\_range\_.overlaps\_with(start.timestamp(),\ end.timestamp())}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00120}00120\ \ \ \ \ \ \ ||\ key\_range\_.overlaps\_with(start,\ end);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00121}00121\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00123}00123\ \ \ \mbox{\hyperlink{classvkdb_1_1_data_range}{TimeRange}}\ time\_range\_;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00124}00124\ \ \ \mbox{\hyperlink{classvkdb_1_1_data_range}{KeyRange}}\ key\_range\_;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00125}00125\ \ \ table\_type\ table\_;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00126}00126\ \};}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00128}00128\ \textcolor{keyword}{template}\ <ArithmeticNoCVRefQuals\ TValue>}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00129}00129\ std::ostream\&\ operator<<(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvkdb_1_1_mem_table}{MemTable<TValue>}}\&\ table)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00130}00130\ \ \ os\ <<\ table.str();}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00131}00131\ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00132}00132\ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00134}00134\ \textcolor{keyword}{template}\ <ArithmeticNoCVRefQuals\ TValue>}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00135}00135\ std::istream\&\ operator>>(std::istream\&\ is,\ MemTable<TValue>\&\ table)\ \{}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00136}00136\ \ \ std::string\ str;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00137}00137\ \ \ is\ >>\ str;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00138}00138\ \ \ MemTable<TValue>::fromString(str,\ table);}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00139}00139\ \ \ \textcolor{keywordflow}{return}\ is;}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00140}00140\ \}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00141}00141\ \}\ \ \textcolor{comment}{//\ namespace\ vkdb}}
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{mem__table_8h_source_l00144}00144\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ STORAGE\_MEM\_TABLE\_H}}
+
+\end{DoxyCode}

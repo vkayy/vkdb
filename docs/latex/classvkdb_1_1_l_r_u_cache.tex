@@ -1,0 +1,200 @@
+\doxysection{vkdb\+::LRUCache\texorpdfstring{$<$}{<} TKey, TValue \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classvkdb_1_1_l_r_u_cache}{}\label{classvkdb_1_1_l_r_u_cache}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_ace5477a310f56e8aeaabc339606e0389}{key\+\_\+type}} = TKey
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_a835292c05b1050769904dee56999d53d}{mapped\+\_\+type}} = std\+::optional$<$TValue$>$
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_a2fcc3444db7494dc4cd45f69dcb8ef96}{value\+\_\+type}} = std\+::pair$<$const key\+\_\+type, mapped\+\_\+type$>$
+\item 
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_ad971ea29551a39136516fa83294721af}{size\+\_\+type}} = uint64\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_ab09f0ba573801abe9d5f988c63d2ed67}{LRUCache}} (size\+\_\+type capacity)
+\item 
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a6eab60de7fc99e968358579904ec12b3}\label{classvkdb_1_1_l_r_u_cache_a6eab60de7fc99e968358579904ec12b3} 
+{\bfseries LRUCache} (\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a732a8cca480e71d75cc034b6e6f8bee3}\label{classvkdb_1_1_l_r_u_cache_a732a8cca480e71d75cc034b6e6f8bee3} 
+\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}} \& {\bfseries operator=} (\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}} \&\&) noexcept=default
+\item 
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a86047155c81f8e8cac064c5ec441f8f0}\label{classvkdb_1_1_l_r_u_cache_a86047155c81f8e8cac064c5ec441f8f0} 
+{\bfseries LRUCache} (const \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}} \&)=delete
+\item 
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a589e089046f9b5abadcef9eccfd20a20}\label{classvkdb_1_1_l_r_u_cache_a589e089046f9b5abadcef9eccfd20a20} 
+\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{LRUCache}} \&)=delete
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{Same\+No\+CVRef\+Quals}}$<$ key\+\_\+type $>$ K, std\+::convertible\+\_\+to$<$ mapped\+\_\+type $>$ V$>$ }\\void \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_a6e5fb7f9449ab7d55c8ed07ffb1251f6}{put}} (K \&\&key, V \&\&value)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{Same\+No\+CVRef\+Quals}}$<$ key\+\_\+type $>$ K$>$ }\\mapped\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_a92d9f8903452afee83b631841b68a02d}{get}} (K \&\&key)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{Same\+No\+CVRef\+Quals}}$<$ key\+\_\+type $>$ K$>$ }\\bool \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_a81bb3ed03a1dea44e4c226b6f298c42d}{contains}} (K \&\&key) const noexcept
+\item 
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_a9cc82a7267cf78debcecf5fe254cebf6}{capacity}} () const noexcept
+\item 
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_a98d9cb8237fa210031d74014c017b38b}{size}} () const noexcept
+\item 
+void \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache_aca58528e9de3d1ed92bd6909ca2947ee}{clear}} () noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$\newline
+class vkdb\+::\+LRUCache$<$ TKey, TValue $>$}
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00013}{13}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classvkdb_1_1_l_r_u_cache_ace5477a310f56e8aeaabc339606e0389}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!key\_type@{key\_type}}
+\index{key\_type@{key\_type}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{key\_type}{key\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_ace5477a310f56e8aeaabc339606e0389} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::key\+\_\+type = TKey}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00015}{15}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a835292c05b1050769904dee56999d53d}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!mapped\_type@{mapped\_type}}
+\index{mapped\_type@{mapped\_type}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{mapped\_type}{mapped\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a835292c05b1050769904dee56999d53d} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::mapped\+\_\+type = std\+::optional$<$TValue$>$}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00016}{16}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_ad971ea29551a39136516fa83294721af}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!size\_type@{size\_type}}
+\index{size\_type@{size\_type}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{size\_type}{size\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_ad971ea29551a39136516fa83294721af} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::size\+\_\+type = uint64\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00018}{18}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a2fcc3444db7494dc4cd45f69dcb8ef96}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!value\_type@{value\_type}}
+\index{value\_type@{value\_type}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{value\_type}{value\_type}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a2fcc3444db7494dc4cd45f69dcb8ef96} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+using \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::value\+\_\+type = std\+::pair$<$const key\+\_\+type, mapped\+\_\+type$>$}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00017}{17}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a45fe9a56ab3fe704fa1562da23385c00}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!LRUCache@{LRUCache}}
+\index{LRUCache@{LRUCache}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{LRUCache()}{LRUCache()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a45fe9a56ab3fe704fa1562da23385c00} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::\+LRUCache (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00020}{20}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_ab09f0ba573801abe9d5f988c63d2ed67}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!LRUCache@{LRUCache}}
+\index{LRUCache@{LRUCache}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{LRUCache()}{LRUCache()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_ab09f0ba573801abe9d5f988c63d2ed67} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+\mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::\+LRUCache (\begin{DoxyParamCaption}\item[{size\+\_\+type}]{capacity}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00024}{24}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a9cc82a7267cf78debcecf5fe254cebf6}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!capacity@{capacity}}
+\index{capacity@{capacity}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{capacity()}{capacity()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a9cc82a7267cf78debcecf5fe254cebf6} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::capacity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00074}{74}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_aca58528e9de3d1ed92bd6909ca2947ee}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!clear@{clear}}
+\index{clear@{clear}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_aca58528e9de3d1ed92bd6909ca2947ee} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+void \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00084}{84}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a81bb3ed03a1dea44e4c226b6f298c42d}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!contains@{contains}}
+\index{contains@{contains}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a81bb3ed03a1dea44e4c226b6f298c42d} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+template$<$\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{Same\+No\+CVRef\+Quals}}$<$ key\+\_\+type $>$ K$>$ \\
+bool \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::contains (\begin{DoxyParamCaption}\item[{K \&\&}]{key}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00069}{69}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a92d9f8903452afee83b631841b68a02d}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!get@{get}}
+\index{get@{get}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a92d9f8903452afee83b631841b68a02d} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+template$<$\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{Same\+No\+CVRef\+Quals}}$<$ key\+\_\+type $>$ K$>$ \\
+mapped\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::get (\begin{DoxyParamCaption}\item[{K \&\&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00058}{58}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a6e5fb7f9449ab7d55c8ed07ffb1251f6}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!put@{put}}
+\index{put@{put}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a6e5fb7f9449ab7d55c8ed07ffb1251f6} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+template$<$\mbox{\hyperlink{concept_same_no_c_v_ref_quals}{Same\+No\+CVRef\+Quals}}$<$ key\+\_\+type $>$ K, std\+::convertible\+\_\+to$<$ mapped\+\_\+type $>$ V$>$ \\
+void \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::put (\begin{DoxyParamCaption}\item[{K \&\&}]{key}{, }\item[{V \&\&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00043}{43}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+\Hypertarget{classvkdb_1_1_l_r_u_cache_a98d9cb8237fa210031d74014c017b38b}\index{vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}!size@{size}}
+\index{size@{size}!vkdb::LRUCache$<$ TKey, TValue $>$@{vkdb::LRUCache$<$ TKey, TValue $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{classvkdb_1_1_l_r_u_cache_a98d9cb8237fa210031d74014c017b38b} 
+template$<$\mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TKey, \mbox{\hyperlink{concept_regular_no_c_v_ref_quals}{Regular\+No\+CVRef\+Quals}} TValue$>$ \\
+size\+\_\+type \mbox{\hyperlink{classvkdb_1_1_l_r_u_cache}{vkdb\+::\+LRUCache}}$<$ TKey, TValue $>$\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{lru__cache_8h_source_l00079}{79}} of file \mbox{\hyperlink{lru__cache_8h_source}{lru\+\_\+cache.\+h}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/vkay/\+Dev/vkdb/include/storage/vkdb/lru\+\_\+cache.\+h\end{DoxyCompactItemize}
