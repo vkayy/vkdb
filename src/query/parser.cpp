@@ -8,7 +8,7 @@ Parser::Parser(
 ) noexcept
   : tokens_{tokens}, callback_{callback}, position_{0} {}
 
-std::optional<Expr> Parser::parse() {
+std::optional<Expr> Parser::parse() noexcept {
   try {
     return parse_expression();
   } catch (const ParseError&) {

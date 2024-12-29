@@ -25,7 +25,7 @@ public:
     error_callback callback = [](const Token&, const std::string&) {}
   ) noexcept;
 
-  [[nodiscard]] std::optional<Expr> parse();
+  [[nodiscard]] std::optional<Expr> parse() noexcept;
 
 private:
   [[nodiscard]] ParseError error(Token token, const std::string& message);

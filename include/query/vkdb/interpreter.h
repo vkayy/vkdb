@@ -84,7 +84,10 @@ public:
     error_callback callback = [](const RuntimeError&) {}
   ) noexcept;
 
-  void interpret(const Expr& expr, std::ostream& stream = std::cout) const;
+  void interpret(
+    const Expr& expr,
+    std::ostream& stream = std::cout
+  ) const noexcept;
 
 private:
   [[nodiscard]] std::string to_string(const OutputResult& result) const;

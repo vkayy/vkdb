@@ -68,7 +68,7 @@ std::vector<TableName> Database::tables() const noexcept {
 Database& Database::run(
   const std::string& source,
   std::ostream& stream
-) {
+) noexcept {
   Lexer lexer{source};
   auto tokens{lexer.tokenize()};
 
@@ -92,7 +92,7 @@ Database& Database::run(
 Database& Database::runFile(
   const std::filesystem::path path,
   std::ostream& stream
-) {
+) noexcept {
   if (path.extension() != ".vq") {
     std::cerr << "\033[1;32mDatabase::runFile(): File extension cannot be "
     << path.extension() << ", must be .vq.\033[0m\n";
@@ -119,7 +119,7 @@ Database& Database::runFile(
   return *this;
 }
 
-Database& Database::runPrompt() {
+Database& Database::runPrompt() noexcept {
   std::cout << "\033[1;31mwelcome to the vq repl! :)\033[0m\n";
   std::cout << "\033[1;31m(on database '" << name_ << "')\033[0m\n";
   std::string line;
@@ -134,7 +134,7 @@ Database& Database::runPrompt() {
   return *this;
 }
 
-void Database::error(Token token, const std::string& message) {
+void Database::error(Token token, const std::string& message) noexcept {
   if (token.type() == TokenType::END_OF_FILE) {
     report(token.line(), "at end", message);
   } else {
@@ -143,7 +143,7 @@ void Database::error(Token token, const std::string& message) {
   had_error_ = true;
 }
 
-void Database::runtime_error(const RuntimeError& error) {
+void Database::runtime_error(const RuntimeError& error) noexcept {
   std::cerr << "\033[1;32m[line " << error.token().line();
   std::cerr << "] Runtime error: " << error.message() << "\033[0m\n";
   had_runtime_error_ = true;
@@ -153,7 +153,7 @@ void Database::report(
   size_type line,
   const std::string& where,
   const std::string& message
-) {
+) const noexcept {
   std::cerr << "\033[1;32m[line " << line << "] Parse error ";
   std::cerr << where << ": " << message << "\033[0m\n";
 }

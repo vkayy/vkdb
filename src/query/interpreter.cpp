@@ -16,7 +16,10 @@ std::string RuntimeError::message() const {
 Interpreter::Interpreter(Database& database, error_callback callback) noexcept
   : database_{database}, callback_{callback} {}
 
-void Interpreter::interpret(const Expr& expr, std::ostream& stream) const {
+void Interpreter::interpret(
+  const Expr& expr,
+  std::ostream& stream
+) const noexcept {
   try {
     auto results{visit(expr)};
     for (const auto& result : results) {
