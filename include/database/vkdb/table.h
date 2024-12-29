@@ -141,6 +141,7 @@ public:
 
     /**
      * @brief Check if the table has been populated.
+     * @details Checks if the storage engine is not empty.
      * 
      * @return true If the table has been populated.
      * @return false If the table has not been populated.
