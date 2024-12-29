@@ -72,61 +72,7 @@ It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` ty
 
 Also, one important thing to note is that all database files will be stored in `vkdb::DATABASE_DIRECTORY`; you shouldn't tamper with this directory nor the files in it.
 
-```mermaid
-graph LR
-    classDef uiLayer fill:#404040,stroke:#fff,color:#fff
-    classDef memoryLayer fill:#404040,stroke:#fff,color:#fff
-    classDef diskLayer fill:#404040,stroke:#fff,color:#fff
-
-    subgraph userInterface[User Interface]
-        database[Database]:::uiLayer
-        table[Table]:::uiLayer
-    end
-
-    subgraph memoryLayer[Memory Layer]
-        direction LR
-        c0Layer[C0 Layer]:::memoryLayer
-        memtable[Memtable]:::memoryLayer
-        timestampRangeM[Timestamp Range]:::memoryLayer
-        keyRangeM[Key Range]:::memoryLayer
-        lruCache[LRU Cache]:::memoryLayer
-
-        subgraph metadata[ ]
-            direction TB
-            sstableMetadata[SSTable Metadata]:::memoryLayer
-            index[Index]:::memoryLayer
-            timestampRangeS[Timestamp Range]:::memoryLayer
-            keyRangeS[Key Range]:::memoryLayer
-            bloomFilter[Bloom Filter]:::memoryLayer
-        end
-
-        c0Layer --> memtable
-        memtable --> timestampRangeM
-        memtable --> keyRangeM
-        sstableMetadata --> index
-        sstableMetadata --> timestampRangeS
-        sstableMetadata --> keyRangeS
-        sstableMetadata --> bloomFilter
-    end
-
-    subgraph diskLayer[Disk Layer]
-        direction LR
-        ckLayers[Ck Layers]:::diskLayer
-        ssTables[SSTables]:::diskLayer
-        writeAheadLog[Write-Ahead Log]:::diskLayer
-
-        ckLayers --> ssTables
-        ssTables --> sstableMetadata
-    end
-
-    database --> table
-    table --> lsmTree[LSM Tree]
-
-    lsmTree --> lruCache
-    lsmTree --> writeAheadLog
-    lsmTree --> c0Layer
-    lsmTree --> ckLayers
-```
+![database engine internals](docs/images/database-engine-internals.png)
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
@@ -138,57 +84,7 @@ In terms of parsing, vq has been constructed to have an LL(1) grammar—this mea
 
 Finally, the interpreter makes quick use of the AST via the visitor pattern, built into C++ with `std::variant` (mentioned earlier) and `std::visit`. This ended up making the interpreter (and pretty-printer) very satisfying to write.
 
-```mermaid
-graph LR
-    classDef inputLayer fill:#404040,stroke:#fff,color:#fff
-    classDef lexicalLayer fill:#404040,stroke:#fff,color:#fff
-    classDef syntacticLayer fill:#404040,stroke:#fff,color:#fff
-    classDef semanticLayer fill:#404040,stroke:#fff,color:#fff
-    classDef outputLayer fill:#404040,stroke:#fff,color:#fff
-
-    subgraph Input
-        sourceCode[Source Code]:::inputLayer
-    end
-
-    subgraph LexicalAnalysis[Lexical Analysis]
-        lexer[Lexer]:::lexicalLayer
-        tokens[Tokens]:::lexicalLayer
-        tokenType[Type]:::lexicalLayer
-        lineNo[Line Number]:::lexicalLayer
-        columnNo[Column Number]:::lexicalLayer
-        lexeme[Lexeme]:::lexicalLayer
-        lexer --> tokens
-        tokenType -.-> tokens
-        lineNo -.-> tokens
-        columnNo -.-> tokens
-        lexeme -.-> tokens
-    end
-
-    subgraph SyntacticAnalysis[Syntactic Analysis]
-        parser[Recursive Descent Parser]:::syntacticLayer
-        ast[Abstract Syntax Tree]:::syntacticLayer
-        variant[std::variant]:::syntacticLayer
-        parser --> ast
-        variant -.-> ast
-    end
-
-    subgraph SemanticAnalysis[Semantic Analysis]
-        interpreter[Interpreter]:::semanticLayer
-        visitor[Visitor Pattern]:::semanticLayer
-        stdVisit[std::visit]:::semanticLayer
-        visitor -.-> interpreter
-        stdVisit -.-> visitor
-    end
-
-    subgraph output[Output]
-        result[Result]:::outputLayer
-    end
-
-    sourceCode --> lexer
-    tokens --> parser
-    ast --> interpreter
-    interpreter --> result
-```
+![database engine internals](docs/images/query-processing-internals.png)
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
