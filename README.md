@@ -449,7 +449,7 @@ Documentation: [vkdb](https://vkayy.github.io/vkdb)
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/vkayy/vkdb/blob/main/LICENSE) for more information.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
