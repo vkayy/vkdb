@@ -10,11 +10,20 @@ class LSMTree;
 template <ArithmeticNoCVRefQuals TValue>
 class WriteAheadLog;
 
+/**
+ * @brief Type of WAL record.
+ * 
+ */
 enum class WALRecordType {
   PUT,
   REMOVE
 };
 
+/**
+ * @brief Represents a WAL record.
+ * 
+ * @tparam TValue Value type.
+ */
 template <ArithmeticNoCVRefQuals TValue>
 struct WALRecord {
   WALRecordType type;

@@ -8,6 +8,15 @@
 #include <iostream>
 
 namespace vkdb {
+/**
+ * @brief Convert a string to a TimeSeriesEntry.
+ * 
+ * @tparam TValue Value type.
+ * @param entry String representation.
+ * @return TimeSeriesEntry<TValue> Entry.
+ * 
+ * @throw std::exception If the string representation is invalid.
+ */
 template <ArithmeticNoCVRefQuals TValue>
 TimeSeriesEntry<TValue> entryFromString(std::string&& entry) {
   auto sep{entry.find('|')};
@@ -27,6 +36,15 @@ TimeSeriesEntry<TValue> entryFromString(std::string&& entry) {
   return {entry_key, entry_value};
 }
 
+/**
+ * @brief Convert a TimeSeriesEntry to a string.
+ * 
+ * @tparam TValue Value type. 
+ * @param entry Entry.
+ * @return std::string String representation.
+ * 
+ * @throw std::exception If the entry is invalid.
+ */
 template <ArithmeticNoCVRefQuals TValue>
 std::string entryToString(const TimeSeriesEntry<TValue>& entry) {
   std::stringstream ss;
@@ -40,22 +58,15 @@ std::string entryToString(const TimeSeriesEntry<TValue>& entry) {
   return ss.str();
 }
 
-template <ArithmeticNoCVRefQuals TValue>
-std::string datapointsToString(
-  const std::vector<DataPoint<TValue>>& datapoints
-) {
-  std::ostringstream output;
-  output << "[";
-  for (const auto& datapoint : datapoints) {
-    TimeSeriesKey key{datapoint.timestamp, datapoint.metric, datapoint.tags};
-    TimeSeriesEntry<TValue> entry{key, datapoint.value};
-    output << entryToString(entry) << ";";
-  }
-  output.seekp(-!datapoints.empty(), std::ios_base::end);
-  output << "]";
-  return output.str();
-}
-
+/**
+ * @brief Convert a string to a vector of datapoints.
+ * 
+ * @tparam TValue Value type.
+ * @param datapoints String representation.
+ * @return std::vector<DataPoint<TValue>> Datapoints.
+ * 
+ * @throw std::exception If the string representation is invalid.
+ */
 template <ArithmeticNoCVRefQuals TValue>
 std::vector<DataPoint<TValue>> datapointsFromString(
   const std::string& datapoints
@@ -74,6 +85,31 @@ std::vector<DataPoint<TValue>> datapointsFromString(
     });
   }
   return result;
+}
+
+/**
+ * @brief Convert a vector of datapoints to a string.
+ * 
+ * @tparam TValue Value type.
+ * @param datapoints Datapoints.
+ * @return std::string String representation.
+ * 
+ * @throw std::exception If any entry is invalid.
+ */
+template <ArithmeticNoCVRefQuals TValue>
+std::string datapointsToString(
+  const std::vector<DataPoint<TValue>>& datapoints
+) {
+  std::ostringstream output;
+  output << "[";
+  for (const auto& datapoint : datapoints) {
+    TimeSeriesKey key{datapoint.timestamp, datapoint.metric, datapoint.tags};
+    TimeSeriesEntry<TValue> entry{key, datapoint.value};
+    output << entryToString(entry) << ";";
+  }
+  output.seekp(-!datapoints.empty(), std::ios_base::end);
+  output << "]";
+  return output.str();
 }
 }  // namespace vkdb
 

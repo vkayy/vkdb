@@ -5,6 +5,16 @@
 #include <vkdb/concepts.h>
 
 namespace vkdb {
+/**
+ * @brief Generate a random number.
+ * @details Minimum and maximum values are inclusive, defaulting to
+ * the minimum and maximum values of the number type.
+ * 
+ * @tparam T Number type.
+ * @param min Minimum value.
+ * @param max Maximum value.
+ * @return T Random number.
+ */
 template <ArithmeticNoCVRefQuals T>
 T random(
   T min = std::numeric_limits<T>::min(),
