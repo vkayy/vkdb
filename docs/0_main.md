@@ -7,7 +7,6 @@
 [![license](https://img.shields.io/github/license/vkayy/vkdb.svg)](https://github.com/vkayy/vkdb/blob/main/LICENSE)
 [![stars](https://img.shields.io/github/stars/vkayy/vkdb)](https://github.com/vkayy/vkdb/stargazers)
 [![forks](https://img.shields.io/github/forks/vkayy/vkdb)](https://github.com/vkayy/vkdb/network/members)
-
 ```cpp
 #include <vkdb/database.h>
 
@@ -19,21 +18,20 @@ int main() {
 
 **vkdb** is a time series database engine built in C++ with minimal dependencies.
 
-### Motivation
+#### Motivation
 
 I wanted to challenge myself architecturally and push my boundaries with C++, both in terms of knowledge and performance.
 
-### Links
+#### Links
 
 Author: [Vinz Kakilala](https://linkedin.com/in/vinzkakilala)
 
 Project Link: [vkdb](https://github.com/vkayy/vkdb)
 
-
-### License
+#### License
 
 Distributed under the MIT License. See [LICENSE](https://github.com/vkayy/vkdb/blob/main/LICENSE) for more information.
 
-### Credits
+#### Credits
 
 Used [MurmurHash3](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp) for the Bloom filters. Fast, uniform, and deterministic.
