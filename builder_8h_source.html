@@ -106,408 +106,410 @@ $(document).ready(function(){initNavTree('builder_8h_source.html',''); initResiz
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;vkdb/lsm_tree.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;variant&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;ranges&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;unordered_set&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>vkdb {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">using </span>TagColumns = std::unordered_set&lt;TagKey&gt;;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">template</span> &lt;ArithmeticNoCVRefQuals TValue&gt;</div>
-<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html">   23</a></span><span class="keyword">class </span><a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">using </span><a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a> = <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">using </span>mapped_type = std::optional&lt;TValue&gt;;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">using </span>valuetype = std::pair&lt;const keytype, mapped_type&gt;;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">using </span>size_type = uint64_t;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">using </span>result_type = std::vector&lt;valuetype&gt;;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#aeb2b04770c683182feba75857649c787">   35</a></span>  <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#aeb2b04770c683182feba75857649c787">QueryBuilder</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#af30c289ecad701a250f538f20601519a">   45</a></span>  <span class="keyword">explicit</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#af30c289ecad701a250f538f20601519a">QueryBuilder</a>(</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <a class="code hl_class" href="classvkdb_1_1LSMTree.html">LSMTree&lt;TValue&gt;</a>&amp; lsm_tree,</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">const</span> TagColumns&amp; tag_columns</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  ) noexcept</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    : lsm_tree_{lsm_tree}</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    , tag_columns_{tag_columns}</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    , query_type_{QueryType::NONE}</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    , filters_{TRUE_TIME_SERIES_KEY_FILTER} {}</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;ranges&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;unordered_set&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>vkdb {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">using </span>TagColumns = std::unordered_set&lt;TagKey&gt;;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">template</span> &lt;ArithmeticNoCVRefQuals TValue&gt;</div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html">   25</a></span><span class="keyword">class </span><a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">using </span><a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a> = <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">using </span>mapped_type = std::optional&lt;TValue&gt;;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">using </span>valuetype = std::pair&lt;const keytype, mapped_type&gt;;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keyword">using </span>size_type = uint64_t;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keyword">using </span>result_type = std::vector&lt;valuetype&gt;;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#aeb2b04770c683182feba75857649c787">   37</a></span>  <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#aeb2b04770c683182feba75857649c787">QueryBuilder</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#af30c289ecad701a250f538f20601519a">   47</a></span>  <span class="keyword">explicit</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#af30c289ecad701a250f538f20601519a">QueryBuilder</a>(</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_class" href="classvkdb_1_1LSMTree.html">LSMTree&lt;TValue&gt;</a>&amp; lsm_tree,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">const</span> TagColumns&amp; tag_columns</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  ) noexcept</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    : lsm_tree_{lsm_tree}</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    , tag_columns_{tag_columns}</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    , query_type_{QueryType::NONE}</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    , filters_{TRUE_TIME_SERIES_KEY_FILTER} {}</div>
 </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#ae1fe0f75ca012ed0f0abc1b6a2ea3222">   58</a></span>  <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ae1fe0f75ca012ed0f0abc1b6a2ea3222">QueryBuilder</a>(<a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;&amp;) noexcept = default;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a99d1d1caf9858d12837023cff8413df0">   64</a></span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; operator=(<a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;&amp;) noexcept = default;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#acab4dda69538bddcfe4594a255656df1">   70</a></span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>(const <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;) noexcept = default;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a6ea95753afa72c275e5922a9ddcdcef6">   76</a></span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; operator=(const <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;) noexcept = default;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a4800a264819c63a0101502c33057c19c">   82</a></span>  ~<a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>() noexcept = default;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a5d1dc75f4de08940cf22b4484077b767">   94</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a5d1dc75f4de08940cf22b4484077b767">point</a>(const <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; key) {</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    validate_tags(key.tags());</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    set_query_type(QueryType::POINT);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    query_params_ = QueryParams{PointParams{key}};</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#ae1fe0f75ca012ed0f0abc1b6a2ea3222">   60</a></span>  <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ae1fe0f75ca012ed0f0abc1b6a2ea3222">QueryBuilder</a>(<a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;&amp;) noexcept = default;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a99d1d1caf9858d12837023cff8413df0">   66</a></span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; operator=(<a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;&amp;) noexcept = default;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#acab4dda69538bddcfe4594a255656df1">   72</a></span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>(const <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;) noexcept = default;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a6ea95753afa72c275e5922a9ddcdcef6">   78</a></span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; operator=(const <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp;) noexcept = default;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a4800a264819c63a0101502c33057c19c">   84</a></span>  ~<a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>() noexcept = default;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a5d1dc75f4de08940cf22b4484077b767">   96</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a5d1dc75f4de08940cf22b4484077b767">point</a>(const <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; key) {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    validate_tags(key.tags());</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    set_query_type(QueryType::POINT);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    query_params_ = QueryParams{PointParams{key}};</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  }</div>
 </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="foldopen" id="foldopen00113" data-start="{" data-end="}">
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">  113</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; start, <span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; end) {</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    validate_tags(start.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    validate_tags(end.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    set_query_type(QueryType::RANGE);</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    query_params_ = QueryParams{RangeParams{start, end}};</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="foldopen" id="foldopen00115" data-start="{" data-end="}">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">  115</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; start, <span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; end) {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    validate_tags(start.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    validate_tags(end.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    set_query_type(QueryType::RANGE);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    query_params_ = QueryParams{RangeParams{start, end}};</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  }</div>
 </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
-<div class="foldopen" id="foldopen00132" data-start="{" data-end="}">
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#aaf0079988613acf608dc3d754dcfcceb">  132</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#aaf0079988613acf608dc3d754dcfcceb">filterByTag</a>(</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keyword">const</span> TagKey&amp; key,</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">const</span> TagValue&amp; value</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  ) {</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    validate_tags(Tag{key, value});</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    add_filter([key, value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>      <span class="keywordflow">return</span> k.tags().contains(key) &amp;&amp; k.tags().at(key) == value;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    });</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="foldopen" id="foldopen00134" data-start="{" data-end="}">
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#aaf0079988613acf608dc3d754dcfcceb">  134</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#aaf0079988613acf608dc3d754dcfcceb">filterByTag</a>(</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keyword">const</span> TagKey&amp; key,</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keyword">const</span> TagValue&amp; value</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  ) {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    validate_tags(Tag{key, value});</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    add_filter([key, value](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>      <span class="keywordflow">return</span> k.tags().contains(key) &amp;&amp; k.tags().at(key) == value;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    });</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  }</div>
 </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
-<div class="foldopen" id="foldopen00155" data-start="{" data-end="}">
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#aee1c6c5a227a656775644e74f6a95090">  155</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#aee1c6c5a227a656775644e74f6a95090">filterByAnyTags</a>(<span class="keyword">const</span> Tags&amp;... tags) {</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    validate_tags(tags...);</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    add_filter([tags...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>      return ((k.tags().contains(tags.first) &amp;&amp;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>               k.tags().at(tags.first) == tags.second) || ...);</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    });</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  }</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
+<div class="foldopen" id="foldopen00157" data-start="{" data-end="}">
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#aee1c6c5a227a656775644e74f6a95090">  157</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#aee1c6c5a227a656775644e74f6a95090">filterByAnyTags</a>(<span class="keyword">const</span> Tags&amp;... tags) {</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    validate_tags(tags...);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    add_filter([tags...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>      return ((k.tags().contains(tags.first) &amp;&amp;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>               k.tags().at(tags.first) == tags.second) || ...);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    });</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  }</div>
 </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
-<div class="foldopen" id="foldopen00176" data-start="{" data-end="}">
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a3c93b78a85ee16e3d7ecbc4b0f567190">  176</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a3c93b78a85ee16e3d7ecbc4b0f567190">filterByAllTags</a>(<span class="keyword">const</span> Tags&amp;... tags) {</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    validate_tags(tags...);</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    add_filter([tags...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>      return ((k.tags().contains(tags.first) &amp;&amp;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>               k.tags().at(tags.first) == tags.second) &amp;&amp; ...);</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    });</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  }</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
+<div class="foldopen" id="foldopen00178" data-start="{" data-end="}">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a3c93b78a85ee16e3d7ecbc4b0f567190">  178</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a3c93b78a85ee16e3d7ecbc4b0f567190">filterByAllTags</a>(<span class="keyword">const</span> Tags&amp;... tags) {</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    validate_tags(tags...);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    add_filter([tags...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>      return ((k.tags().contains(tags.first) &amp;&amp;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>               k.tags().at(tags.first) == tags.second) &amp;&amp; ...);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    });</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  }</div>
 </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
-<div class="foldopen" id="foldopen00195" data-start="{" data-end="}">
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a49086e8774802b9c2669f9fc5436d029">  195</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a49086e8774802b9c2669f9fc5436d029">filterByMetric</a>(<span class="keyword">const</span> Metric&amp; metric) {</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    add_filter([metric](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>      <span class="keywordflow">return</span> k.metric() == metric;</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    });</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  }</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="foldopen" id="foldopen00197" data-start="{" data-end="}">
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a49086e8774802b9c2669f9fc5436d029">  197</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a49086e8774802b9c2669f9fc5436d029">filterByMetric</a>(<span class="keyword">const</span> Metric&amp; metric) {</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    add_filter([metric](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>      <span class="keywordflow">return</span> k.metric() == metric;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    });</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>  }</div>
 </div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Metric&gt;... Metrics&gt;</div>
-<div class="foldopen" id="foldopen00214" data-start="{" data-end="}">
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a6c37c198ed3d0094160481f7195f1fcb">  214</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a6c37c198ed3d0094160481f7195f1fcb">filterByAnyMetrics</a>(<span class="keyword">const</span> Metrics&amp;... metrics) {</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    add_filter([metrics...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>      return ((k.metric() == metrics) || ...);</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    });</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>  }</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Metric&gt;... Metrics&gt;</div>
+<div class="foldopen" id="foldopen00216" data-start="{" data-end="}">
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a6c37c198ed3d0094160481f7195f1fcb">  216</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a6c37c198ed3d0094160481f7195f1fcb">filterByAnyMetrics</a>(<span class="keyword">const</span> Metrics&amp;... metrics) {</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    add_filter([metrics...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>      return ((k.metric() == metrics) || ...);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    });</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>  }</div>
 </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
-<div class="foldopen" id="foldopen00231" data-start="{" data-end="}">
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#af2f5f2c9ca2f48576faeb30da18aceb8">  231</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#af2f5f2c9ca2f48576faeb30da18aceb8">filterByTimestamp</a>(<span class="keyword">const</span> Timestamp&amp; timestamp) {</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    add_filter([timestamp](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>      <span class="keywordflow">return</span> k.timestamp() == timestamp;</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    });</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>  }</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
+<div class="foldopen" id="foldopen00233" data-start="{" data-end="}">
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#af2f5f2c9ca2f48576faeb30da18aceb8">  233</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#af2f5f2c9ca2f48576faeb30da18aceb8">filterByTimestamp</a>(<span class="keyword">const</span> Timestamp&amp; timestamp) {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    add_filter([timestamp](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>      <span class="keywordflow">return</span> k.timestamp() == timestamp;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    });</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>  }</div>
 </div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Timestamp&gt;... Timestamps&gt;</div>
-<div class="foldopen" id="foldopen00250" data-start="{" data-end="}">
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#af01b4f93a25c11217daefbde633ad33a">  250</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#af01b4f93a25c11217daefbde633ad33a">filterByAnyTimestamps</a>(</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keyword">const</span> Timestamps&amp;... timestamps</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  ) {</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    add_filter([timestamps...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>      return ((k.timestamp() == timestamps) || ...);</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    });</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>  }</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Timestamp&gt;... Timestamps&gt;</div>
+<div class="foldopen" id="foldopen00252" data-start="{" data-end="}">
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#af01b4f93a25c11217daefbde633ad33a">  252</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#af01b4f93a25c11217daefbde633ad33a">filterByAnyTimestamps</a>(</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keyword">const</span> Timestamps&amp;... timestamps</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>  ) {</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    add_filter([timestamps...](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>      return ((k.timestamp() == timestamps) || ...);</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    });</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>  }</div>
 </div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
-<div class="foldopen" id="foldopen00269" data-start="{" data-end="}">
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a0c3a1e308b9e60cf200ae47cf3c166bf">  269</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a0c3a1e308b9e60cf200ae47cf3c166bf">put</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; key, <span class="keyword">const</span> TValue&amp; value) {</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    validate_tags(key.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    set_query_type(QueryType::PUT);</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    query_params_ = QueryParams{PutParams{key, value}};</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>  }</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
+<div class="foldopen" id="foldopen00271" data-start="{" data-end="}">
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a0c3a1e308b9e60cf200ae47cf3c166bf">  271</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a0c3a1e308b9e60cf200ae47cf3c166bf">put</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; key, <span class="keyword">const</span> TValue&amp; value) {</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    validate_tags(key.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    set_query_type(QueryType::PUT);</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    query_params_ = QueryParams{PutParams{key, value}};</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>  }</div>
 </div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
-<div class="foldopen" id="foldopen00285" data-start="{" data-end="}">
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#ac8fc4d2191a63ed203caca3a78d209cb">  285</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ac8fc4d2191a63ed203caca3a78d209cb">remove</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; key) {</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    validate_tags(key.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    set_query_type(QueryType::REMOVE);</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    query_params_ = QueryParams{RemoveParams{key}};</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>  }</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> </div>
+<div class="foldopen" id="foldopen00287" data-start="{" data-end="}">
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#ac8fc4d2191a63ed203caca3a78d209cb">  287</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ac8fc4d2191a63ed203caca3a78d209cb">remove</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">keytype</a>&amp; key) {</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    validate_tags(key.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">tags</a>());</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    set_query_type(QueryType::REMOVE);</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    query_params_ = QueryParams{RemoveParams{key}};</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  }</div>
 </div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
-<div class="foldopen" id="foldopen00301" data-start="{" data-end="}">
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a7a3200ba4a8d2768fa77c65486585c44">  301</a></span>  [[nodiscard]] size_type <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a7a3200ba4a8d2768fa77c65486585c44">count</a>() {</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    setup_aggregate();</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    <span class="keywordflow">return</span> std::ranges::distance(get_filtered_range());</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>  }</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="foldopen" id="foldopen00303" data-start="{" data-end="}">
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a7a3200ba4a8d2768fa77c65486585c44">  303</a></span>  [[nodiscard]] size_type <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a7a3200ba4a8d2768fa77c65486585c44">count</a>() {</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    setup_aggregate();</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="keywordflow">return</span> std::ranges::distance(get_filtered_range());</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>  }</div>
 </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
-<div class="foldopen" id="foldopen00316" data-start="{" data-end="}">
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">  316</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">sum</a>() {</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    setup_aggregate();</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    <span class="keywordflow">return</span> std::accumulate(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.begin(), <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.end(), TValue{},</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>      [](<span class="keyword">const</span> TValue&amp; acc, <span class="keyword">const</span> valuetype&amp; entry) {</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        return acc + entry.second.value();</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>      });</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>  }</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
+<div class="foldopen" id="foldopen00318" data-start="{" data-end="}">
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">  318</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">sum</a>() {</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    setup_aggregate();</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    <span class="keywordflow">return</span> std::accumulate(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.begin(), <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.end(), TValue{},</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>      [](<span class="keyword">const</span> TValue&amp; acc, <span class="keyword">const</span> valuetype&amp; entry) {</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        return acc + entry.second.value();</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>      });</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>  }</div>
 </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
-<div class="foldopen" id="foldopen00335" data-start="{" data-end="}">
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a907d98d7c3bbc73a95feff5d2409a978">  335</a></span>  [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a907d98d7c3bbc73a95feff5d2409a978">avg</a>() {</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    setup_aggregate();</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">sum</a>{std::accumulate(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.begin(), <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.end(), TValue{},</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>      [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; acc, <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        return acc + entry.second.value();</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>      })};</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">sum</a>) / std::ranges::distance(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>);</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>  }</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
+<div class="foldopen" id="foldopen00337" data-start="{" data-end="}">
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a907d98d7c3bbc73a95feff5d2409a978">  337</a></span>  [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a907d98d7c3bbc73a95feff5d2409a978">avg</a>() {</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    setup_aggregate();</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">sum</a>{std::accumulate(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.begin(), <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>.end(), TValue{},</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>      [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; acc, <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        return acc + entry.second.value();</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>      })};</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">sum</a>) / std::ranges::distance(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>);</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>  }</div>
 </div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> </div>
-<div class="foldopen" id="foldopen00355" data-start="{" data-end="}">
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a352758f4e96e1514c7ebe74a93e95192">  355</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a352758f4e96e1514c7ebe74a93e95192">min</a>() {</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    setup_aggregate();</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>    <span class="keywordflow">return</span> std::ranges::min_element(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>, {}, [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>      <span class="keywordflow">return</span> entry.second.value();</div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    })-&gt;second.value();</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>  }</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span> </div>
+<div class="foldopen" id="foldopen00357" data-start="{" data-end="}">
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a352758f4e96e1514c7ebe74a93e95192">  357</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a352758f4e96e1514c7ebe74a93e95192">min</a>() {</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>    setup_aggregate();</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    <span class="keywordflow">return</span> std::ranges::min_element(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>, {}, [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>      <span class="keywordflow">return</span> entry.second.value();</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>    })-&gt;second.value();</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>  }</div>
 </div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> </div>
-<div class="foldopen" id="foldopen00373" data-start="{" data-end="}">
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#acee4b8420946fb3233dc79057d6f967b">  373</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#acee4b8420946fb3233dc79057d6f967b">max</a>() {</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>    setup_aggregate();</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    <span class="keywordflow">return</span> std::ranges::max_element(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>, {}, [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>      <span class="keywordflow">return</span> entry.second.value();</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    })-&gt;second.value();</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>  }</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
+<div class="foldopen" id="foldopen00375" data-start="{" data-end="}">
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#acee4b8420946fb3233dc79057d6f967b">  375</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#acee4b8420946fb3233dc79057d6f967b">max</a>() {</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    setup_aggregate();</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <span class="keyword">auto</span> <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>{get_nonempty_filtered_range()};</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    <span class="keywordflow">return</span> std::ranges::max_element(<a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">range</a>, {}, [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>      <span class="keywordflow">return</span> entry.second.value();</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>    })-&gt;second.value();</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>  }</div>
 </div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span> </div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>  [[nodiscard]]</div>
-<div class="foldopen" id="foldopen00391" data-start="{" data-end="}">
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a951eda98ebdb2dfcd6cc9fca5a944ae8">  391</a></span>  result_type <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a951eda98ebdb2dfcd6cc9fca5a944ae8">execute</a>() {</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    <span class="keywordflow">switch</span> (query_type_) {</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    <span class="keywordflow">case</span> QueryType::NONE:</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>      <span class="keywordflow">if</span> (filters_.size() == 1) {</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>          <span class="stringliteral">&quot;QueryBuilder::execute(): No query type specified.&quot;</span></div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        };</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>      }</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>      set_default_range_if_none();</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>      <span class="keywordflow">return</span> get_filtered_range();</div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="keywordflow">case</span> QueryType::POINT:</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>      <span class="keywordflow">return</span> execute_point_query();</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>    <span class="keywordflow">case</span> QueryType::RANGE:</div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>      <span class="keywordflow">return</span> execute_range_query();</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="keywordflow">case</span> QueryType::PUT:</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>      <span class="keywordflow">return</span> execute_put_query();</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    <span class="keywordflow">case</span> QueryType::REMOVE:</div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>      <span class="keywordflow">return</span> execute_remove_query();</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    }</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>  }</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>  [[nodiscard]]</div>
+<div class="foldopen" id="foldopen00393" data-start="{" data-end="}">
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno"><a class="line" href="classvkdb_1_1QueryBuilder.html#a951eda98ebdb2dfcd6cc9fca5a944ae8">  393</a></span>  result_type <a class="code hl_function" href="classvkdb_1_1QueryBuilder.html#a951eda98ebdb2dfcd6cc9fca5a944ae8">execute</a>() {</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>    <span class="keywordflow">switch</span> (query_type_) {</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    <span class="keywordflow">case</span> QueryType::NONE:</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>      <span class="keywordflow">if</span> (filters_.size() == 1) {</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        <span class="keywordflow">throw</span> std::runtime_error{</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>          <span class="stringliteral">&quot;QueryBuilder::execute(): No query type specified.&quot;</span></div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        };</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>      }</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>      set_default_range_if_none();</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>      <span class="keywordflow">return</span> get_filtered_range();</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>    <span class="keywordflow">case</span> QueryType::POINT:</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>      <span class="keywordflow">return</span> execute_point_query();</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="keywordflow">case</span> QueryType::RANGE:</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>      <span class="keywordflow">return</span> execute_range_query();</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    <span class="keywordflow">case</span> QueryType::PUT:</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>      <span class="keywordflow">return</span> execute_put_query();</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    <span class="keywordflow">case</span> QueryType::REMOVE:</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>      <span class="keywordflow">return</span> execute_remove_query();</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>    }</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>  }</div>
 </div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> </div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>  <span class="keyword">enum class</span> QueryType { NONE, POINT, RANGE, PUT, REMOVE };</div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span> </div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>  <span class="keyword">struct </span>PointParams {</div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>    keytype key;</div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>  };</div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span> </div>
-<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>  <span class="keyword">struct </span>RangeParams {</div>
-<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>    keytype start;</div>
-<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span> </div>
-<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>    keytype end;</div>
-<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>  };</div>
-<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span> </div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>  <span class="keyword">struct </span>PutParams {</div>
-<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>    keytype key;</div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span> </div>
-<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>    TValue value;</div>
-<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>  };</div>
-<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span> </div>
-<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>  <span class="keyword">struct </span>RemoveParams {</div>
-<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>    keytype key;</div>
-<div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span>  };</div>
-<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span> </div>
-<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>  <span class="keyword">using </span>QueryParams = std::variant&lt;</div>
-<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>    std::monostate,</div>
-<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>    PointParams,</div>
-<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>    RangeParams,</div>
-<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span>    PutParams,</div>
-<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>    RemoveParams</div>
-<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>  &gt;;</div>
-<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span> </div>
-<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>  <span class="keywordtype">void</span> set_query_type(QueryType query_type) {</div>
-<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>    <span class="keywordflow">if</span> (query_type_ != QueryType::NONE) {</div>
-<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>        <span class="stringliteral">&quot;QueryBuilder::set_query_type(): Query type already set.&quot;</span></div>
-<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>      };</div>
-<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>    }</div>
-<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>    query_type_ = query_type;</div>
-<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>  }</div>
-<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span> </div>
-<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>  <span class="keywordtype">void</span> set_default_range_if_none() noexcept {</div>
-<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>    <span class="keywordflow">if</span> (query_type_ == QueryType::NONE) {</div>
-<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>      query_params_ = QueryParams{RangeParams{</div>
-<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>        MIN_TIME_SERIES_KEY,</div>
-<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>        MAX_TIME_SERIES_KEY</div>
-<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>      }};</div>
-<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>      query_type_ = QueryType::RANGE;</div>
-<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>    }</div>
-<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>  }</div>
-<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span> </div>
-<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>  <span class="keywordtype">void</span> check_if_aggregable()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>    <span class="keywordflow">if</span> (query_type_ != QueryType::RANGE &amp;&amp; query_type_ != QueryType::POINT) {</div>
-<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>        <span class="stringliteral">&quot;QueryBuilder::check_if_aggregable(): Query type must be aggregable.&quot;</span></div>
-<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>      };</div>
-<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>    }</div>
-<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>  }</div>
-<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span> </div>
-<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>  <span class="keywordtype">void</span> setup_aggregate() {</div>
-<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>    set_default_range_if_none();</div>
-<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>    check_if_aggregable();</div>
-<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>  }</div>
-<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span> </div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>  <span class="keywordtype">void</span> add_filter(TimeSeriesKeyFilter&amp;&amp; filter) {</div>
-<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>    filters_.push_back(std::move(filter));</div>
-<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>  }</div>
-<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span> </div>
-<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>  [[nodiscard]] result_type get_filtered_range()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>    <span class="keywordflow">if</span> (query_type_ == QueryType::POINT) {</div>
-<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>      <span class="keywordflow">return</span> execute_point_query();</div>
-<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>    }</div>
-<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;RangeParams&gt;(query_params_)};</div>
-<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>    <span class="keywordflow">return</span> lsm_tree_.getRange(params.start, params.end,</div>
-<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>      [<span class="keyword">this</span>](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>        return std::ranges::all_of(filters_, [&amp;k](const auto&amp; filter) {</div>
-<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>          return filter(k);</div>
-<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>        });</div>
-<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>      });</div>
-<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>  }</div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span> </div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>  [[nodiscard]] result_type get_nonempty_filtered_range()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>    <span class="keyword">auto</span> filtered_range{get_filtered_range()};</div>
-<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>    <span class="keywordflow">if</span> (filtered_range.empty()) {</div>
-<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>        <span class="stringliteral">&quot;QueryBuilder::get_nonempty_filtered_range(): &quot;</span></div>
-<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>        <span class="stringliteral">&quot;Cannot aggregate on empty range.&quot;</span></div>
-<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>      };</div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>    }</div>
-<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>    <span class="keywordflow">return</span> filtered_range;</div>
-<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>  }</div>
-<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span> </div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>  [[nodiscard]] result_type execute_point_query()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;PointParams&gt;(query_params_)};</div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>    <span class="keyword">auto</span> value{lsm_tree_.get(params.key)};</div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>    <span class="keywordflow">if</span> (!value.has_value()) {</div>
-<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>      <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>    }</div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>    <span class="keywordflow">return</span> {{params.key, value}};</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>  }</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span> </div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>  [[nodiscard]] result_type execute_range_query()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>    <span class="keyword">auto</span> range{get_filtered_range()};</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>    <span class="keywordflow">return</span> {range.begin(), range.end()};</div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>  }</div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span> </div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>  [[nodiscard]] result_type execute_put_query() {</div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;PutParams&gt;(query_params_)};</div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>    lsm_tree_.put(params.key, params.value);</div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>    <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>  }</div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span> </div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>  [[nodiscard]] result_type execute_remove_query() {</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;RemoveParams&gt;(query_params_)};</div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>    lsm_tree_.remove(params.key);</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>    <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>  }</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span> </div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>  <span class="keywordtype">void</span> validate_tags(<span class="keyword">const</span> TagTable&amp; tag_table)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : tag_table) {</div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>      <span class="keywordflow">if</span> (!tag_columns_.contains(key)) {</div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>        <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>          <span class="stringliteral">&quot;QueryBuilder::validate_tags(): Tag &#39;&quot;</span></div>
-<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>          + key + <span class="stringliteral">&quot;&#39; not in tag columns.&quot;</span></div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>        };</div>
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>      }</div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>    }</div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>  }</div>
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span> </div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>  <span class="keyword">template</span> &lt;AllSameNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>  <span class="keywordtype">void</span> validate_tags(<span class="keyword">const</span> Tags&amp;... tags)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : <a class="code hl_namespace" href="namespacestd.html">std</a>::initializer_list&lt;Tag&gt;{tags...}) {</div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>      <span class="keywordflow">if</span> (!tag_columns_.contains(key)) {</div>
-<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>        <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>          <span class="stringliteral">&quot;QueryBuilder::validate_tags(): Tag &#39;&quot;</span></div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>          + key + <span class="stringliteral">&quot;&#39; not in tag columns.&quot;</span></div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>        };</div>
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>      }</div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>    }</div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>  }</div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span> </div>
-<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>  LSMTree&lt;TValue&gt;&amp; lsm_tree_;</div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span> </div>
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span>  <span class="keyword">const</span> TagColumns&amp; tag_columns_;</div>
-<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span> </div>
-<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>  QueryType query_type_;</div>
-<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span> </div>
-<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>  QueryParams query_params_;</div>
-<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span> </div>
-<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>  std::vector&lt;TimeSeriesKeyFilter&gt; filters_;</div>
-<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>};</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>  <span class="keyword">enum class</span> QueryType { NONE, POINT, RANGE, PUT, REMOVE };</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span> </div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>  <span class="keyword">struct </span>PointParams {</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    keytype key;</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>  };</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span> </div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>  <span class="keyword">struct </span>RangeParams {</div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>    keytype start;</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span> </div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>    keytype end;</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>  };</div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span> </div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>  <span class="keyword">struct </span>PutParams {</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    keytype key;</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span> </div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>    TValue value;</div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>  };</div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span> </div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>  <span class="keyword">struct </span>RemoveParams {</div>
+<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span>    keytype key;</div>
+<div class="line"><a id="l00479" name="l00479"></a><span class="lineno">  479</span>  };</div>
+<div class="line"><a id="l00480" name="l00480"></a><span class="lineno">  480</span> </div>
+<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>  <span class="keyword">using </span>QueryParams = std::variant&lt;</div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>    std::monostate,</div>
+<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span>    PointParams,</div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>    RangeParams,</div>
+<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>    PutParams,</div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>    RemoveParams</div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>  &gt;;</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span> </div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>  <span class="keywordtype">void</span> set_query_type(QueryType query_type) {</div>
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>    <span class="keywordflow">if</span> (query_type_ != QueryType::NONE) {</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>        <span class="stringliteral">&quot;QueryBuilder::set_query_type(): Query type already set.&quot;</span></div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>      };</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>    }</div>
+<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    query_type_ = query_type;</div>
+<div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>  }</div>
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span> </div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>  <span class="keywordtype">void</span> set_default_range_if_none() noexcept {</div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>    <span class="keywordflow">if</span> (query_type_ == QueryType::NONE) {</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>      query_params_ = QueryParams{RangeParams{</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>        MIN_TIME_SERIES_KEY,</div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>        MAX_TIME_SERIES_KEY</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>      }};</div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>      query_type_ = QueryType::RANGE;</div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>    }</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>  }</div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span> </div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>  <span class="keywordtype">void</span> check_if_aggregable()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>    <span class="keywordflow">if</span> (query_type_ != QueryType::RANGE &amp;&amp; query_type_ != QueryType::POINT) {</div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>        <span class="stringliteral">&quot;QueryBuilder::check_if_aggregable(): Query type must be aggregable.&quot;</span></div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>      };</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>    }</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>  }</div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span> </div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>  <span class="keywordtype">void</span> setup_aggregate() {</div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>    set_default_range_if_none();</div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>    check_if_aggregable();</div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>  }</div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span> </div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>  <span class="keywordtype">void</span> add_filter(TimeSeriesKeyFilter&amp;&amp; filter) {</div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>    filters_.push_back(std::move(filter));</div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>  }</div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span> </div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>  [[nodiscard]] result_type get_filtered_range()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>    <span class="keywordflow">if</span> (query_type_ == QueryType::POINT) {</div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>      <span class="keywordflow">return</span> execute_point_query();</div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>    }</div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;RangeParams&gt;(query_params_)};</div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>    <span class="keywordflow">return</span> lsm_tree_.getRange(params.start, params.end,</div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>      [<span class="keyword">this</span>](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k) {</div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>        return std::ranges::all_of(filters_, [&amp;k](const auto&amp; filter) {</div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>          return filter(k);</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>        });</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>      });</div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>  }</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span> </div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>  [[nodiscard]] result_type get_nonempty_filtered_range()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>    <span class="keyword">auto</span> filtered_range{get_filtered_range()};</div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>    <span class="keywordflow">if</span> (filtered_range.empty()) {</div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>        <span class="stringliteral">&quot;QueryBuilder::get_nonempty_filtered_range(): &quot;</span></div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>        <span class="stringliteral">&quot;Cannot aggregate on empty range.&quot;</span></div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>      };</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>    }</div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>    <span class="keywordflow">return</span> filtered_range;</div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>  }</div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span> </div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>  [[nodiscard]] result_type execute_point_query()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;PointParams&gt;(query_params_)};</div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>    <span class="keyword">auto</span> value{lsm_tree_.get(params.key)};</div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>    <span class="keywordflow">if</span> (!value.has_value()) {</div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>      <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    }</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>    <span class="keywordflow">return</span> {{params.key, value}};</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>  }</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span> </div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>  [[nodiscard]] result_type execute_range_query()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>    <span class="keyword">auto</span> range{get_filtered_range()};</div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>    <span class="keywordflow">return</span> {range.begin(), range.end()};</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>  }</div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span> </div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>  [[nodiscard]] result_type execute_put_query() {</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;PutParams&gt;(query_params_)};</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>    lsm_tree_.put(params.key, params.value);</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>    <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>  }</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span> </div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>  [[nodiscard]] result_type execute_remove_query() {</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; params{std::get&lt;RemoveParams&gt;(query_params_)};</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    lsm_tree_.remove(params.key);</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>    <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>  }</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span> </div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>  <span class="keywordtype">void</span> validate_tags(<span class="keyword">const</span> TagTable&amp; tag_table)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : tag_table) {</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>      <span class="keywordflow">if</span> (!tag_columns_.contains(key)) {</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>        <span class="keywordflow">throw</span> std::runtime_error{</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>          <span class="stringliteral">&quot;QueryBuilder::validate_tags(): Tag &#39;&quot;</span></div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>          + key + <span class="stringliteral">&quot;&#39; not in tag columns.&quot;</span></div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>        };</div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>      }</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>    }</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>  }</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span> </div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>  <span class="keyword">template</span> &lt;AllSameNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>  <span class="keywordtype">void</span> validate_tags(<span class="keyword">const</span> Tags&amp;... tags)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : <a class="code hl_namespace" href="namespacestd.html">std</a>::initializer_list&lt;Tag&gt;{tags...}) {</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>      <span class="keywordflow">if</span> (!tag_columns_.contains(key)) {</div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>        <span class="keywordflow">throw</span> std::runtime_error{</div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>          <span class="stringliteral">&quot;QueryBuilder::validate_tags(): Tag &#39;&quot;</span></div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>          + key + <span class="stringliteral">&quot;&#39; not in tag columns.&quot;</span></div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>        };</div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>      }</div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>    }</div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>  }</div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span> </div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>  LSMTree&lt;TValue&gt;&amp; lsm_tree_;</div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span> </div>
+<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>  <span class="keyword">const</span> TagColumns&amp; tag_columns_;</div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span> </div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span>  QueryType query_type_;</div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span> </div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>  QueryParams query_params_;</div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span> </div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>  std::vector&lt;TimeSeriesKeyFilter&gt; filters_;</div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>};</div>
 </div>
-<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>}  <span class="comment">// namespace vkdb</span></div>
-<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span> </div>
-<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span><span class="preprocessor">#endif </span><span class="comment">// QUERY_BUILDER_H</span></div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>}  <span class="comment">// namespace vkdb</span></div>
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span> </div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span><span class="preprocessor">#endif </span><span class="comment">// QUERY_BUILDER_H</span></div>
 <div class="ttc" id="aclassvkdb_1_1LSMTree_html"><div class="ttname"><a href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a></div><div class="ttdoc">LSM tree on TimeSeriesKey.</div><div class="ttdef"><b>Definition</b> <a href="lsm__tree_8h_source.html#l00034">lsm_tree.h:34</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html">vkdb::QueryBuilder</a></div><div class="ttdoc">Query builder for querying a Table.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00023">builder.h:23</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a0c3a1e308b9e60cf200ae47cf3c166bf"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a0c3a1e308b9e60cf200ae47cf3c166bf">vkdb::QueryBuilder::put</a></div><div class="ttdeci">QueryBuilder &amp; put(const keytype &amp;key, const TValue &amp;value)</div><div class="ttdoc">Put a key-value pair into the LSMTree.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00269">builder.h:269</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a329e37b7f7cb693a5ad0b83a81dc16ef"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">vkdb::QueryBuilder::range</a></div><div class="ttdeci">QueryBuilder &amp; range(const keytype &amp;start, const keytype &amp;end)</div><div class="ttdoc">Configure builder for range query.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00113">builder.h:113</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a352758f4e96e1514c7ebe74a93e95192"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a352758f4e96e1514c7ebe74a93e95192">vkdb::QueryBuilder::min</a></div><div class="ttdeci">TValue min()</div><div class="ttdoc">Calculate the minimum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00355">builder.h:355</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a3c93b78a85ee16e3d7ecbc4b0f567190"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a3c93b78a85ee16e3d7ecbc4b0f567190">vkdb::QueryBuilder::filterByAllTags</a></div><div class="ttdeci">QueryBuilder &amp; filterByAllTags(const Tags &amp;... tags)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple tags.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00176">builder.h:176</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a49086e8774802b9c2669f9fc5436d029"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a49086e8774802b9c2669f9fc5436d029">vkdb::QueryBuilder::filterByMetric</a></div><div class="ttdeci">QueryBuilder &amp; filterByMetric(const Metric &amp;metric)</div><div class="ttdoc">Filter the TimeSeriesKeys by a metric.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00195">builder.h:195</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a5d1dc75f4de08940cf22b4484077b767"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a5d1dc75f4de08940cf22b4484077b767">vkdb::QueryBuilder::point</a></div><div class="ttdeci">QueryBuilder &amp; point(const keytype &amp;key)</div><div class="ttdoc">Configure builder for point query.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00094">builder.h:94</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a6c37c198ed3d0094160481f7195f1fcb"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a6c37c198ed3d0094160481f7195f1fcb">vkdb::QueryBuilder::filterByAnyMetrics</a></div><div class="ttdeci">QueryBuilder &amp; filterByAnyMetrics(const Metrics &amp;... metrics)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple metrics.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00214">builder.h:214</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a7a3200ba4a8d2768fa77c65486585c44"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a7a3200ba4a8d2768fa77c65486585c44">vkdb::QueryBuilder::count</a></div><div class="ttdeci">size_type count()</div><div class="ttdoc">Count the number of entries in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00301">builder.h:301</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a907d98d7c3bbc73a95feff5d2409a978"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a907d98d7c3bbc73a95feff5d2409a978">vkdb::QueryBuilder::avg</a></div><div class="ttdeci">double avg()</div><div class="ttdoc">Calculate the average of the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00335">builder.h:335</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a951eda98ebdb2dfcd6cc9fca5a944ae8"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a951eda98ebdb2dfcd6cc9fca5a944ae8">vkdb::QueryBuilder::execute</a></div><div class="ttdeci">result_type execute()</div><div class="ttdoc">Execute the query.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00391">builder.h:391</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_aaf0079988613acf608dc3d754dcfcceb"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#aaf0079988613acf608dc3d754dcfcceb">vkdb::QueryBuilder::filterByTag</a></div><div class="ttdeci">QueryBuilder &amp; filterByTag(const TagKey &amp;key, const TagValue &amp;value)</div><div class="ttdoc">Filter the TimeSeriesKeys by a tag.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00132">builder.h:132</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_ac8fc4d2191a63ed203caca3a78d209cb"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#ac8fc4d2191a63ed203caca3a78d209cb">vkdb::QueryBuilder::remove</a></div><div class="ttdeci">QueryBuilder &amp; remove(const keytype &amp;key)</div><div class="ttdoc">Remove a key from the LSMTree.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00285">builder.h:285</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_acee4b8420946fb3233dc79057d6f967b"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#acee4b8420946fb3233dc79057d6f967b">vkdb::QueryBuilder::max</a></div><div class="ttdeci">TValue max()</div><div class="ttdoc">Calculate the maximum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00373">builder.h:373</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_ad63a544764ecb7cd31b3ed5d10ac58d3"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">vkdb::QueryBuilder::sum</a></div><div class="ttdeci">TValue sum()</div><div class="ttdoc">Sum the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00316">builder.h:316</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html">vkdb::QueryBuilder</a></div><div class="ttdoc">Query builder for querying a Table.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00025">builder.h:25</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a0c3a1e308b9e60cf200ae47cf3c166bf"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a0c3a1e308b9e60cf200ae47cf3c166bf">vkdb::QueryBuilder::put</a></div><div class="ttdeci">QueryBuilder &amp; put(const keytype &amp;key, const TValue &amp;value)</div><div class="ttdoc">Put a key-value pair into the LSMTree.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00271">builder.h:271</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a329e37b7f7cb693a5ad0b83a81dc16ef"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a329e37b7f7cb693a5ad0b83a81dc16ef">vkdb::QueryBuilder::range</a></div><div class="ttdeci">QueryBuilder &amp; range(const keytype &amp;start, const keytype &amp;end)</div><div class="ttdoc">Configure builder for range query.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00115">builder.h:115</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a352758f4e96e1514c7ebe74a93e95192"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a352758f4e96e1514c7ebe74a93e95192">vkdb::QueryBuilder::min</a></div><div class="ttdeci">TValue min()</div><div class="ttdoc">Calculate the minimum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00357">builder.h:357</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a3c93b78a85ee16e3d7ecbc4b0f567190"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a3c93b78a85ee16e3d7ecbc4b0f567190">vkdb::QueryBuilder::filterByAllTags</a></div><div class="ttdeci">QueryBuilder &amp; filterByAllTags(const Tags &amp;... tags)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple tags.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00178">builder.h:178</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a49086e8774802b9c2669f9fc5436d029"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a49086e8774802b9c2669f9fc5436d029">vkdb::QueryBuilder::filterByMetric</a></div><div class="ttdeci">QueryBuilder &amp; filterByMetric(const Metric &amp;metric)</div><div class="ttdoc">Filter the TimeSeriesKeys by a metric.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00197">builder.h:197</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a5d1dc75f4de08940cf22b4484077b767"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a5d1dc75f4de08940cf22b4484077b767">vkdb::QueryBuilder::point</a></div><div class="ttdeci">QueryBuilder &amp; point(const keytype &amp;key)</div><div class="ttdoc">Configure builder for point query.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00096">builder.h:96</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a6c37c198ed3d0094160481f7195f1fcb"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a6c37c198ed3d0094160481f7195f1fcb">vkdb::QueryBuilder::filterByAnyMetrics</a></div><div class="ttdeci">QueryBuilder &amp; filterByAnyMetrics(const Metrics &amp;... metrics)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple metrics.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00216">builder.h:216</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a7a3200ba4a8d2768fa77c65486585c44"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a7a3200ba4a8d2768fa77c65486585c44">vkdb::QueryBuilder::count</a></div><div class="ttdeci">size_type count()</div><div class="ttdoc">Count the number of entries in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00303">builder.h:303</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a907d98d7c3bbc73a95feff5d2409a978"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a907d98d7c3bbc73a95feff5d2409a978">vkdb::QueryBuilder::avg</a></div><div class="ttdeci">double avg()</div><div class="ttdoc">Calculate the average of the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00337">builder.h:337</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_a951eda98ebdb2dfcd6cc9fca5a944ae8"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#a951eda98ebdb2dfcd6cc9fca5a944ae8">vkdb::QueryBuilder::execute</a></div><div class="ttdeci">result_type execute()</div><div class="ttdoc">Execute the query.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00393">builder.h:393</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_aaf0079988613acf608dc3d754dcfcceb"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#aaf0079988613acf608dc3d754dcfcceb">vkdb::QueryBuilder::filterByTag</a></div><div class="ttdeci">QueryBuilder &amp; filterByTag(const TagKey &amp;key, const TagValue &amp;value)</div><div class="ttdoc">Filter the TimeSeriesKeys by a tag.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00134">builder.h:134</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_ac8fc4d2191a63ed203caca3a78d209cb"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#ac8fc4d2191a63ed203caca3a78d209cb">vkdb::QueryBuilder::remove</a></div><div class="ttdeci">QueryBuilder &amp; remove(const keytype &amp;key)</div><div class="ttdoc">Remove a key from the LSMTree.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00287">builder.h:287</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_acee4b8420946fb3233dc79057d6f967b"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#acee4b8420946fb3233dc79057d6f967b">vkdb::QueryBuilder::max</a></div><div class="ttdeci">TValue max()</div><div class="ttdoc">Calculate the maximum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00375">builder.h:375</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_ad63a544764ecb7cd31b3ed5d10ac58d3"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#ad63a544764ecb7cd31b3ed5d10ac58d3">vkdb::QueryBuilder::sum</a></div><div class="ttdeci">TValue sum()</div><div class="ttdoc">Sum the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00318">builder.h:318</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_ae1fe0f75ca012ed0f0abc1b6a2ea3222"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#ae1fe0f75ca012ed0f0abc1b6a2ea3222">vkdb::QueryBuilder::QueryBuilder</a></div><div class="ttdeci">QueryBuilder(QueryBuilder &amp;&amp;) noexcept=default</div><div class="ttdoc">Move-construct a QueryBuilder object.</div></div>
 <div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_aeb2b04770c683182feba75857649c787"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#aeb2b04770c683182feba75857649c787">vkdb::QueryBuilder::QueryBuilder</a></div><div class="ttdeci">QueryBuilder()=delete</div><div class="ttdoc">Deleted default constructor.</div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_aee1c6c5a227a656775644e74f6a95090"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#aee1c6c5a227a656775644e74f6a95090">vkdb::QueryBuilder::filterByAnyTags</a></div><div class="ttdeci">QueryBuilder &amp; filterByAnyTags(const Tags &amp;... tags)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple tags.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00155">builder.h:155</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_af01b4f93a25c11217daefbde633ad33a"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#af01b4f93a25c11217daefbde633ad33a">vkdb::QueryBuilder::filterByAnyTimestamps</a></div><div class="ttdeci">QueryBuilder &amp; filterByAnyTimestamps(const Timestamps &amp;... timestamps)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple timestamps.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00250">builder.h:250</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_af2f5f2c9ca2f48576faeb30da18aceb8"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#af2f5f2c9ca2f48576faeb30da18aceb8">vkdb::QueryBuilder::filterByTimestamp</a></div><div class="ttdeci">QueryBuilder &amp; filterByTimestamp(const Timestamp &amp;timestamp)</div><div class="ttdoc">Filter the TimeSeriesKeys by a timestamp.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00231">builder.h:231</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_af30c289ecad701a250f538f20601519a"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#af30c289ecad701a250f538f20601519a">vkdb::QueryBuilder::QueryBuilder</a></div><div class="ttdeci">QueryBuilder(LSMTree&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns) noexcept</div><div class="ttdoc">Construct a new QueryBuilder object.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00045">builder.h:45</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_aee1c6c5a227a656775644e74f6a95090"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#aee1c6c5a227a656775644e74f6a95090">vkdb::QueryBuilder::filterByAnyTags</a></div><div class="ttdeci">QueryBuilder &amp; filterByAnyTags(const Tags &amp;... tags)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple tags.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00157">builder.h:157</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_af01b4f93a25c11217daefbde633ad33a"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#af01b4f93a25c11217daefbde633ad33a">vkdb::QueryBuilder::filterByAnyTimestamps</a></div><div class="ttdeci">QueryBuilder &amp; filterByAnyTimestamps(const Timestamps &amp;... timestamps)</div><div class="ttdoc">Filter the TimeSeriesKeys by multiple timestamps.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00252">builder.h:252</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_af2f5f2c9ca2f48576faeb30da18aceb8"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#af2f5f2c9ca2f48576faeb30da18aceb8">vkdb::QueryBuilder::filterByTimestamp</a></div><div class="ttdeci">QueryBuilder &amp; filterByTimestamp(const Timestamp &amp;timestamp)</div><div class="ttdoc">Filter the TimeSeriesKeys by a timestamp.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00233">builder.h:233</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html_af30c289ecad701a250f538f20601519a"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html#af30c289ecad701a250f538f20601519a">vkdb::QueryBuilder::QueryBuilder</a></div><div class="ttdeci">QueryBuilder(LSMTree&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns) noexcept</div><div class="ttdoc">Construct a new QueryBuilder object.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00047">builder.h:47</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a></div><div class="ttdoc">Represents a key in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00084">time_series_key.h:84</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a11432ca0811e6d1e98fe5562ede166d9"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">vkdb::TimeSeriesKey::tags</a></div><div class="ttdeci">const TagTable &amp; tags() const noexcept</div><div class="ttdoc">Get the tags.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8cpp_source.html#l00085">time_series_key.cpp:85</a></div></div>
 <div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">STL namespace.</div></div>
