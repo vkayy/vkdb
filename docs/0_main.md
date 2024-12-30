@@ -1,8 +1,9 @@
 # vkdb
 
-![](images/vkdb-full-cropped.png)
+![](images/vkdb-full-cropped-small.png)
 
 <div style="margin: 32px;" align="center">
+<p>A time series database engine built in C++ with minimal dependencies.</p>
 [![c++](https://img.shields.io/badge/C%2B%2B-%2300599C?logo=cplusplus&logoColor=FFFFFF)](https://cplusplus.com/)
 [![contributors](https://img.shields.io/github/contributors/vkayy/vkdb)](https://github.com/vkayy/vkdb/graphs/contributors)
 ![last commit](https://img.shields.io/github/last-commit/vkayy/vkdb)
@@ -10,6 +11,7 @@
 [![license](https://img.shields.io/github/license/vkayy/vkdb.svg)](https://github.com/vkayy/vkdb/blob/main/LICENSE)
 [![stars](https://img.shields.io/github/stars/vkayy/vkdb)](https://github.com/vkayy/vkdb/stargazers)
 [![forks](https://img.shields.io/github/forks/vkayy/vkdb)](https://github.com/vkayy/vkdb/network/members)
+<h4><a href="https://github.com/vkayy/vkdb">GitHub Repository</a></h4>
 </div>
 
 > **⚠ Warning**<br> vkdb is currently in the early stages of development and is not yet ready for daily use!
@@ -17,21 +19,9 @@
 
 **vkdb** is a hobbyist time series database engine built with a focus on simplicity and modernity. Motivated by unfamiliar architectures and endless optimisation opportunities, this project is far from commercial, and is defined by a pursuit of challenge.
 
+#### Authors
 
-```cpp
-#include <vkdb/database.h>
-
-int main() {
-  vkdb::Database db{"welcome_to_vkdb"};
-  db.runFile("made_by_vk.vq");
-}
-```
-
-#### Links
-
-Author: [Vinz Kakilala](https://linkedin.com/in/vinzkakilala)
-
-Project Link: [vkdb](https://github.com/vkayy/vkdb)
+[Vinz Kakilala](https://linkedin.com/in/vinzkakilala)
 
 #### License
 
