@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout
+        uses: actions/checkout@v3
 
       - name: Set up CMake
-        uses: lukka/get-cmake
+        uses: lukka/get-cmake@v2
 
       - name: Build and run tests
         run: |
