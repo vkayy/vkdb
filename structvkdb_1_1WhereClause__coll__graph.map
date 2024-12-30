@@ -1,0 +1,16 @@
+<map id="vkdb::WhereClause" name="vkdb::WhereClause">
+<area shape="rect" id="Node000001" title="Where clause." alt="" coords="84,460,232,485"/>
+<area shape="rect" id="Node000002" href="$structvkdb_1_1TagListExpr.html" title="Tag list expression." alt="" coords="90,372,226,397"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,411,161,459,155,459,155,411"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="85,269,231,309"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="161,323,161,372,155,372,155,323"/>
+<area shape="rect" id="Node000004" href="$structvkdb_1_1TagExpr.html" title="Tag expression." alt="" coords="101,181,215,207"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="161,220,161,269,155,269,155,220"/>
+<area shape="rect" id="Node000005" href="$structvkdb_1_1TagKeyExpr.html" title="Tag key expression." alt="" coords="5,93,143,119"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="97,127,148,179,144,183,93,131"/>
+<area shape="rect" id="Node000006" href="$classvkdb_1_1Token.html" title="Represents a token." alt="" coords="109,5,207,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="139,43,88,95,84,91,135,39"/>
+<area shape="rect" id="Node000007" href="$structvkdb_1_1TagValueExpr.html" title="Tag value expression." alt="" coords="167,93,317,119"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="181,39,232,91,228,95,177,43"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="223,131,172,183,168,179,219,127"/>
+</map>

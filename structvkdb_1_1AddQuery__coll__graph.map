@@ -1,0 +1,14 @@
+<map id="vkdb::AddQuery" name="vkdb::AddQuery">
+<area shape="rect" id="Node000001" title="Add query." alt="" coords="101,383,227,408"/>
+<area shape="rect" id="Node000002" href="$structvkdb_1_1TagColumnsExpr.html" title="Tag columns expression." alt="" coords="17,295,188,320"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,332,122,357,147,381,143,384,118,360,106,335"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,192,152,232"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="90,245,102,294,97,295,84,246"/>
+<area shape="rect" id="Node000004" href="$structvkdb_1_1TagKeyExpr.html" title="Tag key expression." alt="" coords="30,93,167,119"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="79,131,72,143,69,168,74,191,69,192,64,168,67,142,74,128"/>
+<area shape="rect" id="Node000005" href="$classvkdb_1_1Token.html" title="Represents a token." alt="" coords="115,5,213,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="149,43,110,94,106,91,145,40"/>
+<area shape="rect" id="Node000006" href="$structvkdb_1_1TableNameExpr.html" title="Table name expression." alt="" coords="147,143,311,168"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="179,42,185,53,226,141,222,143,180,56,174,44"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="235,182,237,218,236,264,228,313,210,360,199,374,186,385,183,380,196,370,206,357,223,312,231,264,232,218,230,182"/>
+</map>
