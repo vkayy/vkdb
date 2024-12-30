@@ -1,7 +1,7 @@
 <a id="readme-top"></a>
 
 <div align="center">
-  <img src="docs/images/vkdb-full-cropped.svg" alt="logo" width="500" height="250" />
+  <img src="docs/images/vkdb-full-cropped.svg" alt="logo" width="250" height=auto />
   <p>A time series database engine built in C++ with minimal dependencies.</p>
   <a href="https://cplusplus.com/">
   <img src="https://img.shields.io/badge/C%2B%2B-%2300599C?logo=cplusplus&logoColor=FFFFFF" alt="c++" /></a>
