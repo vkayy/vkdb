@@ -1,5 +1,8 @@
 # vkdb
 
+![](images/vkdb-light-cropped.png)
+
+<div style="margin: 32px;" align="center">
 [![c++](https://img.shields.io/badge/C%2B%2B-%2300599C?logo=cplusplus&logoColor=FFFFFF)](https://cplusplus.com/)
 [![contributors](https://img.shields.io/github/contributors/vkayy/vkdb)](https://github.com/vkayy/vkdb/graphs/contributors)
 ![last commit](https://img.shields.io/github/last-commit/vkayy/vkdb)
@@ -7,6 +10,8 @@
 [![license](https://img.shields.io/github/license/vkayy/vkdb.svg)](https://github.com/vkayy/vkdb/blob/main/LICENSE)
 [![stars](https://img.shields.io/github/stars/vkayy/vkdb)](https://github.com/vkayy/vkdb/stargazers)
 [![forks](https://img.shields.io/github/forks/vkayy/vkdb)](https://github.com/vkayy/vkdb/network/members)
+</div>
+
 ```cpp
 #include <vkdb/database.h>
 
@@ -16,11 +21,9 @@ int main() {
 }
 ```
 
-**vkdb** is a time series database engine built in C++ with minimal dependencies.
+#### About
 
-#### Motivation
-
-I wanted to challenge myself architecturally and push my boundaries with C++, both in terms of knowledge and performance.
+I wanted to challenge myself architecturally and push my boundaries with C++, both in terms of knowledge and performance. So, I decided to try and build this database engine with modern C++ and minimal dependencies (within reason). At the moment, vkdb is functional, but there is definitely loads of room for further progression!
 
 #### Links
 

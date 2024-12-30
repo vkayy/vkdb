@@ -61,7 +61,7 @@ PROJECT_BRIEF          = A time series database engine in C++.
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
 # the logo to the output directory.
 
-PROJECT_LOGO           = images/vkdb-light-cropped.png
+PROJECT_LOGO           = images/vkdb-logo-light.png
 
 # With the PROJECT_ICON tag one can specify an icon that is included in the tabs
 # when the HTML document is shown. Doxygen will copy the logo to the output
