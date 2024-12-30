@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout
 
       - name: Install Doxygen
         run: sudo apt-get install doxygen graphviz -y
@@ -20,7 +20,7 @@ jobs:
           doxygen Doxyfile
 
       - name: Push to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           publish_dir: ./docs/html
