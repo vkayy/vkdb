@@ -1,0 +1,26 @@
+name: Run Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up CMake
+        uses: lukka/get-cmake@v3
+
+      - name: Build and run tests
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          make
+          ./tests/vkdb_tests
