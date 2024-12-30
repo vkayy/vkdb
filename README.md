@@ -22,9 +22,9 @@
   </h4>
 </div>
 
-> **⚠ Warning**<br> vkDB is currently in the early stages of development and is not yet ready for daily use!
+> **⚠ Warning**<br> vkdb is currently in the early stages of development and is not yet ready for daily use!
 
-**vkDB** is a hobbyist time series database engine built with a focus on simplicity and modernity. Motivated by unfamiliar architectures and endless optimisation opportunities, this project is far from commercial, and is defined by a pursuit of challenge.
+**vkdb** is a hobbyist time series database engine built with a focus on simplicity and modernity. Motivated by unfamiliar architectures and endless optimisation opportunities, this project is far from commercial, and is defined by a pursuit of challenge.
 
 # Table of contents
 
@@ -63,7 +63,7 @@
 
 ### Database engine
 
-vkDB is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.
+vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.
 
 When you instantiate a `vkdb::Database`, all of the prior in-memory information (in-memory layer, metadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via `vkdb::Database::clear`.
 
