@@ -49,7 +49,7 @@
 
 [Authors](#authors)
 
-[Acknowledgements](#acknowledgements)
+[Credits](#credits)
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
@@ -348,7 +348,7 @@ Distributed under the MIT License. See [LICENSE](https://github.com/vkayy/vkdb/b
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-## Acknowledgements
+## Credits
 
 Used [MurmurHash3](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp) for the Bloom filters. Fast, uniform, and deterministic.
 
