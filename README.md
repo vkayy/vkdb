@@ -61,12 +61,6 @@
 
 ## Internals
 
-### Motivation
-
-I wanted to challenge myself architecturally and push my boundaries with C++, both in terms of knowledge and performance.
-
-<p align="right"><a href="#readme-top">back to top</a></p>
-
 ### Database engine
 
 vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.
