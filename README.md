@@ -17,6 +17,9 @@
   <img src="https://img.shields.io/github/stars/vkayy/vkdb" alt="stars" /></a>
   <a href="https://github.com/vkayy/vkdb/network/members">
   <img src="https://img.shields.io/github/forks/vkayy/vkdb" alt="forks" /></a>
+  <h4>
+    <a href="https://vkayy.github.io/vkdb">Documentation</a>
+  </h4>
 </div>
 
 # Table of contents
