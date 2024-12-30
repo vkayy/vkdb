@@ -17,11 +17,16 @@ jobs:
       - name: Set up CMake
         uses: lukka/get-cmake@latest
 
+      - name: Install GCC-10 and set it as default
+        run: |
+          sudo apt update
+          sudo apt install -y gcc-10
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
+          sudo update-alternatives --config gcc || true
+
+
       - name: Build and run tests
         run: |
-          sudo apt install gcc-10
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10
-          sudo update-alternatives --config gcc
           mkdir -p build
           cd build
           cmake ..
