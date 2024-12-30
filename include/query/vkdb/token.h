@@ -1,6 +1,7 @@
 #ifndef QUERY_TOKEN_H
 #define QUERY_TOKEN_H
 
+#include <cstdint>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>

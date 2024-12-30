@@ -3,6 +3,7 @@
 
 #include <vkdb/concepts.h>
 #include <vkdb/lsm_tree.h>
+#include <variant>
 #include <ranges>
 #include <unordered_set>
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <optional>
 #include <sstream>
 #include <iomanip>
 #include <vkdb/concepts.h>

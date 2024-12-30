@@ -6,6 +6,7 @@
 #include <optional>
 #include <utility>
 #include <concepts>
+#include <mutex>
 #include <vkdb/concepts.h>
 
 namespace vkdb {
