@@ -22,10 +22,13 @@
   </h4>
 </div>
 
+> **⚠ Warning**<br> vkdb is currently in the early stages of development and is not yet ready for daily use!
+
+**vkdb** is a hobbyist time series database engine built with a focus on simplicity and modernity. Motivated by unfamiliar architectures and endless optimisation opportunities, this project is far from commercial, and is defined by a pursuit of challenge.
+
 # Table of contents
 
-[About the project](#about-the-project)
-- [Motivation](#motivation)
+[Internals](#internals)
 - [Database engine](#database-engine)
 - [Query processing](#query-processing)
 
@@ -56,7 +59,7 @@
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-## About the project
+## Internals
 
 ### Motivation
 
@@ -337,11 +340,9 @@ Here's the EBNF grammar encapsulating vq.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-## Links
+## Authors
 
-Author: [Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me)
-
-Documentation: [vkdb](https://vkayy.github.io/vkdb)
+[Vinz Kakilala](https://linkedin.com/in/vinzkakilala) (me)
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
