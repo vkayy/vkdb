@@ -5,6 +5,8 @@
 #include <vkdb/lsm_tree.h>
 #include <variant>
 #include <ranges>
+#include <ranges>
+#include <algorithm>
 #include <unordered_set>
 
 namespace vkdb {

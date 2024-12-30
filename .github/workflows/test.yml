@@ -19,6 +19,9 @@ jobs:
 
       - name: Build and run tests
         run: |
+          sudo apt install gcc-10
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10
+          sudo update-alternatives --config gcc
           mkdir -p build
           cd build
           cmake ..
