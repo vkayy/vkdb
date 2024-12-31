@@ -6,7 +6,7 @@ vkdb is built on log-structured merge (LSM) trees. In their simplest form, these
 
 When you instantiate a `vkdb::Database`, all of the prior in-memory information (in-memory layer, metadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via `vkdb::Database::clear`.
 
-It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` type via `vkdb::Database::getTable`, unless you just want to play around with vq (more on this later).
+It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` type via `vkdb::Database::getTable`, unless you just want to play around with vq (read more about the playground [here](2_usage.md)).
 
 > [!NOTE]
 > All database files will be stored in `_vkdb_database_directory`; you shouldn't tamper with this directory unless you want to move your databases between machines.
