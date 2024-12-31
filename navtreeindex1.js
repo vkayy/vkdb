@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"classvkdb_1_1WriteAheadLog.html#aa4a4f8bf33941b547bb5a94005c350be":[5,0,0,48,2],
 "classvkdb_1_1WriteAheadLog.html#aac644f060e5da1c129dff3c122ff276b":[5,0,0,48,5],
 "classvkdb_1_1WriteAheadLog.html#ab5e10eb746b62c1fab61f7061dae55d0":[5,0,0,48,0],
 "classvkdb_1_1WriteAheadLog.html#ad643f980e8c3760a2f96bf0be3bba8d9":[5,0,0,48,6],
@@ -37,8 +36,8 @@ var NAVTREEINDEX1 =
 "expr_8h_source.html":[6,0,0,1,0,1],
 "files.html":[6,0],
 "friendly__builder_8h_source.html":[6,0,0,1,0,2],
-"functions.html":[5,2,0],
 "functions.html":[5,2,0,0],
+"functions.html":[5,2,0],
 "functions_b.html":[5,2,0,1],
 "functions_c.html":[5,2,0,2],
 "functions_d.html":[5,2,0,3],
