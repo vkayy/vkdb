@@ -14,16 +14,11 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install graphviz -y
 
-      - name: Install Latest Stable Doxygen
+      - name: Install Doxygen 1.12.0
         run: |
-          curl -s https://api.github.com/repos/doxygen/doxygen/releases/latest \
-            | grep "browser_download_url.*linux.bin.tar.gz" \
-            | cut -d '"' -f 4 \
-            | wget -qi -
-          tar -xvf doxygen-*.linux.bin.tar.gz
-          sudo mv doxygen-*/bin/* /usr/local/bin/
-          sudo mv doxygen-*/share/* /usr/local/share/
-          doxygen --version
+          wget https://github.com/doxygen/doxygen/releases/download/Release_1_12_1/doxygen-1.12.1.linux.bin.tar.gz
+          tar -xvf doxygen-1.12.1.linux.bin.tar.gz
+          sudo ./doxygen-1.12.1/install.sh
 
       - name: Generate Docs
         run: |
