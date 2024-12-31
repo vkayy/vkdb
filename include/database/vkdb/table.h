@@ -92,7 +92,8 @@ public:
      * @param tag_column Tag column.
      * @return Table& Reference to the table.
      * 
-     * @throw std::runtime_error If the tag column already exists.
+     * @throw std::runtime_error If the table has previously been populated
+     * with data or the tag column already exists.
      */
     Table& addTagColumn(const TagKey& tag_column);
 
@@ -101,6 +102,9 @@ public:
      * 
      * @param tag_column Tag column.
      * @return Table& Reference to the table.
+     * 
+     * @throw std::runtime_error If the table has previously been populated
+     * with data or the tag column does not exist.
      */
     Table& removeTagColumn(const TagKey& tag_column);
 

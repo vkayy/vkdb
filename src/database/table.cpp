@@ -16,6 +16,12 @@ Table& Table::setTagColumns(const TagColumns& tag_columns) noexcept {
 }
 
 Table& Table::addTagColumn(const TagKey& tag_column) {
+  if (beenPopulated()) {
+    throw std::runtime_error{
+      "Table::addTagColumn(): Table '" + name_
+      + "' has previously been populated with data."
+    };
+  }
   auto inserted{tag_columns_.insert(tag_column).second};
   if (!inserted) {
     throw std::runtime_error{
@@ -28,6 +34,12 @@ Table& Table::addTagColumn(const TagKey& tag_column) {
 }
 
 Table& Table::removeTagColumn(const TagKey& tag_column) {
+  if (beenPopulated()) {
+    throw std::runtime_error{
+      "Table::removeTagColumn(): Table '" + name_
+      + "' has previously been populated with data."
+    };
+  }
   auto removed{tag_columns_.erase(tag_column) > 0};
   if (!removed) {
     throw std::runtime_error{
