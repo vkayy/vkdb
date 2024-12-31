@@ -246,7 +246,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1Table.html" title="Represents a table in vkdb.">Table</a>&amp; Reference to the table.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If the tag column already exists. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>If the table has previously been populated with data or the tag column already exists. </td></tr>
   </table>
   </dd>
 </dl>
@@ -284,7 +284,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 false If the table has not been populated. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00063">63</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00075">75</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
 
 </div>
 </div>
@@ -314,7 +314,7 @@ false If the table has not been populated. </dd></dl>
 <p>Clear the table. </p>
 <p>Clears the table directory. </p>
 
-<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00042">42</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00054">54</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
 
 </div>
 </div>
@@ -344,7 +344,7 @@ false If the table has not been populated. </dd></dl>
 <p>Get the name of the table. </p>
 <dl class="section return"><dt>Returns</dt><dd>TableName Name of the table. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00051">51</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00063">63</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
 
 </div>
 </div>
@@ -374,7 +374,7 @@ false If the table has not been populated. </dd></dl>
 <p>Get the path to the table directory. </p>
 <dl class="section return"><dt>Returns</dt><dd>FilePath Path to the directory. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00059">59</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00071">71</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
 
 </div>
 </div>
@@ -404,7 +404,7 @@ false If the table has not been populated. </dd></dl>
 <p>Get a <a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html" title="Friendly query builder for querying a Table.">FriendlyQueryBuilder</a> object. </p>
 <dl class="section return"><dt>Returns</dt><dd>FriendlyQueryBuilder&lt;double&gt; Friendly query builder. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00047">47</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00059">59</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
 
 </div>
 </div>
@@ -431,9 +431,15 @@ false If the table has not been populated. </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1Table.html" title="Represents a table in vkdb.">Table</a>&amp; Reference to the table. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classvkdb_1_1Table.html" title="Represents a table in vkdb.">Table</a>&amp; Reference to the table.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>If the table has previously been populated with data or the tag column does not exist. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00030">30</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00036">36</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
 
 </div>
 </div>
@@ -500,7 +506,7 @@ false If the table has not been populated. </dd></dl>
 <p>Get the TagColumns object. </p>
 <dl class="section return"><dt>Returns</dt><dd>TagColumns Tag columns. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00055">55</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8cpp_source.html#l00067">67</a> of file <a class="el" href="table_8cpp_source.html">table.cpp</a>.</p>
 
 </div>
 </div>
