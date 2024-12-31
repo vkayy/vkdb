@@ -1,0 +1,12 @@
+<map id="vkdb::DataPoint&lt; TValue &gt;" name="vkdb::DataPoint&lt; TValue &gt;">
+<area shape="rect" id="Node000001" title="Represents a datapoint in vkdb." alt="" coords="135,285,335,311"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,95,118,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="67,134,58,177,59,200,68,221,87,244,112,261,139,274,167,283,166,288,137,279,109,265,84,247,63,224,54,202,53,177,62,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="124,197,345,223"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="106,125,218,195,215,200,103,130"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,144,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,59,77,94,72,94,72,59"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="237,237,237,285,232,285,232,237"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="369,197,436,223"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="369,231,259,287,256,283,367,227"/>
+</map>
