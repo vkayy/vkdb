@@ -143,6 +143,13 @@ public:
      */
     [[nodiscard]] FilePath path() const noexcept;
 
+private:
+    /**
+     * @brief Type alias for the storage engine.
+     * 
+     */
+    using StorageEngine = LSMTree<double>;
+
     /**
      * @brief Check if the table has been populated.
      * @details Checks if the storage engine is not empty.
@@ -150,14 +157,7 @@ public:
      * @return true If the table has been populated.
      * @return false If the table has not been populated.
      */
-    [[nodiscard]] bool beenPopulated() const noexcept;
-
-private:
-    /**
-     * @brief Type alias for the storage engine.
-     * 
-     */
-    using StorageEngine = LSMTree<double>;
+    [[nodiscard]] bool been_populated() const noexcept;
     
     /**
      * @brief Save the tag columns to a file.

@@ -16,7 +16,7 @@ Table& Table::setTagColumns(const TagColumns& tag_columns) noexcept {
 }
 
 Table& Table::addTagColumn(const TagKey& tag_column) {
-  if (beenPopulated()) {
+  if (been_populated()) {
     throw std::runtime_error{
       "Table::addTagColumn(): Table '" + name_
       + "' has previously been populated with data."
@@ -34,7 +34,7 @@ Table& Table::addTagColumn(const TagKey& tag_column) {
 }
 
 Table& Table::removeTagColumn(const TagKey& tag_column) {
-  if (beenPopulated()) {
+  if (been_populated()) {
     throw std::runtime_error{
       "Table::removeTagColumn(): Table '" + name_
       + "' has previously been populated with data."
@@ -72,7 +72,7 @@ FilePath Table::path() const noexcept {
   return db_path_ / FilePath{name_};
 }
 
-bool Table::beenPopulated() const noexcept {
+bool Table::been_populated() const noexcept {
   return !storage_engine_.empty();
 }
 
