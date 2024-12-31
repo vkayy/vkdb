@@ -6,7 +6,8 @@ var searchData=
   ['replay_3',['replay',['../classvkdb_1_1WriteAheadLog.html#a57fb236100eb09364709f2de54616354',1,'vkdb::WriteAheadLog']]],
   ['replaywal_4',['replayWAL',['../classvkdb_1_1LSMTree.html#abd350466f8593cc88a1f1e943841ae38',1,'vkdb::LSMTree']]],
   ['run_5',['run',['../classvkdb_1_1Database.html#ae2b1c561490a7e040f50702540a15651',1,'vkdb::Database::run()'],['../classvkdb_1_1VQ.html#a2fcdb83836971bdac39fcb98ebc86ba5',1,'vkdb::VQ::run()']]],
-  ['runfile_6',['runfile',['../classvkdb_1_1Database.html#a5209899a9824cd2c04a4b41e5e8ae9d9',1,'vkdb::Database::runFile()'],['../classvkdb_1_1VQ.html#a6daf5be571e62d8d32b891da60a9743d',1,'vkdb::VQ::runFile()']]],
-  ['runprompt_7',['runprompt',['../classvkdb_1_1Database.html#aa4160bbc94525865fcea6a8c3f922d66',1,'vkdb::Database::runPrompt()'],['../classvkdb_1_1VQ.html#aa8ef53cff1c2cd927e487d5e2b197809',1,'vkdb::VQ::runPrompt() noexcept']]],
-  ['runtimeerror_8',['runtimeerror',['../classvkdb_1_1VQ.html#addd820cd9ec68735efc614dfc0340b27',1,'vkdb::VQ::runtimeError()'],['../classvkdb_1_1RuntimeError.html#aa1ead7c959c2f2b607de74246e49b682',1,'vkdb::RuntimeError::RuntimeError()']]]
+  ['runfile_6',['runFile',['../classvkdb_1_1Database.html#a5209899a9824cd2c04a4b41e5e8ae9d9',1,'vkdb::Database::runFile()'],['../classvkdb_1_1VQ.html#a6daf5be571e62d8d32b891da60a9743d',1,'vkdb::VQ::runFile()']]],
+  ['runprompt_7',['runPrompt',['../classvkdb_1_1Database.html#aa4160bbc94525865fcea6a8c3f922d66',1,'vkdb::Database::runPrompt()'],['../classvkdb_1_1VQ.html#aa8ef53cff1c2cd927e487d5e2b197809',1,'vkdb::VQ::runPrompt()']]],
+  ['runtimeerror_8',['RuntimeError',['../classvkdb_1_1RuntimeError.html#aa1ead7c959c2f2b607de74246e49b682',1,'vkdb::RuntimeError']]],
+  ['runtimeerror_9',['runtimeError',['../classvkdb_1_1VQ.html#addd820cd9ec68735efc614dfc0340b27',1,'vkdb::VQ']]]
 ];

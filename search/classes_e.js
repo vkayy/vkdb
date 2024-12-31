@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['walrecord_0',['WALRecord',['../structvkdb_1_1WALRecord.html',1,'vkdb']]],
-  ['whereclause_1',['WhereClause',['../structvkdb_1_1WhereClause.html',1,'vkdb']]],
-  ['writeaheadlog_2',['WriteAheadLog',['../classvkdb_1_1WriteAheadLog.html',1,'vkdb']]]
+  ['valueexpr_0',['ValueExpr',['../structvkdb_1_1ValueExpr.html',1,'vkdb']]],
+  ['vq_1',['VQ',['../classvkdb_1_1VQ.html',1,'vkdb']]]
 ];

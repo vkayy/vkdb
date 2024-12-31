@@ -1,14 +1,11 @@
 var searchData=
 [
-  ['table_0',['Table',['../classvkdb_1_1Table.html',1,'vkdb']]],
-  ['tablenameexpr_1',['TableNameExpr',['../structvkdb_1_1TableNameExpr.html',1,'vkdb']]],
-  ['tablesquery_2',['TablesQuery',['../structvkdb_1_1TablesQuery.html',1,'vkdb']]],
-  ['tagcolumnsexpr_3',['TagColumnsExpr',['../structvkdb_1_1TagColumnsExpr.html',1,'vkdb']]],
-  ['tagexpr_4',['TagExpr',['../structvkdb_1_1TagExpr.html',1,'vkdb']]],
-  ['tagkeyexpr_5',['TagKeyExpr',['../structvkdb_1_1TagKeyExpr.html',1,'vkdb']]],
-  ['taglistexpr_6',['TagListExpr',['../structvkdb_1_1TagListExpr.html',1,'vkdb']]],
-  ['tagvalueexpr_7',['TagValueExpr',['../structvkdb_1_1TagValueExpr.html',1,'vkdb']]],
-  ['timeserieskey_8',['TimeSeriesKey',['../classvkdb_1_1TimeSeriesKey.html',1,'vkdb']]],
-  ['timestampexpr_9',['TimestampExpr',['../structvkdb_1_1TimestampExpr.html',1,'vkdb']]],
-  ['token_10',['Token',['../classvkdb_1_1Token.html',1,'vkdb']]]
+  ['selectquery_0',['SelectQuery',['../structvkdb_1_1SelectQuery.html',1,'vkdb']]],
+  ['selecttypeavgexpr_1',['SelectTypeAvgExpr',['../structvkdb_1_1SelectTypeAvgExpr.html',1,'vkdb']]],
+  ['selecttypecountexpr_2',['SelectTypeCountExpr',['../structvkdb_1_1SelectTypeCountExpr.html',1,'vkdb']]],
+  ['selecttypedataexpr_3',['SelectTypeDataExpr',['../structvkdb_1_1SelectTypeDataExpr.html',1,'vkdb']]],
+  ['selecttypemaxexpr_4',['SelectTypeMaxExpr',['../structvkdb_1_1SelectTypeMaxExpr.html',1,'vkdb']]],
+  ['selecttypeminexpr_5',['SelectTypeMinExpr',['../structvkdb_1_1SelectTypeMinExpr.html',1,'vkdb']]],
+  ['selecttypesumexpr_6',['SelectTypeSumExpr',['../structvkdb_1_1SelectTypeSumExpr.html',1,'vkdb']]],
+  ['sstable_7',['SSTable',['../classvkdb_1_1SSTable.html',1,'vkdb']]]
 ];
