@@ -57,7 +57,7 @@ int main()  {
 ```
 
 > [!CAUTION]
-> Do not instantiate multiple databases with the same name, nor a single database with the name `interpreter_default` (read more about this database [here](2_usage.md)). As these instances have in-memory components, this can cause unexpected behaviour if they (and they likely will) become out-of-sync.
+> Do not instantiate multiple databases with the same name, nor a single database with the name `interpreter_default` (more on this database [here](2_usage.md)). As these instances have in-memory components, this can cause unexpected behaviour if they (and they likely will) become out-of-sync.
 
 ### Table management
 
