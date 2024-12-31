@@ -22,7 +22,8 @@
   </h4>
 </div>
 
-> **⚠ Warning**<br> vkdb is currently in the early stages of development and is not yet ready for daily use!
+> [!WARNING]
+> vkdb is currently in the early stages of development and is not yet ready for daily use!
 
 **vkdb** is a hobbyist time series database engine built with a focus on simplicity and modernity. Motivated by unfamiliar architectures and endless optimisation opportunities, this project is far from commercial, and is defined by a pursuit of challenge.
 
@@ -69,7 +70,8 @@ When you instantiate a `vkdb::Database`, all of the prior in-memory information 
 
 It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` type via `vkdb::Database::getTable`, unless you just want to play around with vq (more on this later).
 
-Also, one important thing to note is that all database files will be stored in `vkdb::DATABASE_DIRECTORY`; you shouldn't tamper with this directory nor the files in it.
+> [!NOTE]
+> All database files will be stored in `vkdb::DATABASE_DIRECTORY`; you shouldn't tamper with this directory unless you want to move your databases between machines.
 
 ![database engine internals](docs/images/database-engine-internals.png)
 
@@ -151,6 +153,9 @@ int main()  {
 }
 ```
 
+> [!CAUTION]
+> Do not instantiate multiple databases with the same name, nor a single database with the name `interpreter_default` (more on this later). As these instances have in-memory components, this can cause unexpected behaviour if they (and they likely will) become out-of-sync.
+
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 ### Table management
@@ -164,6 +169,9 @@ db.createTable("sensor_data")
 
 db.run("REMOVE TAGS type FROM sensor_data;")
 ```
+
+> [!IMPORTANT]
+> When a table has been populated, it can no longer have its tag columns modified unless you call `vkdb::Table::clear`.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
@@ -196,7 +204,7 @@ auto sum{table_replay.query()
 
 ### Playground
 
-You can also play around with vq by running `vkdb::VQ::run...()`. This operates on a reserved database called `interpreter_default` (which, consequently, you should not use as a database name).
+You can also play around with vq by running `vkdb::VQ::run...()`. This operates on a reserved database called `interpreter_default`.
 
 ```cpp
 #include <vkdb/vq.h>

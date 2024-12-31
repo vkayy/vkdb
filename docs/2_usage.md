@@ -56,6 +56,9 @@ int main()  {
 }
 ```
 
+> [!CAUTION]
+> Do not instantiate multiple databases with the same name, nor a single database with the name `interpreter_default` (more on this later). As these instances have in-memory components, this can cause unexpected behaviour if they (and they likely will) become out-of-sync.
+
 ### Table management
 
 You can manipulate tables with the database API, both with methods or queries.
@@ -67,6 +70,10 @@ db.createTable("sensor_data")
 
 db.run("REMOVE TAGS type FROM sensor_data;")
 ```
+
+> [!IMPORTANT]
+> When a table has been populated, it can no longer have its tag columns modified unless you call `vkdb::Table::clear`.
+
 
 ### General queries
 

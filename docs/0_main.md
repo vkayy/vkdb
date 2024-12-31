@@ -14,8 +14,8 @@
 <h4><a href="https://github.com/vkayy/vkdb">GitHub Repository</a></h4>
 </div>
 
-> **⚠ Warning**<br> vkdb is currently in the early stages of development and is not yet ready for daily use!
-
+> [!WARNING]
+> vkdb is currently in the early stages of development and is not yet ready for daily use!
 
 **vkdb** is a hobbyist time series database engine built with a focus on simplicity and modernity. Motivated by unfamiliar architectures and endless optimisation opportunities, this project is far from commercial, and is defined by a pursuit of challenge.
 
