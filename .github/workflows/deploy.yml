@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      
+      - name: Update Submodules
+        run: git submodule update
 
       - name: Install Dependencies
         run: sudo apt-get install graphviz -y
