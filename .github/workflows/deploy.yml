@@ -15,10 +15,9 @@ jobs:
         run: sudo apt-get install graphviz -y
 
       - name: Install Doxygen 1.12.0
-        run: |
-          wget https://github.com/doxygen/doxygen/releases/download/Release_1_12_1/doxygen-1.12.1.linux.bin.tar.gz
-          tar -xvf doxygen-1.12.1.linux.bin.tar.gz
-          sudo ./doxygen-1.12.1/install.sh
+        uses: ssciwr/doxygen-install@v1
+        with:
+          version: "1.12.0"
 
       - name: Generate Docs
         run: |
