@@ -71,7 +71,7 @@ When you instantiate a `vkdb::Database`, all of the prior in-memory information 
 It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` type via `vkdb::Database::getTable`, unless you just want to play around with vq (more on this later).
 
 > [!NOTE]
-> All database files will be stored in `vkdb::DATABASE_DIRECTORY`; you shouldn't tamper with this directory unless you want to move your databases between machines.
+> All database files will be stored in `_vkdb_database_directory`; you shouldn't tamper with this directory unless you want to move your databases between machines.
 
 ![database engine internals](docs/images/database-engine-internals.png)
 
