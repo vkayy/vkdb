@@ -11,6 +11,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install Doxygen
+        run: sudo apt-get install doxygen graphviz -y
+
+      - name: Generate Docs
+        run: |
+          cd docs
+          doxygen Doxyfile
+
       - name: Push to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
