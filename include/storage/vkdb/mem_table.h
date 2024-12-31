@@ -193,7 +193,6 @@ public:
   }
 
 private:
-
   using TimeRange = DataRange<Timestamp>;
   using KeyRange = DataRange<key_type>;
 
