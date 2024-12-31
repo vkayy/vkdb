@@ -38,7 +38,7 @@
 - [Tests](#tests)
 - [Examples](#examples)
 
-[Using the library](#using-the-library)
+[Usage](#usage)
 - [Setup](#setup)
 - [Interface](#interface)
 - [Table management](#table-management)
@@ -122,7 +122,7 @@ From the build folder, you can also run any of the examples.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
-## Using the library
+## Usage
 
 ### Setup
 Add this to your `CMakeLists.txt` file—it lets you use vkdb by fetching the most recent version into your project's build.
