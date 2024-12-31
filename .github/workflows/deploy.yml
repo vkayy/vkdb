@@ -5,22 +5,24 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-documentation:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install Doxygen
-        run: sudo apt-get install doxygen graphviz -y
-
-      - name: Generate Docs
-        run: |
-          cd docs
-          doxygen Doxyfile
-
-      - name: Push to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          publish_dir: ./docs/html
+    - name: Checkout Code
+    - uses: actions/checkout@v3
+    
+    - name: Doxygen Action
+      uses: mattnotmitt/doxygen-action@v1.1.0
+      with:
+          doxyfile-path: ./docs/Doxyfile
+    
+    - name: GH Pages Deployment
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/html/
+        enable_jekyll: false
+        allow_empty_commit: false
+        force_orphan: true
+        publish_branch: gh-pages
