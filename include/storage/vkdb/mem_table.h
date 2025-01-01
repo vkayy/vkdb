@@ -193,9 +193,6 @@ public:
   }
 
 private:
-  using TimeRange = DataRange<Timestamp>;
-  using KeyRange = DataRange<key_type>;
-
   /**
    * @brief Checks if a key is within the valid range.
    * 

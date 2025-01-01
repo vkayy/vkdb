@@ -194,6 +194,18 @@ private:
    */
   std::pair<data_type, data_type> range_;
 };
+
+/**
+ * @brief Type alias for timestamp data range.
+ * 
+ */
+using TimeRange = DataRange<Timestamp>;
+
+/**
+ * @brief Type alias for key data range.
+ * 
+ */
+using KeyRange = DataRange<TimeSeriesKey>;
 }  // namespace vkdb
 
 #endif // STORAGE_DATA_RANGE_H

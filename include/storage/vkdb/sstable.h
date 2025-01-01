@@ -236,24 +236,30 @@ public:
     return file_path;
   }
 
+  /**
+   * @brief Get the key range of the SSTable.
+   * 
+   * @return KeyRange Key range.
+   */
+  [[nodiscard]] KeyRange keyRange() const noexcept {
+    return key_range_;
+  }
+
+  /**
+   * @brief Get the time range of the SSTable.
+   * 
+   * @return TimeRange Time range.
+   */
+  [[nodiscard]] TimeRange timeRange() const noexcept {
+    return time_range_;
+  }
+
 private:
   /**
    * @brief Type alias for ordered mapping of keys to stream positions.
    * 
    */
   using Index = std::map<const key_type, std::streampos>;
-
-  /**
-   * @brief Type alias for timestamp data range.
-   * 
-   */
-  using TimeRange = DataRange<Timestamp>;
-
-  /**
-   * @brief Type alias for key data range.
-   * 
-   */
-  using KeyRange = DataRange<key_type>;
 
   /**
    * @brief Update the metadata with a key and stream position.
