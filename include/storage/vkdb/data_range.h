@@ -17,13 +17,22 @@ public:
   using data_type = TData;
 
   /**
-   * @brief Construct a new Data Range object.
+   * @brief Construct a new DataRange object.
    * 
    */
   DataRange() noexcept = default;
 
   /**
-   * @brief Construct a new Data Range object from the given string.
+   * @brief Construct a new DataRange object from the given start and end.
+   * 
+   * @param start The start of the range.
+   * @param end The end of the range.
+   */
+  DataRange(const data_type& start, const data_type& end) noexcept
+    : is_set_{true}, range_{start, end} {}
+
+  /**
+   * @brief Construct a new DataRange object from the given string.
    * 
    * @param str The string representation of the range.
    * 
@@ -53,31 +62,31 @@ public:
   }
 
   /**
-   * @brief Move-construct a Data Range object.
+   * @brief Move-construct a DataRange object.
    * 
    */
   DataRange(DataRange&&) noexcept = default;
 
   /**
-   * @brief Move-assign a Data Range object.
+   * @brief Move-assign a DataRange object.
    * 
    */
   DataRange& operator=(DataRange&&) noexcept = default;
 
   /**
-   * @brief Deleted copy constructor.
+   * @brief Copy-construct a DataRange object.
    * 
    */
-  DataRange(const DataRange&) = delete;
+  DataRange(const DataRange&) noexcept = default;
 
   /**
-   * @brief Deleted copy assignment operator.
+   * @brief Copy-assign a DataRange object.
    * 
    */
-  DataRange& operator=(const DataRange&) = delete;
+  DataRange& operator=(const DataRange&) noexcept = default;
 
   /**
-   * @brief Destroy the Data Range object.
+   * @brief Destroy the DataRange object.
    * 
    */
   ~DataRange() noexcept = default;
