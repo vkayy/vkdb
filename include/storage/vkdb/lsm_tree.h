@@ -55,7 +55,7 @@ public:
     : wal_{path}
     , path_{std::move(path)}
     , sstable_id_{0}
-    , ck_layers_{CK_LAYER_TABLE_COUNTS.size()}
+    , ck_layers_{CK_LAYER_TABLE_COUNT.size()}
     , cache_{CACHE_CAPACITY} {
       std::filesystem::create_directories(path_);
       load_sstables();
@@ -391,7 +391,7 @@ private:
    * - C7: 1 year
    * 
    */
-  static constexpr std::array<size_type, 8> CK_LAYER_WINDOWS{
+  static constexpr std::array<size_type, 8> CK_LAYER_WINDOW_SIZE{
     0,
     0,
     86400,
@@ -407,7 +407,7 @@ private:
    * @details The number of SSTables in each Ck layer is 1000.
    * 
    */
-  static constexpr std::array<size_type, 8> CK_LAYER_TABLE_COUNTS{
+  static constexpr std::array<size_type, 8> CK_LAYER_TABLE_COUNT{
     1'000,
     1'000,
     1'000,
@@ -425,7 +425,7 @@ private:
    */
   void load_sstables() {
     auto& c1_layer{ck_layers_[0]};
-    c1_layer.reserve(CK_LAYER_TABLE_COUNTS[0]);
+    c1_layer.reserve(CK_LAYER_TABLE_COUNT[0]);
     std::set<FilePath> sstable_files;
     for (const auto& file : std::filesystem::directory_iterator(path_)) {
       if (!file.is_regular_file() || file.path().extension() != ".sst") {
@@ -448,7 +448,7 @@ private:
       path_ / ("sstable_" + std::to_string(sstable_id_++) + ".sst")
     };
     auto& c1_layer{ck_layers_[0]};
-    if (c1_layer.size() == CK_LAYER_TABLE_COUNTS[0]) {
+    if (c1_layer.size() == CK_LAYER_TABLE_COUNT[0]) {
       throw std::runtime_error{
         "LSMTree::flush(): C1 layer is full. Unable to flush memtable."
       };
