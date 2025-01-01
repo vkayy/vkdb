@@ -389,7 +389,6 @@ public:
    * @throw std::runtime_error If the query type is not set and there are no
    * filters or if executing the query fails.
    */
-  [[nodiscard]]
   result_type execute() {
     switch (query_type_) {
     case QueryType::NONE:
