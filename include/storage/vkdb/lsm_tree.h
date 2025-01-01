@@ -40,12 +40,6 @@ public:
   using table_type = typename MemTable<TValue>::table_type;
 
   /**
-   * @brief Number of SSTables in the C1 layer.
-   * 
-   */
-  static constexpr size_type C1_LAYER_SIZE{1'000};
-
-  /**
    * @brief Max number of entries in the cache.
    * 
    */
@@ -61,6 +55,7 @@ public:
     : wal_{path}
     , path_{std::move(path)}
     , sstable_id_{0}
+    , ck_layers_{CK_LAYER_TABLE_COUNTS.size()}
     , cache_{CACHE_CAPACITY} {
       std::filesystem::create_directories(path_);
       load_sstables();
@@ -107,9 +102,9 @@ public:
    * layer is full.
    */
   void put(const key_type& key, const TValue& value, bool log = true) {
-    mem_table_.put(key, value);
+    c0_layer_.put(key, value);
     dirty_table_[key] = true;
-    if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
+    if (c0_layer_.size() == MemTable<TValue>::MAX_ENTRIES) {
       flush();
     }
     if (log) {
@@ -127,9 +122,9 @@ public:
    * layer is full.
    */
   void remove(const key_type& key, bool log = true) {
-    mem_table_.put(key, std::nullopt);
+    c0_layer_.put(key, std::nullopt);
     dirty_table_[key] = true;
-    if (mem_table_.size() == MemTable<TValue>::MAX_ENTRIES) {
+    if (c0_layer_.size() == MemTable<TValue>::MAX_ENTRIES) {
       flush();
     }
     if (log) {
@@ -149,13 +144,14 @@ public:
     if (!dirty_table_[key] && cache_.contains(key)) {
       return cache_.get(key);
     }
-    if (mem_table_.contains(key)) {
-      const auto value{mem_table_.get(key)};
+    if (c0_layer_.contains(key)) {
+      const auto value{c0_layer_.get(key)};
       cache_.put(key, value);
       dirty_table_[key] = false;
       return value;
     }
-    for (const auto& sstable : sstables_ | std::views::reverse) {
+    const auto& c1_layer{ck_layers_[0]};
+    for (const auto& sstable : c1_layer | std::views::reverse) {
       if (sstable.contains(key)) {
         const auto value{sstable.get(key)};
         cache_.put(key, value);
@@ -182,7 +178,7 @@ public:
     TimeSeriesKeyFilter&& filter
   ) const {
     table_type entry_table;
-    for (const auto& sstable : sstables_) {
+    for (const auto& sstable : ck_layers_[0]) {
       for (const auto& [key, value] : sstable.getRange(start, end)) {
         if (!filter(key)) {
           continue;
@@ -194,7 +190,7 @@ public:
         entry_table[key] = value;
       }
     }
-    for (const auto& [key, value] : mem_table_.getRange(start, end)) {
+    for (const auto& [key, value] : c0_layer_.getRange(start, end)) {
       if (!filter(key)) {
         continue;
       }
@@ -222,22 +218,23 @@ public:
       const key_type& end,
       TimeSeriesKeyFilter filter
   ) const {
+    const auto& c1_layer{ck_layers_[0]};
     std::vector<std::future<std::vector<value_type>>> range_futures;
-    range_futures.reserve(sstables_.size() + 1);
+    range_futures.reserve(c1_layer.size() + 1);
     
     range_futures.push_back(std::async(std::launch::async,
       [this, &start, &end, &filter]() {
-        std::vector<value_type> mem_table_entries;
-        for (const auto& [key, value] : mem_table_.getRange(start, end)) {
+        std::vector<value_type> c0_layer_entries;
+        for (const auto& [key, value] : c0_layer_.getRange(start, end)) {
           if (filter(key)) {
-            mem_table_entries.emplace_back(key, value);
+            c0_layer_entries.emplace_back(key, value);
           }
         }
-        return mem_table_entries;
+        return c0_layer_entries;
       }
     ));
 
-    for (const auto& sstable : sstables_ | std::views::reverse) {
+    for (const auto& sstable : c1_layer | std::views::reverse) {
       range_futures.push_back(std::async(std::launch::async, 
         [&sstable, &start, &end, &filter]() {
           std::vector<value_type> sstable_entries;
@@ -286,7 +283,7 @@ public:
    * 
    */
   void clear() noexcept {
-    for (const auto& sstable : sstables_) {
+    for (const auto& sstable : ck_layers_[0]) {
       std::filesystem::remove(sstable.path());
       std::filesystem::remove(sstable.metadataPath());
     }
@@ -300,8 +297,8 @@ public:
    */
   [[nodiscard]] std::string str() const noexcept {
     std::stringstream ss;
-    ss << mem_table_.str();
-    for (const auto& sstable : sstables_) {
+    ss << c0_layer_.str();
+    for (const auto& sstable : ck_layers_[0]) {
       ss << sstable.str();
     }
     return ss.str();
@@ -313,7 +310,7 @@ public:
    * @return size_type The number of SSTables.
    */
   [[nodiscard]] size_type sstableCount() const noexcept {
-    return sstables_.size();
+    return ck_layers_[0].size();
   }
 
   /**
@@ -323,10 +320,34 @@ public:
    * @return false if the LSM tree is not empty.
    */
   [[nodiscard]] bool empty() const noexcept {
-    return mem_table_.empty() && sstables_.empty();
+    return c0_layer_.empty() && ck_layers_[0].empty();
   }
 
 private:
+  /**
+   * @brief Time window.
+   * @details A time window is a range of timestamps.
+   * 
+   */
+  struct TimeWindow {
+    /**
+     * @brief Range.
+     * 
+     */
+    DataRange<Timestamp> range;
+
+    /**
+     * @brief Check if two time windows overlap.
+     * 
+     * @param other Other time window.
+     * @return true if the time windows overlap.
+     * @return false if the time windows do not overlap.
+     */
+    bool overlaps(const TimeWindow& other) const noexcept {
+      return range.overlapsWith(other.range);
+    }
+  };
+
   /**
    * @brief Type alias for memtable.
    * 
@@ -334,10 +355,16 @@ private:
   using C0Layer = MemTable<TValue>;
 
   /**
-   * @brief Type alias for SSTable vector.
+   * @brief Type alias for a vector of SSTables.
    * 
    */
-  using C1Layer = std::vector<SSTable<TValue>>;
+  using CkLayer = std::vector<SSTable<TValue>>;
+
+  /**
+   * @brief Type alias for CkLayer vector.
+   * 
+   */
+  using CkLayers = std::vector<CkLayer>;
 
   /**
    * @brief Type alias for LRU cache.
@@ -352,23 +379,44 @@ private:
   using DirtyTable = std::unordered_map<key_type, bool>;
 
   /**
-   * @brief Flush the memtable to an SSTable.
+   * @brief Time window sizes of each Ck layer.
+   * @details The time window sizes are in seconds.
+   * - C0: 0 (any overlap)
+   * - C1: 0 (any overlap)
+   * - C2: 1 day
+   * - C3: 1 week
+   * - C4: 1 month
+   * - C5: 3 months
+   * - C6: 6 months
+   * - C7: 1 year
    * 
-   * @throw std::runtime_error if the C1 layer is full.
    */
-  void flush() {
-    FilePath sstable_file_path{
-      path_ / ("sstable_" + std::to_string(sstable_id_++) + ".sst")
-    };
-    if (sstables_.size() == C1_LAYER_SIZE) {
-      throw std::runtime_error{
-        "LSMTree::flush(): C1 layer is full. Unable to flush memtable."
-      };
-    }
-    sstables_.emplace_back(sstable_file_path, std::move(mem_table_));
-    mem_table_.clear();
-    wal_.clear();
-  }
+  static constexpr std::array<size_type, 8> CK_LAYER_WINDOWS{
+    0,
+    0,
+    86400,
+    604800,
+    2592000,
+    7776000,
+    15552000,
+    31536000
+  };
+
+  /**
+   * @brief Number of SSTables in each Ck layer.
+   * @details The number of SSTables in each Ck layer is 1000.
+   * 
+   */
+  static constexpr std::array<size_type, 8> CK_LAYER_TABLE_COUNTS{
+    1'000,
+    1'000,
+    1'000,
+    1'000,
+    1'000,
+    1'000,
+    1'000,
+    1'000
+  };
 
   /**
    * @brief Load the SSTables from disk.
@@ -376,7 +424,8 @@ private:
    * @throw std::runtime_error If loading of any SSTable fails.
    */
   void load_sstables() {
-    sstables_.reserve(C1_LAYER_SIZE);
+    auto& c1_layer{ck_layers_[0]};
+    c1_layer.reserve(CK_LAYER_TABLE_COUNTS[0]);
     std::set<FilePath> sstable_files;
     for (const auto& file : std::filesystem::directory_iterator(path_)) {
       if (!file.is_regular_file() || file.path().extension() != ".sst") {
@@ -385,21 +434,41 @@ private:
       sstable_files.insert(file.path());
     }
     for (const auto& sstable_file : sstable_files) {
-      sstables_.emplace_back(sstable_file);
+      c1_layer.emplace_back(sstable_file);
     }
+  }
+
+  /**
+   * @brief Flush the memtable to an SSTable.
+   * 
+   * @throw std::runtime_error if the C1 layer is full.
+   */
+  void flush() {
+    FilePath sstable_file_path{
+      path_ / ("sstable_" + std::to_string(sstable_id_++) + ".sst")
+    };
+    auto& c1_layer{ck_layers_[0]};
+    if (c1_layer.size() == CK_LAYER_TABLE_COUNTS[0]) {
+      throw std::runtime_error{
+        "LSMTree::flush(): C1 layer is full. Unable to flush memtable."
+      };
+    }
+    c1_layer.emplace_back(sstable_file_path, std::move(c0_layer_));
+    c0_layer_.clear();
+    wal_.clear();
   }
 
   /**
    * @brief Memtable.
    * 
    */
-  C0Layer mem_table_;
+  C0Layer c0_layer_;
 
   /**
-   * @brief SSTables.
+   * @brief SSTable layers.
    * 
    */
-  C1Layer sstables_;
+  CkLayers ck_layers_;
 
   /**
    * @brief Write-ahead log.
