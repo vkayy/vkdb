@@ -81,7 +81,6 @@ It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` ty
 
 #### Compaction
 
-
 The LSM tree uses time-window compaction to efficiently organise and merge SSTables across different layers (C0-C7). Each layer has a specific time window size and maximum number of SSTables.
 
 | Layer | Time Window | Max. SSTables |
@@ -95,10 +94,9 @@ The LSM tree uses time-window compaction to efficiently organise and merge SSTab
 | C6 | 3 months | 10,000 |
 | C7 | 1 year | 10,000 |
 
-When the memtable fills up, it is flushed to C0 as an SSTable. C0 acts as a buffer for the later layers, and when it exceeds its SSTable limit, all the SSTables are merged into C1 at once, with each SSTable spanning a 30-minute window.
+When the memtable fills up, it's flushed to C0 as an SSTable. C0 acts as a buffer for the later layers, and when it exceeds its SSTable limit, all the SSTables are merged into C1 at once, with each SSTable spanning a 30-minute window.
 
-When any other layer exceeds its SSTable limit, its oldest excess SSTables are merged with the next layer's SSTables based on the layer's time window. For example, if C1 has too many SSTables:
-
+When any other layer exceeds its SSTable limit, only its oldest, excess SSTables are merged with the next layer's SSTables based on the layer's time window. For example, if C1 has too many SSTables:
 1. The oldest SSTables from C1 are selected.
 2. Any overlapping SSTables in C2 are identified based on 1-hour time windows.
 3. The selected SSTables are merged into new SSTables in C2.
