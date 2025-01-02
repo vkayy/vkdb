@@ -104,22 +104,22 @@ $(function(){initNavTree('md_2__usage.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Usage</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md4"></a></p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md6"></a></p>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Running locally (not needed)</h1>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 Installation</h2>
 <p>First, clone the project and <code>cd</code> into the directory. </p><div class="fragment"><div class="line">git clone https://github.com/vkayy/vkdb.git &amp;&amp; cd vkdb</div>
 </div><!-- fragment --><p> Then, make the build directory and build the project with CMake. </p><div class="fragment"><div class="line">mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
 Tests</h2>
 <p>From the build folder, you can run the tests. </p><div class="fragment"><div class="line">./tests/vkdb_tests</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
 Examples</h2>
 <p>From the build folder, you can also run any of the examples. </p><div class="fragment"><div class="line">./examples/&lt;filename&gt;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md11"></a>
 Using the library</h1>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md12"></a>
 Setup</h2>
 <p>Add this to your <code>CMakeLists.txt</code> file—it lets you use vkdb by fetching the most recent version into your project's build.</p>
 <div class="fragment"><div class="line">include(FetchContent)</div>
@@ -130,7 +130,7 @@ Setup</h2>
 <div class="line">)</div>
 <div class="line">FetchContent_MakeAvailable(vkdb)</div>
 <div class="line">target_link_libraries(${PROJECT_NAME} vkdb)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
 Interface</h2>
 <p>Simply include the database header, and you'll have access to the database API.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vkdb/database.h&gt;</span></div>
@@ -143,7 +143,7 @@ Interface</h2>
 <div class="ttc" id="aclassvkdb_1_1Database_html"><div class="ttname"><a href="classvkdb_1_1Database.html">vkdb::Database</a></div><div class="ttdoc">Represents a database in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="database_8h_source.html#l00020">database.h:20</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1Database_html_af2b2d70995e50959ddb4254d8a5592b5"><div class="ttname"><a href="classvkdb_1_1Database.html#af2b2d70995e50959ddb4254d8a5592b5">vkdb::Database::createTable</a></div><div class="ttdeci">Table &amp; createTable(const TableName &amp;table_name)</div><div class="ttdoc">Create a Table object.</div><div class="ttdef"><b>Definition</b> <a href="database_8cpp_source.html#l00021">database.cpp:21</a></div></div>
 </div><!-- fragment --><dl class="section attention"><dt>Attention</dt><dd>Do not instantiate multiple databases with the same name, nor a single database with the name <code>interpreter_default</code> (more on this database <a class="el" href="md_2__usage.html">here</a>). As these instances have in-memory components, this can cause unexpected behaviour if they (and they likely will) become out-of-sync.</dd></dl>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Table management</h2>
 <p>You can manipulate tables with the database API, both with methods or queries.</p>
 <div class="fragment"><div class="line">db.createTable(<span class="stringliteral">&quot;sensor_data&quot;</span>)</div>
@@ -152,7 +152,7 @@ Table management</h2>
 <div class="line"> </div>
 <div class="line">db.run(<span class="stringliteral">&quot;REMOVE TAGS type FROM sensor_data;&quot;</span>)</div>
 </div><!-- fragment --><dl class="section important"><dt>Important</dt><dd>When a table has been populated, it can no longer have its tag columns modified unless you call <code><a class="el" href="classvkdb_1_1Table.html#a12ddde64eae18e63cd2520fdacfac5d1" title="Clear the table.">vkdb::Table::clear</a></code>.</dd></dl>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 General queries</h2>
 <p>With the database API, you can run queries via strings, files, and the REPL.</p>
 <div class="fragment"><div class="line">test_db</div>
@@ -167,7 +167,7 @@ General queries</h2>
 <div class="line">  .whereTagsContain({<span class="stringliteral">&quot;tag1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>})</div>
 <div class="line">  .sum()</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
 Playground</h2>
 <p>You can also play around with vq by running <code><a class="el" href="classvkdb_1_1VQ.html#a2fcdb83836971bdac39fcb98ebc86ba5" title="Run a source string.">vkdb::VQ::run</a>...()</code>. This operates on a reserved database called <code>interpreter_default</code> (which, consequently, you should not use as a database name).</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vkdb/vq.h&gt;</span></div>
@@ -185,7 +185,7 @@ Playground</h2>
 <td class="markdownTableBodyCenter"><em>The vq playground REPL.</em>   </td></tr>
 </table>
 <p>This is generally for experimental purposes—there's not much to gain from it in practice besides having a playground.</p>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 Mock data</h2>
 <p>Feel free to use <code>vkdb::random&lt;&gt;</code>. Any arithmetic type (with no cv- or ref-qualifiers) can be passed in as a template argument, and you can optionally pass in a lower and upper bound (inclusive).</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> random_int{vkdb::random&lt;int&gt;(-100&#39;000, 100&#39;000)};</div>

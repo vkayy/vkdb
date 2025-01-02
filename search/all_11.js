@@ -9,7 +9,7 @@ var searchData=
   ['selecttypeminexpr_6',['SelectTypeMinExpr',['../structvkdb_1_1SelectTypeMinExpr.html',1,'vkdb']]],
   ['selecttypesumexpr_7',['SelectTypeSumExpr',['../structvkdb_1_1SelectTypeSumExpr.html',1,'vkdb']]],
   ['settagcolumns_8',['setTagColumns',['../classvkdb_1_1Table.html#a1f81ee0de2a479da04f64357e0b5a345',1,'vkdb::Table']]],
-  ['setup_9',['Setup',['../md_2__usage.html#autotoc_md10',1,'']]],
+  ['setup_9',['Setup',['../md_2__usage.html#autotoc_md12',1,'']]],
   ['size_10',['size',['../classvkdb_1_1LRUCache.html#a98d9cb8237fa210031d74014c017b38b',1,'vkdb::LRUCache::size()'],['../classvkdb_1_1MemTable.html#a55245e4853ecc4f0c89a6c29e8bd8146',1,'vkdb::MemTable::size()']]],
   ['sstable_11',['SSTable',['../classvkdb_1_1SSTable.html',1,'vkdb::SSTable&lt; TValue &gt;'],['../classvkdb_1_1SSTable.html#aec18ae6404afec5031b67500dc39448f',1,'vkdb::SSTable::SSTable()=delete'],['../classvkdb_1_1SSTable.html#a27b6b96a69e4d695f7cad20772b46572',1,'vkdb::SSTable::SSTable(FilePath file_path)'],['../classvkdb_1_1SSTable.html#ad07a7a1bf40faa73f854ff6b38c3f915',1,'vkdb::SSTable::SSTable(FilePath file_path, MemTable&lt; TValue &gt; &amp;&amp;mem_table, size_type expected_entries=MemTable&lt; TValue &gt;::C0_LAYER_SSTABLE_MAX_ENTRIES)'],['../classvkdb_1_1SSTable.html#aa76f5f10fb64cc420e689ca40385f730',1,'vkdb::SSTable::SSTable(SSTable &amp;&amp;) noexcept=default'],['../classvkdb_1_1SSTable.html#a830d7c0b53df98c47e5fdcd21828c6d9',1,'vkdb::SSTable::SSTable(const SSTable &amp;)=delete']]],
   ['sstablecount_12',['sstableCount',['../classvkdb_1_1LSMTree.html#a2c16a2ad1c365961b7499caab6b8769d',1,'vkdb::LSMTree::sstableCount() const noexcept'],['../classvkdb_1_1LSMTree.html#aef8202d44b6b7e80df82f98553a345bd',1,'vkdb::LSMTree::sstableCount(size_type k) const']]],

@@ -26,29 +26,32 @@ var NAVTREE =
 [
   [ "vkdb", "index.html", [
     [ "Internals", "md_1__internals.html", [
-      [ "Database engine", "md_1__internals.html#autotoc_md2", null ],
-      [ "Query processing", "md_1__internals.html#autotoc_md3", null ]
+      [ "Database engine", "md_1__internals.html#autotoc_md2", [
+        [ "Architecture", "md_1__internals.html#autotoc_md3", null ],
+        [ "Compaction", "md_1__internals.html#autotoc_md4", null ]
+      ] ],
+      [ "Query processing", "md_1__internals.html#autotoc_md5", null ]
     ] ],
     [ "Usage", "md_2__usage.html", [
-      [ "Running locally (not needed)", "md_2__usage.html#autotoc_md5", [
-        [ "Installation", "md_2__usage.html#autotoc_md6", null ],
-        [ "Tests", "md_2__usage.html#autotoc_md7", null ],
-        [ "Examples", "md_2__usage.html#autotoc_md8", null ]
+      [ "Running locally (not needed)", "md_2__usage.html#autotoc_md7", [
+        [ "Installation", "md_2__usage.html#autotoc_md8", null ],
+        [ "Tests", "md_2__usage.html#autotoc_md9", null ],
+        [ "Examples", "md_2__usage.html#autotoc_md10", null ]
       ] ],
-      [ "Using the library", "md_2__usage.html#autotoc_md9", [
-        [ "Setup", "md_2__usage.html#autotoc_md10", null ],
-        [ "Interface", "md_2__usage.html#autotoc_md11", null ],
-        [ "Table management", "md_2__usage.html#autotoc_md12", null ],
-        [ "General queries", "md_2__usage.html#autotoc_md13", null ],
-        [ "Playground", "md_2__usage.html#autotoc_md14", null ],
-        [ "Mock data", "md_2__usage.html#autotoc_md15", null ]
+      [ "Using the library", "md_2__usage.html#autotoc_md11", [
+        [ "Setup", "md_2__usage.html#autotoc_md12", null ],
+        [ "Interface", "md_2__usage.html#autotoc_md13", null ],
+        [ "Table management", "md_2__usage.html#autotoc_md14", null ],
+        [ "General queries", "md_2__usage.html#autotoc_md15", null ],
+        [ "Playground", "md_2__usage.html#autotoc_md16", null ],
+        [ "Mock data", "md_2__usage.html#autotoc_md17", null ]
       ] ]
     ] ],
     [ "Working with vq", "md_3__vq.html", [
-      [ "Table management", "md_3__vq.html#autotoc_md17", null ],
-      [ "Data manipulation", "md_3__vq.html#autotoc_md18", null ],
-      [ "Errors", "md_3__vq.html#autotoc_md19", null ],
-      [ "EBNF", "md_3__vq.html#autotoc_md20", null ]
+      [ "Table management", "md_3__vq.html#autotoc_md19", null ],
+      [ "Data manipulation", "md_3__vq.html#autotoc_md20", null ],
+      [ "Errors", "md_3__vq.html#autotoc_md21", null ],
+      [ "EBNF", "md_3__vq.html#autotoc_md22", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
