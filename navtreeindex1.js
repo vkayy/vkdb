@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"classvkdb_1_1WriteAheadLog.html#a2fba06076f221c01f5bf1c5b2b876179":[5,0,1,48,1],
 "classvkdb_1_1WriteAheadLog.html#a57fb236100eb09364709f2de54616354":[5,0,1,48,10],
 "classvkdb_1_1WriteAheadLog.html#a81bee049079ca13c931de85090e13048":[5,0,1,48,4],
 "classvkdb_1_1WriteAheadLog.html#a826a9e8d5d35d0ed6192db34514e9717":[5,0,1,48,9],

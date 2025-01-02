@@ -7,6 +7,7 @@ var classvkdb_1_1SSTable =
     [ "SSTable", "classvkdb_1_1SSTable.html#a830d7c0b53df98c47e5fdcd21828c6d9", null ],
     [ "~SSTable", "classvkdb_1_1SSTable.html#aa64f6ead231dbc752dccc9748592fc90", null ],
     [ "contains", "classvkdb_1_1SSTable.html#a971fef8b685b8f3de0a51454bd1024b5", null ],
+    [ "entries", "classvkdb_1_1SSTable.html#ab34488b1a55de4b026f596ee5230b7bf", null ],
     [ "get", "classvkdb_1_1SSTable.html#a2f6cd2f21d21ea7ea0fb63a6e2001c07", null ],
     [ "getRange", "classvkdb_1_1SSTable.html#aefe76b1c1eb68dd076dcfd7df4bb9a2a", null ],
     [ "keyRange", "classvkdb_1_1SSTable.html#a083e4790041f00f4cdfe1182662a1bb4", null ],
