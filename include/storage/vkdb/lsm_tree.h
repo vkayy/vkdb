@@ -553,8 +553,6 @@ private:
     reset_layer(k);
 
     for (auto& [time_window, entries] : time_window_to_entries) {
-      std::cout << "Merged " << entries.size() << " entries into layer "
-        << k + 1 << " with time window " << time_window.str() << std::endl;
       auto sstable{merge_entries(std::move(entries), k)};
       next_layer.push_back(std::move(sstable));
     } 
