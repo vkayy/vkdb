@@ -3,6 +3,7 @@
 
 #include <vkdb/concepts.h>
 #include <vkdb/time_series_key.h>
+#include <iostream>
 
 namespace vkdb {
 /**
@@ -20,7 +21,8 @@ public:
    * @brief Construct a new DataRange object.
    * 
    */
-  DataRange() noexcept = default;
+  DataRange() noexcept
+    : is_set_{false} {}
 
   /**
    * @brief Construct a new DataRange object from the given start and end.
