@@ -43,7 +43,7 @@ When any other layer exceeds its SSTable limit, its oldest excess SSTables are m
 
 This time-window compaction strategy enables:
 - Fast queries, as SSTables beyond C0 are disjoint and only intersecting ranges need to be scanned.
-- Efficient storage, as older data is consolidated into larger chunks whilst recent data stays grnaular.
+- Efficient storage, as older data is consolidated into larger chunks whilst recent data stays granular.
 - Reduced write amplification, with C0 as a buffer and merges occurring on progressively larger time windows.
 
 ## Query processing
