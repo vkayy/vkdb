@@ -135,9 +135,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a27b6b96a69e4d695f7cad20772b46572" id="r_a27b6b96a69e4d695f7cad20772b46572"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27b6b96a69e4d695f7cad20772b46572">SSTable</a> (FilePath file_path)</td></tr>
 <tr class="memdesc:a27b6b96a69e4d695f7cad20772b46572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object given a file path.  <br /></td></tr>
 <tr class="separator:a27b6b96a69e4d695f7cad20772b46572"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e3c706fbf12640cac3b5ed8b201df56" id="r_a5e3c706fbf12640cac3b5ed8b201df56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e3c706fbf12640cac3b5ed8b201df56">SSTable</a> (FilePath file_path, <a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt; &amp;&amp;mem_table, size_type expected_entries=<a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt;::C1_LAYER_SSTABLE_MAX_ENTRIES)</td></tr>
-<tr class="memdesc:a5e3c706fbf12640cac3b5ed8b201df56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object given a file path and a memtable.  <br /></td></tr>
-<tr class="separator:a5e3c706fbf12640cac3b5ed8b201df56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad07a7a1bf40faa73f854ff6b38c3f915" id="r_ad07a7a1bf40faa73f854ff6b38c3f915"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad07a7a1bf40faa73f854ff6b38c3f915">SSTable</a> (FilePath file_path, <a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt; &amp;&amp;mem_table, size_type expected_entries=<a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt;::C0_LAYER_SSTABLE_MAX_ENTRIES)</td></tr>
+<tr class="memdesc:ad07a7a1bf40faa73f854ff6b38c3f915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object given a file path and a memtable.  <br /></td></tr>
+<tr class="separator:ad07a7a1bf40faa73f854ff6b38c3f915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa76f5f10fb64cc420e689ca40385f730" id="r_aa76f5f10fb64cc420e689ca40385f730"><td class="memItemLeft" align="right" valign="top"><a id="aa76f5f10fb64cc420e689ca40385f730" name="aa76f5f10fb64cc420e689ca40385f730"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SSTable</b> (<a class="el" href="classvkdb_1_1SSTable.html">SSTable</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="memdesc:aa76f5f10fb64cc420e689ca40385f730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-construct a <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object. <br /></td></tr>
@@ -319,8 +319,8 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 
 </div>
 </div>
-<a id="a5e3c706fbf12640cac3b5ed8b201df56" name="a5e3c706fbf12640cac3b5ed8b201df56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e3c706fbf12640cac3b5ed8b201df56">&#9670;&#160;</a></span>SSTable() <span class="overload">[2/2]</span></h2>
+<a id="ad07a7a1bf40faa73f854ff6b38c3f915" name="ad07a7a1bf40faa73f854ff6b38c3f915"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad07a7a1bf40faa73f854ff6b38c3f915">&#9670;&#160;</a></span>SSTable() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -343,7 +343,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_type</td>          <td class="paramname"><span class="paramname"><em>expected_entries</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt;TValue&gt;::C1_LAYER_SSTABLE_MAX_ENTRIES</span>&#160;)</td>
+          <td class="paramtype">size_type</td>          <td class="paramname"><span class="paramname"><em>expected_entries</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt;TValue&gt;::C0_LAYER_SSTABLE_MAX_ENTRIES</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -502,7 +502,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00196">196</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00198">198</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -534,7 +534,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the key range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>KeyRange Key range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00243">243</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00245">245</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -566,7 +566,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the path of the metadata file. </p>
 <dl class="section return"><dt>Returns</dt><dd>FilePath Path. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00232">232</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00234">234</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -627,7 +627,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the path of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>FilePath Path. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00223">223</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00225">225</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -659,7 +659,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the time range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>TimeRange Time range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00252">252</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00254">254</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>

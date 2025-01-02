@@ -5,7 +5,6 @@ var classvkdb_1_1LSMTree =
     [ "LSMTree", "classvkdb_1_1LSMTree.html#a52201e05ad04b23c025d215ff8f1665f", null ],
     [ "~LSMTree", "classvkdb_1_1LSMTree.html#a2823a8265694226851ccd478fb67f51c", null ],
     [ "clear", "classvkdb_1_1LSMTree.html#a5cc2a8a9d4be80d6dd8743ceaa38adc1", null ],
-    [ "compact", "classvkdb_1_1LSMTree.html#a04a7a0050f07edfd929c7d714e58de6e", null ],
     [ "empty", "classvkdb_1_1LSMTree.html#ae8d7053fcf5fe5d7d216a7b6bc4315a2", null ],
     [ "get", "classvkdb_1_1LSMTree.html#a6e7ff599260ff80eb4f4c8da2c92f59c", null ],
     [ "getRange", "classvkdb_1_1LSMTree.html#a0188065df6a04726f9dcb4c81bcb01f6", null ],
