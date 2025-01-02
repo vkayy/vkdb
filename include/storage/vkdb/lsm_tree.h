@@ -8,7 +8,7 @@
 #include <vkdb/lru_cache.h>
 #include <vkdb/wal_lsm.h>
 #include <ranges>
-#include <future>
+#include <deque>
 #include <set>
 
 namespace vkdb {
@@ -39,7 +39,7 @@ public:
   using size_type = uint64_t;
   using table_type = typename MemTable<TValue>::table_type;
 
-  static constexpr size_type LAYER_COUNT{10};
+  static constexpr size_type LAYER_COUNT{8};
 
   /**
    * @brief Max number of entries in the cache.
@@ -57,10 +57,10 @@ public:
     : wal_{path}
     , path_{std::move(path)}
     , sstable_id_{0}
-    , ck_layers_{CK_LAYER_TABLE_COUNT.size()}
+    , ck_layers_{LAYER_COUNT}
     , cache_{CACHE_CAPACITY} {
       std::filesystem::create_directories(path_);
-      // load_sstables();
+      load_sstables();
     }
 
   /**
@@ -104,9 +104,9 @@ public:
    * layer is full.
    */
   void put(const key_type& key, const TValue& value, bool log = true) {
-    c0_layer_.put(key, value);
+    mem_table_.put(key, value);
     dirty_table_[key] = true;
-    if (c0_layer_.size() == MemTable<TValue>::C1_LAYER_SSTABLE_MAX_ENTRIES) {
+    if (mem_table_.size() == MemTable<TValue>::C0_LAYER_SSTABLE_MAX_ENTRIES) {
       flush();
     }
     if (log) {
@@ -124,9 +124,9 @@ public:
    * layer is full.
    */
   void remove(const key_type& key, bool log = true) {
-    c0_layer_.put(key, std::nullopt);
+    mem_table_.put(key, std::nullopt);
     dirty_table_[key] = true;
-    if (c0_layer_.size() == MemTable<TValue>::C1_LAYER_SSTABLE_MAX_ENTRIES) {
+    if (mem_table_.size() == MemTable<TValue>::C0_LAYER_SSTABLE_MAX_ENTRIES) {
       flush();
     }
     if (log) {
@@ -147,8 +147,8 @@ public:
       return cache_.get(key);
     }
 
-    if (c0_layer_.contains(key)) {
-      const auto value{c0_layer_.get(key)};
+    if (mem_table_.contains(key)) {
+      const auto value{mem_table_.get(key)};
       cache_.put(key, value);
       dirty_table_[key] = false;
       return value;
@@ -198,7 +198,7 @@ public:
         }
       }
     }
-    for (const auto& [key, value] : c0_layer_.getRange(start, end)) {
+    for (const auto& [key, value] : mem_table_.getRange(start, end)) {
       if (!filter(key)) {
         continue;
       }
@@ -232,10 +232,10 @@ public:
       }
     }
     std::filesystem::remove(wal_.path());
-    c0_layer_.clear();
-    ck_layers_ = CkLayers{CK_LAYER_TABLE_COUNT.size()};
+    mem_table_.clear();
+    ck_layers_ = CkLayers{LAYER_COUNT};
     wal_.clear();
-    sstable_id_ = std::array<size_type, 8>{0};
+    sstable_id_ = std::array<size_type, LAYER_COUNT>{0};
     cache_.clear();
     dirty_table_.clear();
   }
@@ -247,7 +247,7 @@ public:
    */
   [[nodiscard]] std::string str() const noexcept {
     std::stringstream ss;
-    ss << c0_layer_.str();
+    ss << mem_table_.str();
     for (const auto& ck_layer : ck_layers_) {
       for (const auto& sstable : ck_layer) {
         ss << sstable.str();
@@ -278,7 +278,7 @@ public:
    * @throw std::out_of_range If the layer index is out of range.
    */
   [[nodiscard]] size_type sstableCount(size_type k) const {
-    if (k < 0 || k >= ck_layers_.size()) {
+    if (k < 0 || k >= LAYER_COUNT) {
       throw std::out_of_range{
         "LSMTree::sstableCount(): Layer index out of range."
       };
@@ -293,7 +293,7 @@ public:
    * @return false if the LSM tree is not empty.
    */
   [[nodiscard]] bool empty() const noexcept {
-    auto empty{c0_layer_.empty()};
+    auto empty{mem_table_.empty()};
     for (const auto& ck_layer : ck_layers_) {
       empty = empty && ck_layer.empty();
       if (!empty) {
@@ -303,29 +303,12 @@ public:
     return empty;
   }
 
-  /**
-   * @brief Compact the LSM tree.
-   * @details Compact the C1 layer if needed, which will compact the C2 layer
-   * if needed after the compaction, and so on.
-   * 
-   * @throw std::exception If the compaction fails.
-   */
-  void compact() {
-    compact_layer_if_needed(1);
-  }
-
 private:
   /**
-   * @brief Type alias for a vector of SSTables.
+   * @brief Type alias for a deque of SSTables.
    * 
    */
-  using SSTables = std::vector<SSTable<TValue>>;
-
-  /**
-   * @brief Type alias for memtable.
-   * 
-   */
-  using C0Layer = MemTable<TValue>;
+  using SSTables = std::deque<SSTable<TValue>>;
 
   /**
    * @brief Type alias for SSTables.
@@ -358,50 +341,50 @@ private:
   using DirtyTable = std::unordered_map<key_type, bool>;
 
   /**
+   * @brief Type alias for mapping from time window to entries.
+   * 
+   */
+  using TimeWindowToEntriesMap = std::map<TimeWindow, table_type, std::greater<>>;
+
+  /**
    * @brief Time window sizes of each Ck layer.
    * @details The time window sizes are in seconds.
    * - C0: 0 (any overlap)
-   * - C1: 0 (any overlap)
-   * - C2: 1 minute
-   * - C3: 1 hour
-   * - C4: 1 day
-   * - C5: 1 week
-   * - C6: 1 month
-   * - C7: 3 months
-   * - C8: 6 months
-   * - C9: 1 year
+   * - C1: 30 minutes
+   * - C2: 1 hour
+   * - C3: 1 day
+   * - C4: 1 week
+   * - C5: 1 month
+   * - C6: 3 months
+   * - C7: 1 year
    * 
    */
   static constexpr std::array<size_type, LAYER_COUNT> CK_LAYER_WINDOW_SIZE{
     0,
-    0,
-    60,
+    1800,
     3600,
     86400,
     604800,
     2592000,
     7776000,
-    15552000,
     31536000
   };
 
   /**
    * @brief Number of SSTables in each Ck layer.
-   * @details The number of SSTables in each Ck layer increases exponentially
-   * (except C0, as it is the memtable layer).
+   * @details The number of SSTables in each Ck layer is monotonically
+   * non-decreasing, either multiplying by a factor of 10 or staying the same.
    * 
    */
   static constexpr std::array<size_type, LAYER_COUNT> CK_LAYER_TABLE_COUNT{
-    0,
     10,
     100,
+    100,
+    1000,
+    1000,
     1000,
     10000,
-    100000,
-    1000000,
-    10000000,
-    100000000,
-    1000000000
+    10000
   };
 
   /**
@@ -421,10 +404,6 @@ private:
    * @throw std::runtime_error If loading of any SSTable fails.
    */
   void load_sstables() {
-    for (size_type k{1}; k < ck_layers_.size(); ++k) {
-      ck_layers_[k].reserve(CK_LAYER_TABLE_COUNT[k]);
-    }
-    auto& c1_layer{ck_layers_[1]};
     std::array<std::set<FilePath>, LAYER_COUNT> sstable_files;
     for (const auto& file : std::filesystem::directory_iterator(path_)) {
       if (!file.is_regular_file() || file.path().extension() != ".sst") {
@@ -432,13 +411,17 @@ private:
       }
       const auto l_pos{file.path().filename().string().find("_l")};
       const auto layer_idx{
-        std::stoull(file.path().filename().string().substr(l_pos + 2, 1))
+        std::stoull(file.path().filename().string().substr(l_pos + 2))
       };
       sstable_files[layer_idx].insert(file.path());
+      const auto id{
+        std::stoull(file.path().filename().string().substr(l_pos + 4))
+      };
+      sstable_id_[layer_idx] = std::max(sstable_id_[layer_idx], id + 1);
     }
-    for (size_type k{1}; k < ck_layers_.size(); ++k) {
+    for (size_type k{0}; k < LAYER_COUNT; ++k) {
       for (const auto& sstable_file : sstable_files[k]) {
-        ck_layers_[k].emplace_back(sstable_file);
+        ck_layers_[k].emplace_back(std::move(sstable_file));
       }
     }
     compact();
@@ -451,7 +434,7 @@ private:
    * @throw std::out_of_range If the layer index is out of range.
    */
   void validate_layer_index(size_type k) const {
-    if (k < 0 || k >= ck_layers_.size()) {
+    if (k < 0 || k >= LAYER_COUNT) {
       throw std::out_of_range{
         "LSMTree::validate_layer_index(): Layer index out of range."
       };
@@ -477,29 +460,26 @@ private:
    * @throw std::runtime_error if the C1 layer is full.
    */
   void flush() {
-    FilePath sstable_file_path{get_next_file_path(1)};
-    ck_layers_[1].emplace_back(
+    FilePath sstable_file_path{get_next_file_path(0)};
+    ck_layers_[0].emplace_back(
       sstable_file_path,
-      std::move(c0_layer_),
-      c0_layer_.size()
+      std::move(mem_table_),
+      mem_table_.size()
     );
-    c0_layer_.clear();
+    compact_layer_if_needed(0);
+    mem_table_.clear();
     wal_.clear();
   }
 
   /**
-   * @brief Convert a time range to a time window.
+   * @brief Compact the LSM tree.
+   * @details Compact the C0 layer if needed, which will compact the C1 layer
+   * if needed after the compaction, and so on.
    * 
-   * @param range Time range.
-   * @param window_size Window size.
-   * @return TimeWindow Time window.
+   * @throw std::exception If the compaction fails.
    */
-  [[nodiscard]] TimeWindow range_to_window(
-    const TimeRange& range,
-    size_type window_size
-  ) const noexcept {
-    const auto start{(range.lower() / window_size) * window_size};
-    return TimeWindow{start, start + window_size};
+  void compact() {
+    compact_layer_if_needed(0);
   }
 
   /**
@@ -511,7 +491,7 @@ private:
    */
   void compact_layer_if_needed(size_type k) {
     validate_layer_index(k);
-    if (k == ck_layers_.size() - 1) {
+    if (k == LAYER_COUNT - 1) {
       return;
     }
     if (ck_layers_[k].size() <= CK_LAYER_TABLE_COUNT[k]) {
@@ -523,47 +503,141 @@ private:
 
   /**
    * @brief Compact a layer.
-   * @details Split the layer into time windows of the next layer's window size,
-   * and merge each time window into an SSTable. Push the SSTables to the next
-   * layer.
+   * 
+   * @param k Layer index.
+   * 
+   * @throw std::out_of_range If the layer index is out of range.
+   */
+  void compact_layer(size_type k) {
+    if (k == 0) {
+      merge_all_in_layer(k);
+      return;
+    }
+    while (ck_layers_[k].size() > CK_LAYER_TABLE_COUNT[k]) {
+      merge_oldest_in_layer(k);
+    }
+  }
+
+  /**
+   * @brief Update the entries with the SSTable.
+   * @details Adds all SSTable entries to the map based on their time windows,
+   * and adds the SSTable files to the vector of files to remove.
+   * 
+   * @param sstable SSTable.
+   * @param window_size Window size.
+   * @param time_window_to_entries Time window to entries map.
+   * @param files_to_remove Files to remove vector.
+   */
+  void update_entries_with_sstable(
+    const SSTable<TValue>& sstable,
+    size_type window_size,
+    TimeWindowToEntriesMap& time_window_to_entries,
+    std::vector<FilePath>& files_to_remove
+  ) const noexcept {
+    for (const auto& [key, value] : sstable.getRange(
+      MIN_TIME_SERIES_KEY,
+      MAX_TIME_SERIES_KEY
+    )) {
+      const auto start{(key.timestamp() / window_size) * window_size};
+      const auto time_window{TimeWindow{start, start + window_size}};
+      time_window_to_entries[time_window][key] = value;
+    }
+    files_to_remove.push_back(sstable.path());
+    files_to_remove.push_back(sstable.metadataPath());
+  }
+
+  /**
+   * @brief Merge all SSTables in a layer with the next layer's SSTables.
    * 
    * @param k Layer index.
    */
-  void compact_layer(size_type k) {
+  void merge_all_in_layer(size_type k) {
     auto& curr_layer{ck_layers_[k]};
     auto& next_layer{ck_layers_[k + 1]};
     const auto window_size{CK_LAYER_WINDOW_SIZE[k + 1]};
 
-    std::map<TimeWindow, table_type, std::greater<>> time_window_to_entries;
+    TimeWindowToEntriesMap time_window_to_entries;
     std::vector<FilePath> files_to_remove;
 
-    for (auto& sstable : curr_layer) {
-      for (const auto& [key, value] : sstable.getRange(
-        MIN_TIME_SERIES_KEY,
-        MAX_TIME_SERIES_KEY
-      )) {
-        const auto start{(key.timestamp() / window_size) * window_size};
-        const auto time_window{TimeWindow{start, start + window_size}};
-        time_window_to_entries[time_window][key] = value;
-      }
-      files_to_remove.push_back(sstable.path());
-      files_to_remove.push_back(sstable.metadataPath());
+    for (const auto& sstable : next_layer) {
+      update_entries_with_sstable(
+        sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
     }
+    reset_layer(k + 1);
 
+    for (const auto& sstable : curr_layer) {
+      update_entries_with_sstable(
+        sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
+    }
     reset_layer(k);
-
-    for (auto& [time_window, entries] : time_window_to_entries) {
-      auto sstable{merge_entries(std::move(entries), k)};
-      next_layer.push_back(std::move(sstable));
-    } 
 
     for (const auto& file : files_to_remove) {
       if (!std::filesystem::remove(file)) {
         throw std::runtime_error{
-          "LSMTree::compact_layer(): Failed to remove file: '"
+          "LSMTree::merge_all_in_layer(): Failed to remove file: '"
           + std::string{file} + "' after compaction."
         };
       }
+    }
+
+    for (auto& [time_window, entries] : time_window_to_entries) {
+      auto sstable{merge_entries(std::move(entries), k)};
+      next_layer.push_back(std::move(sstable));
+    }
+  }
+
+  /**
+   * @brief Merge the oldest SSTables in a layer with the next layer's.
+   * @details Take the oldest SSTables in the layer, and merge it with the
+   * next layer's SSTables by time window.
+   * 
+   * @param k Layer index.
+   */
+  void merge_oldest_in_layer(size_type k) {
+    auto& curr_layer{ck_layers_[k]};
+    auto& next_layer{ck_layers_[k + 1]};
+    const auto window_size{CK_LAYER_WINDOW_SIZE[k + 1]};
+
+    TimeWindowToEntriesMap time_window_to_entries;
+    std::vector<FilePath> files_to_remove;
+
+    for (const auto& sstable : next_layer) {
+      update_entries_with_sstable(
+        sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
+    }
+    reset_layer(k + 1);
+
+    while (curr_layer.size() > CK_LAYER_TABLE_COUNT[k]) {
+      auto& oldest_sstable{curr_layer.front()};
+      update_entries_with_sstable(
+        oldest_sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
+      curr_layer.pop_front();
+    }
+
+    for (const auto& file : files_to_remove) {
+      if (!std::filesystem::remove(file)) {
+        throw std::runtime_error{
+          "LSMTree::merge_oldest_in_layer(): Failed to remove file: '"
+          + std::string{file} + "' after compaction."
+        };
+      }
+    }
+
+    for (auto& [time_window, entries] : time_window_to_entries) {
+      auto sstable{merge_entries(std::move(entries), k)};
+      next_layer.push_back(std::move(sstable));
     }
   }
 
@@ -588,7 +662,7 @@ private:
    * @brief Memtable.
    * 
    */
-  C0Layer c0_layer_;
+  MemTable<TValue> mem_table_;
 
   /**
    * @brief SSTable layers.
@@ -612,7 +686,7 @@ private:
    * @brief Next SSTable ID for each layer.
    * 
    */
-  std::array<size_type, 8> sstable_id_;
+  std::array<size_type, LAYER_COUNT> sstable_id_;
 
   /**
    * @brief Cache.

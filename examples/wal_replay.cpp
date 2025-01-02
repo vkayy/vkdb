@@ -1,6 +1,7 @@
 #include <vkdb/database.h>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 int main() {
   auto db{std::make_unique<vkdb::Database>("wal_replay")};

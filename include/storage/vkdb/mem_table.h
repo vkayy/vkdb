@@ -22,7 +22,7 @@ public:
   using size_type = uint64_t;
   using table_type = std::map<const key_type, mapped_type>;
 
-  static constexpr size_type C1_LAYER_SSTABLE_MAX_ENTRIES{1'000};
+  static constexpr size_type C0_LAYER_SSTABLE_MAX_ENTRIES{1'000};
 
   /**
    * @brief Construct a new MemTable object.

@@ -55,7 +55,7 @@ public:
   explicit SSTable(FilePath file_path)
     : file_path_{file_path}
     , bloom_filter_{
-        MemTable<TValue>::C1_LAYER_SSTABLE_MAX_ENTRIES,
+        MemTable<TValue>::C0_LAYER_SSTABLE_MAX_ENTRIES,
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       }
   {
@@ -76,7 +76,7 @@ public:
   explicit SSTable(
     FilePath file_path,
     MemTable<TValue>&& mem_table,
-    size_type expected_entries = MemTable<TValue>::C1_LAYER_SSTABLE_MAX_ENTRIES
+    size_type expected_entries = MemTable<TValue>::C0_LAYER_SSTABLE_MAX_ENTRIES
   )
     : file_path_{file_path}
     , bloom_filter_{
@@ -180,6 +180,8 @@ public:
     std::getline(file, entry_str, '[');
     std::getline(file, entry_str, '[');
     auto [entry_key, entry_value] = entryFromString<TValue>(std::move(entry_str));
+
+    file.close();
 
     return entry_value;
   }
