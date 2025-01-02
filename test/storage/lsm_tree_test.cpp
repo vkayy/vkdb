@@ -265,18 +265,18 @@ TEST_F(LSMTreeTest, CanPutWithFlushing) {
     TimeSeriesKey key{i, "metric", {}};
     lsm_tree_->put(key, i);
   }
-
-  std::cout << "Final layer state: " << std::endl;
-  for (uint64_t i{0}; i < LSMTree<int>::LAYER_COUNT; ++i) {
-    std::cout << "- Layer " << i << " has " << lsm_tree_->sstableCount(i)
-      << " SSTables" << std::endl;
-  }
 }
 
 TEST_F(LSMTreeTest, CanPutWithFlushingAndCompaction) {
   for (Timestamp i{0}; i < 100'000; ++i) {
     TimeSeriesKey key{i, "metric", {}};
     lsm_tree_->put(key, i);
+  }
+
+  std::cout << "Initial layer state: " << std::endl;
+  for (uint64_t i{0}; i < LSMTree<int>::LAYER_COUNT; ++i) {
+    std::cout << "- Layer " << i << " has " << lsm_tree_->sstableCount(i)
+      << " SSTables" << std::endl;
   }
 
   lsm_tree_->compact();
@@ -337,12 +337,6 @@ TEST_F(LSMTreeTest, CanGetRangeWithFlushing) {
     TimeSeriesKey{100'000'000, "metric", {}},
     [](const auto&) { return true; }
   )};
-
-  std::cout << "Final layer state: " << std::endl;
-  for (uint64_t i{0}; i < LSMTree<int>::LAYER_COUNT; ++i) {
-    std::cout << "- Layer " << i << " has " << lsm_tree_->sstableCount(i)
-      << " SSTables" << std::endl;
-  }
   
   EXPECT_EQ(entries.size(), 100'000);
 }
