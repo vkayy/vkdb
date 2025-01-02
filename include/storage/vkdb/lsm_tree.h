@@ -647,10 +647,11 @@ private:
    */
   SSTable<TValue> merge_entries(table_type&& entries, size_type k) {
     auto memtable{MemTable<TValue>{std::move(entries)}};
+    const auto memtable_size{memtable.size()};
     auto sstable{SSTable<TValue>{
       get_next_file_path(k + 1),
       std::move(memtable),
-      memtable.size()
+      memtable_size
     }};
     return sstable;
   }
