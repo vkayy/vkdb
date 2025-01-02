@@ -466,7 +466,7 @@ private:
       std::move(mem_table_),
       mem_table_.size()
     );
-    compact_layer_if_needed(0);
+    compact();
     mem_table_.clear();
     wal_.clear();
   }
