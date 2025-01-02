@@ -372,7 +372,8 @@ private:
 
   /**
    * @brief Number of SSTables in each Ck layer.
-   * @details The number of SSTables in each Ck layer increases exponentially.
+   * @details The number of SSTables in each Ck layer is monotonically
+   * non-decreasing, either multiplying by a factor of 10 or staying the same.
    * 
    */
   static constexpr std::array<size_type, LAYER_COUNT> CK_LAYER_TABLE_COUNT{
