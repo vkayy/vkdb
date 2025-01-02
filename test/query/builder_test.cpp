@@ -8,7 +8,7 @@ protected:
   static constexpr auto ENTRY_COUNT{10'000};
 
   void SetUp() override {
-    lsm_tree_ = std::make_unique<LSMTree<int>>("/Users/vkay/Dev/vkdb/output");
+    lsm_tree_ = std::make_unique<LSMTree<int>>("test_lsm_tree");
 
     for (Timestamp i{0}; i < ENTRY_COUNT; ++i) {
       TimeSeriesKey key{i, "metric", {}};
