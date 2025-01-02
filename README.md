@@ -104,7 +104,7 @@ When any other layer exceeds its SSTable limit, its oldest excess SSTables are m
 3. The selected SSTables are merged into new SSTables in C2.
 4. Original SSTables are removed after successful merge.
 
-![compaction internals](images/compaction-internals.png)
+![compaction internals](docs/images/compaction-internals.png)
 
 This time-window compaction strategy enables:
 - Fast queries, as SSTables beyond C0 are disjoint and only intersecting ranges need to be scanned.
