@@ -536,31 +536,32 @@ $(function(){initNavTree('lsm__tree_8h_source.html',''); initResizable(true); })
 <div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span> </div>
 <div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>  SSTable&lt;TValue&gt; merge_entries(table_type&amp;&amp; entries, size_type k) {</div>
 <div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>    <span class="keyword">auto</span> memtable{MemTable&lt;TValue&gt;{std::move(entries)}};</div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    <span class="keyword">auto</span> sstable{SSTable&lt;TValue&gt;{</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>      get_next_file_path(k + 1),</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>      std::move(memtable),</div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>      memtable.size()</div>
-<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>    }};</div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>    <span class="keywordflow">return</span> sstable;</div>
-<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>  }</div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span> </div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>  MemTable&lt;TValue&gt; mem_table_;</div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span> </div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>  CkLayers ck_layers_;</div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span> </div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>  WriteAheadLog&lt;TValue&gt; wal_;</div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span> </div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>  FilePath path_;</div>
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span> </div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>  std::array&lt;size_type, LAYER_COUNT&gt; sstable_id_;</div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span> </div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>  <span class="keyword">mutable</span> Cache cache_;</div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span> </div>
-<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>  <span class="keyword">mutable</span> DirtyTable dirty_table_;</div>
-<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>};</div>
-<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>}  <span class="comment">// namespace vkdb</span></div>
-<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span> </div>
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span><span class="preprocessor">#endif </span><span class="comment">// STORAGE_LSM_TREE_H</span></div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    <span class="keyword">const</span> <span class="keyword">auto</span> memtable_size{memtable.size()};</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>    <span class="keyword">auto</span> sstable{SSTable&lt;TValue&gt;{</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>      get_next_file_path(k + 1),</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>      std::move(memtable),</div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>      memtable_size</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>    }};</div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>    <span class="keywordflow">return</span> sstable;</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>  }</div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span> </div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>  MemTable&lt;TValue&gt; mem_table_;</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span> </div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>  CkLayers ck_layers_;</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span> </div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>  WriteAheadLog&lt;TValue&gt; wal_;</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span> </div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>  FilePath path_;</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span> </div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>  std::array&lt;size_type, LAYER_COUNT&gt; sstable_id_;</div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span> </div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>  <span class="keyword">mutable</span> Cache cache_;</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span> </div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>  <span class="keyword">mutable</span> DirtyTable dirty_table_;</div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>};</div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>}  <span class="comment">// namespace vkdb</span></div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span> </div>
+<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span><span class="preprocessor">#endif </span><span class="comment">// STORAGE_LSM_TREE_H</span></div>
 <div class="ttc" id="aclassvkdb_1_1DataRange_html"><div class="ttname"><a href="classvkdb_1_1DataRange.html">vkdb::DataRange&lt; Timestamp &gt;</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1LRUCache_html"><div class="ttname"><a href="classvkdb_1_1LRUCache.html">vkdb::LRUCache</a></div><div class="ttdoc">A thread-safe LRU cache.</div><div class="ttdef"><b>Definition</b> <a href="lru__cache_8h_source.html#l00020">lru_cache.h:20</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1LRUCache_html_a6e5fb7f9449ab7d55c8ed07ffb1251f6"><div class="ttname"><a href="classvkdb_1_1LRUCache.html#a6e5fb7f9449ab7d55c8ed07ffb1251f6">vkdb::LRUCache::put</a></div><div class="ttdeci">void put(K &amp;&amp;key, V &amp;&amp;value)</div><div class="ttdoc">Put a key-value pair into the cache.</div><div class="ttdef"><b>Definition</b> <a href="lru__cache_8h_source.html#l00093">lru_cache.h:93</a></div></div>
