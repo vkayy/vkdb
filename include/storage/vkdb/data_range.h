@@ -91,6 +91,16 @@ public:
    */
   ~DataRange() noexcept = default;
 
+  [[nodiscard]] auto operator<=>(const DataRange& other) const noexcept {
+    if (!is_set_) {
+      return std::strong_ordering::less;
+    }
+    if (!other.is_set_) {
+      return std::strong_ordering::greater;
+    }
+    return range_ <=> other.range_;
+  }
+
   /**
    * @brief Update the range with the given data.
    * @details If the range is not set, the range is set to the data, otherwise

@@ -6,7 +6,7 @@ using namespace vkdb;
 class WriteAheadLogTest : public ::testing::Test {
 protected:
   void SetUp() override {
-    lsm_tree_path_ = "/Users/vkay/Dev/vkdb/output/wal_test";
+    lsm_tree_path_ = "test_lsm_tree";
     std::filesystem::create_directories(lsm_tree_path_);
     wal_ = std::make_unique<WriteAheadLog<int>>(lsm_tree_path_);
   }

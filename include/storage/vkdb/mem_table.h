@@ -22,12 +22,20 @@ public:
   using size_type = uint64_t;
   using table_type = std::map<const key_type, mapped_type>;
 
-  static constexpr size_type MAX_ENTRIES{1'000};
+  static constexpr size_type C1_LAYER_SSTABLE_MAX_ENTRIES{1'000};
 
   /**
    * @brief Construct a new MemTable object.
    */
   MemTable() noexcept = default;
+
+  /**
+   * @brief Construct a new MemTable object from a map of entries.
+   * 
+   * @param entries The entries to initialise the table with.
+   */
+  MemTable(table_type&& entries) noexcept
+    : table_{std::move(entries)} {}
 
   /**
    * @brief Move-construct a MemTable object.

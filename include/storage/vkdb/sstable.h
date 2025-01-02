@@ -50,22 +50,18 @@ public:
    * 
    * @param file_path Path.
    * 
-   * @throws std::runtime_error If memory-mapping or metadata loading fails.
+   * @throws std::runtime_error If metadata loading fails.
    */
   explicit SSTable(FilePath file_path)
     : file_path_{file_path}
     , bloom_filter_{
-        MemTable<TValue>::MAX_ENTRIES,
+        MemTable<TValue>::C1_LAYER_SSTABLE_MAX_ENTRIES,
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       }
-    , fd_{-1}
-    , mmap_{nullptr}
-    , mmap_size_{0}
   {
     if (!std::filesystem::exists(file_path_)) {
       return;
     }
-    map_file();
     load_metadata();
   }
   
@@ -77,15 +73,16 @@ public:
    * 
    * @throws std::runtime_error If writing data to disk fails.
    */
-  explicit SSTable(FilePath file_path, MemTable<TValue>&& mem_table)
+  explicit SSTable(
+    FilePath file_path,
+    MemTable<TValue>&& mem_table,
+    size_type expected_entries = MemTable<TValue>::C1_LAYER_SSTABLE_MAX_ENTRIES
+  )
     : file_path_{file_path}
     , bloom_filter_{
-        MemTable<TValue>::MAX_ENTRIES,
+        expected_entries,
         BLOOM_FILTER_FALSE_POSITIVE_RATE
       }
-    , fd_{-1}
-    , mmap_{nullptr}
-    , mmap_size_{0}
     {
       writeDataToDisk(std::move(mem_table));
     }
@@ -116,27 +113,25 @@ public:
 
   /**
    * @brief Destroy the SSTable object.
-   * @details Unmaps the file.
    * 
    */
-  ~SSTable() {
-    unmap_file();
+  ~SSTable() noexcept = default;
+
+  [[nodiscard]] bool operator==(const SSTable& other) const noexcept {
+    return file_path_ == other.file_path_;
   }
 
   /**
    * @brief Write data to disk.
-   * @details Saves the memtable to disk, updates the metadata, and memory-maps
-   * the file.
+   * @details Saves the memtable to disk and saves the metadata.
    * 
    * @param mem_table Memtable.
    * 
-   * @throws std::runtime_error If saving the memtable, metadata, or memory-mapping
-   * the file fails.
+   * @throws std::runtime_error If saving the memtable or metadata fails.
    */
   void writeDataToDisk(MemTable<TValue>&& mem_table) {
     save_memtable(std::move(mem_table));
     save_metadata();
-    map_file();
   }
 
   /**
@@ -164,23 +159,27 @@ public:
       return std::nullopt;
     }
 
-    auto pos{index_.at(key)};
-    if (pos >= mmap_size_) {
+    std::ifstream file{file_path_};
+    if (!file.is_open()) {
       throw std::runtime_error{
-        "SSTable::get(): Invalid position " + std::to_string(pos)
-        + " for key '" + key.str() + "'."
+        "SSTable::get(): Unable to open file '"
+        + std::string(file_path_) + "'."
       };
     }
 
-    auto entry_ptr{static_cast<const char*>(mmap_) + pos + 1};
-    auto [entry_key, entry_value]
-      = entryFromString<TValue>(std::string{entry_ptr});
-    if (entry_key != key) {
+    file.seekg(index_.at(key));
+    if (!file) {
       throw std::runtime_error{
-        "SSTable::get(): Key mismatch. Expected '" + key.str()
-        + "' but got '" + entry_key.str() + "'."
+        "SSTable::get(): Unable to seek to position "
+        + std::to_string(index_.at(key)) + " in file '"
+        + std::string(file_path_) + "'."
       };
     }
+
+    std::string entry_str;
+    std::getline(file, entry_str, '[');
+    std::getline(file, entry_str, '[');
+    auto [entry_key, entry_value] = entryFromString<TValue>(std::move(entry_str));
 
     return entry_value;
   }
@@ -424,60 +423,6 @@ private:
   }
 
   /**
-   * @brief Map the file to memory.
-   * 
-   * @throws std::runtime_error If the file cannot be created, opened,
-   * or mapped.
-   */
-  void map_file() {
-    if (!std::filesystem::exists(file_path_)) {
-      std::ofstream file{file_path_, std::ios::app};
-      if (!file.is_open()) {
-        throw std::runtime_error{
-          "SSTable::map_file(): Unable to create file '"
-          + std::string(file_path_) + "'."
-        };
-      }
-      file.close();
-    }
-    
-    fd_ = open(file_path_.c_str(), O_RDONLY);
-    if (fd_ == -1) {
-      throw std::runtime_error{
-        "SSTable::map_file(): Unable to open file '"
-        + std::string(file_path_) + "'."
-      };
-    }
-
-    mmap_size_ = std::filesystem::file_size(file_path_);
-
-    mmap_ = mmap(nullptr, mmap_size_, PROT_READ, MAP_PRIVATE, fd_, 0);
-    if (mmap_ == MAP_FAILED) {
-      close(fd_);
-      throw std::runtime_error{
-        "SSTable::map_file(): Unable to map file '"
-        + std::string(file_path_) + "'."
-      };
-    }
-  }
-
-  /**
-   * @brief Unmap the file.
-   * 
-   * @throws std::runtime_error If the file cannot be unmapped or closed.
-   */
-  void unmap_file() {
-    if (mmap_ != nullptr) {
-      munmap(mmap_, mmap_size_);
-      mmap_ = nullptr;
-    }
-    if (fd_ != -1) {
-      close(fd_);
-      fd_ = -1;
-    }
-  }
-
-  /**
    * @brief Bloom filter.
    * 
    */
@@ -506,24 +451,6 @@ private:
    * 
    */
   FilePath file_path_;
-
-  /**
-   * @brief File descriptor.
-   * 
-   */
-  int fd_;
-
-  /**
-   * @brief Memory-mapped address.
-   * 
-   */
-  void *mmap_;
-
-  /**
-   * @brief Memory-map size.
-   * 
-   */
-  size_type mmap_size_;
 };
 }  // namespace vkdb
 
