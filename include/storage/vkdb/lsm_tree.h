@@ -534,10 +534,7 @@ private:
     TimeWindowToEntriesMap& time_window_to_entries,
     std::vector<FilePath>& files_to_remove
   ) const noexcept {
-    for (const auto& [key, value] : sstable.getRange(
-      MIN_TIME_SERIES_KEY,
-      MAX_TIME_SERIES_KEY
-    )) {
+    for (const auto& [key, value] : sstable.entries()) {
       const auto start{(key.timestamp() / window_size) * window_size};
       const auto time_window{TimeWindow{start, start + window_size}};
       time_window_to_entries[time_window][key] = value;

@@ -218,6 +218,19 @@ public:
   }
 
   /**
+   * @brief Get the entries of the SSTable.
+   * 
+   * @return std::vector<value_type> Entries.
+   */
+  [[nodiscard]] std::vector<value_type> entries() const noexcept {
+    std::vector<value_type> entries;
+    for (const auto& [key, value] : index_) {
+      entries.emplace_back(key, get(key));
+    }
+    return entries;
+  }
+
+  /**
    * @brief Get the path of the SSTable.
    * 
    * @return FilePath Path.
