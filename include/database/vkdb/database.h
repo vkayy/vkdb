@@ -9,7 +9,9 @@ namespace vkdb {
  * @brief The directory where databases are stored.
  * 
  */
-static const FilePath DATABASE_DIRECTORY{"_vkdb_database_directory"};
+static const FilePath DATABASE_DIRECTORY{
+  std::filesystem::path(getenv("HOME")) / ".vkdb"
+};
 
 /**
  * @brief Represents a database in vkdb.

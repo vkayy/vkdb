@@ -181,6 +181,8 @@ public:
     std::getline(file, entry_str, '[');
     auto [entry_key, entry_value] = entryFromString<TValue>(std::move(entry_str));
 
+    file.close();
+
     return entry_value;
   }
 

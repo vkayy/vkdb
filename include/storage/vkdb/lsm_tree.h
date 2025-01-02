@@ -60,7 +60,7 @@ public:
     , ck_layers_{LAYER_COUNT}
     , cache_{CACHE_CAPACITY} {
       std::filesystem::create_directories(path_);
-      // load_sstables();
+      load_sstables();
     }
 
   /**
@@ -303,17 +303,6 @@ public:
     return empty;
   }
 
-  /**
-   * @brief Compact the LSM tree.
-   * @details Compact the C0 layer if needed, which will compact the C1 layer
-   * if needed after the compaction, and so on.
-   * 
-   * @throw std::exception If the compaction fails.
-   */
-  void compact() {
-    compact_layer_if_needed(0);
-  }
-
 private:
   /**
    * @brief Type alias for a deque of SSTables.
@@ -352,6 +341,12 @@ private:
   using DirtyTable = std::unordered_map<key_type, bool>;
 
   /**
+   * @brief Type alias for mapping from time window to entries.
+   * 
+   */
+  using TimeWindowToEntriesMap = std::map<TimeWindow, table_type, std::greater<>>;
+
+  /**
    * @brief Time window sizes of each Ck layer.
    * @details The time window sizes are in seconds.
    * - C0: 0 (any overlap)
@@ -382,13 +377,13 @@ private:
    */
   static constexpr std::array<size_type, LAYER_COUNT> CK_LAYER_TABLE_COUNT{
     10,
-    20,
-    40,
-    80,
-    160,
-    320,
-    640,
-    1280
+    100,
+    100,
+    1000,
+    1000,
+    1000,
+    10000,
+    10000
   };
 
   /**
@@ -408,10 +403,6 @@ private:
    * @throw std::runtime_error If loading of any SSTable fails.
    */
   void load_sstables() {
-    for (size_type k{0}; k < LAYER_COUNT; ++k) {
-      ck_layers_[k].reserve(CK_LAYER_TABLE_COUNT[k]);
-    }
-    auto& c0_layer{ck_layers_[0]};
     std::array<std::set<FilePath>, LAYER_COUNT> sstable_files;
     for (const auto& file : std::filesystem::directory_iterator(path_)) {
       if (!file.is_regular_file() || file.path().extension() != ".sst") {
@@ -419,13 +410,17 @@ private:
       }
       const auto l_pos{file.path().filename().string().find("_l")};
       const auto layer_idx{
-        std::stoull(file.path().filename().string().substr(l_pos + 2, 1))
+        std::stoull(file.path().filename().string().substr(l_pos + 2))
       };
       sstable_files[layer_idx].insert(file.path());
+      const auto id{
+        std::stoull(file.path().filename().string().substr(l_pos + 4))
+      };
+      sstable_id_[layer_idx] = std::max(sstable_id_[layer_idx], id + 1);
     }
     for (size_type k{0}; k < LAYER_COUNT; ++k) {
       for (const auto& sstable_file : sstable_files[k]) {
-        ck_layers_[k].emplace_back(sstable_file);
+        ck_layers_[k].emplace_back(std::move(sstable_file));
       }
     }
     compact();
@@ -476,18 +471,14 @@ private:
   }
 
   /**
-   * @brief Convert a time range to a time window.
+   * @brief Compact the LSM tree.
+   * @details Compact the C0 layer if needed, which will compact the C1 layer
+   * if needed after the compaction, and so on.
    * 
-   * @param range Time range.
-   * @param window_size Window size.
-   * @return TimeWindow Time window.
+   * @throw std::exception If the compaction fails.
    */
-  [[nodiscard]] TimeWindow range_to_window(
-    const TimeRange& range,
-    size_type window_size
-  ) const noexcept {
-    const auto start{(range.lower() / window_size) * window_size};
-    return TimeWindow{start, start + window_size};
+  void compact() {
+    compact_layer_if_needed(0);
   }
 
   /**
@@ -527,6 +518,34 @@ private:
   }
 
   /**
+   * @brief Update the entries with the SSTable.
+   * @details Adds all SSTable entries to the map based on their time windows,
+   * and adds the SSTable files to the vector of files to remove.
+   * 
+   * @param sstable SSTable.
+   * @param window_size Window size.
+   * @param time_window_to_entries Time window to entries map.
+   * @param files_to_remove Files to remove vector.
+   */
+  void update_entries_with_sstable(
+    const SSTable<TValue>& sstable,
+    size_type window_size,
+    TimeWindowToEntriesMap& time_window_to_entries,
+    std::vector<FilePath>& files_to_remove
+  ) const noexcept {
+    for (const auto& [key, value] : sstable.getRange(
+      MIN_TIME_SERIES_KEY,
+      MAX_TIME_SERIES_KEY
+    )) {
+      const auto start{(key.timestamp() / window_size) * window_size};
+      const auto time_window{TimeWindow{start, start + window_size}};
+      time_window_to_entries[time_window][key] = value;
+    }
+    files_to_remove.push_back(sstable.path());
+    files_to_remove.push_back(sstable.metadataPath());
+  }
+
+  /**
    * @brief Merge all SSTables in a layer with the next layer's SSTables.
    * 
    * @param k Layer index.
@@ -536,41 +555,26 @@ private:
     auto& next_layer{ck_layers_[k + 1]};
     const auto window_size{CK_LAYER_WINDOW_SIZE[k + 1]};
 
-    std::map<TimeWindow, table_type, std::greater<>> time_window_to_entries;
+    TimeWindowToEntriesMap time_window_to_entries;
     std::vector<FilePath> files_to_remove;
 
     for (const auto& sstable : next_layer) {
-      for (const auto& [key, value] : sstable.getRange(
-        MIN_TIME_SERIES_KEY,
-        MAX_TIME_SERIES_KEY
-      )) {
-        const auto start{(key.timestamp() / window_size) * window_size};
-        const auto time_window{TimeWindow{start, start + window_size}};
-        time_window_to_entries[time_window][key] = value;
-      }
+      update_entries_with_sstable(
+        sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
     }
-
     reset_layer(k + 1);
 
     for (const auto& sstable : curr_layer) {
-      for (const auto& [key, value] : sstable.getRange(
-        MIN_TIME_SERIES_KEY,
-        MAX_TIME_SERIES_KEY
-      )) {
-        const auto start{(key.timestamp() / window_size) * window_size};
-        const auto time_window{TimeWindow{start, start + window_size}};
-        time_window_to_entries[time_window][key] = value;
-      }
-      files_to_remove.push_back(sstable.path());
-      files_to_remove.push_back(sstable.metadataPath());
+      update_entries_with_sstable(
+        sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
     }
-
     reset_layer(k);
-
-    for (auto& [time_window, entries] : time_window_to_entries) {
-      auto sstable{merge_entries(std::move(entries), k)};
-      next_layer.push_back(std::move(sstable));
-    }
 
     for (const auto& file : files_to_remove) {
       if (!std::filesystem::remove(file)) {
@@ -579,6 +583,11 @@ private:
           + std::string{file} + "' after compaction."
         };
       }
+    }
+
+    for (auto& [time_window, entries] : time_window_to_entries) {
+      auto sstable{merge_entries(std::move(entries), k)};
+      next_layer.push_back(std::move(sstable));
     }
   }
 
@@ -594,42 +603,27 @@ private:
     auto& next_layer{ck_layers_[k + 1]};
     const auto window_size{CK_LAYER_WINDOW_SIZE[k + 1]};
 
-    std::map<TimeWindow, table_type, std::greater<>> time_window_to_entries;
+    TimeWindowToEntriesMap time_window_to_entries;
     std::vector<FilePath> files_to_remove;
 
     for (const auto& sstable : next_layer) {
-      for (const auto& [key, value] : sstable.getRange(
-        MIN_TIME_SERIES_KEY,
-        MAX_TIME_SERIES_KEY
-      )) {
-        const auto start{(key.timestamp() / window_size) * window_size};
-        const auto time_window{TimeWindow{start, start + window_size}};
-        time_window_to_entries[time_window][key] = value;
-      }
+      update_entries_with_sstable(
+        sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
     }
-
     reset_layer(k + 1);
 
     while (curr_layer.size() > CK_LAYER_TABLE_COUNT[k]) {
       auto& oldest_sstable{curr_layer.front()};
-      for (const auto& [key, value] : oldest_sstable.getRange(
-        MIN_TIME_SERIES_KEY,
-        MAX_TIME_SERIES_KEY
-      )) {
-        const auto start{(key.timestamp() / window_size) * window_size};
-        const auto time_window{TimeWindow{start, start + window_size}};
-        time_window_to_entries[time_window][key] = value;
-      }
-      files_to_remove.push_back(oldest_sstable.path());
-      files_to_remove.push_back(oldest_sstable.metadataPath());
+      update_entries_with_sstable(
+        oldest_sstable, window_size,
+        time_window_to_entries,
+        files_to_remove
+      );
       curr_layer.pop_front();
     }
-
-    for (auto& [time_window, entries] : time_window_to_entries) {
-      auto sstable{merge_entries(std::move(entries), k)};
-      next_layer.push_back(std::move(sstable));
-    }
-
 
     for (const auto& file : files_to_remove) {
       if (!std::filesystem::remove(file)) {
@@ -638,6 +632,11 @@ private:
           + std::string{file} + "' after compaction."
         };
       }
+    }
+
+    for (auto& [time_window, entries] : time_window_to_entries) {
+      auto sstable{merge_entries(std::move(entries), k)};
+      next_layer.push_back(std::move(sstable));
     }
   }
 
@@ -686,7 +685,7 @@ private:
    * @brief Next SSTable ID for each layer.
    * 
    */
-  std::array<size_type, 8> sstable_id_;
+  std::array<size_type, LAYER_COUNT> sstable_id_;
 
   /**
    * @brief Cache.

@@ -265,7 +265,7 @@ TEST_F(LSMTreeTest, CanPutWithFlushing) {
     TimeSeriesKey key{i, "metric", {}};
     lsm_tree_->put(key, i);
   }
-
+  
   std::cout << "Final layer state: " << std::endl;
   for (uint64_t i{0}; i < LSMTree<int>::LAYER_COUNT; ++i) {
     std::cout << "- Layer " << i << " has " << lsm_tree_->sstableCount(i)
