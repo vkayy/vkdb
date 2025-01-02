@@ -32,7 +32,7 @@ The LSM tree uses time-window compaction to efficiently organise and merge SSTab
 
 When the memtable fills up, it is flushed to C0 as an SSTable. C0 acts as a buffer for the later layers, and when it exceeds its SSTable limit, all the SSTables are merged into C1 at once, with each SSTable spanning a 30-minute window.
 
-When any other layer exceeds its SSTable limit, its oldest excess SSTables are merged with the next layer's SSTables based on the layer's time window. For example, if C1 has too many SSTables:
+When any other layer exceeds its SSTable limit, its oldest excess SSTables are merged with the next layer's SSTables based on the layer's time window. For example, if C1 has too many SSTables.
 
 1. The oldest SSTables from C1 are selected.
 2. Any overlapping SSTables in C2 are identified based on 1-hour time windows.

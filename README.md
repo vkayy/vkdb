@@ -82,7 +82,7 @@ It's best to make all interactions via `vkdb::Database`, or the `vkdb::Table` ty
 #### Compaction
 
 
-The LSM tree uses time-window compaction to efficiently organise and merge SSTables across different layers (C0-C7). Each layer has a specific time window size and maximum number of SSTables:
+The LSM tree uses time-window compaction to efficiently organise and merge SSTables across different layers (C0-C7). Each layer has a specific time window size and maximum number of SSTables.
 
 | Layer | Time Window | Max. SSTables |
 |-------|------------|--------------|
