@@ -109,7 +109,7 @@ $(function(){initNavTree('md_1__internals.html',''); initResizable(true); });
 Database engine</h1>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Architecture</h2>
-<p>vkdb is built on log-structured merge (LSM) trees. In their simplest form, these have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.</p>
+<p>vkdb is built on log-structured merge (LSM) trees. These have an in-memory layer and a disk layer, paired with a write-ahead log (WAL) for persistence of in-memory changes.</p>
 <p>When you instantiate a <code><a class="el" href="classvkdb_1_1Database.html" title="Represents a database in vkdb.">vkdb::Database</a></code>, all of the prior in-memory information (in-memory layer, metadata, etc.) will be loaded in if the database already exists, and if not, a new one is set up. This persists on disk until you clear it via <code><a class="el" href="classvkdb_1_1Database.html#a8565e12cd94951ce0ae47dae0657657a" title="Clear the database.">vkdb::Database::clear</a></code>.</p>
 <p>It's best to make all interactions via <code><a class="el" href="classvkdb_1_1Database.html" title="Represents a database in vkdb.">vkdb::Database</a></code>, or the <code><a class="el" href="classvkdb_1_1Table.html" title="Represents a table in vkdb.">vkdb::Table</a></code> type via <code><a class="el" href="classvkdb_1_1Database.html#a0b8827461ebd9a815952b5199d2971e4" title="Get the Table object.">vkdb::Database::getTable</a></code>, unless you just want to play around with vq (more on the playground <a class="el" href="md_2__usage.html">here</a>).</p>
 <dl class="section note"><dt>Note</dt><dd>Make sure the <code>$HOME</code> environment variable is set correctly, as all database files will be stored in <code>.vkdb</code> within your home directory. Only tamper with this directory if moving databases between machines!</dd></dl>
@@ -118,7 +118,7 @@ Architecture</h2>
 </div>
     <h2><a class="anchor" id="autotoc_md4"></a>
 Compaction</h2>
-<p>The LSM tree uses time-window compaction to efficiently organise and merge SSTables across different layers (C0-C7). Each layer has a specific time window size and maximum number of SSTables:</p>
+<p>The LSM tree uses time-window compaction to efficiently organise and merge SSTables across different layers (C0-C7). Each layer has a specific time window size and maximum number of SSTables.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Layer   </th><th class="markdownTableHeadNone">Time Window   </th><th class="markdownTableHeadNone">Max. SSTables    </th></tr>
@@ -139,8 +139,8 @@ Compaction</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">C7   </td><td class="markdownTableBodyNone">1 year   </td><td class="markdownTableBodyNone">10,000   </td></tr>
 </table>
-<p>When the memtable fills up, it is flushed to C0 as an SSTable. C0 acts as a buffer for the later layers, and when it exceeds its SSTable limit, all the SSTables are merged into C1 at once, with each SSTable spanning a 30-minute window.</p>
-<p>When any other layer exceeds its SSTable limit, its oldest excess SSTables are merged with the next layer's SSTables based on the layer's time window. For example, if C1 has too many SSTables.</p>
+<p>When the memtable fills up, it's flushed to C0 as an SSTable. C0 acts as a buffer for the later layers, and when it exceeds its SSTable limit, all the SSTables are merged into C1 at once, with each SSTable spanning a 30-minute window.</p>
+<p>When any other layer exceeds its SSTable limit, only its oldest, excess SSTables are merged with the next layer's SSTables based on the layer's time window. For example, if C1 has too many SSTables:</p>
 <ol type="1">
 <li>The oldest SSTables from C1 are selected.</li>
 <li>Any overlapping SSTables in C2 are identified based on 1-hour time windows.</li>
