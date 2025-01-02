@@ -165,9 +165,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0188065df6a04726f9dcb4c81bcb01f6" id="r_a0188065df6a04726f9dcb4c81bcb01f6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; value_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0188065df6a04726f9dcb4c81bcb01f6">getRange</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;start, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;end, TimeSeriesKeyFilter &amp;&amp;filter) const</td></tr>
 <tr class="memdesc:a0188065df6a04726f9dcb4c81bcb01f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a filtered set of entries in a timestamp range.  <br /></td></tr>
 <tr class="separator:a0188065df6a04726f9dcb4c81bcb01f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44ad33f19acde0ae9bbefa8a1f7f206f" id="r_a44ad33f19acde0ae9bbefa8a1f7f206f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; value_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44ad33f19acde0ae9bbefa8a1f7f206f">getRangeParallel</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;start, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;end, TimeSeriesKeyFilter filter) const</td></tr>
-<tr class="memdesc:a44ad33f19acde0ae9bbefa8a1f7f206f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a filtered set of entries in a timestamp range in parallel.  <br /></td></tr>
-<tr class="separator:a44ad33f19acde0ae9bbefa8a1f7f206f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd350466f8593cc88a1f1e943841ae38" id="r_abd350466f8593cc88a1f1e943841ae38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd350466f8593cc88a1f1e943841ae38">replayWAL</a> ()</td></tr>
 <tr class="memdesc:abd350466f8593cc88a1f1e943841ae38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replay the write-ahead log.  <br /></td></tr>
 <tr class="separator:abd350466f8593cc88a1f1e943841ae38"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,15 +177,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2c16a2ad1c365961b7499caab6b8769d" id="r_a2c16a2ad1c365961b7499caab6b8769d"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c16a2ad1c365961b7499caab6b8769d">sstableCount</a> () const noexcept</td></tr>
 <tr class="memdesc:a2c16a2ad1c365961b7499caab6b8769d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of SSTables in the LSM tree.  <br /></td></tr>
 <tr class="separator:a2c16a2ad1c365961b7499caab6b8769d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef8202d44b6b7e80df82f98553a345bd" id="r_aef8202d44b6b7e80df82f98553a345bd"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef8202d44b6b7e80df82f98553a345bd">sstableCount</a> (size_type k) const</td></tr>
+<tr class="memdesc:aef8202d44b6b7e80df82f98553a345bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of SSTables in a Ck layer.  <br /></td></tr>
+<tr class="separator:aef8202d44b6b7e80df82f98553a345bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8d7053fcf5fe5d7d216a7b6bc4315a2" id="r_ae8d7053fcf5fe5d7d216a7b6bc4315a2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8d7053fcf5fe5d7d216a7b6bc4315a2">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:ae8d7053fcf5fe5d7d216a7b6bc4315a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the LSM tree is empty.  <br /></td></tr>
 <tr class="separator:ae8d7053fcf5fe5d7d216a7b6bc4315a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04a7a0050f07edfd929c7d714e58de6e" id="r_a04a7a0050f07edfd929c7d714e58de6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04a7a0050f07edfd929c7d714e58de6e">compact</a> ()</td></tr>
+<tr class="memdesc:a04a7a0050f07edfd929c7d714e58de6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compact the LSM tree.  <br /></td></tr>
+<tr class="separator:a04a7a0050f07edfd929c7d714e58de6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:ad7f154184bc497fa701e1373fff1d12f" id="r_ad7f154184bc497fa701e1373fff1d12f"><td class="memItemLeft" align="right" valign="top">static constexpr size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7f154184bc497fa701e1373fff1d12f">C1_LAYER_SIZE</a> {1'000}</td></tr>
-<tr class="memdesc:ad7f154184bc497fa701e1373fff1d12f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of SSTables in the C1 layer.  <br /></td></tr>
-<tr class="separator:ad7f154184bc497fa701e1373fff1d12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bfeb60da810305480c1bdbca9ebe98a" id="r_a0bfeb60da810305480c1bdbca9ebe98a"><td class="memItemLeft" align="right" valign="top">static constexpr size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bfeb60da810305480c1bdbca9ebe98a">LAYER_COUNT</a> {10}</td></tr>
+<tr class="separator:a0bfeb60da810305480c1bdbca9ebe98a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadd43d84f267b41840505fd7e2ba1dfa" id="r_aadd43d84f267b41840505fd7e2ba1dfa"><td class="memItemLeft" align="right" valign="top">static constexpr size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aadd43d84f267b41840505fd7e2ba1dfa">CACHE_CAPACITY</a> {10'000}</td></tr>
 <tr class="memdesc:aadd43d84f267b41840505fd7e2ba1dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max number of entries in the cache.  <br /></td></tr>
 <tr class="separator:aadd43d84f267b41840505fd7e2ba1dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,7 +332,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00060">60</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00056">56</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -363,7 +365,45 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Clear the LSM tree. </p>
 <p>Remove all <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> files and the WAL file. </p>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00288">288</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00227">227</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+
+</div>
+</div>
+<a id="a04a7a0050f07edfd929c7d714e58de6e" name="a04a7a0050f07edfd929c7d714e58de6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04a7a0050f07edfd929c7d714e58de6e">&#9670;&#160;</a></span>compact()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::compact </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compact the LSM tree. </p>
+<p>Compact the C1 layer if needed, which will compact the C2 layer if needed after the compaction, and so on.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::exception</td><td>If the compaction fails. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00313">313</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -397,7 +437,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <dd>
 false if the LSM tree is not empty. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00325">325</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00295">295</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -441,7 +481,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00148">148</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00145">145</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -496,62 +536,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00179">179</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
-
-</div>
-</div>
-<a id="a44ad33f19acde0ae9bbefa8a1f7f206f" name="a44ad33f19acde0ae9bbefa8a1f7f206f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44ad33f19acde0ae9bbefa8a1f7f206f">&#9670;&#160;</a></span>getRangeParallel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; value_type &gt; <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::getRangeParallel </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>end</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">TimeSeriesKeyFilter</td>          <td class="paramname"><span class="paramname"><em>filter</em></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get a filtered set of entries in a timestamp range in parallel. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">start</td><td>Start timestamp. </td></tr>
-    <tr><td class="paramname">end</td><td>End timestamp. </td></tr>
-    <tr><td class="paramname">filter</td><td>Filter. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;value_type&gt; Entries.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>If getting the entries fails. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00220">220</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00181">181</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -605,7 +590,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00109">109</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00106">106</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -653,7 +638,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00129">129</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00126">126</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -684,12 +669,12 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 
 <p>Replay the write-ahead log. </p>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00279">279</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00218">218</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
 <a id="a2c16a2ad1c365961b7499caab6b8769d" name="a2c16a2ad1c365961b7499caab6b8769d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c16a2ad1c365961b7499caab6b8769d">&#9670;&#160;</a></span>sstableCount()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c16a2ad1c365961b7499caab6b8769d">&#9670;&#160;</a></span>sstableCount() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -716,7 +701,51 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the number of SSTables in the LSM tree. </p>
 <dl class="section return"><dt>Returns</dt><dd>size_type The number of SSTables. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00315">315</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00264">264</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+
+</div>
+</div>
+<a id="aef8202d44b6b7e80df82f98553a345bd" name="aef8202d44b6b7e80df82f98553a345bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef8202d44b6b7e80df82f98553a345bd">&#9670;&#160;</a></span>sstableCount() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_type <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::sstableCount </td>
+          <td>(</td>
+          <td class="paramtype">size_type</td>          <td class="paramname"><span class="paramname"><em>k</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the number of SSTables in a Ck layer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">k</td><td>Ck layer index. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>size_type The number of SSTables.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>If the layer index is out of range. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00280">280</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -748,39 +777,11 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Convert the LSM tree to a string. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::string The string representation of the LSM tree. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00301">301</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00248">248</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="ad7f154184bc497fa701e1373fff1d12f" name="ad7f154184bc497fa701e1373fff1d12f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7f154184bc497fa701e1373fff1d12f">&#9670;&#160;</a></span>C1_LAYER_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_type <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::C1_LAYER_SIZE {1'000}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Number of SSTables in the C1 layer. </p>
-
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00046">46</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
-
-</div>
-</div>
 <a id="aadd43d84f267b41840505fd7e2ba1dfa" name="aadd43d84f267b41840505fd7e2ba1dfa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aadd43d84f267b41840505fd7e2ba1dfa">&#9670;&#160;</a></span>CACHE_CAPACITY</h2>
 
@@ -805,7 +806,33 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 
 <p>Max number of entries in the cache. </p>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00052">52</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00048">48</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+
+</div>
+</div>
+<a id="a0bfeb60da810305480c1bdbca9ebe98a" name="a0bfeb60da810305480c1bdbca9ebe98a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bfeb60da810305480c1bdbca9ebe98a">&#9670;&#160;</a></span>LAYER_COUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_type <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::LAYER_COUNT {10}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00042">42</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>

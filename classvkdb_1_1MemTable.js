@@ -1,6 +1,7 @@
 var classvkdb_1_1MemTable =
 [
     [ "MemTable", "classvkdb_1_1MemTable.html#a30b4ff092033bb8e9d36a3b2ac848ece", null ],
+    [ "MemTable", "classvkdb_1_1MemTable.html#a02b5e235341009f8421f043745278994", null ],
     [ "MemTable", "classvkdb_1_1MemTable.html#aa2b3b98ca7cf9e13e8cc7899a418c228", null ],
     [ "MemTable", "classvkdb_1_1MemTable.html#a24e1f05426d4d439ab2a0fb5f0c1720b", null ],
     [ "~MemTable", "classvkdb_1_1MemTable.html#af21a80243e476e5ba5f4e3af11cb6eb9", null ],

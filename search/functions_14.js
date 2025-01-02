@@ -1,18 +1,13 @@
 var searchData=
 [
-  ['_7ebloomfilter_0',['~BloomFilter',['../classvkdb_1_1BloomFilter.html#a739be5167b4819776dd2cc2665823785',1,'vkdb::BloomFilter']]],
-  ['_7edatabase_1',['~Database',['../classvkdb_1_1Database.html#a8e86c94073b81b1b301b1717cf4d32e7',1,'vkdb::Database']]],
-  ['_7edatarange_2',['~DataRange',['../classvkdb_1_1DataRange.html#a56a2c4367211af00804076535c11269c',1,'vkdb::DataRange']]],
-  ['_7efriendlyquerybuilder_3',['~FriendlyQueryBuilder',['../classvkdb_1_1FriendlyQueryBuilder.html#aefac3e8d28a74a3ab7dd619192520299',1,'vkdb::FriendlyQueryBuilder']]],
-  ['_7elexer_4',['~Lexer',['../classvkdb_1_1Lexer.html#a0c2716ecf98fe79781fdea338171fd25',1,'vkdb::Lexer']]],
-  ['_7elrucache_5',['~LRUCache',['../classvkdb_1_1LRUCache.html#ad50b3438306164e51bd2982e20befca4',1,'vkdb::LRUCache']]],
-  ['_7elsmtree_6',['~LSMTree',['../classvkdb_1_1LSMTree.html#a2823a8265694226851ccd478fb67f51c',1,'vkdb::LSMTree']]],
-  ['_7ememtable_7',['~MemTable',['../classvkdb_1_1MemTable.html#af21a80243e476e5ba5f4e3af11cb6eb9',1,'vkdb::MemTable']]],
-  ['_7equerybuilder_8',['~QueryBuilder',['../classvkdb_1_1QueryBuilder.html#a4800a264819c63a0101502c33057c19c',1,'vkdb::QueryBuilder']]],
-  ['_7esstable_9',['~SSTable',['../classvkdb_1_1SSTable.html#af752ed8b05bd61132a7feb263c6be1e5',1,'vkdb::SSTable']]],
-  ['_7etable_10',['~Table',['../classvkdb_1_1Table.html#aad432ae8b9bd4d92c3de6b5d667228b2',1,'vkdb::Table']]],
-  ['_7etimeserieskey_11',['~TimeSeriesKey',['../classvkdb_1_1TimeSeriesKey.html#ad31caff4365bcb2864b4a3b605441d3c',1,'vkdb::TimeSeriesKey']]],
-  ['_7etoken_12',['~Token',['../classvkdb_1_1Token.html#a459e1aca3f23692276d085ce4063c738',1,'vkdb::Token']]],
-  ['_7evq_13',['~VQ',['../classvkdb_1_1VQ.html#ade8d897599ffafecf25715a98e10f17d',1,'vkdb::VQ']]],
-  ['_7ewriteaheadlog_14',['~WriteAheadLog',['../classvkdb_1_1WriteAheadLog.html#a81bee049079ca13c931de85090e13048',1,'vkdb::WriteAheadLog']]]
+  ['wheremetricis_0',['whereMetricIs',['../classvkdb_1_1FriendlyQueryBuilder.html#aed6c603688a811b165e37bc2eaed077d',1,'vkdb::FriendlyQueryBuilder']]],
+  ['wheremetricisanyof_1',['whereMetricIsAnyOf',['../classvkdb_1_1FriendlyQueryBuilder.html#a86950f05d27d96f826f63ac08294bed8',1,'vkdb::FriendlyQueryBuilder']]],
+  ['wheretagscontain_2',['whereTagsContain',['../classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9',1,'vkdb::FriendlyQueryBuilder']]],
+  ['wheretagscontainallof_3',['whereTagsContainAllOf',['../classvkdb_1_1FriendlyQueryBuilder.html#afc0534c8779075569b1d90993edb86cd',1,'vkdb::FriendlyQueryBuilder']]],
+  ['wheretagscontainanyof_4',['whereTagsContainAnyOf',['../classvkdb_1_1FriendlyQueryBuilder.html#a11e5a78eb979b7aba45bde1944ce559e',1,'vkdb::FriendlyQueryBuilder']]],
+  ['wheretimestampbetween_5',['whereTimestampBetween',['../classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650',1,'vkdb::FriendlyQueryBuilder']]],
+  ['wheretimestampis_6',['whereTimestampIs',['../classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b',1,'vkdb::FriendlyQueryBuilder']]],
+  ['wheretimestampisanyof_7',['whereTimestampIsAnyOf',['../classvkdb_1_1FriendlyQueryBuilder.html#aab58e31bf7e8064ebb84eb7b60e50444',1,'vkdb::FriendlyQueryBuilder']]],
+  ['writeaheadlog_8',['WriteAheadLog',['../classvkdb_1_1WriteAheadLog.html#ab5e10eb746b62c1fab61f7061dae55d0',1,'vkdb::WriteAheadLog::WriteAheadLog()=delete'],['../classvkdb_1_1WriteAheadLog.html#a2fba06076f221c01f5bf1c5b2b876179',1,'vkdb::WriteAheadLog::WriteAheadLog(FilePath lsm_tree_path) noexcept'],['../classvkdb_1_1WriteAheadLog.html#aa4a4f8bf33941b547bb5a94005c350be',1,'vkdb::WriteAheadLog::WriteAheadLog(WriteAheadLog &amp;&amp;) noexcept=default'],['../classvkdb_1_1WriteAheadLog.html#a153378ef5e9d81c91a22d41dc13ff3ea',1,'vkdb::WriteAheadLog::WriteAheadLog(const WriteAheadLog &amp;)=delete']]],
+  ['writedatatodisk_9',['writeDataToDisk',['../classvkdb_1_1SSTable.html#a19917056b092822a5250fd64c21dd647',1,'vkdb::SSTable']]]
 ];

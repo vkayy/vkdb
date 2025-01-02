@@ -135,9 +135,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a27b6b96a69e4d695f7cad20772b46572" id="r_a27b6b96a69e4d695f7cad20772b46572"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27b6b96a69e4d695f7cad20772b46572">SSTable</a> (FilePath file_path)</td></tr>
 <tr class="memdesc:a27b6b96a69e4d695f7cad20772b46572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object given a file path.  <br /></td></tr>
 <tr class="separator:a27b6b96a69e4d695f7cad20772b46572"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af80a6d73e9bce2a1fe955164d0cfa1f3" id="r_af80a6d73e9bce2a1fe955164d0cfa1f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af80a6d73e9bce2a1fe955164d0cfa1f3">SSTable</a> (FilePath file_path, <a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt; &amp;&amp;mem_table)</td></tr>
-<tr class="memdesc:af80a6d73e9bce2a1fe955164d0cfa1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object given a file path and a memtable.  <br /></td></tr>
-<tr class="separator:af80a6d73e9bce2a1fe955164d0cfa1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3c706fbf12640cac3b5ed8b201df56" id="r_a5e3c706fbf12640cac3b5ed8b201df56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e3c706fbf12640cac3b5ed8b201df56">SSTable</a> (FilePath file_path, <a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt; &amp;&amp;mem_table, size_type expected_entries=<a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt;::C1_LAYER_SSTABLE_MAX_ENTRIES)</td></tr>
+<tr class="memdesc:a5e3c706fbf12640cac3b5ed8b201df56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object given a file path and a memtable.  <br /></td></tr>
+<tr class="separator:a5e3c706fbf12640cac3b5ed8b201df56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa76f5f10fb64cc420e689ca40385f730" id="r_aa76f5f10fb64cc420e689ca40385f730"><td class="memItemLeft" align="right" valign="top"><a id="aa76f5f10fb64cc420e689ca40385f730" name="aa76f5f10fb64cc420e689ca40385f730"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SSTable</b> (<a class="el" href="classvkdb_1_1SSTable.html">SSTable</a> &amp;&amp;) noexcept=default</td></tr>
 <tr class="memdesc:aa76f5f10fb64cc420e689ca40385f730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-construct a <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object. <br /></td></tr>
@@ -154,9 +154,12 @@ Public Member Functions</h2></td></tr>
 <a class="el" href="classvkdb_1_1SSTable.html">SSTable</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classvkdb_1_1SSTable.html">SSTable</a> &amp;)=delete</td></tr>
 <tr class="memdesc:a9c2aba8ce123ab0c8044dfdab34abf03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deleted copy assignment operator. <br /></td></tr>
 <tr class="separator:a9c2aba8ce123ab0c8044dfdab34abf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af752ed8b05bd61132a7feb263c6be1e5" id="r_af752ed8b05bd61132a7feb263c6be1e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af752ed8b05bd61132a7feb263c6be1e5">~SSTable</a> ()</td></tr>
-<tr class="memdesc:af752ed8b05bd61132a7feb263c6be1e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object.  <br /></td></tr>
-<tr class="separator:af752ed8b05bd61132a7feb263c6be1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa64f6ead231dbc752dccc9748592fc90" id="r_aa64f6ead231dbc752dccc9748592fc90"><td class="memItemLeft" align="right" valign="top"><a id="aa64f6ead231dbc752dccc9748592fc90" name="aa64f6ead231dbc752dccc9748592fc90"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~SSTable</b> () noexcept=default</td></tr>
+<tr class="memdesc:aa64f6ead231dbc752dccc9748592fc90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object. <br /></td></tr>
+<tr class="separator:aa64f6ead231dbc752dccc9748592fc90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdfff5c4e29e0a09a9bf0258e0477b03" id="r_abdfff5c4e29e0a09a9bf0258e0477b03"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdfff5c4e29e0a09a9bf0258e0477b03">operator==</a> (const <a class="el" href="classvkdb_1_1SSTable.html">SSTable</a> &amp;other) const noexcept</td></tr>
+<tr class="separator:abdfff5c4e29e0a09a9bf0258e0477b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19917056b092822a5250fd64c21dd647" id="r_a19917056b092822a5250fd64c21dd647"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19917056b092822a5250fd64c21dd647">writeDataToDisk</a> (<a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt; &amp;&amp;mem_table)</td></tr>
 <tr class="memdesc:a19917056b092822a5250fd64c21dd647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to disk.  <br /></td></tr>
 <tr class="separator:a19917056b092822a5250fd64c21dd647"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,6 +178,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0aebdc3cfd28fd41593e36e6090b19ab" id="r_a0aebdc3cfd28fd41593e36e6090b19ab"><td class="memItemLeft" align="right" valign="top">FilePath&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0aebdc3cfd28fd41593e36e6090b19ab">metadataPath</a> () const noexcept</td></tr>
 <tr class="memdesc:a0aebdc3cfd28fd41593e36e6090b19ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the path of the metadata file.  <br /></td></tr>
 <tr class="separator:a0aebdc3cfd28fd41593e36e6090b19ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a083e4790041f00f4cdfe1182662a1bb4" id="r_a083e4790041f00f4cdfe1182662a1bb4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1DataRange.html">KeyRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a083e4790041f00f4cdfe1182662a1bb4">keyRange</a> () const noexcept</td></tr>
+<tr class="memdesc:a083e4790041f00f4cdfe1182662a1bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the key range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>.  <br /></td></tr>
+<tr class="separator:a083e4790041f00f4cdfe1182662a1bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c955d27d39356b619b1c81c36a49579" id="r_a2c955d27d39356b619b1c81c36a49579"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1DataRange.html">TimeRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c955d27d39356b619b1c81c36a49579">timeRange</a> () const noexcept</td></tr>
+<tr class="memdesc:a2c955d27d39356b619b1c81c36a49579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the time range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>.  <br /></td></tr>
+<tr class="separator:a2c955d27d39356b619b1c81c36a49579"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -301,7 +310,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If memory-mapping or metadata loading fails. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>If metadata loading fails. </td></tr>
   </table>
   </dd>
 </dl>
@@ -310,8 +319,8 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 
 </div>
 </div>
-<a id="af80a6d73e9bce2a1fe955164d0cfa1f3" name="af80a6d73e9bce2a1fe955164d0cfa1f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af80a6d73e9bce2a1fe955164d0cfa1f3">&#9670;&#160;</a></span>SSTable() <span class="overload">[2/2]</span></h2>
+<a id="a5e3c706fbf12640cac3b5ed8b201df56" name="a5e3c706fbf12640cac3b5ed8b201df56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e3c706fbf12640cac3b5ed8b201df56">&#9670;&#160;</a></span>SSTable() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -329,7 +338,12 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>mem_table</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt; TValue &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>mem_table</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_type</td>          <td class="paramname"><span class="paramname"><em>expected_entries</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="classvkdb_1_1MemTable.html">MemTable</a>&lt;TValue&gt;::C1_LAYER_SSTABLE_MAX_ENTRIES</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -354,39 +368,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00080">80</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
-
-</div>
-</div>
-<a id="af752ed8b05bd61132a7feb263c6be1e5" name="af752ed8b05bd61132a7feb263c6be1e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af752ed8b05bd61132a7feb263c6be1e5">&#9670;&#160;</a></span>~SSTable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classvkdb_1_1SSTable.html">vkdb::SSTable</a>&lt; TValue &gt;::~<a class="el" href="classvkdb_1_1SSTable.html">SSTable</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Destroy the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> object. </p>
-<p>Unmaps the file. </p>
-
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00122">122</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00076">76</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -427,7 +409,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <dd>
 false if the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> does not contain the key. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00149">149</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00144">144</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -471,7 +453,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00162">162</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00157">157</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -520,7 +502,39 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00197">197</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00196">196</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+
+</div>
+</div>
+<a id="a083e4790041f00f4cdfe1182662a1bb4" name="a083e4790041f00f4cdfe1182662a1bb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a083e4790041f00f4cdfe1182662a1bb4">&#9670;&#160;</a></span>keyRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvkdb_1_1DataRange.html">KeyRange</a> <a class="el" href="classvkdb_1_1SSTable.html">vkdb::SSTable</a>&lt; TValue &gt;::keyRange </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the key range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>KeyRange Key range. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00243">243</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -552,7 +566,36 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the path of the metadata file. </p>
 <dl class="section return"><dt>Returns</dt><dd>FilePath Path. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00233">233</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00232">232</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+
+</div>
+</div>
+<a id="abdfff5c4e29e0a09a9bf0258e0477b03" name="abdfff5c4e29e0a09a9bf0258e0477b03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdfff5c4e29e0a09a9bf0258e0477b03">&#9670;&#160;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classvkdb_1_1SSTable.html">vkdb::SSTable</a>&lt; TValue &gt;::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classvkdb_1_1SSTable.html">SSTable</a>&lt; TValue &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00120">120</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -584,7 +627,39 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the path of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>FilePath Path. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00224">224</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00223">223</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+
+</div>
+</div>
+<a id="a2c955d27d39356b619b1c81c36a49579" name="a2c955d27d39356b619b1c81c36a49579"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c955d27d39356b619b1c81c36a49579">&#9670;&#160;</a></span>timeRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvkdb_1_1DataRange.html">TimeRange</a> <a class="el" href="classvkdb_1_1SSTable.html">vkdb::SSTable</a>&lt; TValue &gt;::timeRange </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the time range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>TimeRange Time range. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00252">252</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -614,7 +689,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 </div><div class="memdoc">
 
 <p>Write data to disk. </p>
-<p>Saves the memtable to disk, updates the metadata, and memory-maps the file.</p>
+<p>Saves the memtable to disk and saves the metadata.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mem_table</td><td>Memtable.</td></tr>
@@ -623,12 +698,12 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If saving the memtable, metadata, or memory-mapping the file fails. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>If saving the memtable or metadata fails. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00136">136</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00132">132</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
