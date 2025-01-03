@@ -529,7 +529,7 @@ private:
    * @param files_to_remove Files to remove vector.
    */
   void update_entries_with_sstable(
-    const SSTable<TValue>& sstable,
+    SSTable<TValue>&& sstable,
     size_type window_size,
     TimeWindowToEntriesMap& time_window_to_entries,
     std::vector<FilePath>& files_to_remove
@@ -556,18 +556,18 @@ private:
     TimeWindowToEntriesMap time_window_to_entries;
     std::vector<FilePath> files_to_remove;
 
-    for (const auto& sstable : next_layer) {
+    for (auto&& sstable : next_layer) {
       update_entries_with_sstable(
-        sstable, window_size,
+        std::move(sstable), window_size,
         time_window_to_entries,
         files_to_remove
       );
     }
     reset_layer(k + 1);
 
-    for (const auto& sstable : curr_layer) {
+    for (auto&& sstable : curr_layer) {
       update_entries_with_sstable(
-        sstable, window_size,
+        std::move(sstable), window_size,
         time_window_to_entries,
         files_to_remove
       );
@@ -604,9 +604,9 @@ private:
     TimeWindowToEntriesMap time_window_to_entries;
     std::vector<FilePath> files_to_remove;
 
-    for (const auto& sstable : next_layer) {
+    for (auto&& sstable : next_layer) {
       update_entries_with_sstable(
-        sstable, window_size,
+        std::move(sstable), window_size,
         time_window_to_entries,
         files_to_remove
       );
@@ -616,7 +616,7 @@ private:
     while (curr_layer.size() > CK_LAYER_TABLE_COUNT[k]) {
       auto& oldest_sstable{curr_layer.front()};
       update_entries_with_sstable(
-        oldest_sstable, window_size,
+        std::move(oldest_sstable), window_size,
         time_window_to_entries,
         files_to_remove
       );
