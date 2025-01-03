@@ -135,37 +135,163 @@ public:
   }
 
   /**
+   * @brief Searches memtable for a key.
+   * 
+   * @param key Key.
+   * 
+   * @throw std::invalid_argument If the key is not in the memtable.
+   */
+  mapped_type search_memtable(const key_type& key) const {
+    const auto mem_table_value{mem_table_.get(key)};
+    cache_.put(key, mem_table_value);
+    dirty_table_[key] = false;
+    return mem_table_value;
+  }
+
+  /**
+   * @brief Iteratively searches SSTables of a layer for a key.
+   * 
+   * @param k Layer index.
+   * @param key Key.
+   * @return mapped_type The value if it is found, std::nullopt otherwise.
+   * 
+   * @throw std::out_of_range If the layer index is out of range.
+   */
+  mapped_type iterative_layer_search(
+    size_type k,
+    const key_type& key
+  ) const {
+    validate_layer_index(k);
+    for (const auto& sstable : ck_layers_[k] | std::views::reverse) {
+      const auto sstable_value{sstable.get(key)};
+      if (!sstable_value.has_value()) {
+        continue;
+      }
+      cache_.put(key, sstable_value);
+      dirty_table_[key] = false;
+      return sstable_value;
+    }
+    return std::nullopt;
+  }
+
+  /**
+   * @brief Binary searches SSTables of a layer for a key.
+   * 
+   * @param k Layer index.
+   * @param key Key.
+   * @return mapped_type The value if it is found, std::nullopt otherwise.
+   * 
+   * @throw std::exception If searching for the key fails.
+   */
+  mapped_type binary_layer_search(
+    size_type k,
+    const key_type& key
+  ) const {
+    const auto timestamp{key.timestamp()};
+    const auto& ck_layer{ck_layers_[k]};
+    auto sstable_it{std::lower_bound(
+      ck_layer.begin(),
+      ck_layer.end(),
+      timestamp,
+      [](const auto& sstable, const auto target_time) {
+        return target_time < sstable.timeRange().lower();
+      }
+    )};
+
+    if (
+      sstable_it != ck_layer.end() && 
+      sstable_it->timeRange().lower() <= timestamp && 
+      timestamp <= sstable_it->timeRange().upper()
+    ) {
+      const auto sstable_value{sstable_it->get(key)};
+      if (sstable_value.has_value()) {
+        cache_.put(key, sstable_value);
+        dirty_table_[key] = false;
+        return sstable_value;
+      }
+      return std::nullopt;
+    }
+    return std::nullopt;
+  }
+
+
+  /**
+   * @brief Binary searches SSTables of a layer for a filtered range of keys.
+   * @details Updates entry table with the range of key-value pairs.
+   * 
+   * @param k Layer index.
+   * @param start Start key.
+   * @param end End key.
+   * @param filter Filter.
+   * @param entry_table Entries.
+   * 
+   * @throw std::exception If searching for the keys fails.
+   */
+  void binary_layer_search_range(
+    size_type k,
+    const key_type& start,
+    const key_type& end,
+    const TimeSeriesKeyFilter& filter,
+    table_type& entry_table
+  ) const {
+    const auto& ck_layer{ck_layers_[k]};
+    auto start_it{std::lower_bound(
+      ck_layer.begin(),
+      ck_layer.end(),
+      start.timestamp(),
+      [](const auto& sstable, const auto target_time) {
+        return sstable.timeRange().upper() < target_time;
+      }
+    )};
+    
+    auto end_it{std::upper_bound(
+      start_it,
+      ck_layer.end(),
+      end.timestamp(),
+      [](const auto target_time, const auto& sstable) {
+        return target_time < sstable.timeRange().lower();
+      }
+    )};
+
+    for (
+      const auto& sstable :
+      std::ranges::subrange(start_it, end_it) | std::views::reverse
+    ) {
+      update_entries_with_sstable_range(
+        sstable, start, end, filter, entry_table
+      );
+    }
+  }
+
+
+  /**
    * @brief Get a value from the LSM tree.
    * 
    * @param key Key.
-   * @return mapped_type The value if it exists, std::nullopt otherwise.
-   * 
-   * @throw std::exception If getting the value fails.
+   * @return mapped_type The value if it exists.
    */
-  [[nodiscard]] mapped_type get(const key_type& key) const {
+  [[nodiscard]] mapped_type get(const key_type& key) const noexcept {
     if (!dirty_table_[key] && cache_.contains(key)) {
       return cache_.get(key);
     }
 
-    if (mem_table_.contains(key)) {
-      const auto value{mem_table_.get(key)};
-      cache_.put(key, value);
-      dirty_table_[key] = false;
-      return value;
-    }
+    try {
+      return search_memtable(key);
+    } catch (const std::invalid_argument& e) {
+      const auto c0_value{iterative_layer_search(0, key)};
+      if (c0_value.has_value()) {
+        return c0_value;
+      }
 
-    for (const auto& ck_layer : ck_layers_) {
-      for (const auto& sstable : ck_layer | std::views::reverse) {
-        if (sstable.contains(key)) {
-          const auto value{sstable.get(key)};
-          cache_.put(key, value);
-          dirty_table_[key] = false;
-          return value;
+      for (size_type k{1}; k < LAYER_COUNT; ++k) {
+        const auto ck_value{binary_layer_search(k, key)};
+        if (ck_value.has_value()) {
+          return ck_value;
         }
       }
-    }
 
-    return std::nullopt;
+      return std::nullopt;
+    }
   }
 
   /**
@@ -184,29 +310,16 @@ public:
     TimeSeriesKeyFilter&& filter
   ) const {
     table_type entry_table;
-    for (const auto& ck_layer : ck_layers_ | std::views::reverse) {
-      for (const auto& sstable : ck_layer) {
-        for (const auto& [key, value] : sstable.getRange(start, end)) {
-          if (!filter(key)) {
-            continue;
-          }
-          if (!value.has_value()) {
-            entry_table.erase(key);
-            continue;
-          }
-          entry_table[key] = value;
-        }
-      }
+    for (size_type k{LAYER_COUNT - 1}; k > 0; --k) {
+      binary_layer_search_range(k, start, end, filter, entry_table);
+    }
+    for (const auto& sstable : ck_layers_[0]) {
+      update_entries_with_sstable_range(
+        sstable, start, end, filter, entry_table
+      );
     }
     for (const auto& [key, value] : mem_table_.getRange(start, end)) {
-      if (!filter(key)) {
-        continue;
-      }
-      if (!value.has_value()) {
-        entry_table.erase(key);
-        continue;
-      }
-      entry_table[key] = value;
+      update_entries_with_filtered_key(key, value, filter, entry_table);
     }
     return {entry_table.begin(), entry_table.end()};
   }
@@ -469,6 +582,51 @@ private:
     compact();
     mem_table_.clear();
     wal_.clear();
+  }
+
+  /**
+   * @brief Update entries with a filtered key-value pair.
+   * 
+   * @param key Key.
+   * @param value Value.
+   * @param filter Filter.
+   * @param entry_table Entries.
+   */
+  void update_entries_with_filtered_key(
+    const key_type& key,
+    const mapped_type& value,
+    const TimeSeriesKeyFilter& filter,
+    table_type& entry_table
+  ) const noexcept {
+    if (!filter(key)) {
+      return;
+    }
+    if (!value.has_value()) {
+      entry_table.erase(key);
+      return;
+    }
+    entry_table[key] = value;
+  }
+
+  /**
+   * @brief Update entries with a filtered SSTable range.
+   * 
+   * @param sstable SSTable.
+   * @param start Start key.
+   * @param end End key.
+   * @param filter Filter.
+   * @param entry_table Entries.
+   */
+  void update_entries_with_sstable_range(
+    const SSTable<TValue>& sstable,
+    const key_type& start,
+    const key_type& end,
+    const TimeSeriesKeyFilter& filter,
+    table_type& entry_table
+  ) const noexcept {
+    for (const auto& [key, value] : sstable.getRange(start, end)) {
+      update_entries_with_filtered_key(key, value, filter, entry_table);
+    }
   }
 
   /**

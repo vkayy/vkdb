@@ -192,13 +192,11 @@ public:
    * @param start Start timestamp.
    * @param end End timestamp.
    * @return std::vector<value_type> Entries.
-   * 
-   * @throws std::exception If getting the entries fails.
    */
   [[nodiscard]] std::vector<value_type> getRange(
     const key_type& start,
     const key_type& end
-  ) const {
+  ) const noexcept {
     if (!overlaps_with(start, end)) {
       return {};
     }
