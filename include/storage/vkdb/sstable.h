@@ -200,18 +200,28 @@ public:
     if (!overlaps_with(start, end)) {
       return {};
     }
-    std::vector<value_type> entries;
-    for (auto it{index_.lower_bound(start)};
-         it != index_.end() && it->first < end; ++it) {
-      const auto [key, pos] = *it;
-      if (key < start) {
-        continue;
-      }
-      if (key > end) {
-        break;
-      }
-      entries.emplace_back(key, get(key));
+
+    auto start_it{index_.lower_bound(start)};
+    auto end_it{index_.upper_bound(end)};
+    if (start_it == end_it) {
+      return {};
     }
+
+    std::vector<value_type> entries;
+    entries.reserve(std::distance(start_it, end_it));
+
+    std::ifstream file{file_path_, std::ios::binary};
+    for (auto it{start_it}; it != end_it; ++it) {
+      const auto& [key, pos] = *it;
+      file.seekg(pos);
+      std::string entry_str;
+      std::getline(file, entry_str, '[');
+      std::getline(file, entry_str, '[');
+      auto [entry_key, entry_value] 
+        = entryFromString<TValue>(std::move(entry_str));
+      entries.emplace_back(entry_key, entry_value);
+    }
+    
     return entries;
   }
 
@@ -221,11 +231,7 @@ public:
    * @return std::vector<value_type> Entries.
    */
   [[nodiscard]] std::vector<value_type> entries() const noexcept {
-    std::vector<value_type> entries;
-    for (const auto& [key, value] : index_) {
-      entries.emplace_back(key, get(key));
-    }
-    return entries;
+    return getRange(MIN_TIME_SERIES_KEY, MAX_TIME_SERIES_KEY);
   }
 
   /**
