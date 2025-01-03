@@ -135,37 +135,114 @@ public:
   }
 
   /**
+   * @brief Searches memtable for a key.
+   * 
+   * @param key Key.
+   * 
+   * @throw std::invalid_argument If the key is not in the memtable.
+   */
+  mapped_type search_memtable(const key_type& key) const {
+    const auto mem_table_value{mem_table_.get(key)};
+    cache_.put(key, mem_table_value);
+    dirty_table_[key] = false;
+    return mem_table_value;
+  }
+
+  /**
+   * @brief Iteratively searches SSTables of a layer for a key.
+   * 
+   * @param k Layer index.
+   * @param key Key.
+   * @return mapped_type The value if it is found, std::nullopt otherwise.
+   * 
+   * @throw std::out_of_range If the layer index is out of range.
+   */
+  mapped_type iterative_layer_search(
+    size_type k,
+    const key_type& key
+  ) const {
+    validate_layer_index(k);
+    for (const auto& sstable : ck_layers_[k] | std::views::reverse) {
+      const auto sstable_value{sstable.get(key)};
+      if (!sstable_value.has_value()) {
+        continue;
+      }
+      cache_.put(key, sstable_value);
+      dirty_table_[key] = false;
+      return sstable_value;
+    }
+    return std::nullopt;
+  }
+
+  /**
+   * @brief Binary searches SSTables of a layer for a key.
+   * 
+   * @param k Layer index.
+   * @param key Key.
+   * @return mapped_type The value if it is found, std::nullopt otherwise.
+   * 
+   * @throw std::out_of_range If the layer index is out of range.
+   */
+  mapped_type binary_layer_search(
+    size_type k,
+    const key_type& key
+  ) const {
+    const auto timestamp{key.timestamp()};
+    const auto& ck_layer{ck_layers_[k]};
+    auto sstable_iter{std::lower_bound(
+      ck_layer.begin(),
+      ck_layer.end(),
+      timestamp,
+      [](const auto& sstable, const auto target_time) {
+        return target_time < sstable.timeRange().lower();
+      }
+    )};
+
+    if (
+      sstable_iter != ck_layer.end() && 
+      sstable_iter->timeRange().lower() <= timestamp && 
+      timestamp <= sstable_iter->timeRange().upper()
+    ) {
+      const auto sstable_value{sstable_iter->get(key)};
+      if (sstable_value.has_value()) {
+        cache_.put(key, sstable_value);
+        dirty_table_[key] = false;
+        return sstable_value;
+      }
+      return std::nullopt;
+    }
+    return std::nullopt;
+  }
+
+
+  /**
    * @brief Get a value from the LSM tree.
    * 
    * @param key Key.
-   * @return mapped_type The value if it exists, std::nullopt otherwise.
-   * 
-   * @throw std::exception If getting the value fails.
+   * @return mapped_type The value if it exists.
    */
-  [[nodiscard]] mapped_type get(const key_type& key) const {
+  [[nodiscard]] mapped_type get(const key_type& key) const noexcept {
     if (!dirty_table_[key] && cache_.contains(key)) {
       return cache_.get(key);
     }
 
-    if (mem_table_.contains(key)) {
-      const auto value{mem_table_.get(key)};
-      cache_.put(key, value);
-      dirty_table_[key] = false;
-      return value;
-    }
+    try {
+      return search_memtable(key);
+    } catch (const std::invalid_argument& e) {
+      const auto c0_value{iterative_layer_search(0, key)};
+      if (c0_value.has_value()) {
+        return c0_value;
+      }
 
-    for (const auto& ck_layer : ck_layers_) {
-      for (const auto& sstable : ck_layer | std::views::reverse) {
-        if (sstable.contains(key)) {
-          const auto value{sstable.get(key)};
-          cache_.put(key, value);
-          dirty_table_[key] = false;
-          return value;
+      for (size_type k{1}; k < LAYER_COUNT; ++k) {
+        const auto ck_value{binary_layer_search(k, key)};
+        if (ck_value.has_value()) {
+          return ck_value;
         }
       }
-    }
 
-    return std::nullopt;
+      return std::nullopt;
+    }
   }
 
   /**

@@ -49,12 +49,11 @@ TEST_F(MemTableTest, CanPutAndGetValuesOfKeys) {
   auto value1{table_->get(key1)};
   auto value2{table_->get(key2)};
   auto value3{table_->get(key3)};
-  auto value4{table_->get(key4)};
 
   EXPECT_EQ(value1, 1);
   EXPECT_EQ(value2, 2);
   EXPECT_EQ(value3, 3);
-  EXPECT_EQ(value4, std::nullopt);
+  EXPECT_THROW(auto value4{table_->get(key4)}, std::invalid_argument);
 }
 
 TEST_F(MemTableTest, CanPutAndGetValuesOfKeysWithTags) {

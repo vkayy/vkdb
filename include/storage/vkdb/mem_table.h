@@ -92,11 +92,15 @@ public:
    * @brief Retrieves the value associated with a key.
    * 
    * @param key The key to retrieve the value for.
-   * @return mapped_type The value associated with the key, or std::nullopt if the key is not found.
+   * @return mapped_type The value associated with the key.
+   * 
+   * @throw std::invalid_argument If the key is not in the memtable.
    */
-  [[nodiscard]] mapped_type get(const key_type& key) const noexcept {
+  [[nodiscard]] mapped_type get(const key_type& key) const {
     if (!contains(key)) {
-      return std::nullopt;
+      throw std::invalid_argument{
+        "MemTable::get(): Key '" + key.str() + "' not in the memtable."
+      };
     }
     return table_.at(key);
   }
