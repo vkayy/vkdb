@@ -169,9 +169,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f6cd2f21d21ea7ea0fb63a6e2001c07" id="r_a2f6cd2f21d21ea7ea0fb63a6e2001c07"><td class="memItemLeft" align="right" valign="top">mapped_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f6cd2f21d21ea7ea0fb63a6e2001c07">get</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;key) const</td></tr>
 <tr class="memdesc:a2f6cd2f21d21ea7ea0fb63a6e2001c07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value associated with a key.  <br /></td></tr>
 <tr class="separator:a2f6cd2f21d21ea7ea0fb63a6e2001c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefe76b1c1eb68dd076dcfd7df4bb9a2a" id="r_aefe76b1c1eb68dd076dcfd7df4bb9a2a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; value_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aefe76b1c1eb68dd076dcfd7df4bb9a2a">getRange</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;start, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;end) const</td></tr>
-<tr class="memdesc:aefe76b1c1eb68dd076dcfd7df4bb9a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a filtered set of entries in a timestamp range.  <br /></td></tr>
-<tr class="separator:aefe76b1c1eb68dd076dcfd7df4bb9a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1934de8e9d86fdc304df331c729c1cdd" id="r_a1934de8e9d86fdc304df331c729c1cdd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; value_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1934de8e9d86fdc304df331c729c1cdd">getRange</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;start, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;end) const noexcept</td></tr>
+<tr class="memdesc:a1934de8e9d86fdc304df331c729c1cdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a filtered set of entries in a timestamp range.  <br /></td></tr>
+<tr class="separator:a1934de8e9d86fdc304df331c729c1cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab34488b1a55de4b026f596ee5230b7bf" id="r_ab34488b1a55de4b026f596ee5230b7bf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; value_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab34488b1a55de4b026f596ee5230b7bf">entries</a> () const noexcept</td></tr>
 <tr class="memdesc:ab34488b1a55de4b026f596ee5230b7bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the entries of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>.  <br /></td></tr>
 <tr class="separator:ab34488b1a55de4b026f596ee5230b7bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -444,7 +444,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the entries of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;value_type&gt; Entries. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00225">225</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00223">223</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -492,8 +492,8 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 
 </div>
 </div>
-<a id="aefe76b1c1eb68dd076dcfd7df4bb9a2a" name="aefe76b1c1eb68dd076dcfd7df4bb9a2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefe76b1c1eb68dd076dcfd7df4bb9a2a">&#9670;&#160;</a></span>getRange()</h2>
+<a id="a1934de8e9d86fdc304df331c729c1cdd" name="a1934de8e9d86fdc304df331c729c1cdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1934de8e9d86fdc304df331c729c1cdd">&#9670;&#160;</a></span>getRange()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -516,7 +516,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -529,15 +529,9 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;value_type&gt; Entries.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>If getting the entries fails. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;value_type&gt; Entries. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00198">198</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00196">196</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -569,7 +563,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the key range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>KeyRange Key range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00258">258</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00256">256</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -601,7 +595,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the path of the metadata file. </p>
 <dl class="section return"><dt>Returns</dt><dd>FilePath Path. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00247">247</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00245">245</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -662,7 +656,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the path of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>FilePath Path. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00238">238</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00236">236</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>
@@ -694,7 +688,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the time range of the <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>TimeRange Time range. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00267">267</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sstable_8h_source.html#l00265">265</a> of file <a class="el" href="sstable_8h_source.html">sstable.h</a>.</p>
 
 </div>
 </div>

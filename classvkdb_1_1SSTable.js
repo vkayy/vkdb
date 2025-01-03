@@ -9,7 +9,7 @@ var classvkdb_1_1SSTable =
     [ "contains", "classvkdb_1_1SSTable.html#a971fef8b685b8f3de0a51454bd1024b5", null ],
     [ "entries", "classvkdb_1_1SSTable.html#ab34488b1a55de4b026f596ee5230b7bf", null ],
     [ "get", "classvkdb_1_1SSTable.html#a2f6cd2f21d21ea7ea0fb63a6e2001c07", null ],
-    [ "getRange", "classvkdb_1_1SSTable.html#aefe76b1c1eb68dd076dcfd7df4bb9a2a", null ],
+    [ "getRange", "classvkdb_1_1SSTable.html#a1934de8e9d86fdc304df331c729c1cdd", null ],
     [ "keyRange", "classvkdb_1_1SSTable.html#a083e4790041f00f4cdfe1182662a1bb4", null ],
     [ "metadataPath", "classvkdb_1_1SSTable.html#a0aebdc3cfd28fd41593e36e6090b19ab", null ],
     [ "operator=", "classvkdb_1_1SSTable.html#a9c2aba8ce123ab0c8044dfdab34abf03", null ],

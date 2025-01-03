@@ -1,5 +1,9 @@
 var NAVTREEINDEX1 =
 {
+"classvkdb_1_1VQ.html#ade8d897599ffafecf25715a98e10f17d":[5,0,1,45,3],
+"classvkdb_1_1WriteAheadLog.html":[5,0,1,48],
+"classvkdb_1_1WriteAheadLog.html#a052c1251484325119382ff52cfff34d0":[5,0,1,48,7],
+"classvkdb_1_1WriteAheadLog.html#a153378ef5e9d81c91a22d41dc13ff3ea":[5,0,1,48,3],
 "classvkdb_1_1WriteAheadLog.html#a2fba06076f221c01f5bf1c5b2b876179":[5,0,1,48,1],
 "classvkdb_1_1WriteAheadLog.html#a57fb236100eb09364709f2de54616354":[5,0,1,48,10],
 "classvkdb_1_1WriteAheadLog.html#a81bee049079ca13c931de85090e13048":[5,0,1,48,4],
