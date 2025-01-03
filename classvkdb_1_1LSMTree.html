@@ -159,18 +159,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a53fe6a825f8c1c43beef5db16a69575d" id="r_a53fe6a825f8c1c43beef5db16a69575d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53fe6a825f8c1c43beef5db16a69575d">remove</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;key, bool log=true)</td></tr>
 <tr class="memdesc:a53fe6a825f8c1c43beef5db16a69575d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a key pair from the LSM tree.  <br /></td></tr>
 <tr class="separator:a53fe6a825f8c1c43beef5db16a69575d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a706d0f0c6a96836e0b92d1924474ad13" id="r_a706d0f0c6a96836e0b92d1924474ad13"><td class="memItemLeft" align="right" valign="top">mapped_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a706d0f0c6a96836e0b92d1924474ad13">search_memtable</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;key) const</td></tr>
-<tr class="memdesc:a706d0f0c6a96836e0b92d1924474ad13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches memtable for a key.  <br /></td></tr>
-<tr class="separator:a706d0f0c6a96836e0b92d1924474ad13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72f2bee937a1acd46472b1a1ab6b8c2a" id="r_a72f2bee937a1acd46472b1a1ab6b8c2a"><td class="memItemLeft" align="right" valign="top">mapped_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72f2bee937a1acd46472b1a1ab6b8c2a">iterative_layer_search</a> (size_type k, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;key) const</td></tr>
-<tr class="memdesc:a72f2bee937a1acd46472b1a1ab6b8c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iteratively searches SSTables of a layer for a key.  <br /></td></tr>
-<tr class="separator:a72f2bee937a1acd46472b1a1ab6b8c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1af12dacb9451f20fa2d7e5187fb623" id="r_af1af12dacb9451f20fa2d7e5187fb623"><td class="memItemLeft" align="right" valign="top">mapped_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1af12dacb9451f20fa2d7e5187fb623">binary_layer_search</a> (size_type k, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;key) const</td></tr>
-<tr class="memdesc:af1af12dacb9451f20fa2d7e5187fb623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary searches SSTables of a layer for a key.  <br /></td></tr>
-<tr class="separator:af1af12dacb9451f20fa2d7e5187fb623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae06f9385da54bb9f739cd5be04642f8b" id="r_ae06f9385da54bb9f739cd5be04642f8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae06f9385da54bb9f739cd5be04642f8b">binary_layer_search_range</a> (size_type k, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;start, const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;end, const TimeSeriesKeyFilter &amp;filter, table_type &amp;entry_table) const</td></tr>
-<tr class="memdesc:ae06f9385da54bb9f739cd5be04642f8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary searches SSTables of a layer for a filtered range of keys.  <br /></td></tr>
-<tr class="separator:ae06f9385da54bb9f739cd5be04642f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43d58da5bf55bf544151f57a8ee86d5f" id="r_a43d58da5bf55bf544151f57a8ee86d5f"><td class="memItemLeft" align="right" valign="top">mapped_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43d58da5bf55bf544151f57a8ee86d5f">get</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;key) const noexcept</td></tr>
 <tr class="memdesc:a43d58da5bf55bf544151f57a8ee86d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a value from the LSM tree.  <br /></td></tr>
 <tr class="separator:a43d58da5bf55bf544151f57a8ee86d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -346,122 +334,6 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af1af12dacb9451f20fa2d7e5187fb623" name="af1af12dacb9451f20fa2d7e5187fb623"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1af12dacb9451f20fa2d7e5187fb623">&#9670;&#160;</a></span>binary_layer_search()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mapped_type <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::binary_layer_search </td>
-          <td>(</td>
-          <td class="paramtype">size_type</td>          <td class="paramname"><span class="paramname"><em>k</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Binary searches SSTables of a layer for a key. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">k</td><td>Layer index. </td></tr>
-    <tr><td class="paramname">key</td><td>Key. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>mapped_type The value if it is found, std::nullopt otherwise.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>If searching for the key fails. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00186">186</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
-
-</div>
-</div>
-<a id="ae06f9385da54bb9f739cd5be04642f8b" name="ae06f9385da54bb9f739cd5be04642f8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae06f9385da54bb9f739cd5be04642f8b">&#9670;&#160;</a></span>binary_layer_search_range()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::binary_layer_search_range </td>
-          <td>(</td>
-          <td class="paramtype">size_type</td>          <td class="paramname"><span class="paramname"><em>k</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>end</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const TimeSeriesKeyFilter &amp;</td>          <td class="paramname"><span class="paramname"><em>filter</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">table_type &amp;</td>          <td class="paramname"><span class="paramname"><em>entry_table</em></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Binary searches SSTables of a layer for a filtered range of keys. </p>
-<p>Updates entry table with the range of key-value pairs.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">k</td><td>Layer index. </td></tr>
-    <tr><td class="paramname">start</td><td>Start key. </td></tr>
-    <tr><td class="paramname">end</td><td>End key. </td></tr>
-    <tr><td class="paramname">filter</td><td>Filter. </td></tr>
-    <tr><td class="paramname">entry_table</td><td>Entries.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>If searching for the keys fails. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00230">230</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
-
-</div>
-</div>
 <a id="a5cc2a8a9d4be80d6dd8743ceaa38adc1" name="a5cc2a8a9d4be80d6dd8743ceaa38adc1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5cc2a8a9d4be80d6dd8743ceaa38adc1">&#9670;&#160;</a></span>clear()</h2>
 
@@ -490,7 +362,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Clear the LSM tree. </p>
 <p>Remove all <a class="el" href="classvkdb_1_1SSTable.html" title="Sorted string table for storing key-value pairs.">SSTable</a> files and the WAL file. </p>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00340">340</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00210">210</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -524,7 +396,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <dd>
 false if the LSM tree is not empty. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00408">408</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00278">278</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -562,7 +434,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mapped_type The value if it exists. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00273">273</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00143">143</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -617,56 +489,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00307">307</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
-
-</div>
-</div>
-<a id="a72f2bee937a1acd46472b1a1ab6b8c2a" name="a72f2bee937a1acd46472b1a1ab6b8c2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72f2bee937a1acd46472b1a1ab6b8c2a">&#9670;&#160;</a></span>iterative_layer_search()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mapped_type <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::iterative_layer_search </td>
-          <td>(</td>
-          <td class="paramtype">size_type</td>          <td class="paramname"><span class="paramname"><em>k</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;) const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Iteratively searches SSTables of a layer for a key. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">k</td><td>Layer index. </td></tr>
-    <tr><td class="paramname">key</td><td>Key. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>mapped_type The value if it is found, std::nullopt otherwise.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::out_of_range</td><td>If the layer index is out of range. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00160">160</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00177">177</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -799,50 +622,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 
 <p>Replay the write-ahead log. </p>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00331">331</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
-
-</div>
-</div>
-<a id="a706d0f0c6a96836e0b92d1924474ad13" name="a706d0f0c6a96836e0b92d1924474ad13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a706d0f0c6a96836e0b92d1924474ad13">&#9670;&#160;</a></span>search_memtable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mapped_type <a class="el" href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a>&lt; TValue &gt;::search_memtable </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">key_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Searches memtable for a key. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">key</td><td>Key.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::invalid_argument</td><td>If the key is not in the memtable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00144">144</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00201">201</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -874,7 +654,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Get the number of SSTables in the LSM tree. </p>
 <dl class="section return"><dt>Returns</dt><dd>size_type The number of SSTables. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00377">377</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00247">247</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -918,7 +698,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00393">393</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00263">263</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
@@ -950,7 +730,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <p>Convert the LSM tree to a string. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::string The string representation of the LSM tree. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00361">361</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lsm__tree_8h_source.html#l00231">231</a> of file <a class="el" href="lsm__tree_8h_source.html">lsm_tree.h</a>.</p>
 
 </div>
 </div>
