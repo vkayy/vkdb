@@ -369,9 +369,9 @@ private:
 
     std::string line;
     std::getline(file, line);
-    time_range_ = DataRange<Timestamp>{std::move(line)};
+    time_range_ = TimeRange{std::move(line)};
     std::getline(file, line);
-    key_range_ = DataRange<key_type>{std::move(line)};
+    key_range_ = KeyRange{std::move(line)};
     std::getline(file, line);
     bloom_filter_ = BloomFilter{std::move(line)};
     std::getline(file, line);
