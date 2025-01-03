@@ -253,14 +253,12 @@ public:
       }
     )};
 
-    std::vector<typename CkLayer::const_iterator> sstable_its;
-    for (auto it{start_it}; it != end_it; ++it) {
-      sstable_its.push_back(it);
-    }
-
-    for (const auto& sstable_it : sstable_its | std::views::reverse) {
+    for (
+      const auto& sstable :
+      std::ranges::subrange(start_it, end_it) | std::views::reverse
+    ) {
       update_entries_with_sstable_range(
-        *sstable_it, start, end, filter, entry_table
+        sstable, start, end, filter, entry_table
       );
     }
   }
