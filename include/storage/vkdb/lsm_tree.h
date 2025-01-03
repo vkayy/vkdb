@@ -189,7 +189,7 @@ public:
   ) const {
     const auto timestamp{key.timestamp()};
     const auto& ck_layer{ck_layers_[k]};
-    auto sstable_iter{std::lower_bound(
+    auto sstable_it{std::lower_bound(
       ck_layer.begin(),
       ck_layer.end(),
       timestamp,
@@ -199,11 +199,11 @@ public:
     )};
 
     if (
-      sstable_iter != ck_layer.end() && 
-      sstable_iter->timeRange().lower() <= timestamp && 
-      timestamp <= sstable_iter->timeRange().upper()
+      sstable_it != ck_layer.end() && 
+      sstable_it->timeRange().lower() <= timestamp && 
+      timestamp <= sstable_it->timeRange().upper()
     ) {
-      const auto sstable_value{sstable_iter->get(key)};
+      const auto sstable_value{sstable_it->get(key)};
       if (sstable_value.has_value()) {
         cache_.put(key, sstable_value);
         dirty_table_[key] = false;
@@ -261,30 +261,54 @@ public:
     TimeSeriesKeyFilter&& filter
   ) const {
     table_type entry_table;
-    for (const auto& ck_layer : ck_layers_ | std::views::reverse) {
-      for (const auto& sstable : ck_layer) {
-        for (const auto& [key, value] : sstable.getRange(start, end)) {
-          if (!filter(key)) {
-            continue;
-          }
-          if (!value.has_value()) {
-            entry_table.erase(key);
-            continue;
-          }
-          entry_table[key] = value;
+    
+    for (size_type k{LAYER_COUNT - 1}; k > 0; --k) {
+      const auto& ck_layer{ck_layers_[k]};
+      auto start_it{std::lower_bound(
+        ck_layer.begin(),
+        ck_layer.end(),
+        start.timestamp(),
+        [](const auto& sstable, const auto target_time) {
+          return sstable.timeRange().upper() < target_time;
         }
+      )};
+      
+      auto end_it{std::upper_bound(
+        start_it,
+        ck_layer.end(),
+        end.timestamp(),
+        [](const auto target_time, const auto& sstable) {
+          return target_time < sstable.timeRange().lower();
+        }
+      )};
+
+      std::vector<typename CkLayer::const_iterator> sstable_its;
+      for (auto it{start_it}; it != end_it; ++it) {
+        sstable_its.push_back(it);
+      }
+
+      for (const auto& sstable_it : sstable_its | std::views::reverse) {
+        update_entries_with_sstable_range(
+          *sstable_it, start, end, filter, entry_table
+        );
       }
     }
+    
+    for (const auto& sstable : ck_layers_[0]) {
+      update_entries_with_sstable_range(
+        sstable, start, end, filter, entry_table
+      );
+    }
+
     for (const auto& [key, value] : mem_table_.getRange(start, end)) {
-      if (!filter(key)) {
-        continue;
-      }
+      if (!filter(key)) continue;
       if (!value.has_value()) {
         entry_table.erase(key);
         continue;
       }
       entry_table[key] = value;
     }
+
     return {entry_table.begin(), entry_table.end()};
   }
 
@@ -546,6 +570,34 @@ private:
     compact();
     mem_table_.clear();
     wal_.clear();
+  }
+
+  /**
+   * @brief Update entries with a filtered SSTable range.
+   * 
+   * @param sstable SSTable.
+   * @param start Start key.
+   * @param end End key.
+   * @param filter Filter.
+   * @param entry_table Entries.
+   */
+  void update_entries_with_sstable_range(
+    const SSTable<TValue>& sstable,
+    const key_type& start,
+    const key_type& end,
+    const TimeSeriesKeyFilter& filter,
+    table_type& entry_table
+  ) const noexcept {
+    for (const auto& [key, value] : sstable.getRange(start, end)) {
+      if (!filter(key)) {
+        continue;
+      }
+      if (!value.has_value()) {
+        entry_table.erase(key);
+        continue;
+      }
+      entry_table[key] = value;
+    }
   }
 
   /**
