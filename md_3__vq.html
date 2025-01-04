@@ -104,8 +104,8 @@ $(function(){initNavTree('md_3__vq.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Working with vq</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md18"></a></p>
-<h1><a class="anchor" id="autotoc_md19"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md19"></a></p>
+<h1><a class="anchor" id="autotoc_md20"></a>
 Table management</h1>
 <p>Here are some table management queries.</p>
 <div class="fragment"><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> climate TAGS region, season;</div>
@@ -115,7 +115,7 @@ Table management</h1>
 <div class="line"><span class="keyword">ADD</span> TAGS host, status <span class="keyword">TO</span> servers;</div>
 <div class="line"> </div>
 <div class="line">REMOVE TAGS host <span class="keyword">FROM</span> servers;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md20"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md21"></a>
 Data manipulation</h1>
 <p>Here are some data manipulation queries. </p><div class="fragment"><div class="line"><span class="keyword">SELECT</span> DATA status <span class="keyword">FROM</span> sensors <span class="keyword">ALL</span>;</div>
 <div class="line"> </div>
@@ -124,7 +124,7 @@ Data manipulation</h1>
 <div class="line">PUT temperature <span class="stringliteral">1234</span> <span class="stringliteral">23</span>.<span class="stringliteral">5</span> <span class="keyword">INTO</span> weather TAGS city=paris, unit=celsius;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">DELETE</span> rainfall <span class="stringliteral">1234</span> <span class="keyword">FROM</span> weather TAGS city=tokyo, unit=millimetres;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md21"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md22"></a>
 Errors</h1>
 <p>There are two kinds of errors you can get—parse errors and runtime errors, occurring at the named points in time for self-explanatory reasons.</p>
 <table class="markdownTable">
@@ -135,7 +135,7 @@ Errors</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter"><em>A parse error and a runtime error in the REPL.</em>   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 EBNF</h1>
 <p>Here's the EBNF grammar encapsulating vq.</p>
 <div class="fragment"><div class="line">&lt;expr&gt; ::= {&lt;query&gt; &quot;;&quot;}+</div>

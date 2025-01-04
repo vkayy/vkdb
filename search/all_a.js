@@ -2,7 +2,7 @@ var searchData=
 [
   ['lexeme_0',['lexeme',['../classvkdb_1_1Token.html#a24a78c8bdc6a6a91f69957e4dd65d163',1,'vkdb::Token']]],
   ['lexer_1',['Lexer',['../classvkdb_1_1Lexer.html',1,'vkdb::Lexer'],['../classvkdb_1_1Lexer.html#ae525b42452656f802ee542521f8d3757',1,'vkdb::Lexer::Lexer()=delete'],['../classvkdb_1_1Lexer.html#a68879aad6482466e784e11c1bd1f63c9',1,'vkdb::Lexer::Lexer(const std::string &amp;input) noexcept'],['../classvkdb_1_1Lexer.html#a87fef622e34efeb7385c5f27f5b7e2ba',1,'vkdb::Lexer::Lexer(Lexer &amp;&amp;) noexcept=default'],['../classvkdb_1_1Lexer.html#aa90befb37985492d26da47e117707b17',1,'vkdb::Lexer::Lexer(const Lexer &amp;)=delete']]],
-  ['library_2',['Using the library',['../md_2__usage.html#autotoc_md11',1,'']]],
+  ['library_2',['Using the library',['../md_2__usage.html#autotoc_md12',1,'']]],
   ['line_3',['line',['../classvkdb_1_1Token.html#a74417505b6df495dd5c5adb613b4b183',1,'vkdb::Token']]],
   ['locally_20not_20needed_4',['Running locally (not needed)',['../md_2__usage.html#autotoc_md7',1,'']]],
   ['lower_5',['lower',['../classvkdb_1_1DataRange.html#a5541dd673c258f1fe2fc2a9bdc652a21',1,'vkdb::DataRange']]],

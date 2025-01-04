@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['management_0',['management',['../md_2__usage.html#autotoc_md14',1,'Table management'],['../md_3__vq.html#autotoc_md19',1,'Table management']]],
-  ['manipulation_1',['Data manipulation',['../md_3__vq.html#autotoc_md20',1,'']]],
+  ['management_0',['management',['../md_2__usage.html#autotoc_md15',1,'Table management'],['../md_3__vq.html#autotoc_md20',1,'Table management']]],
+  ['manipulation_1',['Data manipulation',['../md_3__vq.html#autotoc_md21',1,'']]],
   ['max_2',['max',['../classvkdb_1_1QueryBuilder.html#acee4b8420946fb3233dc79057d6f967b',1,'vkdb::QueryBuilder::max()'],['../classvkdb_1_1FriendlyQueryBuilder.html#a8b595c91a409bac8541e1f111b9c3f4f',1,'vkdb::FriendlyQueryBuilder::max()']]],
   ['max_5ffalse_5fpositive_5frate_3',['MAX_FALSE_POSITIVE_RATE',['../classvkdb_1_1BloomFilter.html#ae1eb4d84b67b4eea1deb57667d5ef8b7',1,'vkdb::BloomFilter']]],
   ['max_5fmetric_5flength_4',['MAX_METRIC_LENGTH',['../classvkdb_1_1TimeSeriesKey.html#a84d31620be4c1768301cb923103537a0',1,'vkdb::TimeSeriesKey']]],
@@ -13,5 +13,5 @@ var searchData=
   ['metricexpr_10',['MetricExpr',['../structvkdb_1_1MetricExpr.html',1,'vkdb']]],
   ['min_11',['min',['../classvkdb_1_1QueryBuilder.html#a352758f4e96e1514c7ebe74a93e95192',1,'vkdb::QueryBuilder::min()'],['../classvkdb_1_1FriendlyQueryBuilder.html#aa4225978d5aedffc540da88daa846c9e',1,'vkdb::FriendlyQueryBuilder::min()']]],
   ['min_5ffalse_5fpositive_5frate_12',['MIN_FALSE_POSITIVE_RATE',['../classvkdb_1_1BloomFilter.html#ad55a02a68a7d6ffa1614acf04248d733',1,'vkdb::BloomFilter']]],
-  ['mock_20data_13',['Mock data',['../md_2__usage.html#autotoc_md17',1,'']]]
+  ['mock_20data_13',['Mock data',['../md_2__usage.html#autotoc_md18',1,'']]]
 ];

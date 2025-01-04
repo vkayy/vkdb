@@ -36,22 +36,23 @@ var NAVTREE =
       [ "Running locally (not needed)", "md_2__usage.html#autotoc_md7", [
         [ "Installation", "md_2__usage.html#autotoc_md8", null ],
         [ "Tests", "md_2__usage.html#autotoc_md9", null ],
-        [ "Examples", "md_2__usage.html#autotoc_md10", null ]
+        [ "Benchmarks", "md_2__usage.html#autotoc_md10", null ],
+        [ "Examples", "md_2__usage.html#autotoc_md11", null ]
       ] ],
-      [ "Using the library", "md_2__usage.html#autotoc_md11", [
-        [ "Setup", "md_2__usage.html#autotoc_md12", null ],
-        [ "Interface", "md_2__usage.html#autotoc_md13", null ],
-        [ "Table management", "md_2__usage.html#autotoc_md14", null ],
-        [ "General queries", "md_2__usage.html#autotoc_md15", null ],
-        [ "Playground", "md_2__usage.html#autotoc_md16", null ],
-        [ "Mock data", "md_2__usage.html#autotoc_md17", null ]
+      [ "Using the library", "md_2__usage.html#autotoc_md12", [
+        [ "Setup", "md_2__usage.html#autotoc_md13", null ],
+        [ "Interface", "md_2__usage.html#autotoc_md14", null ],
+        [ "Table management", "md_2__usage.html#autotoc_md15", null ],
+        [ "General queries", "md_2__usage.html#autotoc_md16", null ],
+        [ "Playground", "md_2__usage.html#autotoc_md17", null ],
+        [ "Mock data", "md_2__usage.html#autotoc_md18", null ]
       ] ]
     ] ],
     [ "Working with vq", "md_3__vq.html", [
-      [ "Table management", "md_3__vq.html#autotoc_md19", null ],
-      [ "Data manipulation", "md_3__vq.html#autotoc_md20", null ],
-      [ "Errors", "md_3__vq.html#autotoc_md21", null ],
-      [ "EBNF", "md_3__vq.html#autotoc_md22", null ]
+      [ "Table management", "md_3__vq.html#autotoc_md20", null ],
+      [ "Data manipulation", "md_3__vq.html#autotoc_md21", null ],
+      [ "Errors", "md_3__vq.html#autotoc_md22", null ],
+      [ "EBNF", "md_3__vq.html#autotoc_md23", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
