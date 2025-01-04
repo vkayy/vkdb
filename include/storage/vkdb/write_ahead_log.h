@@ -127,6 +127,7 @@ public:
       }
     }
     file.close();
+    clear();
   }
 
   /**

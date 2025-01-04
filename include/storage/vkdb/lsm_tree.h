@@ -100,17 +100,16 @@ public:
    * @param value Value.
    * @param log Whether to log the operation in the WAL.
    * 
-   * @throw std::runtime_error If the memtable is flushed when the C1
-   * layer is full.
+   * @throw std::runtime_error If compaction fails in flushing.
    */
   void put(const key_type& key, const TValue& value, bool log = true) {
+    if (log) {
+      wal_.append({WALRecordType::PUT, {key, value}});
+    }
     mem_table_.put(key, value);
     dirty_table_[key] = true;
     if (mem_table_.size() == MemTable<TValue>::C0_LAYER_SSTABLE_MAX_ENTRIES) {
       flush();
-    }
-    if (log) {
-      wal_.append({WALRecordType::PUT, {key, value}});
     }
   }
 
@@ -124,13 +123,13 @@ public:
    * layer is full.
    */
   void remove(const key_type& key, bool log = true) {
+    if (log) {
+      wal_.append({WALRecordType::REMOVE, {key, std::nullopt}});
+    }
     mem_table_.put(key, std::nullopt);
     dirty_table_[key] = true;
     if (mem_table_.size() == MemTable<TValue>::C0_LAYER_SSTABLE_MAX_ENTRIES) {
       flush();
-    }
-    if (log) {
-      wal_.append({WALRecordType::REMOVE, {key, std::nullopt}});
     }
   }
 
@@ -440,7 +439,7 @@ private:
   /**
    * @brief Flush the memtable to an SSTable.
    * 
-   * @throw std::runtime_error if the C1 layer is full.
+   * @throw std::exception If compaction fails.
    */
   void flush() {
     FilePath sstable_file_path{get_next_file_path(0)};
