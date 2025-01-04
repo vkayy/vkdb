@@ -105,18 +105,10 @@ public:
 
     std::string line;
     while (std::getline(file, line)) {
-      std::istringstream iss{line};
-
-      std::string type_str;
-      iss >> type_str;
-      WALRecordType type{std::stoi(type_str)};
-
-      std::string entry_str;
-      iss >> entry_str;
+      WALRecordType type{std::stoi(line.substr(0))};
       TimeSeriesEntry<TValue> entry{
-        entryFromString<TValue>(entry_str.substr(1))
+        entryFromString<TValue>(line.substr(line.find(' ') + 2))
       };
-
       switch (type) {
       case WALRecordType::PUT:
         lsm_tree.put(entry.first, entry.second.value(), false);
@@ -126,6 +118,7 @@ public:
         break;
       }
     }
+    
     file.close();
     clear();
   }
