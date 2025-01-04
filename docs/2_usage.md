@@ -20,6 +20,13 @@ From the build folder, you can run the tests.
 ./tests/vkdb_tests
 ```
 
+### Benchmarks
+
+From the build folder, you can run the benchmarks.
+```
+./benchmark/vkdb_benchmarks
+```
+
 ### Examples
 
 From the build folder, you can also run any of the examples.

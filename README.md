@@ -142,7 +142,16 @@ mkdir build && cd build && cmake .. && make
 
 From the build folder, you can run the tests.
 ```
-./tests/vkdb_tests
+./test/vkdb_tests
+```
+
+<p align="right"><a href="#readme-top">back to top</a></p>
+
+### Benchmarks
+
+From the build folder, you can run the benchmarks.
+```
+./benchmark/vkdb_benchmarks
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
