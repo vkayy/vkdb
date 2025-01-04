@@ -1,9 +1,9 @@
 file(GLOB_RECURSE vkdb_SRC
-    "*.cpp"
+  "*.cpp"
 )
 
 add_library(vkdb
-    ${vkdb_SRC}
+  ${vkdb_SRC}
 )
 
 target_include_directories(vkdb PUBLIC
