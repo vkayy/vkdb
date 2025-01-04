@@ -36,6 +36,7 @@
 [Running locally (not needed)](#running-locally-not-needed)
 - [Installation](#installation)
 - [Tests](#tests)
+- [Benchmarks](#benchmarks)
 - [Examples](#examples)
 
 [Usage](#usage)
