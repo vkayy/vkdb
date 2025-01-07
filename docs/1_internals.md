@@ -21,21 +21,21 @@ The LSM tree uses time-window compaction to efficiently organise and merge SSTab
 
 | Layer | Time Window | Max. SSTables |
 |-------|------------|--------------|
-| C0 | Overlapping | 10 |
-| C1 | 30 minutes | 100 |
-| C2 | 1 hour | 100 |
-| C3 | 1 day | 1,000 |
-| C4 | 1 week | 1,000 |
-| C5 | 1 month | 1,000 |
-| C6 | 3 months | 10,000 |
-| C7 | 1 year | 10,000 |
+| C0 | Overlapping | 32 |
+| C1 | 1 day | 2,048 |
+| C2 | 1 week | 1,024 |
+| C3 | 1 month | 512 |
+| C4 | 3 months | 256 |
+| C5 | 6 months | 128 |
+| C6 | 1 year | 64 |
+| C7 | 3 years | 32 |
 
-When the memtable fills up, it's flushed to C0 as an SSTable. C0 acts as a buffer for the later layers, and when it exceeds its SSTable limit, all the SSTables are merged into C1 at once, with each SSTable spanning a 30-minute window.
+When the memtable fills up, it's flushed to C0 as an SSTable. C0 acts as a buffer for the later layers, and when it exceeds its SSTable limit, all the SSTables are merged into C1 at once, with each SSTable spanning a 1-day window.
 
 When any other layer exceeds its SSTable limit, only its oldest, excess SSTables are merged with the next layer's SSTables based on the layer's time window. For example, if C1 has too many SSTables:
 
 1. The oldest SSTables from C1 are selected.
-2. Any overlapping SSTables in C2 are identified based on 1-hour time windows.
+2. Any overlapping SSTables in C2 are identified based on 1-week time windows.
 3. The selected SSTables are merged into new SSTables in C2.
 4. Original SSTables are removed after successful merge.
 

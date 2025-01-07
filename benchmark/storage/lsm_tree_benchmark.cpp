@@ -3,21 +3,23 @@
 #include <random>
 #include <filesystem>
 
+#define REGISTER_LSM_TREE_BENCHMARKS(size) \
+  BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointWrite) \
+    ->Args({size}); \
+  BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointRead) \
+    ->Args({size}); \
+  BENCHMARK_REGISTER_F(LSMTreeBenchmark, RangeRead) \
+    ->Args({size});
+
 class LSMTreeBenchmark : public benchmark::Fixture {
 protected:
-  const std::filesystem::path TEST_DIR{"benchmark_storage"};
-  
-  std::unique_ptr<vkdb::LSMTree<double>> lsm_tree_;
-
   void SetUp(const benchmark::State& state) override {
-    std::filesystem::create_directories(TEST_DIR);
-    lsm_tree_ = std::make_unique<vkdb::LSMTree<double>>(TEST_DIR);
+    lsm_tree_ = std::make_unique<vkdb::LSMTree<double>>("test_lsm_tree");
   }
 
   void TearDown(const benchmark::State& state) override {
     lsm_tree_->clear();
     lsm_tree_.reset();
-    std::filesystem::remove_all(TEST_DIR);
   }
 
   vkdb::Timestamp random_timestamp(vkdb::Timestamp min, vkdb::Timestamp max) {
@@ -35,6 +37,8 @@ protected:
       {}
     };
   }
+
+  std::unique_ptr<vkdb::LSMTree<double>> lsm_tree_;
 };
 
 BENCHMARK_DEFINE_F(LSMTreeBenchmark, PointWrite)(benchmark::State& state) {
@@ -116,20 +120,9 @@ BENCHMARK_DEFINE_F(LSMTreeBenchmark, RangeRead)(benchmark::State& state) {
   state.SetItemsProcessed(state.iterations());
 }
 
-BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointWrite)
-  ->RangeMultiplier(2)
-  ->Range(1'000, 500'000)
-  ->Unit(benchmark::kMillisecond)
-  ->MinTime(5);
-
-BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointRead)
-  ->RangeMultiplier(2)
-  ->Range(1'000, 500'000)
-  ->Unit(benchmark::kMillisecond)
-  ->MinTime(5);
-
-BENCHMARK_REGISTER_F(LSMTreeBenchmark, RangeRead)
-  ->RangeMultiplier(2)
-  ->Range(1'000, 500'000)
-  ->Unit(benchmark::kMillisecond)
-  ->MinTime(5);
+REGISTER_LSM_TREE_BENCHMARKS(1'000)
+REGISTER_LSM_TREE_BENCHMARKS(10'000)
+REGISTER_LSM_TREE_BENCHMARKS(100'000)
+REGISTER_LSM_TREE_BENCHMARKS(1'000'000)
+REGISTER_LSM_TREE_BENCHMARKS(10'000'000)
+REGISTER_LSM_TREE_BENCHMARKS(100'000'000)

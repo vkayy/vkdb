@@ -42,7 +42,7 @@ if(VKDB_BUILD_BENCHMARKS)
     GIT_TAG v1.9.1
   )
   FetchContent_MakeAvailable(benchmark)
-  target_link_libraries(vkdb_benchmark PRIVATE benchmark::benchmark)
+  target_link_libraries(vkdb_benchmarks PRIVATE benchmark::benchmark)
 endif()
 
     

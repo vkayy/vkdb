@@ -254,7 +254,7 @@ public:
   ) {
     if (
       metric.empty() ||
-      metric.length() >= TimeSeriesKey::MAX_METRIC_LENGTH
+      metric.length() > TimeSeriesKey::MAX_METRIC_LENGTH
     ) {
       throw std::runtime_error{
         "FriendlyQueryBuilder::get(): Invalid metric '" + metric + "'."

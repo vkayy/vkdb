@@ -237,7 +237,7 @@ TEST_F(FriendlyQueryBuilderTest, ThrowsWhenInvalidMetric) {
 
   EXPECT_THROW(
     query()
-      .put(0, std::string(TimeSeriesKey::MAX_METRIC_LENGTH, '\0'), {}, 0)
+      .put(0, std::string(TimeSeriesKey::MAX_METRIC_LENGTH + 1, '\0'), {}, 0)
       .execute(),
     std::runtime_error
   );

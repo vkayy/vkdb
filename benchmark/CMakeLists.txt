@@ -1,9 +1,9 @@
-file(GLOB_RECURSE vkdb_benchmark_SRC
+file(GLOB_RECURSE vkdb_benchmarks_SRC
   "*.cpp"
 )
 
-add_executable(vkdb_benchmark
-  ${vkdb_benchmark_SRC}
+add_executable(vkdb_benchmarks
+  ${vkdb_benchmarks_SRC}
 )
 
-target_link_libraries(vkdb_benchmark PRIVATE vkdb)
+target_link_libraries(vkdb_benchmarks PRIVATE vkdb)

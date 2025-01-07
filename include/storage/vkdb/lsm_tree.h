@@ -332,41 +332,39 @@ private:
    * @brief Time window sizes of each Ck layer.
    * @details The time window sizes are in seconds.
    * - C0: 0 (any overlap)
-   * - C1: 30 minutes
-   * - C2: 1 hour
-   * - C3: 1 day
-   * - C4: 1 week
-   * - C5: 1 month
-   * - C6: 3 months
-   * - C7: 1 year
+   * - C1: 1 day
+   * - C2: 1 week
+   * - C3: 1 month
+   * - C4: 3 months
+   * - C5: 6 months
+   * - C6: 1 year
+   * - C7: 3 years
    * 
    */
   static constexpr std::array<size_type, LAYER_COUNT> CK_LAYER_WINDOW_SIZE{
     0,
-    1800,
-    3600,
-    86400,
-    604800,
-    2592000,
-    7776000,
-    31536000
+    86'400,
+    604'800,
+    2'592'000,
+    7'776'000,
+    15'552'000,
+    31'536'000,
+    94'608'000
   };
 
   /**
    * @brief Number of SSTables in each Ck layer.
-   * @details The number of SSTables in each Ck layer is monotonically
-   * non-decreasing, either multiplying by a factor of 10 or staying the same.
    * 
    */
   static constexpr std::array<size_type, LAYER_COUNT> CK_LAYER_TABLE_COUNT{
-    10,
-    100,
-    100,
-    1000,
-    1000,
-    1000,
-    10000,
-    10000
+    32,
+    2'048,
+    1'024,
+    512,
+    256,
+    128,
+    64,
+    32
   };
 
   /**

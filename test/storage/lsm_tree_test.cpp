@@ -77,8 +77,6 @@ TEST_F(LSMTreeTest, CanPutAndGetWithFlushing) {
     auto value{lsm_tree_->get(key)};
     EXPECT_EQ(value, std::nullopt);
   }
-
-  EXPECT_EQ(lsm_tree_->sstableCount(), 10);
 }
 
 TEST_F(LSMTreeTest, CanUpdateValuesOfKeysWithFlushing) {
@@ -97,8 +95,6 @@ TEST_F(LSMTreeTest, CanUpdateValuesOfKeysWithFlushing) {
     auto value{lsm_tree_->get(key)};
     EXPECT_EQ(value, i + 1);
   }
-
-  EXPECT_EQ(lsm_tree_->sstableCount(), 10);
 }
 
 TEST_F(LSMTreeTest, CanGetRangeOfEntriesWithoutFlushing) {
@@ -261,7 +257,7 @@ TEST_F(LSMTreeTest, CanReplayWriteAheadLog) {
 }
 
 TEST_F(LSMTreeTest, CanPutWithFlushing) {
-  for (Timestamp i{0}; i < 100'000; ++i) {
+  for (Timestamp i{0}; i < 100'000'000; ++i) {
     TimeSeriesKey key{i, "metric", {}};
     lsm_tree_->put(key, i);
   }

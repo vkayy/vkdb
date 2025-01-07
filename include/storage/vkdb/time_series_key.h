@@ -93,7 +93,7 @@ public:
    * @brief Metric width.
    * 
    */
-  static constexpr auto MAX_METRIC_LENGTH{64};
+  static constexpr auto MAX_METRIC_LENGTH{15};
 
   /**
    * @brief Construct a new TimeSeriesKey object.
