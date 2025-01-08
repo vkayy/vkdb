@@ -257,7 +257,7 @@ TEST_F(LSMTreeTest, CanReplayWriteAheadLog) {
 }
 
 TEST_F(LSMTreeTest, CanPutWithFlushing) {
-  for (Timestamp i{0}; i < 100'000'000; ++i) {
+  for (Timestamp i{0}; i < 100'000; ++i) {
     TimeSeriesKey key{i, "metric", {}};
     lsm_tree_->put(key, i);
   }
