@@ -269,6 +269,12 @@ private:
   TagTable tags_;
 
   /**
+   * @brief String representation.
+   * 
+   */
+  std::string str_;
+
+  /**
    * @brief STL hash.
    * 
    */

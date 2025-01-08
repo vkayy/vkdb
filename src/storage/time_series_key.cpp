@@ -20,7 +20,8 @@ TimeSeriesKey::TimeSeriesKey(std::string&& str) {
     tags_[key] = value;
   }
 
-  hash_ = std::hash<std::string>{}(std::move(str));
+  str_ = std::move(str);
+  hash_ = std::hash<std::string>{}(str_);
 }
 
 TimeSeriesKey::TimeSeriesKey(
@@ -30,8 +31,18 @@ TimeSeriesKey::TimeSeriesKey(
 ) noexcept
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
-  , tags_{std::move(tags)}
-  , hash_{std::hash<TimeSeriesKey>{}(*this)} {}
+  , tags_{std::move(tags)} {
+  std::stringstream ss;
+  ss << "{" << std::setw(TIMESTAMP_WIDTH) << std::setfill('0');
+  ss << timestamp_ << "}{" << metric_ << "}{";
+  for (const auto& [key, value] : tags_) {
+    ss << key << ":" << value << ",";
+  }
+  ss.seekp(-!tags_.empty(), std::ios_base::end);
+  ss << "}";
+  str_ = ss.str();
+  hash_ = std::hash<std::string>{}(str_);
+}
 
 bool TimeSeriesKey::operator==(const TimeSeriesKey& other) const noexcept {
   return hash_ == other.hash_;
@@ -88,15 +99,7 @@ const TagTable& TimeSeriesKey::tags() const noexcept {
 }
 
 std::string TimeSeriesKey::str() const noexcept {
-  std::stringstream ss;
-  ss << "{" << std::setw(TIMESTAMP_WIDTH) << std::setfill('0');
-  ss << timestamp_ << "}{" << metric_ << "}{";
-  for (const auto& [key, value] : tags_) {
-    ss << key << ":" << value << ",";
-  }
-  ss.seekp(-!tags_.empty(), std::ios_base::end);
-  ss << "}";
-  return ss.str();
+  return str_;
 }
 }  // namespace vkdb
 
