@@ -92,7 +92,7 @@ Here's the EBNF grammar encapsulating vq.
 
 <identifier> ::= <char> {<char> | <digit>}*
 
-<number> ::= {"-"}? <digit> {<digit>} {"." <digit>+}?
+<number> ::= {"-"}? <digit>+ {"." <digit>+}?
 
 <char> ::= "A" | ... | "Z" | "a" | ... | "z" | "_"
 
