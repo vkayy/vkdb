@@ -27,10 +27,11 @@ TimeSeriesEntry<TValue> entryFromString(std::string&& entry) {
   auto entry_key{TimeSeriesKey{std::move(key_str)}};
   std::optional<TValue> entry_value;
   if (value_str != "null") {
-    std::stringstream value_ss{value_str};
-    TValue value;
-    value_ss >> value;
-    entry_value = value;
+    if constexpr (std::is_integral_v<TValue>) {
+      entry_value = static_cast<TValue>(std::stoll(value_str));
+    } else if constexpr (std::is_floating_point_v<TValue>) {
+      entry_value = static_cast<TValue>(std::stod(value_str)); 
+    }
   }
 
   return {entry_key, entry_value};
