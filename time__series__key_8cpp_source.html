@@ -126,133 +126,134 @@ $(function(){initNavTree('time__series__key_8cpp_source.html',''); initResizable
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    std::getline(ss, value, <span class="charliteral">&#39;,&#39;</span>);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    tags_[key] = value;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  }</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  hash_ = std::hash&lt;std::string&gt;{}(std::move(<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">str</a>));</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}</div>
 </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="foldopen" id="foldopen00024" data-start="{" data-end="}">
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a29d70782a659f3bcca45c9a0f57d01b7">   24</a></span><a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a25712e88c605bf003253cf955fbfd949">TimeSeriesKey::TimeSeriesKey</a>(</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  Timestamp timestamp,</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  Metric metric,</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  TagTable tags</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>) noexcept</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  : timestamp_{timestamp}</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  , metric_{std::move(metric)}</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  , tags_{std::move(tags)} {}</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="}">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a29d70782a659f3bcca45c9a0f57d01b7">   26</a></span><a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a25712e88c605bf003253cf955fbfd949">TimeSeriesKey::TimeSeriesKey</a>(</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  Timestamp timestamp,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  Metric metric,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  TagTable tags</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>) noexcept</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  : timestamp_{timestamp}</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  , metric_{std::move(metric)}</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  , tags_{std::move(tags)}</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  , hash_{std::hash&lt;TimeSeriesKey&gt;{}(*this)} {}</div>
 </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a2bb97d4ac8a651caa184f9d8136edcc8">   33</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a2bb97d4ac8a651caa184f9d8136edcc8">TimeSeriesKey::operator==</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keywordflow">return</span> timestamp_ == other.timestamp_ &amp;&amp;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>         metric_ == other.metric_ &amp;&amp;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>         tags_ == other.tags_;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a2bb97d4ac8a651caa184f9d8136edcc8">   36</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a2bb97d4ac8a651caa184f9d8136edcc8">TimeSeriesKey::operator==</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keywordflow">return</span> hash_ == other.hash_;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>}</div>
 </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#af84f615d81c03911a3979bb493b90483">   39</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#af84f615d81c03911a3979bb493b90483">TimeSeriesKey::operator!=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="}">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#af84f615d81c03911a3979bb493b90483">   40</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#af84f615d81c03911a3979bb493b90483">TimeSeriesKey::operator!=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
 </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a737d450d96eecd437c6e83217c12e222">   43</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a737d450d96eecd437c6e83217c12e222">TimeSeriesKey::operator&lt;</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="keywordflow">if</span> (other == MIN_TIME_SERIES_KEY) {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  }</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordflow">if</span> (*<span class="keyword">this</span> == MIN_TIME_SERIES_KEY) {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <span class="keywordflow">if</span> (*<span class="keyword">this</span> == MAX_TIME_SERIES_KEY) {</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  }</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keywordflow">if</span> (other == MAX_TIME_SERIES_KEY) {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  }</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordflow">if</span> (timestamp_ != other.timestamp_) {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> timestamp_ &lt; other.timestamp_;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keywordflow">if</span> (metric_ != other.metric_) {</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">return</span> metric_ &lt; other.metric_;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  }</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keywordflow">return</span> tags_ &lt; other.tags_;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a737d450d96eecd437c6e83217c12e222">   44</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a737d450d96eecd437c6e83217c12e222">TimeSeriesKey::operator&lt;</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keywordflow">if</span> (other.hash_ == MIN_TIME_SERIES_KEY_HASH) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  }</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keywordflow">if</span> (hash_ == MIN_TIME_SERIES_KEY_HASH) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keywordflow">if</span> (hash_ == MAX_TIME_SERIES_KEY_HASH) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keywordflow">if</span> (other.hash_ == MAX_TIME_SERIES_KEY_HASH) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keywordflow">if</span> (timestamp_ != other.timestamp_) {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> timestamp_ &lt; other.timestamp_;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  }</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keywordflow">if</span> (metric_ != other.metric_) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">return</span> metric_ &lt; other.metric_;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="keywordflow">return</span> tags_ &lt; other.tags_;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
 </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a68d05bee9d6dc3c1ccaaa2929fc8ccba">   65</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a68d05bee9d6dc3c1ccaaa2929fc8ccba">TimeSeriesKey::operator&gt;</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordflow">return</span> other &lt; *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>}</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a68d05bee9d6dc3c1ccaaa2929fc8ccba">   66</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a68d05bee9d6dc3c1ccaaa2929fc8ccba">TimeSeriesKey::operator&gt;</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="keywordflow">return</span> other &lt; *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}</div>
 </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a45a9104e8f8750e0796f8fb0ceb24904">   69</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a45a9104e8f8750e0796f8fb0ceb24904">TimeSeriesKey::operator&lt;=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keywordflow">return</span> !(*<span class="keyword">this</span> &gt; other);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>}</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="foldopen" id="foldopen00070" data-start="{" data-end="}">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a45a9104e8f8750e0796f8fb0ceb24904">   70</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a45a9104e8f8750e0796f8fb0ceb24904">TimeSeriesKey::operator&lt;=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="keywordflow">return</span> !(*<span class="keyword">this</span> &gt; other);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
 </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="foldopen" id="foldopen00073" data-start="{" data-end="}">
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a2a5ba3ff81560e62ccff169b97afb6ce">   73</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a2a5ba3ff81560e62ccff169b97afb6ce">TimeSeriesKey::operator&gt;=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  <span class="keywordflow">return</span> !(*<span class="keyword">this</span> &lt; other);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a2a5ba3ff81560e62ccff169b97afb6ce">   74</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a2a5ba3ff81560e62ccff169b97afb6ce">TimeSeriesKey::operator&gt;=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a>&amp; other) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keywordflow">return</span> !(*<span class="keyword">this</span> &lt; other);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>}</div>
 </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#acc42352474d8c0c268133efa2b36f104">   77</a></span>Timestamp <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#acc42352474d8c0c268133efa2b36f104">TimeSeriesKey::timestamp</a>() const noexcept {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keywordflow">return</span> timestamp_;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="}">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#acc42352474d8c0c268133efa2b36f104">   78</a></span>Timestamp <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#acc42352474d8c0c268133efa2b36f104">TimeSeriesKey::timestamp</a>() const noexcept {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keywordflow">return</span> timestamp_;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>}</div>
 </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a28ce5be65b4df6a9009569c84cf1cebf">   81</a></span>Metric <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a28ce5be65b4df6a9009569c84cf1cebf">TimeSeriesKey::metric</a>() const noexcept {</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keywordflow">return</span> metric_;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>}</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a28ce5be65b4df6a9009569c84cf1cebf">   82</a></span>Metric <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a28ce5be65b4df6a9009569c84cf1cebf">TimeSeriesKey::metric</a>() const noexcept {</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="keywordflow">return</span> metric_;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
 </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="foldopen" id="foldopen00085" data-start="{" data-end="}">
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">   85</a></span><span class="keyword">const</span> TagTable&amp; <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">TimeSeriesKey::tags</a>() const noexcept {</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <span class="keywordflow">return</span> tags_;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>}</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="foldopen" id="foldopen00086" data-start="{" data-end="}">
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">   86</a></span><span class="keyword">const</span> TagTable&amp; <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">TimeSeriesKey::tags</a>() const noexcept {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <span class="keywordflow">return</span> tags_;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>}</div>
 </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="foldopen" id="foldopen00089" data-start="{" data-end="}">
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">   89</a></span>std::string <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">TimeSeriesKey::str</a>() const noexcept {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  std::stringstream ss;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  ss &lt;&lt; <span class="stringliteral">&quot;{&quot;</span> &lt;&lt; std::setw(<a class="code hl_variable" href="classvkdb_1_1TimeSeriesKey.html#a050955835db93a10580c983930c0c5ac">TIMESTAMP_WIDTH</a>) &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  ss &lt;&lt; timestamp_ &lt;&lt; <span class="stringliteral">&quot;}{&quot;</span> &lt;&lt; metric_ &lt;&lt; <span class="stringliteral">&quot;}{&quot;</span>;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : tags_) {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    ss &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; value &lt;&lt; <span class="stringliteral">&quot;,&quot;</span>;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  }</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  ss.seekp(-!tags_.empty(), std::ios_base::end);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  ss &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="keywordflow">return</span> ss.str();</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="foldopen" id="foldopen00090" data-start="{" data-end="}">
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">   90</a></span>std::string <a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">TimeSeriesKey::str</a>() const noexcept {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  std::stringstream ss;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  ss &lt;&lt; <span class="stringliteral">&quot;{&quot;</span> &lt;&lt; std::setw(<a class="code hl_variable" href="classvkdb_1_1TimeSeriesKey.html#a050955835db93a10580c983930c0c5ac">TIMESTAMP_WIDTH</a>) &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  ss &lt;&lt; timestamp_ &lt;&lt; <span class="stringliteral">&quot;}{&quot;</span> &lt;&lt; metric_ &lt;&lt; <span class="stringliteral">&quot;}{&quot;</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : tags_) {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    ss &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; value &lt;&lt; <span class="stringliteral">&quot;,&quot;</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  ss.seekp(-!tags_.empty(), std::ios_base::end);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  ss &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  <span class="keywordflow">return</span> ss.str();</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}</div>
 </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}  <span class="comment">// namespace vkdb</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, <span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a>&amp; key) {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  os &lt;&lt; key.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">str</a>();</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keywordflow">return</span> os;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>}</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>std::istream&amp; operator&gt;&gt;(std::istream&amp; is, <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a>&amp; key) {</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  std::string str;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  is &gt;&gt; str;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  key = <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a>{std::move(str)};</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keywordflow">return</span> is;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>}  <span class="comment">// namespace vkdb</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, <span class="keyword">const</span> <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a>&amp; key) {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  os &lt;&lt; key.<a class="code hl_function" href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">str</a>();</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <span class="keywordflow">return</span> os;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>std::istream&amp; operator&gt;&gt;(std::istream&amp; is, <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a>&amp; key) {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  std::string str;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  is &gt;&gt; str;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  key = <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a>{std::move(str)};</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <span class="keywordflow">return</span> is;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>}</div>
 <div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a></div><div class="ttdoc">Represents a key in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00084">time_series_key.h:84</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a050955835db93a10580c983930c0c5ac"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a050955835db93a10580c983930c0c5ac">vkdb::TimeSeriesKey::TIMESTAMP_WIDTH</a></div><div class="ttdeci">static constexpr auto TIMESTAMP_WIDTH</div><div class="ttdoc">Timestamp width.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00090">time_series_key.h:90</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a11432ca0811e6d1e98fe5562ede166d9"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">vkdb::TimeSeriesKey::tags</a></div><div class="ttdeci">const TagTable &amp; tags() const noexcept</div><div class="ttdoc">Get the tags.</div><div class="ttdef"><b>Definition</b> <a href="#l00085">time_series_key.cpp:85</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a11432ca0811e6d1e98fe5562ede166d9"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a11432ca0811e6d1e98fe5562ede166d9">vkdb::TimeSeriesKey::tags</a></div><div class="ttdeci">const TagTable &amp; tags() const noexcept</div><div class="ttdoc">Get the tags.</div><div class="ttdef"><b>Definition</b> <a href="#l00086">time_series_key.cpp:86</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a25712e88c605bf003253cf955fbfd949"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a25712e88c605bf003253cf955fbfd949">vkdb::TimeSeriesKey::TimeSeriesKey</a></div><div class="ttdeci">TimeSeriesKey() noexcept=default</div><div class="ttdoc">Construct a new TimeSeriesKey object.</div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a28ce5be65b4df6a9009569c84cf1cebf"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a28ce5be65b4df6a9009569c84cf1cebf">vkdb::TimeSeriesKey::metric</a></div><div class="ttdeci">Metric metric() const noexcept</div><div class="ttdoc">Get the metric.</div><div class="ttdef"><b>Definition</b> <a href="#l00081">time_series_key.cpp:81</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a2a5ba3ff81560e62ccff169b97afb6ce"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a2a5ba3ff81560e62ccff169b97afb6ce">vkdb::TimeSeriesKey::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Greater-than-or-equal-to operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00073">time_series_key.cpp:73</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a2bb97d4ac8a651caa184f9d8136edcc8"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a2bb97d4ac8a651caa184f9d8136edcc8">vkdb::TimeSeriesKey::operator==</a></div><div class="ttdeci">bool operator==(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Equality operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00033">time_series_key.cpp:33</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a45a9104e8f8750e0796f8fb0ceb24904"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a45a9104e8f8750e0796f8fb0ceb24904">vkdb::TimeSeriesKey::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Less-than-or-equal-to operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00069">time_series_key.cpp:69</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a68d05bee9d6dc3c1ccaaa2929fc8ccba"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a68d05bee9d6dc3c1ccaaa2929fc8ccba">vkdb::TimeSeriesKey::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Greater-than operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00065">time_series_key.cpp:65</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a710a9cc5fe6ddc11d8bd5c8d8329c2c0"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">vkdb::TimeSeriesKey::str</a></div><div class="ttdeci">std::string str() const noexcept</div><div class="ttdoc">Get the string representation of the key.</div><div class="ttdef"><b>Definition</b> <a href="#l00089">time_series_key.cpp:89</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a737d450d96eecd437c6e83217c12e222"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a737d450d96eecd437c6e83217c12e222">vkdb::TimeSeriesKey::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Less-than operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00043">time_series_key.cpp:43</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_acc42352474d8c0c268133efa2b36f104"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#acc42352474d8c0c268133efa2b36f104">vkdb::TimeSeriesKey::timestamp</a></div><div class="ttdeci">Timestamp timestamp() const noexcept</div><div class="ttdoc">Get the timestamp.</div><div class="ttdef"><b>Definition</b> <a href="#l00077">time_series_key.cpp:77</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_af84f615d81c03911a3979bb493b90483"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#af84f615d81c03911a3979bb493b90483">vkdb::TimeSeriesKey::operator!=</a></div><div class="ttdeci">bool operator!=(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Inequality operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00039">time_series_key.cpp:39</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a28ce5be65b4df6a9009569c84cf1cebf"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a28ce5be65b4df6a9009569c84cf1cebf">vkdb::TimeSeriesKey::metric</a></div><div class="ttdeci">Metric metric() const noexcept</div><div class="ttdoc">Get the metric.</div><div class="ttdef"><b>Definition</b> <a href="#l00082">time_series_key.cpp:82</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a2a5ba3ff81560e62ccff169b97afb6ce"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a2a5ba3ff81560e62ccff169b97afb6ce">vkdb::TimeSeriesKey::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Greater-than-or-equal-to operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00074">time_series_key.cpp:74</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a2bb97d4ac8a651caa184f9d8136edcc8"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a2bb97d4ac8a651caa184f9d8136edcc8">vkdb::TimeSeriesKey::operator==</a></div><div class="ttdeci">bool operator==(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Equality operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00036">time_series_key.cpp:36</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a45a9104e8f8750e0796f8fb0ceb24904"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a45a9104e8f8750e0796f8fb0ceb24904">vkdb::TimeSeriesKey::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Less-than-or-equal-to operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00070">time_series_key.cpp:70</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a68d05bee9d6dc3c1ccaaa2929fc8ccba"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a68d05bee9d6dc3c1ccaaa2929fc8ccba">vkdb::TimeSeriesKey::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Greater-than operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00066">time_series_key.cpp:66</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a710a9cc5fe6ddc11d8bd5c8d8329c2c0"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a710a9cc5fe6ddc11d8bd5c8d8329c2c0">vkdb::TimeSeriesKey::str</a></div><div class="ttdeci">std::string str() const noexcept</div><div class="ttdoc">Get the string representation of the key.</div><div class="ttdef"><b>Definition</b> <a href="#l00090">time_series_key.cpp:90</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a737d450d96eecd437c6e83217c12e222"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a737d450d96eecd437c6e83217c12e222">vkdb::TimeSeriesKey::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Less-than operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00044">time_series_key.cpp:44</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_acc42352474d8c0c268133efa2b36f104"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#acc42352474d8c0c268133efa2b36f104">vkdb::TimeSeriesKey::timestamp</a></div><div class="ttdeci">Timestamp timestamp() const noexcept</div><div class="ttdoc">Get the timestamp.</div><div class="ttdef"><b>Definition</b> <a href="#l00078">time_series_key.cpp:78</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_af84f615d81c03911a3979bb493b90483"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#af84f615d81c03911a3979bb493b90483">vkdb::TimeSeriesKey::operator!=</a></div><div class="ttdeci">bool operator!=(const TimeSeriesKey &amp;other) const noexcept</div><div class="ttdoc">Inequality operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00040">time_series_key.cpp:40</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
