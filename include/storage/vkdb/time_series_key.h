@@ -267,6 +267,12 @@ private:
    * 
    */
   TagTable tags_;
+
+  /**
+   * @brief STL hash.
+   * 
+   */
+  size_t hash_;
 };
 
 /**
@@ -346,5 +352,21 @@ struct hash<vkdb::TimeSeriesKey> {
 };
 }  // namespace std
 
+
+/**
+ * @brief Minimum TimeSeriesKey hash.
+ * 
+ */
+static const size_t MIN_TIME_SERIES_KEY_HASH{
+  std::hash<vkdb::TimeSeriesKey>{}(MIN_TIME_SERIES_KEY)
+};
+
+/**
+ * @brief Maximum TimeSeriesKey hash.
+ * 
+ */
+static const size_t MAX_TIME_SERIES_KEY_HASH{
+  std::hash<vkdb::TimeSeriesKey>{}(MAX_TIME_SERIES_KEY)
+};
 
 #endif // STORAGE_TIME_SERIES_KEY_H

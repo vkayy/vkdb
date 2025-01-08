@@ -19,6 +19,8 @@ TimeSeriesKey::TimeSeriesKey(std::string&& str) {
     std::getline(ss, value, ',');
     tags_[key] = value;
   }
+
+  hash_ = std::hash<std::string>{}(std::move(str));
 }
 
 TimeSeriesKey::TimeSeriesKey(
@@ -28,12 +30,11 @@ TimeSeriesKey::TimeSeriesKey(
 ) noexcept
   : timestamp_{timestamp}
   , metric_{std::move(metric)}
-  , tags_{std::move(tags)} {}
+  , tags_{std::move(tags)}
+  , hash_{std::hash<TimeSeriesKey>{}(*this)} {}
 
 bool TimeSeriesKey::operator==(const TimeSeriesKey& other) const noexcept {
-  return timestamp_ == other.timestamp_ &&
-         metric_ == other.metric_ &&
-         tags_ == other.tags_;
+  return hash_ == other.hash_;
 }
 
 bool TimeSeriesKey::operator!=(const TimeSeriesKey& other) const noexcept {
@@ -41,16 +42,16 @@ bool TimeSeriesKey::operator!=(const TimeSeriesKey& other) const noexcept {
 }
 
 bool TimeSeriesKey::operator<(const TimeSeriesKey& other) const noexcept {
-  if (other == MIN_TIME_SERIES_KEY) {
+  if (other.hash_ == MIN_TIME_SERIES_KEY_HASH) {
     return false;
   }
-  if (*this == MIN_TIME_SERIES_KEY) {
+  if (hash_ == MIN_TIME_SERIES_KEY_HASH) {
     return true;
   }
-  if (*this == MAX_TIME_SERIES_KEY) {
+  if (hash_ == MAX_TIME_SERIES_KEY_HASH) {
     return false;
   }
-  if (other == MAX_TIME_SERIES_KEY) {
+  if (other.hash_ == MAX_TIME_SERIES_KEY_HASH) {
     return true;
   }
   if (timestamp_ != other.timestamp_) {
