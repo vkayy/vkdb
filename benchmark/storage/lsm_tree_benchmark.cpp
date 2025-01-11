@@ -3,14 +3,6 @@
 #include <random>
 #include <filesystem>
 
-#define REGISTER_LSM_TREE_BENCHMARKS(size) \
-  BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointWrite) \
-    ->Args({size}); \
-  BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointRead) \
-    ->Args({size}); \
-  BENCHMARK_REGISTER_F(LSMTreeBenchmark, RangeRead) \
-    ->Args({size});
-
 class LSMTreeBenchmark : public benchmark::Fixture {
 protected:
   void SetUp(const benchmark::State& state) override {
@@ -120,9 +112,26 @@ BENCHMARK_DEFINE_F(LSMTreeBenchmark, RangeRead)(benchmark::State& state) {
   state.SetItemsProcessed(state.iterations());
 }
 
-REGISTER_LSM_TREE_BENCHMARKS(1'000)
-REGISTER_LSM_TREE_BENCHMARKS(10'000)
-REGISTER_LSM_TREE_BENCHMARKS(100'000)
-REGISTER_LSM_TREE_BENCHMARKS(1'000'000)
-REGISTER_LSM_TREE_BENCHMARKS(10'000'000)
-REGISTER_LSM_TREE_BENCHMARKS(100'000'000)
+// BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointWrite)
+//   ->RangeMultiplier(2)
+//   ->Range(1'000, 10'000)
+//   ->Range(16'384, 100'000)
+//   ->Range(131'072, 1'000'000)
+//   ->Range(1'048'576, 10'000'000)
+//   ->MinTime(5);
+
+BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointRead)
+  ->RangeMultiplier(2)
+  ->Range(1'000, 10'000)
+  ->Range(16'384, 100'000)
+  ->Range(131'072, 1'000'000)
+  ->Range(1'048'576, 10'000'000)
+  ->MinTime(5);
+
+BENCHMARK_REGISTER_F(LSMTreeBenchmark, RangeRead)
+  ->RangeMultiplier(2)
+  ->Range(1'000, 10'000)
+  ->Range(16'384, 100'000)
+  ->Range(131'072, 1'000'000)
+  ->Range(1'048'576, 10'000'000)
+  ->MinTime(5);

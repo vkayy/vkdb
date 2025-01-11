@@ -97,12 +97,18 @@ public:
    * @throw std::invalid_argument If the key is not in the memtable.
    */
   [[nodiscard]] mapped_type get(const key_type& key) const {
-    if (!contains(key)) {
+    if (!in_range(key)) {
       throw std::invalid_argument{
         "MemTable::get(): Key '" + key.str() + "' not in the memtable."
       };
     }
-    return table_.at(key);
+    auto it{table_.find(key)};
+    if (it != table_.end()) {
+      return it->second;
+    }
+    throw std::invalid_argument{
+      "MemTable::get(): Key '" + key.str() + "' not in the memtable."
+    };
   }
 
   /**
