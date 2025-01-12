@@ -112,13 +112,13 @@ BENCHMARK_DEFINE_F(LSMTreeBenchmark, RangeRead)(benchmark::State& state) {
   state.SetItemsProcessed(state.iterations());
 }
 
-// BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointWrite)
-//   ->RangeMultiplier(2)
-//   ->Range(1'000, 10'000)
-//   ->Range(16'384, 100'000)
-//   ->Range(131'072, 1'000'000)
-//   ->Range(1'048'576, 10'000'000)
-//   ->MinTime(5);
+BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointWrite)
+  ->RangeMultiplier(2)
+  ->Range(1'000, 10'000)
+  ->Range(16'384, 100'000)
+  ->Range(131'072, 1'000'000)
+  ->Range(1'048'576, 10'000'000)
+  ->MinTime(5);
 
 BENCHMARK_REGISTER_F(LSMTreeBenchmark, PointRead)
   ->RangeMultiplier(2)
