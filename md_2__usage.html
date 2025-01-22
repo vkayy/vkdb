@@ -110,16 +110,16 @@ Running locally (not needed)</h1>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Installation</h2>
 <p>First, clone the project and <code>cd</code> into the directory. </p><div class="fragment"><div class="line">git clone https://github.com/vkayy/vkdb.git &amp;&amp; cd vkdb</div>
-</div><!-- fragment --><p> Then, make the build directory and build the project with CMake. </p><div class="fragment"><div class="line">mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</div>
+</div><!-- fragment --><p> Then, simply run the build script. </p><div class="fragment"><div class="line">./build.sh</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
 Tests</h2>
-<p>From the build folder, you can run the tests. </p><div class="fragment"><div class="line">./tests/vkdb_tests</div>
+<p>You can use the <code>-t</code> flag to run the tests. </p><div class="fragment"><div class="line">./build.sh -t</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
 Benchmarks</h2>
-<p>From the build folder, you can run the benchmarks. </p><div class="fragment"><div class="line">./benchmark/vkdb_benchmarks</div>
+<p>You can also use the <code>-b</code> flag to run the benchmarks. </p><div class="fragment"><div class="line">./build.sh -b</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
 Examples</h2>
-<p>From the build folder, you can also run any of the examples. </p><div class="fragment"><div class="line">./examples/&lt;filename&gt;</div>
+<p>Finally, you can use the <code>-e</code> flag to run any of the examples. </p><div class="fragment"><div class="line">./build.sh -e &lt;filename&gt;</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md12"></a>
 Using the library</h1>
 <h2><a class="anchor" id="autotoc_md13"></a>
