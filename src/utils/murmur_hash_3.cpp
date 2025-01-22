@@ -10,7 +10,7 @@
 //-----------------------------------------------------------------------------
 // Platform-specific functions and macros
 
-#include <stdlib.h>
+#include <cstdint>
 
 // Microsoft Visual Studio
 

@@ -122,7 +122,8 @@ public:
    * 
    * @throw std::runtime_error If adding any of the filters fails.
    */
-  template <AllConvertibleToNoCVRefQuals<Metric>... Metrics>
+  template <typename... Metrics>
+    requires (AllConvertibleToNoCVRefQuals<Metric, Metrics> && ...)
   [[nodiscard]] FriendlyQueryBuilder& whereMetricIsAnyOf(
     const Metrics&... metrics
   ) {
@@ -176,7 +177,8 @@ public:
    * 
    * @throw std::runtime_error If adding the filter fails.
    */
-  template <AllConvertibleToNoCVRefQuals<Timestamp>... Timestamps>
+  template <typename... Timestamps>
+    requires (AllConvertibleToNoCVRefQuals<Timestamp, Timestamps> && ...)
   [[nodiscard]] FriendlyQueryBuilder& whereTimestampIsAnyOf(
     const Timestamps&... timestamps
   ) {
@@ -208,7 +210,8 @@ public:
    * 
    * @throw std::runtime_error If adding any of the filters fails.
    */
-  template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
+  template <typename... Tags>
+    requires (AllConvertibleToNoCVRefQuals<Tag, Tags> && ...)
   [[nodiscard]] FriendlyQueryBuilder& whereTagsContainAnyOf(
     const Tags&... tags
   ) {
@@ -226,7 +229,8 @@ public:
    * 
    * @throw std::runtime_error If adding all of the filters fails.
    */
-  template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
+  template <typename... Tags>
+    requires (AllConvertibleToNoCVRefQuals<Tag, Tags> && ...)
   [[nodiscard]] FriendlyQueryBuilder& whereTagsContainAllOf(
     const Tags&... tags
   ) {

@@ -10,6 +10,7 @@
 #include <ranges>
 #include <deque>
 #include <set>
+#include <functional>
 
 namespace vkdb {
 /**
@@ -397,7 +398,10 @@ private:
       const auto id{
         std::stoull(file.path().filename().string().substr(l_pos + 4))
       };
-      sstable_id_[layer_idx] = std::max(sstable_id_[layer_idx], id + 1);
+      sstable_id_[layer_idx] = std::max(
+        sstable_id_[layer_idx],
+        static_cast<size_type>(id + 1)
+      );
     }
     for (size_type k{0}; k < LAYER_COUNT; ++k) {
       for (const auto& sstable_file : sstable_files[k]) {
