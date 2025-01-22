@@ -1,0 +1,23 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [g++, clang++]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and run tests
+        env:
+          CXX: ${{ matrix.compiler }}
+        run: ./build.sh -t

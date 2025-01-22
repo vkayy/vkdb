@@ -1,8 +1,9 @@
 #ifndef UTILS_RANDOM_H
 #define UTILS_RANDOM_H
 
-#include <random>
 #include <vkdb/concepts.h>
+
+#include <random>
 
 namespace vkdb {
 /**
@@ -25,9 +26,10 @@ T random(
   if constexpr (std::integral<T>) {
     std::uniform_int_distribution<T> dist{min, max};
     return dist(gen);
+  } else {
+    std::uniform_real_distribution<T> dist{min, max};
+    return dist(gen);
   }
-  std::uniform_real_distribution<T> dist{min, max};
-  return dist(gen);
 }
 }  // namespace vkdb
 

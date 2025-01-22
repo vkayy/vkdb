@@ -3,11 +3,12 @@
 
 #include <vkdb/concepts.h>
 #include <vkdb/lsm_tree.h>
-#include <variant>
-#include <ranges>
-#include <ranges>
+
 #include <algorithm>
+#include <cstdint>
+#include <ranges>
 #include <unordered_set>
+#include <variant>
 
 namespace vkdb {
 /**
@@ -153,7 +154,8 @@ public:
    * 
    * @throw std::runtime_error If a tag key is not in the tag columns.
    */
-  template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
+  template <typename... Tags>
+    requires (AllConvertibleToNoCVRefQuals<Tag, Tags> && ...)
   [[nodiscard]] QueryBuilder& filterByAnyTags(const Tags&... tags) {
     validate_tags(tags...);
     add_filter([tags...](const auto& k) {
@@ -174,7 +176,8 @@ public:
    * 
    * @throw std::runtime_error If a tag key is not in the tag columns.
    */
-  template <AllConvertibleToNoCVRefQuals<Tag>... Tags>
+  template <typename... Tags>
+    requires (AllConvertibleToNoCVRefQuals<Tag, Tags> && ...)
   [[nodiscard]] QueryBuilder& filterByAllTags(const Tags&... tags) {
     validate_tags(tags...);
     add_filter([tags...](const auto& k) {
@@ -212,7 +215,8 @@ public:
    * 
    * @throw std::runtime_error If adding the filter fails.
    */
-  template <AllConvertibleToNoCVRefQuals<Metric>... Metrics>
+  template <typename... Metrics>
+    requires (AllConvertibleToNoCVRefQuals<Metric, Metrics> && ...)
   [[nodiscard]] QueryBuilder& filterByAnyMetrics(const Metrics&... metrics) {
     add_filter([metrics...](const auto& k) {
       return ((k.metric() == metrics) || ...);
@@ -248,7 +252,8 @@ public:
    * 
    * @throw std::runtime_error If adding the filter fails.
    */
-  template <AllConvertibleToNoCVRefQuals<Timestamp>... Timestamps>
+  template <typename... Timestamps>
+    requires (AllConvertibleToNoCVRefQuals<Timestamp, Timestamps> && ...)
   [[nodiscard]] QueryBuilder& filterByAnyTimestamps(
     const Timestamps&... timestamps
   ) {
@@ -386,8 +391,9 @@ public:
    * 
    * @return result_type Result of the query.
    * 
-   * @throw std::runtime_error If the query type is not set and there are no
-   * filters or if executing the query fails.
+   * @throw std::runtime_error If the query type is unset and
+   * there are no filters, or if the query type is invalid, or
+   * if the execution fails.
    */
   result_type execute() {
     switch (query_type_) {
@@ -408,6 +414,9 @@ public:
     case QueryType::REMOVE:
       return execute_remove_query();
     }
+    throw std::runtime_error{
+      "QueryBuilder::execute(): Invalid query type."
+    };
   }
 
 private:
@@ -678,7 +687,8 @@ private:
    * 
    * @throw std::runtime_error If a tag key is not in the tag columns.
    */
-  template <AllSameNoCVRefQuals<Tag>... Tags>
+  template <typename... Tags>
+    requires (AllConvertibleToNoCVRefQuals<Tag, Tags> && ...)
   void validate_tags(const Tags&... tags) const {
     for (const auto& [key, value] : std::initializer_list<Tag>{tags...}) {
       if (!tag_columns_.contains(key)) {

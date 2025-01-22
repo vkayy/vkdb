@@ -50,10 +50,10 @@ concept ArithmeticNoCVRefQuals = Arithmetic<T> && HasNoCVRefQuals<T>;
  * @brief Concept for types that are all the same as another after
  * removing cv- and ref-qualifiers.
  * 
- * @tparam Ts Types to compare.
  * @tparam U Type to compare against.
+ * @tparam Ts Types to compare.
  */
-template <typename... Ts, typename U>
+template <typename U, typename... Ts>
 concept AllSameNoCVRefQuals = (SameNoCVRefQuals<Ts, U> && ...);
 
 /**
@@ -71,10 +71,10 @@ concept ConvertibleToNoCVRefQuals
  * @brief Concept for types that are all convertible to another and
  * have no cv- or ref-qualifiers.
  * 
- * @tparam Ts Types to convert.
  * @tparam U Type to convert to.
+ * @tparam Ts Types to convert.
  */
-template <typename... Ts, typename U>
+template <typename U, typename... Ts>
 concept AllConvertibleToNoCVRefQuals
   = (ConvertibleToNoCVRefQuals<Ts, U> && ...);
 
@@ -93,10 +93,10 @@ concept ConstructibleToNoCVRefQuals
  * @brief Concept for types that are all constructible to another and
  * have no cv- or ref-qualifiers.
  * 
- * @tparam Ts Types to construct from.
  * @tparam U Type to construct to.
+ * @tparam Ts Types to construct from.
  */
-template <typename... Ts, typename U>
+template <typename U, typename... Ts>
 concept AllConstructibleToNoCVRefQuals
   = (ConstructibleToNoCVRefQuals<Ts, U> && ...);
 
