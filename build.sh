@@ -44,7 +44,7 @@ fi
 
 cd "$BUILD_DIR" || { echo "Failed to change directory to '$BUILD_DIR'"; exit 1; }
 
-if ! cmake -DCMAKE_BUILD_TYPE=Release -DRUN_HAVE_STD_REGEX=0 ..; then
+if ! cmake -DCMAKE_BUILD_TYPE=Release ..; then
     echo "CMake configuration failed."
     exit 1
 fi
