@@ -23,7 +23,7 @@
 </div>
 
 > [!NOTE]
-> Development has slowed for now! Working on high-performance C++ for HFT at Thalesians.
+> Development has slowed for now! Working on low-latemcy C++ for HFT at Thalesians.
 
 > [!WARNING]
 > vkdb is currently in the early stages of development and is not yet ready for daily use!
