@@ -1,0 +1,33 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Install compiler
+        run: |
+          sudo apt update
+          if [ "${{ matrix.compiler }}" == "gcc" ]; then
+            sudo apt install -y gcc g++
+          elif [ "${{ matrix.compiler }}" == "clang" ]; then
+            sudo apt install -y clang
+          fi
+
+      - name: Build and run tests
+        run: ./build.sh -t
