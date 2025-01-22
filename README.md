@@ -4,23 +4,26 @@
   <img src="docs/images/vkdb-full-cropped.svg" alt="logo" width="250" height=auto />
   <p>A time series database engine built in C++ with minimal dependencies.</p>
   <a href="https://cplusplus.com/">
-  <img src="https://img.shields.io/badge/C%2B%2B-%2300599C?logo=cplusplus&logoColor=FFFFFF" alt="c++" /></a>
+    <img src="https://img.shields.io/badge/C%2B%2B-%2300599C?style=flat-square&logo=cplusplus&logoColor=ffffff" alt="C++" /></a>
   <a href="https://github.com/vkayy/vkdb/graphs/contributors">
-  <img src="https://img.shields.io/github/contributors/vkayy/vkdb" alt="contributors" /></a>
+    <img src="https://img.shields.io/github/contributors/vkayy/vkdb?style=flat-square" alt="contributors" /></a>
   <a href="">
-  <img src="https://img.shields.io/github/last-commit/vkayy/vkdb" alt="last update" /></a>
+    <img src="https://img.shields.io/github/last-commit/vkayy/vkdb?style=flat-square" alt="last update" /></a>
   <a href="https://github.com/vkayy/vkdb/issues/">
-  <img src="https://img.shields.io/github/issues/vkayy/vkdb" alt="open issues" /></a>
+    <img src="https://img.shields.io/github/issues/vkayy/vkdb?style=flat-square" alt="open issues" /></a>
   <a href="https://github.com/vkayy/vkdb/blob/main/LICENSE">
-  <img src="https://img.shields.io/github/license/vkayy/vkdb.svg" alt="license" /></a>
+    <img src="https://img.shields.io/github/license/vkayy/vkdb?style=flat-square" alt="license" /></a>
   <a href="https://github.com/vkayy/vkdb/stargazers">
-  <img src="https://img.shields.io/github/stars/vkayy/vkdb" alt="stars" /></a>
+    <img src="https://img.shields.io/github/stars/vkayy/vkdb?style=flat-square" alt="stars" /></a>
   <a href="https://github.com/vkayy/vkdb/network/members">
-  <img src="https://img.shields.io/github/forks/vkayy/vkdb" alt="forks" /></a>
+    <img src="https://img.shields.io/github/forks/vkayy/vkdb?style=flat-square" alt="forks" /></a>
   <h4>
     <a href="https://vkayy.github.io/vkdb">Documentation</a>
   </h4>
 </div>
+
+> [!NOTE]
+> Development has slowed for now! Working on low-latency C++ for HFT at Thalesians.
 
 > [!WARNING]
 > vkdb is currently in the early stages of development and is not yet ready for daily use!
