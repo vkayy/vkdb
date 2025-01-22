@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['filterbyalltags_0',['filterByAllTags',['../classvkdb_1_1QueryBuilder.html#a3c93b78a85ee16e3d7ecbc4b0f567190',1,'vkdb::QueryBuilder']]],
-  ['filterbyanymetrics_1',['filterByAnyMetrics',['../classvkdb_1_1QueryBuilder.html#a6c37c198ed3d0094160481f7195f1fcb',1,'vkdb::QueryBuilder']]],
-  ['filterbyanytags_2',['filterByAnyTags',['../classvkdb_1_1QueryBuilder.html#aee1c6c5a227a656775644e74f6a95090',1,'vkdb::QueryBuilder']]],
-  ['filterbyanytimestamps_3',['filterByAnyTimestamps',['../classvkdb_1_1QueryBuilder.html#af01b4f93a25c11217daefbde633ad33a',1,'vkdb::QueryBuilder']]],
+  ['filterbyalltags_0',['filterByAllTags',['../classvkdb_1_1QueryBuilder.html#a694600ac404657739e979385b582cd4b',1,'vkdb::QueryBuilder']]],
+  ['filterbyanymetrics_1',['filterByAnyMetrics',['../classvkdb_1_1QueryBuilder.html#a4fb36d89553a34daa23e9e8984f13b90',1,'vkdb::QueryBuilder']]],
+  ['filterbyanytags_2',['filterByAnyTags',['../classvkdb_1_1QueryBuilder.html#ad1df1a67a435046cb789488dedb159c1',1,'vkdb::QueryBuilder']]],
+  ['filterbyanytimestamps_3',['filterByAnyTimestamps',['../classvkdb_1_1QueryBuilder.html#ac3d5163d0e628661ed0e9420d83ee206',1,'vkdb::QueryBuilder']]],
   ['filterbymetric_4',['filterByMetric',['../classvkdb_1_1QueryBuilder.html#a49086e8774802b9c2669f9fc5436d029',1,'vkdb::QueryBuilder']]],
   ['filterbytag_5',['filterByTag',['../classvkdb_1_1QueryBuilder.html#aaf0079988613acf608dc3d754dcfcceb',1,'vkdb::QueryBuilder']]],
   ['filterbytimestamp_6',['filterByTimestamp',['../classvkdb_1_1QueryBuilder.html#af2f5f2c9ca2f48576faeb30da18aceb8',1,'vkdb::QueryBuilder']]],

@@ -110,7 +110,7 @@ $(function(){initNavTree('conceptAllConvertibleToNoCVRefQuals.html',''); initRes
 
 <p><code>#include &lt;<a class="el" href="concepts_8h_source.html">concepts.h</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts, <span class="keyword">typename</span> U&gt;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> U, <span class="keyword">typename</span>... Ts&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a> =  (<a class="code hl_concept" href="conceptConvertibleToNoCVRefQuals.html">ConvertibleToNoCVRefQuals&lt;Ts, U&gt;</a> &amp;&amp; ...)</div>
 <div class="ttc" id="aconceptAllConvertibleToNoCVRefQuals_html"><div class="ttname"><a href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a></div><div class="ttdoc">Concept for types that are all convertible to another and have no cv- or ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00078">concepts.h:79</a></div></div>
 <div class="ttc" id="aconceptConvertibleToNoCVRefQuals_html"><div class="ttname"><a href="conceptConvertibleToNoCVRefQuals.html">ConvertibleToNoCVRefQuals</a></div><div class="ttdoc">Concept for a type that is convertible to another and has no cv- or ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00067">concepts.h:68</a></div></div>
@@ -118,8 +118,8 @@ $(function(){initNavTree('conceptAllConvertibleToNoCVRefQuals.html',''); initRes
 <div class="textblock"><p>Concept for types that are all convertible to another and have no cv- or ref-qualifiers. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Ts</td><td>Types to convert. </td></tr>
     <tr><td class="paramname">U</td><td>Type to convert to. </td></tr>
+    <tr><td class="paramname">Ts</td><td>Types to convert. </td></tr>
   </table>
   </dd>
 </dl>

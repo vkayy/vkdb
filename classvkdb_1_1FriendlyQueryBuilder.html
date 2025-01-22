@@ -161,31 +161,35 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aed6c603688a811b165e37bc2eaed077d" id="r_aed6c603688a811b165e37bc2eaed077d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed6c603688a811b165e37bc2eaed077d">whereMetricIs</a> (const Metric &amp;metric)</td></tr>
 <tr class="memdesc:aed6c603688a811b165e37bc2eaed077d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where metric is clause.  <br /></td></tr>
 <tr class="separator:aed6c603688a811b165e37bc2eaed077d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86950f05d27d96f826f63ac08294bed8" id="r_a86950f05d27d96f826f63ac08294bed8"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Metric &gt;... Metrics&gt; </td></tr>
-<tr class="memitem:a86950f05d27d96f826f63ac08294bed8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a86950f05d27d96f826f63ac08294bed8">whereMetricIsAnyOf</a> (const Metrics &amp;... metrics)</td></tr>
-<tr class="memdesc:a86950f05d27d96f826f63ac08294bed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where metric is any of clause.  <br /></td></tr>
-<tr class="separator:a86950f05d27d96f826f63ac08294bed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3315452307ea1d8c657545d2e66eeb13" id="r_a3315452307ea1d8c657545d2e66eeb13"><td class="memTemplParams" colspan="2">template&lt;typename... Metrics&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Metric, Metrics&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:a3315452307ea1d8c657545d2e66eeb13"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3315452307ea1d8c657545d2e66eeb13">whereMetricIsAnyOf</a> (const Metrics &amp;... metrics)</td></tr>
+<tr class="memdesc:a3315452307ea1d8c657545d2e66eeb13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where metric is any of clause.  <br /></td></tr>
+<tr class="separator:a3315452307ea1d8c657545d2e66eeb13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a899e3ba26e9da0380b2423b40a41418b" id="r_a899e3ba26e9da0380b2423b40a41418b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a899e3ba26e9da0380b2423b40a41418b">whereTimestampIs</a> (const Timestamp &amp;timestamp)</td></tr>
 <tr class="memdesc:a899e3ba26e9da0380b2423b40a41418b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where timestamp is clause.  <br /></td></tr>
 <tr class="separator:a899e3ba26e9da0380b2423b40a41418b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85831c38c48c4303739bc7f581b1c650" id="r_a85831c38c48c4303739bc7f581b1c650"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85831c38c48c4303739bc7f581b1c650">whereTimestampBetween</a> (const Timestamp &amp;start, const Timestamp &amp;end)</td></tr>
 <tr class="memdesc:a85831c38c48c4303739bc7f581b1c650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where timestamp is between clause.  <br /></td></tr>
 <tr class="separator:a85831c38c48c4303739bc7f581b1c650"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab58e31bf7e8064ebb84eb7b60e50444" id="r_aab58e31bf7e8064ebb84eb7b60e50444"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Timestamp &gt;... Timestamps&gt; </td></tr>
-<tr class="memitem:aab58e31bf7e8064ebb84eb7b60e50444"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aab58e31bf7e8064ebb84eb7b60e50444">whereTimestampIsAnyOf</a> (const Timestamps &amp;... timestamps)</td></tr>
-<tr class="memdesc:aab58e31bf7e8064ebb84eb7b60e50444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where timestamp is any of clause.  <br /></td></tr>
-<tr class="separator:aab58e31bf7e8064ebb84eb7b60e50444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5de699e48b9c1037019f67a4a20e084" id="r_ac5de699e48b9c1037019f67a4a20e084"><td class="memTemplParams" colspan="2">template&lt;typename... Timestamps&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Timestamp, Timestamps&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:ac5de699e48b9c1037019f67a4a20e084"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac5de699e48b9c1037019f67a4a20e084">whereTimestampIsAnyOf</a> (const Timestamps &amp;... timestamps)</td></tr>
+<tr class="memdesc:ac5de699e48b9c1037019f67a4a20e084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where timestamp is any of clause.  <br /></td></tr>
+<tr class="separator:ac5de699e48b9c1037019f67a4a20e084"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55081a375dd13ef5b55dd3a810bfa7e9" id="r_a55081a375dd13ef5b55dd3a810bfa7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55081a375dd13ef5b55dd3a810bfa7e9">whereTagsContain</a> (const Tag &amp;tag)</td></tr>
 <tr class="memdesc:a55081a375dd13ef5b55dd3a810bfa7e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain clause.  <br /></td></tr>
 <tr class="separator:a55081a375dd13ef5b55dd3a810bfa7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11e5a78eb979b7aba45bde1944ce559e" id="r_a11e5a78eb979b7aba45bde1944ce559e"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
-<tr class="memitem:a11e5a78eb979b7aba45bde1944ce559e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a11e5a78eb979b7aba45bde1944ce559e">whereTagsContainAnyOf</a> (const Tags &amp;... tags)</td></tr>
-<tr class="memdesc:a11e5a78eb979b7aba45bde1944ce559e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain any of clause.  <br /></td></tr>
-<tr class="separator:a11e5a78eb979b7aba45bde1944ce559e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc0534c8779075569b1d90993edb86cd" id="r_afc0534c8779075569b1d90993edb86cd"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
-<tr class="memitem:afc0534c8779075569b1d90993edb86cd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afc0534c8779075569b1d90993edb86cd">whereTagsContainAllOf</a> (const Tags &amp;... tags)</td></tr>
-<tr class="memdesc:afc0534c8779075569b1d90993edb86cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain all of clause.  <br /></td></tr>
-<tr class="separator:afc0534c8779075569b1d90993edb86cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcc92a25d100764663eeae238dc4ba01" id="r_afcc92a25d100764663eeae238dc4ba01"><td class="memTemplParams" colspan="2">template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:afcc92a25d100764663eeae238dc4ba01"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afcc92a25d100764663eeae238dc4ba01">whereTagsContainAnyOf</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:afcc92a25d100764663eeae238dc4ba01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain any of clause.  <br /></td></tr>
+<tr class="separator:afcc92a25d100764663eeae238dc4ba01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd48c748cc0f97235c8c2f1f5d956817" id="r_acd48c748cc0f97235c8c2f1f5d956817"><td class="memTemplParams" colspan="2">template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:acd48c748cc0f97235c8c2f1f5d956817"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#acd48c748cc0f97235c8c2f1f5d956817">whereTagsContainAllOf</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:acd48c748cc0f97235c8c2f1f5d956817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for where tags contain all of clause.  <br /></td></tr>
+<tr class="separator:acd48c748cc0f97235c8c2f1f5d956817"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90d7060f2718ed895e8a6f129a047130" id="r_a90d7060f2718ed895e8a6f129a047130"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90d7060f2718ed895e8a6f129a047130">put</a> (Timestamp timestamp, Metric metric, const TagTable &amp;tag_table, TValue value)</td></tr>
 <tr class="memdesc:a90d7060f2718ed895e8a6f129a047130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure builder for put query.  <br /></td></tr>
 <tr class="separator:a90d7060f2718ed895e8a6f129a047130"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -394,7 +398,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00325">325</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00329">329</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -433,7 +437,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00299">299</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00303">303</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -472,7 +476,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00363">363</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00367">367</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -567,7 +571,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00351">351</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00355">355</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -606,7 +610,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00338">338</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00342">342</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -668,7 +672,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00250">250</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00254">254</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -724,7 +728,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00280">280</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00284">284</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -763,7 +767,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00312">312</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00316">316</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -811,15 +815,16 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 
 </div>
 </div>
-<a id="a86950f05d27d96f826f63ac08294bed8" name="a86950f05d27d96f826f63ac08294bed8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86950f05d27d96f826f63ac08294bed8">&#9670;&#160;</a></span>whereMetricIsAnyOf()</h2>
+<a id="a3315452307ea1d8c657545d2e66eeb13" name="a3315452307ea1d8c657545d2e66eeb13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3315452307ea1d8c657545d2e66eeb13">&#9670;&#160;</a></span>whereMetricIsAnyOf()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Metric &gt;... Metrics&gt; </div>
+template&lt;typename... Metrics&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Metric, Metrics&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -859,7 +864,7 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00126">126</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00127">127</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -903,19 +908,20 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00196">196</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00198">198</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
-<a id="afc0534c8779075569b1d90993edb86cd" name="afc0534c8779075569b1d90993edb86cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc0534c8779075569b1d90993edb86cd">&#9670;&#160;</a></span>whereTagsContainAllOf()</h2>
+<a id="acd48c748cc0f97235c8c2f1f5d956817" name="acd48c748cc0f97235c8c2f1f5d956817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd48c748cc0f97235c8c2f1f5d956817">&#9670;&#160;</a></span>whereTagsContainAllOf()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </div>
+template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -955,19 +961,20 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00230">230</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00234">234</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
-<a id="a11e5a78eb979b7aba45bde1944ce559e" name="a11e5a78eb979b7aba45bde1944ce559e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11e5a78eb979b7aba45bde1944ce559e">&#9670;&#160;</a></span>whereTagsContainAnyOf()</h2>
+<a id="afcc92a25d100764663eeae238dc4ba01" name="afcc92a25d100764663eeae238dc4ba01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcc92a25d100764663eeae238dc4ba01">&#9670;&#160;</a></span>whereTagsContainAnyOf()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </div>
+template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1007,7 +1014,7 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00212">212</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00215">215</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -1056,7 +1063,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00159">159</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00160">160</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
@@ -1100,19 +1107,20 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00142">142</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00143">143</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>
-<a id="aab58e31bf7e8064ebb84eb7b60e50444" name="aab58e31bf7e8064ebb84eb7b60e50444"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab58e31bf7e8064ebb84eb7b60e50444">&#9670;&#160;</a></span>whereTimestampIsAnyOf()</h2>
+<a id="ac5de699e48b9c1037019f67a4a20e084" name="ac5de699e48b9c1037019f67a4a20e084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5de699e48b9c1037019f67a4a20e084">&#9670;&#160;</a></span>whereTimestampIsAnyOf()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Timestamp &gt;... Timestamps&gt; </div>
+template&lt;typename... Timestamps&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Timestamp, Timestamps&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1152,7 +1160,7 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00180">180</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="friendly__builder_8h_source.html#l00182">182</a> of file <a class="el" href="friendly__builder_8h_source.html">friendly_builder.h</a>.</p>
 
 </div>
 </div>

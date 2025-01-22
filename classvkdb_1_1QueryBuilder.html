@@ -165,28 +165,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaf0079988613acf608dc3d754dcfcceb" id="r_aaf0079988613acf608dc3d754dcfcceb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf0079988613acf608dc3d754dcfcceb">filterByTag</a> (const TagKey &amp;key, const TagValue &amp;value)</td></tr>
 <tr class="memdesc:aaf0079988613acf608dc3d754dcfcceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by a tag.  <br /></td></tr>
 <tr class="separator:aaf0079988613acf608dc3d754dcfcceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee1c6c5a227a656775644e74f6a95090" id="r_aee1c6c5a227a656775644e74f6a95090"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
-<tr class="memitem:aee1c6c5a227a656775644e74f6a95090"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aee1c6c5a227a656775644e74f6a95090">filterByAnyTags</a> (const Tags &amp;... tags)</td></tr>
-<tr class="memdesc:aee1c6c5a227a656775644e74f6a95090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple tags.  <br /></td></tr>
-<tr class="separator:aee1c6c5a227a656775644e74f6a95090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c93b78a85ee16e3d7ecbc4b0f567190" id="r_a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </td></tr>
-<tr class="memitem:a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3c93b78a85ee16e3d7ecbc4b0f567190">filterByAllTags</a> (const Tags &amp;... tags)</td></tr>
-<tr class="memdesc:a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple tags.  <br /></td></tr>
-<tr class="separator:a3c93b78a85ee16e3d7ecbc4b0f567190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1df1a67a435046cb789488dedb159c1" id="r_ad1df1a67a435046cb789488dedb159c1"><td class="memTemplParams" colspan="2">template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:ad1df1a67a435046cb789488dedb159c1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad1df1a67a435046cb789488dedb159c1">filterByAnyTags</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:ad1df1a67a435046cb789488dedb159c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple tags.  <br /></td></tr>
+<tr class="separator:ad1df1a67a435046cb789488dedb159c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a694600ac404657739e979385b582cd4b" id="r_a694600ac404657739e979385b582cd4b"><td class="memTemplParams" colspan="2">template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:a694600ac404657739e979385b582cd4b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a694600ac404657739e979385b582cd4b">filterByAllTags</a> (const Tags &amp;... tags)</td></tr>
+<tr class="memdesc:a694600ac404657739e979385b582cd4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple tags.  <br /></td></tr>
+<tr class="separator:a694600ac404657739e979385b582cd4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49086e8774802b9c2669f9fc5436d029" id="r_a49086e8774802b9c2669f9fc5436d029"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49086e8774802b9c2669f9fc5436d029">filterByMetric</a> (const Metric &amp;metric)</td></tr>
 <tr class="memdesc:a49086e8774802b9c2669f9fc5436d029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by a metric.  <br /></td></tr>
 <tr class="separator:a49086e8774802b9c2669f9fc5436d029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c37c198ed3d0094160481f7195f1fcb" id="r_a6c37c198ed3d0094160481f7195f1fcb"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Metric &gt;... Metrics&gt; </td></tr>
-<tr class="memitem:a6c37c198ed3d0094160481f7195f1fcb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6c37c198ed3d0094160481f7195f1fcb">filterByAnyMetrics</a> (const Metrics &amp;... metrics)</td></tr>
-<tr class="memdesc:a6c37c198ed3d0094160481f7195f1fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple metrics.  <br /></td></tr>
-<tr class="separator:a6c37c198ed3d0094160481f7195f1fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fb36d89553a34daa23e9e8984f13b90" id="r_a4fb36d89553a34daa23e9e8984f13b90"><td class="memTemplParams" colspan="2">template&lt;typename... Metrics&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Metric, Metrics&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:a4fb36d89553a34daa23e9e8984f13b90"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4fb36d89553a34daa23e9e8984f13b90">filterByAnyMetrics</a> (const Metrics &amp;... metrics)</td></tr>
+<tr class="memdesc:a4fb36d89553a34daa23e9e8984f13b90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple metrics.  <br /></td></tr>
+<tr class="separator:a4fb36d89553a34daa23e9e8984f13b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f5f2c9ca2f48576faeb30da18aceb8" id="r_af2f5f2c9ca2f48576faeb30da18aceb8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2f5f2c9ca2f48576faeb30da18aceb8">filterByTimestamp</a> (const Timestamp &amp;timestamp)</td></tr>
 <tr class="memdesc:af2f5f2c9ca2f48576faeb30da18aceb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by a timestamp.  <br /></td></tr>
 <tr class="separator:af2f5f2c9ca2f48576faeb30da18aceb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af01b4f93a25c11217daefbde633ad33a" id="r_af01b4f93a25c11217daefbde633ad33a"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Timestamp &gt;... Timestamps&gt; </td></tr>
-<tr class="memitem:af01b4f93a25c11217daefbde633ad33a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af01b4f93a25c11217daefbde633ad33a">filterByAnyTimestamps</a> (const Timestamps &amp;... timestamps)</td></tr>
-<tr class="memdesc:af01b4f93a25c11217daefbde633ad33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple timestamps.  <br /></td></tr>
-<tr class="separator:af01b4f93a25c11217daefbde633ad33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3d5163d0e628661ed0e9420d83ee206" id="r_ac3d5163d0e628661ed0e9420d83ee206"><td class="memTemplParams" colspan="2">template&lt;typename... Timestamps&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Timestamp, Timestamps&gt; &amp;&amp; ...)</td></tr>
+<tr class="memitem:ac3d5163d0e628661ed0e9420d83ee206"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac3d5163d0e628661ed0e9420d83ee206">filterByAnyTimestamps</a> (const Timestamps &amp;... timestamps)</td></tr>
+<tr class="memdesc:ac3d5163d0e628661ed0e9420d83ee206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the TimeSeriesKeys by multiple timestamps.  <br /></td></tr>
+<tr class="separator:ac3d5163d0e628661ed0e9420d83ee206"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c3a1e308b9e60cf200ae47cf3c166bf" id="r_a0c3a1e308b9e60cf200ae47cf3c166bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvkdb_1_1QueryBuilder.html">QueryBuilder</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c3a1e308b9e60cf200ae47cf3c166bf">put</a> (const <a class="el" href="classvkdb_1_1TimeSeriesKey.html">keytype</a> &amp;key, const TValue &amp;value)</td></tr>
 <tr class="memdesc:a0c3a1e308b9e60cf200ae47cf3c166bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a key-value pair into the <a class="el" href="classvkdb_1_1LSMTree.html" title="LSM tree on TimeSeriesKey.">LSMTree</a>.  <br /></td></tr>
 <tr class="separator:a0c3a1e308b9e60cf200ae47cf3c166bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,7 +226,7 @@ class vkdb::QueryBuilder&lt; TValue &gt;</div><p>Query builder for querying a <a
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00025">25</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00026">26</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a065e9abcf7327fbbd9d3df73bc91e199" name="a065e9abcf7327fbbd9d3df73bc91e199"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a065e9abcf7327fbbd9d3df73bc91e199">&#9670;&#160;</a></span>keytype</h2>
@@ -238,7 +242,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00027">27</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00028">28</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -256,7 +260,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00028">28</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00029">29</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -274,7 +278,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00031">31</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00032">32</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -292,7 +296,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00030">30</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00031">31</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -310,7 +314,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00029">29</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00030">30</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -354,7 +358,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00047">47</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00048">48</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -394,7 +398,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00337">337</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00342">342</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -433,7 +437,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00303">303</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00308">308</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -467,24 +471,25 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
 <dl class="section return"><dt>Returns</dt><dd>result_type Result of the query.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>If the query type is not set and there are no filters or if executing the query fails. </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>If the query type is unset and there are no filters, or if the query type is invalid, or if the execution fails. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00392">392</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00398">398</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
-<a id="a3c93b78a85ee16e3d7ecbc4b0f567190" name="a3c93b78a85ee16e3d7ecbc4b0f567190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c93b78a85ee16e3d7ecbc4b0f567190">&#9670;&#160;</a></span>filterByAllTags()</h2>
+<a id="a694600ac404657739e979385b582cd4b" name="a694600ac404657739e979385b582cd4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a694600ac404657739e979385b582cd4b">&#9670;&#160;</a></span>filterByAllTags()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </div>
+template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -525,19 +530,20 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00178">178</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00181">181</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
-<a id="a6c37c198ed3d0094160481f7195f1fcb" name="a6c37c198ed3d0094160481f7195f1fcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c37c198ed3d0094160481f7195f1fcb">&#9670;&#160;</a></span>filterByAnyMetrics()</h2>
+<a id="a4fb36d89553a34daa23e9e8984f13b90" name="a4fb36d89553a34daa23e9e8984f13b90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fb36d89553a34daa23e9e8984f13b90">&#9670;&#160;</a></span>filterByAnyMetrics()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Metric &gt;... Metrics&gt; </div>
+template&lt;typename... Metrics&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Metric, Metrics&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -578,19 +584,20 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00216">216</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00220">220</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
-<a id="aee1c6c5a227a656775644e74f6a95090" name="aee1c6c5a227a656775644e74f6a95090"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee1c6c5a227a656775644e74f6a95090">&#9670;&#160;</a></span>filterByAnyTags()</h2>
+<a id="ad1df1a67a435046cb789488dedb159c1" name="ad1df1a67a435046cb789488dedb159c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1df1a67a435046cb789488dedb159c1">&#9670;&#160;</a></span>filterByAnyTags()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Tag &gt;... Tags&gt; </div>
+template&lt;typename... Tags&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Tag, Tags&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -631,19 +638,20 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00157">157</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00159">159</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
-<a id="af01b4f93a25c11217daefbde633ad33a" name="af01b4f93a25c11217daefbde633ad33a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af01b4f93a25c11217daefbde633ad33a">&#9670;&#160;</a></span>filterByAnyTimestamps()</h2>
+<a id="ac3d5163d0e628661ed0e9420d83ee206" name="ac3d5163d0e628661ed0e9420d83ee206"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3d5163d0e628661ed0e9420d83ee206">&#9670;&#160;</a></span>filterByAnyTimestamps()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNoCVRefQuals</a> TValue&gt; </div>
 <div class="memtemplate">
-template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt; Timestamp &gt;... Timestamps&gt; </div>
+template&lt;typename... Timestamps&gt; <br />
+requires (<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a>&lt;Timestamp, Timestamps&gt; &amp;&amp; ...)</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -684,7 +692,7 @@ template&lt;<a class="el" href="conceptAllConvertibleToNoCVRefQuals.html">AllCon
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00252">252</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00257">257</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -729,7 +737,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00197">197</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00200">200</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -779,7 +787,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00134">134</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00135">135</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -824,7 +832,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00233">233</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00237">237</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -863,7 +871,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00375">375</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00380">380</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -902,7 +910,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00357">357</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00362">362</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -947,7 +955,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00096">96</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00097">97</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -996,7 +1004,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00271">271</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00276">276</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -1046,7 +1054,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00115">115</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00116">116</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -1090,7 +1098,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00287">287</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00292">292</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>
@@ -1129,7 +1137,7 @@ template&lt;<a class="el" href="conceptArithmeticNoCVRefQuals.html">ArithmeticNo
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00318">318</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="builder_8h_source.html#l00323">323</a> of file <a class="el" href="builder_8h_source.html">builder.h</a>.</p>
 
 </div>
 </div>

@@ -18,11 +18,11 @@ var classvkdb_1_1FriendlyQueryBuilder =
     [ "remove", "classvkdb_1_1FriendlyQueryBuilder.html#a6f290bb22fbd25441a80ef247bd5b508", null ],
     [ "sum", "classvkdb_1_1FriendlyQueryBuilder.html#ad8f550715ed9ef1caa06831fa58370a3", null ],
     [ "whereMetricIs", "classvkdb_1_1FriendlyQueryBuilder.html#aed6c603688a811b165e37bc2eaed077d", null ],
-    [ "whereMetricIsAnyOf", "classvkdb_1_1FriendlyQueryBuilder.html#a86950f05d27d96f826f63ac08294bed8", null ],
+    [ "whereMetricIsAnyOf", "classvkdb_1_1FriendlyQueryBuilder.html#a3315452307ea1d8c657545d2e66eeb13", null ],
     [ "whereTagsContain", "classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9", null ],
-    [ "whereTagsContainAllOf", "classvkdb_1_1FriendlyQueryBuilder.html#afc0534c8779075569b1d90993edb86cd", null ],
-    [ "whereTagsContainAnyOf", "classvkdb_1_1FriendlyQueryBuilder.html#a11e5a78eb979b7aba45bde1944ce559e", null ],
+    [ "whereTagsContainAllOf", "classvkdb_1_1FriendlyQueryBuilder.html#acd48c748cc0f97235c8c2f1f5d956817", null ],
+    [ "whereTagsContainAnyOf", "classvkdb_1_1FriendlyQueryBuilder.html#afcc92a25d100764663eeae238dc4ba01", null ],
     [ "whereTimestampBetween", "classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650", null ],
     [ "whereTimestampIs", "classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b", null ],
-    [ "whereTimestampIsAnyOf", "classvkdb_1_1FriendlyQueryBuilder.html#aab58e31bf7e8064ebb84eb7b60e50444", null ]
+    [ "whereTimestampIsAnyOf", "classvkdb_1_1FriendlyQueryBuilder.html#ac5de699e48b9c1037019f67a4a20e084", null ]
 ];

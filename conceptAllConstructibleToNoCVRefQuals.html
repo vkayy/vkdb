@@ -110,7 +110,7 @@ $(function(){initNavTree('conceptAllConstructibleToNoCVRefQuals.html',''); initR
 
 <p><code>#include &lt;<a class="el" href="concepts_8h_source.html">concepts.h</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts, <span class="keyword">typename</span> U&gt;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> U, <span class="keyword">typename</span>... Ts&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptAllConstructibleToNoCVRefQuals.html">AllConstructibleToNoCVRefQuals</a> =  (<a class="code hl_concept" href="conceptConstructibleToNoCVRefQuals.html">ConstructibleToNoCVRefQuals&lt;Ts, U&gt;</a> &amp;&amp; ...)</div>
 <div class="ttc" id="aconceptAllConstructibleToNoCVRefQuals_html"><div class="ttname"><a href="conceptAllConstructibleToNoCVRefQuals.html">AllConstructibleToNoCVRefQuals</a></div><div class="ttdoc">Concept for types that are all constructible to another and have no cv- or ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00100">concepts.h:101</a></div></div>
 <div class="ttc" id="aconceptConstructibleToNoCVRefQuals_html"><div class="ttname"><a href="conceptConstructibleToNoCVRefQuals.html">ConstructibleToNoCVRefQuals</a></div><div class="ttdoc">Concept for a type that is constructible to another and has no cv- or ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00089">concepts.h:90</a></div></div>
@@ -118,8 +118,8 @@ $(function(){initNavTree('conceptAllConstructibleToNoCVRefQuals.html',''); initR
 <div class="textblock"><p>Concept for types that are all constructible to another and have no cv- or ref-qualifiers. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Ts</td><td>Types to construct from. </td></tr>
     <tr><td class="paramname">U</td><td>Type to construct to. </td></tr>
+    <tr><td class="paramname">Ts</td><td>Types to construct from. </td></tr>
   </table>
   </dd>
 </dl>

@@ -165,186 +165,191 @@ $(function(){initNavTree('friendly__builder_8h_source.html',''); initResizable(t
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  }</div>
 </div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Metric&gt;... Metrics&gt;</div>
-<div class="foldopen" id="foldopen00126" data-start="{" data-end="}">
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a86950f05d27d96f826f63ac08294bed8">  126</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a86950f05d27d96f826f63ac08294bed8">whereMetricIsAnyOf</a>(</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keyword">const</span> Metrics&amp;... metrics</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  ) {</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    std::ignore = query_builder_.filterByAnyMetrics(metrics...);</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Metrics&gt;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keyword">requires</span> (<a class="code hl_concept" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals&lt;Metric, Metrics&gt;</a> &amp;&amp; ...)</div>
+<div class="foldopen" id="foldopen00127" data-start="{" data-end="}">
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a3315452307ea1d8c657545d2e66eeb13">  127</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a3315452307ea1d8c657545d2e66eeb13">whereMetricIsAnyOf</a>(</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keyword">const</span> Metrics&amp;... metrics</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  ) {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    std::ignore = query_builder_.filterByAnyMetrics(metrics...);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  }</div>
 </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="foldopen" id="foldopen00142" data-start="{" data-end="}">
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b">  142</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b">whereTimestampIs</a>(</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keyword">const</span> Timestamp&amp; timestamp</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  ) {</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    std::ignore = query_builder_.filterByTimestamp(timestamp);</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="foldopen" id="foldopen00143" data-start="{" data-end="}">
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b">  143</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b">whereTimestampIs</a>(</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keyword">const</span> Timestamp&amp; timestamp</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  ) {</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    std::ignore = query_builder_.filterByTimestamp(timestamp);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  }</div>
 </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="foldopen" id="foldopen00159" data-start="{" data-end="}">
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650">  159</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650">whereTimestampBetween</a>(</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keyword">const</span> Timestamp&amp; start,</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keyword">const</span> Timestamp&amp; end</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  ) {</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> start_key{start, MIN_METRIC, {}};</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> end_key{end, MAX_METRIC, {}};</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    std::ignore = query_builder_.range(start_key, end_key);</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  }</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="foldopen" id="foldopen00160" data-start="{" data-end="}">
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650">  160</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650">whereTimestampBetween</a>(</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keyword">const</span> Timestamp&amp; start,</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keyword">const</span> Timestamp&amp; end</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  ) {</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> start_key{start, MIN_METRIC, {}};</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> end_key{end, MAX_METRIC, {}};</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    std::ignore = query_builder_.range(start_key, end_key);</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  }</div>
 </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Timestamp&gt;... Timestamps&gt;</div>
-<div class="foldopen" id="foldopen00180" data-start="{" data-end="}">
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#aab58e31bf7e8064ebb84eb7b60e50444">  180</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#aab58e31bf7e8064ebb84eb7b60e50444">whereTimestampIsAnyOf</a>(</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keyword">const</span> Timestamps&amp;... timestamps</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  ) {</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    std::ignore = query_builder_.filterByAnyTimestamps(timestamps...);</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  }</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Timestamps&gt;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keyword">requires</span> (<a class="code hl_concept" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals&lt;Timestamp, Timestamps&gt;</a> &amp;&amp; ...)</div>
+<div class="foldopen" id="foldopen00182" data-start="{" data-end="}">
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#ac5de699e48b9c1037019f67a4a20e084">  182</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#ac5de699e48b9c1037019f67a4a20e084">whereTimestampIsAnyOf</a>(</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keyword">const</span> Timestamps&amp;... timestamps</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  ) {</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    std::ignore = query_builder_.filterByAnyTimestamps(timestamps...);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  }</div>
 </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="foldopen" id="foldopen00196" data-start="{" data-end="}">
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9">  196</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9">whereTagsContain</a>(<span class="keyword">const</span> Tag&amp; tag) {</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    std::ignore = query_builder_.filterByTag(tag.first, tag.second);</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>  }</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
+<div class="foldopen" id="foldopen00198" data-start="{" data-end="}">
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9">  198</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9">whereTagsContain</a>(<span class="keyword">const</span> Tag&amp; tag) {</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    std::ignore = query_builder_.filterByTag(tag.first, tag.second);</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>  }</div>
 </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
-<div class="foldopen" id="foldopen00212" data-start="{" data-end="}">
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a11e5a78eb979b7aba45bde1944ce559e">  212</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a11e5a78eb979b7aba45bde1944ce559e">whereTagsContainAnyOf</a>(</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keyword">const</span> Tags&amp;... tags</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>  ) {</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    std::ignore = query_builder_.filterByAnyTags(tags...);</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  }</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Tags&gt;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keyword">requires</span> (<a class="code hl_concept" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals&lt;Tag, Tags&gt;</a> &amp;&amp; ...)</div>
+<div class="foldopen" id="foldopen00215" data-start="{" data-end="}">
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#afcc92a25d100764663eeae238dc4ba01">  215</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#afcc92a25d100764663eeae238dc4ba01">whereTagsContainAnyOf</a>(</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keyword">const</span> Tags&amp;... tags</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  ) {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    std::ignore = query_builder_.filterByAnyTags(tags...);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>  }</div>
 </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>  <span class="keyword">template</span> &lt;AllConvertibleToNoCVRefQuals&lt;Tag&gt;... Tags&gt;</div>
-<div class="foldopen" id="foldopen00230" data-start="{" data-end="}">
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#afc0534c8779075569b1d90993edb86cd">  230</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#afc0534c8779075569b1d90993edb86cd">whereTagsContainAllOf</a>(</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keyword">const</span> Tags&amp;... tags</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>  ) {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    std::ignore = query_builder_.filterByAllTags(tags...);</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>  }</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Tags&gt;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="keyword">requires</span> (<a class="code hl_concept" href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals&lt;Tag, Tags&gt;</a> &amp;&amp; ...)</div>
+<div class="foldopen" id="foldopen00234" data-start="{" data-end="}">
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#acd48c748cc0f97235c8c2f1f5d956817">  234</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#acd48c748cc0f97235c8c2f1f5d956817">whereTagsContainAllOf</a>(</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keyword">const</span> Tags&amp;... tags</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>  ) {</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    std::ignore = query_builder_.filterByAllTags(tags...);</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>  }</div>
 </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
-<div class="foldopen" id="foldopen00250" data-start="{" data-end="}">
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a90d7060f2718ed895e8a6f129a047130">  250</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a90d7060f2718ed895e8a6f129a047130">put</a>(</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    Timestamp timestamp,</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    Metric metric,</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keyword">const</span> TagTable&amp; tag_table, TValue value</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>  ) {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <span class="keywordflow">if</span> (</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>      metric.empty() ||</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>      metric.length() &gt; <a class="code hl_variable" href="classvkdb_1_1TimeSeriesKey.html#a84d31620be4c1768301cb923103537a0">TimeSeriesKey::MAX_METRIC_LENGTH</a></div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    ) {</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        <span class="stringliteral">&quot;FriendlyQueryBuilder::get(): Invalid metric &#39;&quot;</span> + metric + <span class="stringliteral">&quot;&#39;.&quot;</span></div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>      };</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    }</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> key{timestamp, metric, tag_table};</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    std::ignore = query_builder_.put(key, value);</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  }</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="foldopen" id="foldopen00254" data-start="{" data-end="}">
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a90d7060f2718ed895e8a6f129a047130">  254</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a90d7060f2718ed895e8a6f129a047130">put</a>(</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    Timestamp timestamp,</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    Metric metric,</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="keyword">const</span> TagTable&amp; tag_table, TValue value</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>  ) {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordflow">if</span> (</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>      metric.empty() ||</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>      metric.length() &gt; <a class="code hl_variable" href="classvkdb_1_1TimeSeriesKey.html#a84d31620be4c1768301cb923103537a0">TimeSeriesKey::MAX_METRIC_LENGTH</a></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    ) {</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>      <span class="keywordflow">throw</span> std::runtime_error{</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <span class="stringliteral">&quot;FriendlyQueryBuilder::get(): Invalid metric &#39;&quot;</span> + metric + <span class="stringliteral">&quot;&#39;.&quot;</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>      };</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    }</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> key{timestamp, metric, tag_table};</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    std::ignore = query_builder_.put(key, value);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  }</div>
 </div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
-<div class="foldopen" id="foldopen00280" data-start="{" data-end="}">
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a6f290bb22fbd25441a80ef247bd5b508">  280</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a6f290bb22fbd25441a80ef247bd5b508">remove</a>(</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    Timestamp timestamp,</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    Metric metric,</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="keyword">const</span> TagTable&amp; tag_table</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>  ) {</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> key{timestamp, metric, tag_table};</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    std::ignore = query_builder_.remove(key);</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  }</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="foldopen" id="foldopen00284" data-start="{" data-end="}">
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a6f290bb22fbd25441a80ef247bd5b508">  284</a></span>  [[nodiscard]] <a class="code hl_class" href="classvkdb_1_1FriendlyQueryBuilder.html">FriendlyQueryBuilder</a>&amp; <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a6f290bb22fbd25441a80ef247bd5b508">remove</a>(</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    Timestamp timestamp,</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    Metric metric,</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <span class="keyword">const</span> TagTable&amp; tag_table</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  ) {</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <a class="code hl_class" href="classvkdb_1_1TimeSeriesKey.html">TimeSeriesKey</a> key{timestamp, metric, tag_table};</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    std::ignore = query_builder_.remove(key);</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  }</div>
 </div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
-<div class="foldopen" id="foldopen00299" data-start="{" data-end="}">
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a5fb0d118f237943c28efb0484597cbea">  299</a></span>  [[nodiscard]] size_type <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a5fb0d118f237943c28efb0484597cbea">count</a>() {</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    <span class="keywordflow">return</span> query_builder_.count();</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>  }</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="foldopen" id="foldopen00303" data-start="{" data-end="}">
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a5fb0d118f237943c28efb0484597cbea">  303</a></span>  [[nodiscard]] size_type <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a5fb0d118f237943c28efb0484597cbea">count</a>() {</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="keywordflow">return</span> query_builder_.count();</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>  }</div>
 </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
-<div class="foldopen" id="foldopen00312" data-start="{" data-end="}">
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#ad8f550715ed9ef1caa06831fa58370a3">  312</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#ad8f550715ed9ef1caa06831fa58370a3">sum</a>() {</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    <span class="keywordflow">return</span> query_builder_.sum();</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>  }</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
+<div class="foldopen" id="foldopen00316" data-start="{" data-end="}">
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#ad8f550715ed9ef1caa06831fa58370a3">  316</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#ad8f550715ed9ef1caa06831fa58370a3">sum</a>() {</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keywordflow">return</span> query_builder_.sum();</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>  }</div>
 </div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
-<div class="foldopen" id="foldopen00325" data-start="{" data-end="}">
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a4902a24b861c0a2f68735b190e9ed88a">  325</a></span>  [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a4902a24b861c0a2f68735b190e9ed88a">avg</a>() {</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keywordflow">return</span> query_builder_.avg();</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>  }</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
+<div class="foldopen" id="foldopen00329" data-start="{" data-end="}">
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a4902a24b861c0a2f68735b190e9ed88a">  329</a></span>  [[nodiscard]] <span class="keywordtype">double</span> <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a4902a24b861c0a2f68735b190e9ed88a">avg</a>() {</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keywordflow">return</span> query_builder_.avg();</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>  }</div>
 </div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
-<div class="foldopen" id="foldopen00338" data-start="{" data-end="}">
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#aa4225978d5aedffc540da88daa846c9e">  338</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#aa4225978d5aedffc540da88daa846c9e">min</a>() {</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keywordflow">return</span> query_builder_.min();</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>  }</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
+<div class="foldopen" id="foldopen00342" data-start="{" data-end="}">
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#aa4225978d5aedffc540da88daa846c9e">  342</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#aa4225978d5aedffc540da88daa846c9e">min</a>() {</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>    <span class="keywordflow">return</span> query_builder_.min();</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>  }</div>
 </div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>  </div>
-<div class="foldopen" id="foldopen00351" data-start="{" data-end="}">
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a8b595c91a409bac8541e1f111b9c3f4f">  351</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a8b595c91a409bac8541e1f111b9c3f4f">max</a>() {</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    <span class="keywordflow">return</span> query_builder_.max();</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>  }</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>  </div>
+<div class="foldopen" id="foldopen00355" data-start="{" data-end="}">
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a8b595c91a409bac8541e1f111b9c3f4f">  355</a></span>  [[nodiscard]] TValue <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a8b595c91a409bac8541e1f111b9c3f4f">max</a>() {</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    <span class="keywordflow">return</span> query_builder_.max();</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>  }</div>
 </div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
-<div class="foldopen" id="foldopen00363" data-start="{" data-end="}">
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a63ba9d8368d2f52981f4ff7e34003578">  363</a></span>  result_type <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a63ba9d8368d2f52981f4ff7e34003578">execute</a>(){</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>    <span class="keyword">auto</span> result{query_builder_.execute() |</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    std::views::transform([](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>      <span class="keywordflow">return</span> <a class="code hl_struct" href="structvkdb_1_1DataPoint.html">DataPoint&lt;TValue&gt;</a>{</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        entry.first.timestamp(),</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        entry.first.metric(),</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        entry.first.tags(),</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        entry.second.value()</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>      };</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    })};</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    <span class="keywordflow">return</span> {result.begin(), result.end()};</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>  }</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> </div>
+<div class="foldopen" id="foldopen00367" data-start="{" data-end="}">
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno"><a class="line" href="classvkdb_1_1FriendlyQueryBuilder.html#a63ba9d8368d2f52981f4ff7e34003578">  367</a></span>  result_type <a class="code hl_function" href="classvkdb_1_1FriendlyQueryBuilder.html#a63ba9d8368d2f52981f4ff7e34003578">execute</a>(){</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keyword">auto</span> result{query_builder_.execute() |</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    std::views::transform([](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry) {</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>      <span class="keywordflow">return</span> <a class="code hl_struct" href="structvkdb_1_1DataPoint.html">DataPoint&lt;TValue&gt;</a>{</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        entry.first.timestamp(),</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        entry.first.metric(),</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        entry.first.tags(),</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        entry.second.value()</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>      };</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    })};</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <span class="keywordflow">return</span> {result.begin(), result.end()};</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>  }</div>
 </div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder&lt;TValue&gt;</a> query_builder_;</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>};</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>  <a class="code hl_class" href="classvkdb_1_1QueryBuilder.html">QueryBuilder&lt;TValue&gt;</a> query_builder_;</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>};</div>
 </div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>}  <span class="comment">// namespace vkdb</span></div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span> </div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span><span class="preprocessor">#endif </span><span class="comment">// QUERY_FRIENDLY_BUILDER_H</span></div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>}  <span class="comment">// namespace vkdb</span></div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span> </div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span><span class="preprocessor">#endif </span><span class="comment">// QUERY_FRIENDLY_BUILDER_H</span></div>
 <div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html">vkdb::FriendlyQueryBuilder</a></div><div class="ttdoc">Friendly query builder for querying a Table.</div><div class="ttdef"><b>Definition</b> <a href="#l00013">friendly_builder.h:13</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a11e5a78eb979b7aba45bde1944ce559e"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a11e5a78eb979b7aba45bde1944ce559e">vkdb::FriendlyQueryBuilder::whereTagsContainAnyOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTagsContainAnyOf(const Tags &amp;... tags)</div><div class="ttdoc">Configure builder for where tags contain any of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00212">friendly_builder.h:212</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a19d3e45977065e08132679a4da387449"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a19d3e45977065e08132679a4da387449">vkdb::FriendlyQueryBuilder::FriendlyQueryBuilder</a></div><div class="ttdeci">FriendlyQueryBuilder(LSMTree&lt; TValue &gt; &amp;lsm_tree, const TagColumns &amp;tag_columns) noexcept</div><div class="ttdoc">Construct a new FriendlyQueryBuilder object.</div><div class="ttdef"><b>Definition</b> <a href="#l00032">friendly_builder.h:32</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a4902a24b861c0a2f68735b190e9ed88a"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a4902a24b861c0a2f68735b190e9ed88a">vkdb::FriendlyQueryBuilder::avg</a></div><div class="ttdeci">double avg()</div><div class="ttdoc">Calculate the average of the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00325">friendly_builder.h:325</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a3315452307ea1d8c657545d2e66eeb13"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a3315452307ea1d8c657545d2e66eeb13">vkdb::FriendlyQueryBuilder::whereMetricIsAnyOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereMetricIsAnyOf(const Metrics &amp;... metrics)</div><div class="ttdoc">Configure builder for where metric is any of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00127">friendly_builder.h:127</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a4902a24b861c0a2f68735b190e9ed88a"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a4902a24b861c0a2f68735b190e9ed88a">vkdb::FriendlyQueryBuilder::avg</a></div><div class="ttdeci">double avg()</div><div class="ttdoc">Calculate the average of the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00329">friendly_builder.h:329</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a4aded1817486021cd7a9a1b8badcebaf"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a4aded1817486021cd7a9a1b8badcebaf">vkdb::FriendlyQueryBuilder::FriendlyQueryBuilder</a></div><div class="ttdeci">FriendlyQueryBuilder(FriendlyQueryBuilder &amp;&amp;) noexcept=default</div><div class="ttdoc">Move-construct a FriendlyQueryBuilder object.</div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a55081a375dd13ef5b55dd3a810bfa7e9"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9">vkdb::FriendlyQueryBuilder::whereTagsContain</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTagsContain(const Tag &amp;tag)</div><div class="ttdoc">Configure builder for where tags contain clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00196">friendly_builder.h:196</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a55081a375dd13ef5b55dd3a810bfa7e9"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a55081a375dd13ef5b55dd3a810bfa7e9">vkdb::FriendlyQueryBuilder::whereTagsContain</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTagsContain(const Tag &amp;tag)</div><div class="ttdoc">Configure builder for where tags contain clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00198">friendly_builder.h:198</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a5c7efc3ee7120ebec7ba5fbf58f61899"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a5c7efc3ee7120ebec7ba5fbf58f61899">vkdb::FriendlyQueryBuilder::FriendlyQueryBuilder</a></div><div class="ttdeci">FriendlyQueryBuilder(QueryBuilder&lt; TValue &gt; &amp;&amp;query_builder)</div><div class="ttdoc">Construct a new FriendlyQueryBuilder object.</div><div class="ttdef"><b>Definition</b> <a href="#l00043">friendly_builder.h:43</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a5fb0d118f237943c28efb0484597cbea"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a5fb0d118f237943c28efb0484597cbea">vkdb::FriendlyQueryBuilder::count</a></div><div class="ttdeci">size_type count()</div><div class="ttdoc">Count the number of entries in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00299">friendly_builder.h:299</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a63ba9d8368d2f52981f4ff7e34003578"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a63ba9d8368d2f52981f4ff7e34003578">vkdb::FriendlyQueryBuilder::execute</a></div><div class="ttdeci">result_type execute()</div><div class="ttdoc">Execute the query.</div><div class="ttdef"><b>Definition</b> <a href="#l00363">friendly_builder.h:363</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a6f290bb22fbd25441a80ef247bd5b508"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a6f290bb22fbd25441a80ef247bd5b508">vkdb::FriendlyQueryBuilder::remove</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; remove(Timestamp timestamp, Metric metric, const TagTable &amp;tag_table)</div><div class="ttdoc">Configure builder for remove query.</div><div class="ttdef"><b>Definition</b> <a href="#l00280">friendly_builder.h:280</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a5fb0d118f237943c28efb0484597cbea"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a5fb0d118f237943c28efb0484597cbea">vkdb::FriendlyQueryBuilder::count</a></div><div class="ttdeci">size_type count()</div><div class="ttdoc">Count the number of entries in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00303">friendly_builder.h:303</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a63ba9d8368d2f52981f4ff7e34003578"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a63ba9d8368d2f52981f4ff7e34003578">vkdb::FriendlyQueryBuilder::execute</a></div><div class="ttdeci">result_type execute()</div><div class="ttdoc">Execute the query.</div><div class="ttdef"><b>Definition</b> <a href="#l00367">friendly_builder.h:367</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a6f290bb22fbd25441a80ef247bd5b508"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a6f290bb22fbd25441a80ef247bd5b508">vkdb::FriendlyQueryBuilder::remove</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; remove(Timestamp timestamp, Metric metric, const TagTable &amp;tag_table)</div><div class="ttdoc">Configure builder for remove query.</div><div class="ttdef"><b>Definition</b> <a href="#l00284">friendly_builder.h:284</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a829d286f4c12b3ad30e11753cd20b549"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a829d286f4c12b3ad30e11753cd20b549">vkdb::FriendlyQueryBuilder::FriendlyQueryBuilder</a></div><div class="ttdeci">FriendlyQueryBuilder()=delete</div><div class="ttdoc">Deleted default constructor.</div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a85831c38c48c4303739bc7f581b1c650"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650">vkdb::FriendlyQueryBuilder::whereTimestampBetween</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTimestampBetween(const Timestamp &amp;start, const Timestamp &amp;end)</div><div class="ttdoc">Configure builder for where timestamp is between clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00159">friendly_builder.h:159</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a86950f05d27d96f826f63ac08294bed8"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a86950f05d27d96f826f63ac08294bed8">vkdb::FriendlyQueryBuilder::whereMetricIsAnyOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereMetricIsAnyOf(const Metrics &amp;... metrics)</div><div class="ttdoc">Configure builder for where metric is any of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00126">friendly_builder.h:126</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a899e3ba26e9da0380b2423b40a41418b"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b">vkdb::FriendlyQueryBuilder::whereTimestampIs</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTimestampIs(const Timestamp &amp;timestamp)</div><div class="ttdoc">Configure builder for where timestamp is clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00142">friendly_builder.h:142</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a8b595c91a409bac8541e1f111b9c3f4f"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a8b595c91a409bac8541e1f111b9c3f4f">vkdb::FriendlyQueryBuilder::max</a></div><div class="ttdeci">TValue max()</div><div class="ttdoc">Calculate the maximum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00351">friendly_builder.h:351</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a90d7060f2718ed895e8a6f129a047130"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a90d7060f2718ed895e8a6f129a047130">vkdb::FriendlyQueryBuilder::put</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; put(Timestamp timestamp, Metric metric, const TagTable &amp;tag_table, TValue value)</div><div class="ttdoc">Configure builder for put query.</div><div class="ttdef"><b>Definition</b> <a href="#l00250">friendly_builder.h:250</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_aa4225978d5aedffc540da88daa846c9e"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#aa4225978d5aedffc540da88daa846c9e">vkdb::FriendlyQueryBuilder::min</a></div><div class="ttdeci">TValue min()</div><div class="ttdoc">Calculate the minimum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00338">friendly_builder.h:338</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_aab58e31bf7e8064ebb84eb7b60e50444"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#aab58e31bf7e8064ebb84eb7b60e50444">vkdb::FriendlyQueryBuilder::whereTimestampIsAnyOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTimestampIsAnyOf(const Timestamps &amp;... timestamps)</div><div class="ttdoc">Configure builder for where timestamp is any of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00180">friendly_builder.h:180</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a85831c38c48c4303739bc7f581b1c650"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a85831c38c48c4303739bc7f581b1c650">vkdb::FriendlyQueryBuilder::whereTimestampBetween</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTimestampBetween(const Timestamp &amp;start, const Timestamp &amp;end)</div><div class="ttdoc">Configure builder for where timestamp is between clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00160">friendly_builder.h:160</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a899e3ba26e9da0380b2423b40a41418b"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a899e3ba26e9da0380b2423b40a41418b">vkdb::FriendlyQueryBuilder::whereTimestampIs</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTimestampIs(const Timestamp &amp;timestamp)</div><div class="ttdoc">Configure builder for where timestamp is clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00143">friendly_builder.h:143</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a8b595c91a409bac8541e1f111b9c3f4f"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a8b595c91a409bac8541e1f111b9c3f4f">vkdb::FriendlyQueryBuilder::max</a></div><div class="ttdeci">TValue max()</div><div class="ttdoc">Calculate the maximum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00355">friendly_builder.h:355</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_a90d7060f2718ed895e8a6f129a047130"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#a90d7060f2718ed895e8a6f129a047130">vkdb::FriendlyQueryBuilder::put</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; put(Timestamp timestamp, Metric metric, const TagTable &amp;tag_table, TValue value)</div><div class="ttdoc">Configure builder for put query.</div><div class="ttdef"><b>Definition</b> <a href="#l00254">friendly_builder.h:254</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_aa4225978d5aedffc540da88daa846c9e"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#aa4225978d5aedffc540da88daa846c9e">vkdb::FriendlyQueryBuilder::min</a></div><div class="ttdeci">TValue min()</div><div class="ttdoc">Calculate the minimum value in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00342">friendly_builder.h:342</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_aad8dd90ffd72a63e2e94d7dd2c8eeaa7"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#aad8dd90ffd72a63e2e94d7dd2c8eeaa7">vkdb::FriendlyQueryBuilder::get</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; get(Timestamp timestamp, Metric metric, const TagTable &amp;tag_table)</div><div class="ttdoc">Configure builder for get query.</div><div class="ttdef"><b>Definition</b> <a href="#l00092">friendly_builder.h:92</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_ad8f550715ed9ef1caa06831fa58370a3"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#ad8f550715ed9ef1caa06831fa58370a3">vkdb::FriendlyQueryBuilder::sum</a></div><div class="ttdeci">TValue sum()</div><div class="ttdoc">Sum the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00312">friendly_builder.h:312</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_ac5de699e48b9c1037019f67a4a20e084"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#ac5de699e48b9c1037019f67a4a20e084">vkdb::FriendlyQueryBuilder::whereTimestampIsAnyOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTimestampIsAnyOf(const Timestamps &amp;... timestamps)</div><div class="ttdoc">Configure builder for where timestamp is any of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00182">friendly_builder.h:182</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_acd48c748cc0f97235c8c2f1f5d956817"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#acd48c748cc0f97235c8c2f1f5d956817">vkdb::FriendlyQueryBuilder::whereTagsContainAllOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTagsContainAllOf(const Tags &amp;... tags)</div><div class="ttdoc">Configure builder for where tags contain all of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00234">friendly_builder.h:234</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_ad8f550715ed9ef1caa06831fa58370a3"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#ad8f550715ed9ef1caa06831fa58370a3">vkdb::FriendlyQueryBuilder::sum</a></div><div class="ttdeci">TValue sum()</div><div class="ttdoc">Sum the values in the range.</div><div class="ttdef"><b>Definition</b> <a href="#l00316">friendly_builder.h:316</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_aed6c603688a811b165e37bc2eaed077d"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#aed6c603688a811b165e37bc2eaed077d">vkdb::FriendlyQueryBuilder::whereMetricIs</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereMetricIs(const Metric &amp;metric)</div><div class="ttdoc">Configure builder for where metric is clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00110">friendly_builder.h:110</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_afc0534c8779075569b1d90993edb86cd"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#afc0534c8779075569b1d90993edb86cd">vkdb::FriendlyQueryBuilder::whereTagsContainAllOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTagsContainAllOf(const Tags &amp;... tags)</div><div class="ttdoc">Configure builder for where tags contain all of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00230">friendly_builder.h:230</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1FriendlyQueryBuilder_html_afcc92a25d100764663eeae238dc4ba01"><div class="ttname"><a href="classvkdb_1_1FriendlyQueryBuilder.html#afcc92a25d100764663eeae238dc4ba01">vkdb::FriendlyQueryBuilder::whereTagsContainAnyOf</a></div><div class="ttdeci">FriendlyQueryBuilder &amp; whereTagsContainAnyOf(const Tags &amp;... tags)</div><div class="ttdoc">Configure builder for where tags contain any of clause.</div><div class="ttdef"><b>Definition</b> <a href="#l00215">friendly_builder.h:215</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1LSMTree_html"><div class="ttname"><a href="classvkdb_1_1LSMTree.html">vkdb::LSMTree</a></div><div class="ttdoc">LSM tree on TimeSeriesKey.</div><div class="ttdef"><b>Definition</b> <a href="wal__lsm_8h_source.html#l00008">wal_lsm.h:8</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html">vkdb::QueryBuilder</a></div><div class="ttdoc">Query builder for querying a Table.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00025">builder.h:25</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a></div><div class="ttdoc">Represents a key in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00084">time_series_key.h:84</a></div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a84d31620be4c1768301cb923103537a0"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a84d31620be4c1768301cb923103537a0">vkdb::TimeSeriesKey::MAX_METRIC_LENGTH</a></div><div class="ttdeci">static constexpr auto MAX_METRIC_LENGTH</div><div class="ttdoc">Metric width.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00096">time_series_key.h:96</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1QueryBuilder_html"><div class="ttname"><a href="classvkdb_1_1QueryBuilder.html">vkdb::QueryBuilder</a></div><div class="ttdoc">Query builder for querying a Table.</div><div class="ttdef"><b>Definition</b> <a href="builder_8h_source.html#l00026">builder.h:26</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a></div><div class="ttdoc">Represents a key in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00086">time_series_key.h:86</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html_a84d31620be4c1768301cb923103537a0"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html#a84d31620be4c1768301cb923103537a0">vkdb::TimeSeriesKey::MAX_METRIC_LENGTH</a></div><div class="ttdeci">static constexpr auto MAX_METRIC_LENGTH</div><div class="ttdoc">Metric width.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00098">time_series_key.h:98</a></div></div>
+<div class="ttc" id="aconceptAllConvertibleToNoCVRefQuals_html"><div class="ttname"><a href="conceptAllConvertibleToNoCVRefQuals.html">AllConvertibleToNoCVRefQuals</a></div><div class="ttdoc">Concept for types that are all convertible to another and have no cv- or ref-qualifiers.</div><div class="ttdef"><b>Definition</b> <a href="concepts_8h_source.html#l00078">concepts.h:79</a></div></div>
 <div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">STL namespace.</div></div>
-<div class="ttc" id="astructvkdb_1_1DataPoint_html"><div class="ttname"><a href="structvkdb_1_1DataPoint.html">vkdb::DataPoint</a></div><div class="ttdoc">Represents a datapoint in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00054">time_series_key.h:54</a></div></div>
+<div class="ttc" id="astructvkdb_1_1DataPoint_html"><div class="ttname"><a href="structvkdb_1_1DataPoint.html">vkdb::DataPoint</a></div><div class="ttdoc">Represents a datapoint in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00056">time_series_key.h:56</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

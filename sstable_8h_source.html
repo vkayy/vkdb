@@ -107,16 +107,16 @@ $(function(){initNavTree('sstable_8h_source.html',''); initResizable(true); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef STORAGE_SSTABLE_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define STORAGE_SSTABLE_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;vkdb/time_series_key.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;vkdb/bloom_filter.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;vkdb/bloom_filter.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;vkdb/concepts.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;vkdb/data_range.h&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;vkdb/mem_table.h&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vkdb/concepts.h&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;vkdb/string.h&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;sys/mman.h&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vkdb/string.h&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;vkdb/time_series_key.h&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>vkdb {</div>
@@ -440,7 +440,7 @@ $(function(){initNavTree('sstable_8h_source.html',''); initResizable(true); });
 <div class="ttc" id="aclassvkdb_1_1SSTable_html_ab34488b1a55de4b026f596ee5230b7bf"><div class="ttname"><a href="classvkdb_1_1SSTable.html#ab34488b1a55de4b026f596ee5230b7bf">vkdb::SSTable::entries</a></div><div class="ttdeci">std::vector&lt; value_type &gt; entries() const noexcept</div><div class="ttdoc">Get the entries of the SSTable.</div><div class="ttdef"><b>Definition</b> <a href="#l00233">sstable.h:233</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1SSTable_html_ad07a7a1bf40faa73f854ff6b38c3f915"><div class="ttname"><a href="classvkdb_1_1SSTable.html#ad07a7a1bf40faa73f854ff6b38c3f915">vkdb::SSTable::SSTable</a></div><div class="ttdeci">SSTable(FilePath file_path, MemTable&lt; TValue &gt; &amp;&amp;mem_table, size_type expected_entries=MemTable&lt; TValue &gt;::C0_LAYER_SSTABLE_MAX_ENTRIES)</div><div class="ttdoc">Construct a new SSTable object given a file path and a memtable.</div><div class="ttdef"><b>Definition</b> <a href="#l00076">sstable.h:76</a></div></div>
 <div class="ttc" id="aclassvkdb_1_1SSTable_html_aec18ae6404afec5031b67500dc39448f"><div class="ttname"><a href="classvkdb_1_1SSTable.html#aec18ae6404afec5031b67500dc39448f">vkdb::SSTable::SSTable</a></div><div class="ttdeci">SSTable()=delete</div><div class="ttdoc">Deleted default constructor.</div></div>
-<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a></div><div class="ttdoc">Represents a key in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00084">time_series_key.h:84</a></div></div>
+<div class="ttc" id="aclassvkdb_1_1TimeSeriesKey_html"><div class="ttname"><a href="classvkdb_1_1TimeSeriesKey.html">vkdb::TimeSeriesKey</a></div><div class="ttdoc">Represents a key in vkdb.</div><div class="ttdef"><b>Definition</b> <a href="time__series__key_8h_source.html#l00086">time_series_key.h:86</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
