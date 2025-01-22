@@ -4,13 +4,13 @@
 
 <div style="margin: 32px;" align="center">
 <p>A time series database engine built in C++ with minimal dependencies.</p>
-[![c++](https://img.shields.io/badge/C%2B%2B-%2300599C?logo=cplusplus&logoColor=FFFFFF?style=for-the-badge)](https://cplusplus.com/)
-[![contributors](https://img.shields.io/github/contributors/vkayy/vkdb?style=for-the-badge)](https://github.com/vkayy/vkdb/graphs/contributors)
-![last commit](https://img.shields.io/github/last-commit/vkayy/vkdb?style=for-the-badge)
-[![open issues](https://img.shields.io/github/issues/vkayy/vkdb?style=for-the-badge)](https://github.com/vkayy/vkdb/issues/)
-[![license](https://img.shields.io/github/license/vkayy/vkdb.svg?style=for-the-badge)](https://github.com/vkayy/vkdb/blob/main/LICENSE)
-[![stars](https://img.shields.io/github/stars/vkayy/vkdb?style=for-the-badge)](https://github.com/vkayy/vkdb/stargazers)
-[![forks](https://img.shields.io/github/forks/vkayy/vkdb?style=for-the-badge)](https://github.com/vkayy/vkdb/network/members)
+[![c++](https://img.shields.io/badge/C%2B%2B-%2300599C?style=flat-square&logo=cplusplus&logoColor=FFFFFF)](https://cplusplus.com/)
+[![contributors](https://img.shields.io/github/contributors/vkayy/vkdb?style=flat-square)](https://github.com/vkayy/vkdb/graphs/contributors)
+![last commit](https://img.shields.io/github/last-commit/vkayy/vkdb?style=flat-square)
+[![open issues](https://img.shields.io/github/issues/vkayy/vkdb?style=flat-square)](https://github.com/vkayy/vkdb/issues/)
+[![license](https://img.shields.io/github/license/vkayy/vkdb.svg?style=flat-square)](https://github.com/vkayy/vkdb/blob/main/LICENSE)
+[![stars](https://img.shields.io/github/stars/vkayy/vkdb?style=flat-square)](https://github.com/vkayy/vkdb/stargazers)
+[![forks](https://img.shields.io/github/forks/vkayy/vkdb?style=flat-square)](https://github.com/vkayy/vkdb/network/members)
 <h4><a href="https://github.com/vkayy/vkdb">GitHub Repository</a></h4>
 </div>
 
