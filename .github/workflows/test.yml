@@ -14,8 +14,10 @@ jobs:
       matrix:
         compiler: [gcc, clang]
     steps:
-      - name: Build and run tests
+      - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Build and run tests
         env:
           CXX: ${{ matrix.compiler }}
         run: ./build.sh -t
