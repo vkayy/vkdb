@@ -7,6 +7,8 @@
 #include <vkdb/write_ahead_log.h>
 #include <vkdb/lru_cache.h>
 #include <vkdb/wal_lsm.h>
+
+#include <algorithm>
 #include <ranges>
 #include <deque>
 #include <set>
