@@ -132,36 +132,36 @@ First, clone the project and `cd` into the directory.
 ```
 git clone https://github.com/vkayy/vkdb.git && cd vkdb
 ```
-Then, make the build directory and build the project with CMake.
+Then, simply run the build script.
 ```
-mkdir build && cd build && cmake .. && make
+./build.sh
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 ### Tests
 
-From the build folder, you can run the tests.
+You can use the `-t` flag to run the tests.
 ```
-./test/vkdb_tests
+./build.sh -t
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 ### Benchmarks
 
-From the build folder, you can run the benchmarks.
+You can also use the `-b` flag to run the benchmarks.
 ```
-./benchmark/vkdb_benchmarks
+./build.sh -b
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 ### Examples
 
-From the build folder, you can also run any of the examples.
+Finally, you can use the `-e` flag to run any of the examples.
 ```
-./examples/<filename>
+./build.sh -e <filename>
 ```
 
 <p align="right"><a href="#readme-top">back to top</a></p>

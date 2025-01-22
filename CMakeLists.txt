@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.25)
-project(vkdb CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+project(vkdb CXX)
 
 option(VKDB_BUILD_TESTS "Build vkdb tests" OFF)
 option(VKDB_BUILD_EXAMPLES "Build vkdb examples" OFF)
