@@ -15,7 +15,7 @@
 </div>
 
 > [!NOTE]
-> Development has slowed for now! Working on low-latency C++ for HFT at Thalesians.
+> Development has slowed for now, as I'm a little busier with work and university!
 
 > [!WARNING]
 > vkdb is currently in the early stages of development and is not yet ready for daily use!
