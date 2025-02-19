@@ -20,14 +20,8 @@ add_subdirectory(src)
 if(VKDB_BUILD_TESTS)
   add_subdirectory(test)
   enable_testing()
-  include(FetchContent)
-  FetchContent_Declare(
-    googletest
-    GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG        main
-  )
-  FetchContent_MakeAvailable(googletest)
-  target_link_libraries(vkdb_tests PRIVATE gtest gtest_main)
+  find_package(GTest REQUIRED)
+  target_link_libraries(vkdb_tests PRIVATE gtest::gtest)
 endif()
 
 if(VKDB_BUILD_EXAMPLES)
@@ -36,14 +30,6 @@ endif()
 
 if(VKDB_BUILD_BENCHMARKS)
   add_subdirectory(benchmark)
-  include(FetchContent)
-  FetchContent_Declare(
-    benchmark
-    GIT_REPOSITORY https://github.com/google/benchmark.git
-    GIT_TAG v1.9.1
-  )
-  FetchContent_MakeAvailable(benchmark)
-  target_link_libraries(vkdb_benchmarks PRIVATE benchmark::benchmark)
+  find_package(benchmark REQUIRED)
+  target_link_libraries(vkdb_benchmarks PRIVATE benchmark::benchmark_main)
 endif()
-
-    
