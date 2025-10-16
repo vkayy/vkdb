@@ -23,7 +23,7 @@
 </div>
 
 > [!NOTE]
-> Development has stopped indefinitely.
+> Development has paused indefinitely!
 
 > [!WARNING]
 > vkdb is currently in the early stages of development and is not yet ready for daily use!
